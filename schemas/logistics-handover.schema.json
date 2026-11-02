@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avelis.example/schemas/logistics-handover.v1.json",
+  "title": "Proposition de remise Bloc 1 vers Bloc 3",
+  "type": "object",
+  "required": ["schema", "project", "candidateId", "envelopeMm", "quantities"],
+  "properties": {
+    "schema": { "const": "avelis.logistics.handover.v1" },
+    "candidateId": { "type": "string" },
+    "envelopeMm": {
+      "type": "object",
+      "required": ["length", "height", "depth"],
+      "properties": {
+        "length": { "type": "number" },
+        "height": { "type": "number" },
+        "depth": { "type": "number" }
+      }
+    },
+    "quantities": {
+      "type": "object",
+      "required": ["memberCount", "timberVolumeM3"],
+      "properties": {
+        "memberCount": { "type": "integer", "minimum": 1 },
+        "timberVolumeM3": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+caseId;wallLengthMm;wallHeightMm;windowWidthMm;windowHeightMm;doorEnabled;doorWidthMm;doorHeightMm;validCandidates;processingTimeMs;candidateId;score;timberVolumeM3;componentCount;estimatedCostEur;estimatedMachineTimeMin
+variant-a-standard;3000;2400;900;1000;false;;;16;22;CAND-09;0;0.19161;15;152.55;12.9
+variant-b-wide;4200;2600;1200;1100;false;;;16;4;CAND-13;0;0.26863;19;209.3;16.34
+variant-c-compact;2400;2400;700;900;false;;;16;2;CAND-01;0;0.17725;15;143.65;12.9
+variant-d-window-door;4200;2600;900;1000;true;900;2100;16;2;CAND-13;0;0.29754;25;240.72;21.5

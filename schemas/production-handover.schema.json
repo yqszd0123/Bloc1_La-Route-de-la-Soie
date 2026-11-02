@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avelis.example/schemas/production-handover.v1.json",
+  "title": "Proposition de remise Bloc 1 vers Bloc 2",
+  "type": "object",
+  "required": ["schema", "project", "candidateId", "status", "members"],
+  "properties": {
+    "schema": { "const": "avelis.production.handover.v1" },
+    "candidateId": { "type": "string" },
+    "status": { "enum": ["CONCEPT_VALID_WITHIN_POC_RULES", "REJECTED", "APPROVED_FOR_PRODUCTION"] },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "role", "materialCode", "section", "lengthMm", "operations", "toleranceMm"],
+        "properties": {
+          "id": { "type": "string" },
+          "role": { "type": "string" },
+          "materialCode": { "type": "string" },
+          "lengthMm": { "type": "number", "exclusiveMinimum": 0 },
+          "operations": { "type": "array", "items": { "type": "string" } },
+          "toleranceMm": { "type": "number", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

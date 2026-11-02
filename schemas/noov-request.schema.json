@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avelis.example/schemas/noov-wall-configuration-request.v1.json",
+  "title": "Proposition de configuration Noov vers Bloc 1",
+  "type": "object",
+  "required": ["schema", "status", "project", "geometry", "objective"],
+  "properties": {
+    "schema": { "const": "avelis.noov.wall-configuration.request.v1" },
+    "status": { "const": "INTERFACE_PROPOSAL_NOT_OFFICIAL_NOOV_FORMAT" },
+    "project": {
+      "type": "object",
+      "required": ["projectId", "typology", "wallId", "version"],
+      "properties": {
+        "projectId": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9_-]*$" },
+        "typology": { "type": "string" },
+        "wallId": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": ["wallLengthMm", "wallHeightMm", "openings"],
+      "properties": {
+        "wallLengthMm": { "type": "number", "minimum": 1800, "maximum": 6000 },
+        "wallHeightMm": { "type": "number", "minimum": 2200, "maximum": 3200 },
+        "openings": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["id", "type", "xMm", "sillMm", "widthMm", "heightMm"],
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "enum": ["WINDOW", "DOOR"] },
+              "xMm": { "type": "number" },
+              "sillMm": { "type": "number", "minimum": 0 },
+              "widthMm": { "type": "number", "exclusiveMinimum": 0 },
+              "heightMm": { "type": "number", "exclusiveMinimum": 0 }
+            }
+          }
+        }
+      }
+    },
+    "objective": { "enum": ["balanced", "material", "manufacturing", "cost"] },
+    "requestedOutputs": { "type": "array", "items": { "type": "string" } }
+  }
+}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4560 2960" role="img" aria-label="Élévation du mur CAND-13">
+<rect width="100%" height="100%" fill="#f8f6f1"/>
+<g transform="translate(180 2780) scale(1 -1)">
+<rect x="0" y="0" width="4200" height="45" fill="#7c4a2d" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C001 — Lisse basse</title></rect>
+<rect x="0" y="2510" width="4200" height="45" fill="#7c4a2d" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C002 — Lisse haute 1</title></rect>
+<rect x="0" y="2555" width="4200" height="45" fill="#7c4a2d" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C003 — Lisse haute 2</title></rect>
+<rect x="0" y="45" width="45" height="2465" fill="#a4633b" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C004 — Montant de rive gauche</title></rect>
+<rect x="4155" y="45" width="45" height="2465" fill="#a4633b" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C005 — Montant de rive droit</title></rect>
+<rect x="1410" y="45" width="45" height="2465" fill="#934b2c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C006 — Montant maître gauche — fenêtre</title></rect>
+<rect x="1455" y="45" width="45" height="1905" fill="#d99a5c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C007 — Montant d’appui gauche — fenêtre</title></rect>
+<rect x="2700" y="45" width="45" height="1905" fill="#d99a5c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C008 — Montant d’appui droit — fenêtre</title></rect>
+<rect x="2745" y="45" width="45" height="2465" fill="#934b2c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C009 — Montant maître droit — fenêtre</title></rect>
+<rect x="1500" y="805" width="1200" height="45" fill="#e0a15d" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C010 — Traverse d’appui — fenêtre</title></rect>
+<rect x="1455" y="1950" width="1290" height="45" fill="#70402b" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C011 — Linteau 1 — fenêtre</title></rect>
+<rect x="600" y="45" width="45" height="2465" fill="#c8834c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C012 — Montant courant</title></rect>
+<rect x="1200" y="45" width="45" height="2465" fill="#c8834c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C013 — Montant courant</title></rect>
+<rect x="1800" y="45" width="45" height="760" fill="#d1a06f" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C014 — Montant d’allège — fenêtre</title></rect>
+<rect x="1800" y="1995" width="45" height="515" fill="#d1a06f" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C015 — Montant haut — fenêtre</title></rect>
+<rect x="2400" y="45" width="45" height="760" fill="#d1a06f" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C016 — Montant d’allège — fenêtre</title></rect>
+<rect x="2400" y="1995" width="45" height="515" fill="#d1a06f" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C017 — Montant haut — fenêtre</title></rect>
+<rect x="3000" y="45" width="45" height="2465" fill="#c8834c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C018 — Montant courant</title></rect>
+<rect x="3600" y="45" width="45" height="2465" fill="#c8834c" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-VARIANT-B-WIDE-V1-0-C019 — Montant courant</title></rect>
+<rect x="1500" y="850" width="1200" height="1100" fill="#dff4ff" fill-opacity="0.8" stroke="#1976a3" stroke-width="8"><title>Fenêtre WINDOW-01</title></rect>
+</g>
+<text x="180" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">CAND-13 — mur 4200 × 2600 mm</text>
+<text x="180" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">Entraxe 600 mm · décalage 0 mm · linteau 1 couche(s)</text>
+<line x1="180" y1="2890" x2="4380" y2="2890" stroke="#182b36" stroke-width="5"/>
+<text x="2280" y="2875" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" fill="#182b36">4200 mm</text>
+</svg>

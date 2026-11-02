@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Rapport scientifique — Avelis Wall Flow</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #102b2d; font-family: Aptos, Arial, sans-serif; background: #d9d6ce; }
+    .page { position: relative; width: 210mm; height: 297mm; padding: 15mm 17mm 15mm; margin: 0 auto 8mm; background: #fffdf9; overflow: hidden; page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+    .page::before { content: ""; position: absolute; left: 0; top: 0; width: 7mm; height: 100%; background: #155c5c; }
+    .cover { padding: 0; background: linear-gradient(135deg,#103e40 0%,#1b6e69 54%,#b59a6a 100%); color: white; }
+    .cover::before { display:none; }
+    .cover-inner { padding: 30mm 20mm; height: 100%; display: flex; flex-direction: column; }
+    .kicker { color: #e3672a; font-size: 9pt; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; }
+    .cover .kicker { color: #ffb07a; }
+    h1 { margin: 8mm 0 4mm; font-size: 33pt; line-height: 1.02; }
+    h2 { margin: 1.5mm 0 3mm; color: #155c5c; font-size: 20pt; line-height: 1.1; }
+    h3 { margin: 4mm 0 1.5mm; color: #b74e20; font-size: 11.5pt; }
+    p, li { font-size: 9.6pt; line-height: 1.36; }
+    p { margin: 0 0 2.5mm; }
+    ul, ol { margin: 1mm 0 3mm; padding-left: 6mm; }
+    li { margin-bottom: 1.2mm; }
+    .lead { font-size: 15pt; line-height: 1.35; max-width: 155mm; }
+    .cover-meta { margin-top: auto; border-top: 1px solid rgba(255,255,255,.5); padding-top: 7mm; font-size: 10pt; line-height: 1.65; }
+    .header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 1px solid #d6cec0; padding-bottom: 3mm; margin-bottom: 5mm; }
+    .header small { color:#657374; font-size:8pt; }
+    .footer { position:absolute; left:17mm; right:17mm; bottom:7mm; display:flex; justify-content:space-between; border-top:1px solid #ddd4c8; padding-top:2mm; color:#687676; font-size:7.5pt; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:5mm; }
+    .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; }
+    .card { background:#f2eee6; border-left:3px solid #e3672a; padding:4mm; border-radius:2mm; }
+    .card strong { display:block; color:#155c5c; margin-bottom:1mm; }
+    .number { font-size:24pt; font-weight:800; color:#155c5c; }
+    .small { font-size:8.2pt; line-height:1.3; color:#4e5d5d; }
+    table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:8.3pt; }
+    th { background:#155c5c; color:#fff; text-align:left; padding:2mm; }
+    td { padding:1.8mm 2mm; border-bottom:1px solid #d8d1c6; vertical-align:top; }
+    tr:nth-child(even) td { background:#f6f3ed; }
+    .process { display:flex; gap:2mm; margin:4mm 0; align-items:stretch; }
+    .process div { flex:1; background:#155c5c; color:#fff; padding:3mm 2mm; text-align:center; font-size:8pt; font-weight:700; border-radius:1.5mm; }
+    .process span { align-self:center; color:#e3672a; font-weight:800; }
+    img { max-width:100%; }
+    .screenshot { width:100%; border:1px solid #c9c0b3; border-radius:3mm; box-shadow:0 2mm 5mm rgba(0,0,0,.13); }
+    .figure { background:#f4f0e8; border-radius:2mm; padding:3mm; text-align:center; margin:3mm 0; }
+    .figure img { max-height:85mm; }
+    .caption { font-size:7.5pt; color:#667; margin-top:1mm; }
+    .warning { background:#fff2cc; border-left:3px solid #dca216; padding:3mm 4mm; font-size:8.8pt; }
+    code { font-family:Consolas,monospace; font-size:8pt; color:#8f3715; }
+    .toc td:first-child { color:#155c5c; font-weight:700; }
+    .quote { font-size:13pt; line-height:1.35; color:#155c5c; border-left:4px solid #e3672a; padding-left:5mm; margin:5mm 0; }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-inner">
+      <div class="kicker">Imagine &amp; Make 2026 · Avelis · Bloc 1 Conception</div>
+      <h1>Avelis<br>Wall Flow</h1>
+      <p class="lead">Conception paramétrique et optimisation multicritère de murs 2D à ossature bois — du besoin client aux fichiers de fabrication, sans ressaisie.</p>
+      <div style="margin-top:18mm;width:58mm;height:5mm;background:#ff824b"></div>
+      <p style="margin-top:9mm;max-width:135mm;font-size:11pt">Rapport scientifique du prototype fonctionnel v1.1</p>
+      <div class="cover-meta">
+        <strong>Équipe 3 — La Route de la Soie</strong><br>
+        Centrale Lille · Challenge Imagine &amp; Make 2026<br>
+        Partenaire industriel : Avelis<br>
+        Date de remise : novembre 2026
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">Synthèse</span><h2>Résumé exécutif et sommaire</h2></div><small>02 / 12</small></div>
+    <p class="quote">Le prototype transforme une configuration de mur en 16 alternatives vérifiées, recommande une solution et remet un paquet cohérent de fabrication, de qualité et d'interfaces.</p>
+    <h3>Problématique</h3>
+    <p>Le passage du configurateur commercial au bureau d'études, puis à la fabrication et à la logistique, crée un risque de ressaisie et de divergence. Le Bloc 1 doit démontrer une chaîne numérique où les paramètres, la géométrie, la nomenclature et les fichiers de remise proviennent d'une source de vérité commune.</p>
+    <h3>Solution et résultats</h3>
+    <p>Avelis Wall Flow est une application hors ligne, sans dépendance, qui génère un modèle sémantique de mur à ossature bois avec une fenêtre et une porte optionnelle. Les ouvertures partagent le même modèle, le même générateur et les mêmes exports. L'application explore quatre entraxes, deux origines de trame et deux variantes de linteau, contrôle les règles POC, calcule matière/complexité/coût et classe les candidats. Les quatre cas de référence produisent chacun 16 solutions valides et leurs fichiers DXF, STL, SVG, CSV, JSON et ZIP.</p>
+    <div class="grid3">
+      <div class="card"><span class="number">16</span><strong>candidats / cas</strong><span class="small">exploration automatique et déterministe</span></div>
+      <div class="card"><span class="number">4</span><strong>cas complets</strong><span class="small">dont un cas fenêtre + porte</span></div>
+      <div class="card"><span class="number">10</span><strong>tests automatisés</strong><span class="small">flux, ouvertures, BOM et formats</span></div>
+    </div>
+    <h3>Sommaire</h3>
+    <table class="toc"><tr><td>1. Exigences et question de recherche</td><td>3</td><td>7. Résultats expérimentaux</td><td>9</td></tr><tr><td>2. État de l'art et choix</td><td>4</td><td>8. Fabrication et interfaces</td><td>10</td></tr><tr><td>3. Méthode et architecture</td><td>5</td><td>9. Prototype, valeur et risques</td><td>11</td></tr><tr><td>4. Modèle et règles</td><td>6</td><td>10. Conclusion et références</td><td>12</td></tr><tr><td>5. Optimisation multicritère</td><td>7</td><td></td><td></td></tr><tr><td>6. Prototype logiciel</td><td>8</td><td></td><td></td></tr></table>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Bloc 1 — Conception</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">01 · Cadrage</span><h2>Exigences et question de recherche</h2></div><small>03 / 12</small></div>
+    <h3>Lecture croisée des documents</h3>
+    <p>Le cahier général fixe la continuité de la chaîne <em>besoin → conception → fabrication → logistique</em>, les interfaces avec Noov et les autres blocs, la traçabilité, les preuves et une restitution commune. La fiche Bloc 1 focalise le travail sur la conception paramétrique, la fabricabilité, l'optimisation et la génération de fichiers. Les attentes de restitution comprennent un prototype fonctionnel, un rapport scientifique de 10 à 15 pages, une vidéo de 2 à 3 minutes, une présentation plénière et un prototype FabLab. Le support général mentionne aussi une composante de plan d'affaires ; elle est traitée dans la documentation et page 11.</p>
+    <h3>Question de recherche</h3>
+    <p class="quote">Comment générer plusieurs ossatures bois fabricables à partir d'un petit nombre de paramètres client, les comparer sans masquer les hypothèses, puis transmettre une solution traçable aux acteurs aval ?</p>
+    <h3>Objectifs opérationnels</h3>
+    <ol><li>Limiter l'entrée aux informations compréhensibles par un utilisateur Noov : identité/version, enveloppe, ouvertures et priorité.</li><li>Produire au moins trois variantes et rendre le choix explicable par des métriques.</li><li>Bloquer les erreurs géométriques avant toute production de fichiers.</li><li>Dériver géométrie, BOM, machine et interfaces du même modèle.</li><li>Fournir un STL réellement imprimable à l'échelle et un protocole de mesure.</li></ol>
+    <h3>Indicateurs</h3>
+    <table><tr><th>Indicateur</th><th>Définition</th><th>Preuve</th></tr><tr><td>Temps configuration → fichiers</td><td>calcul puis manipulation jusqu'au ZIP</td><td>chronométrage et journal</td></tr><tr><td>Variantes valides</td><td>candidats sans erreur POC</td><td>compteur de l'interface</td></tr><tr><td>Taux d'automatisation</td><td>sorties sans ressaisie / sorties</td><td>audit du paquet</td></tr><tr><td>Écart dimensionnel</td><td>FabLab – CAO à l'échelle</td><td>fiche de mesure</td></tr><tr><td>Couverture des règles</td><td>contrôles implémentés et déclarés</td><td>rapport qualité</td></tr></table>
+    <div class="warning"><strong>Limite assumée :</strong> le POC démontre la logique DfMA et la continuité numérique ; il ne certifie pas la structure ou la conformité réglementaire.</div>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Exigences</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">02 · Recherche</span><h2>État de l'art et stratégie de réutilisation</h2></div><small>04 / 12</small></div>
+    <p>Une recherche ciblée a comparé des projets GitHub de conception bois, BIM léger, géométrie paramétrique et fabrication. L'objectif n'était pas de coller des extraits, mais d'identifier les frontières de responsabilités qui rendent un outil maintenable.</p>
+    <table><tr><th>Projet</th><th>Apport</th><th>Décision</th></tr><tr><td>Timberframe Studio</td><td>pièces individuelles, ouvertures, BOM/coût</td><td>reprendre le principe sémantique ; pas le code</td></tr><tr><td>Lite BIM Simulator</td><td>modules matériaux, règles, géométrie, ossature et vue 3D</td><td>reprendre la séparation ; pas de copie sans licence claire</td></tr><tr><td>build123-timber</td><td>éléments paramétriques, assemblages, formats neutres</td><td>conserver l'idée d'export dérivé</td></tr><tr><td>COMPAS Timber</td><td>paramètres/intention comme source de vérité ; modèle de fabrication dérivé</td><td>principe architectural central</td></tr></table>
+    <h3>Constat</h3>
+    <p>Aucun dépôt étudié ne réalise directement l'intégralité du flux demandé avec Noov, génération de variantes, règles POC, décision multicritère, interfaces inter-blocs, STL de prototype et preuve expérimentale. Une adaptation importante serait nécessaire dans tous les cas. Le choix rationnel est donc un noyau original et compact, inspiré de ces architectures mais sans dépendance externe.</p>
+    <h3>Conséquences sur la conception</h3>
+    <div class="grid2"><div class="card"><strong>Source de vérité</strong><span class="small">Les composants sémantiques portent géométrie, rôle, matériau, opérations, tolérance et identifiant. Tous les fichiers sont des vues de ces composants.</span></div><div class="card"><strong>Règles séparées</strong><span class="small">Les contraintes d'entrée et de candidat ne sont pas enfouies dans l'interface ou le dessin.</span></div><div class="card"><strong>Exportateurs indépendants</strong><span class="small">Le DXF ou le STL peuvent être remplacés par IFC/BTLx sans réécrire le générateur.</span></div><div class="card"><strong>Licence prudente</strong><span class="small">Les projets non clairement licenciés ne fournissent aucun code au dépôt.</span></div></div>
+    <p class="small">Les liens, licences observées et précautions de provenance sont consignés dans <code>THIRD_PARTY_NOTICES.md</code> et <code>docs/REFERENCES.md</code>.</p>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>État de l'art</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">03 · Méthode</span><h2>Architecture du flux numérique</h2></div><small>05 / 12</small></div>
+    <div class="process"><div>Configuration<br>Noov</div><span>→</span><div>Règles<br>d'entrée</div><span>→</span><div>Génération<br>16 candidats</div><span>→</span><div>Validation<br>et KPI</div><span>→</span><div>Classement<br>multicritère</div><span>→</span><div>Paquet<br>de remise</div></div>
+    <h3>Organisation du dépôt</h3>
+    <p>Le dépôt adopte une structure de projet open source : <code>apps/web</code> contient uniquement l'interface ; <code>packages/core</code> est le moteur métier ; <code>config</code> et <code>schemas</code> portent les règles et contrats ; <code>experiments</code>, <code>tests</code>, <code>docs</code> et <code>deliverables</code> séparent preuves, vérification et restitution. Aucun fichier unique ne concentre l'application.</p>
+    <table><tr><th>Couche</th><th>Responsabilité</th><th>Sortie</th></tr><tr><td>Domaine</td><td>normaliser l'entrée, identité et profil</td><td>projet versionné</td></tr><tr><td>Génération</td><td>créer les composants par configuration</td><td>modèle sémantique</td></tr><tr><td>Règles</td><td>détecter erreurs et points de revue</td><td>rapport de validation</td></tr><tr><td>Optimisation</td><td>calculer KPI, Pareto et score</td><td>liste classée</td></tr><tr><td>Export</td><td>sérialiser le candidat sélectionné</td><td>DXF, STL, SVG, CSV, JSON, ZIP</td></tr><tr><td>Web</td><td>interaction, vue et téléchargement</td><td>prototype utilisable</td></tr></table>
+    <h3>Robustesse pour la soutenance</h3>
+    <p>L'application se lance par double-clic, sans serveur et sans réseau. Elle n'utilise ni bibliothèque externe, ni CDN, ni compilation. Les modules JavaScript sont partagés entre navigateur et tests Node. Le ZIP est créé localement : aucune donnée projet n'est téléversée. Cette sobriété facilite la démonstration et la reproductibilité.</p>
+    <h3>Traçabilité</h3>
+    <p>Un identifiant de pièce combine projet, mur, version et séquence. Le même code apparaît dans le modèle, la BOM, le CSV machine et les interfaces. Le profil de règles et la version du logiciel accompagnent la remise ; une évolution peut donc être auditée sans confondre deux géométries.</p>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Architecture</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">04 · Modèle</span><h2>Génération sémantique et contrôles</h2></div><small>06 / 12</small></div>
+    <div class="figure"><img src="../../experiments/results/variant-d-window-door/02_conception/elevation.svg" alt="Élévation du cas D avec fenêtre et porte"><div class="caption">Cas D recommandé : fenêtre et porte sont issues du même modèle d'ouverture et du même générateur.</div></div>
+    <h3>Paramètres et construction</h3>
+    <p>L'utilisateur décrit l'enveloppe du mur, une fenêtre et, via un interrupteur, une porte optionnelle. Le domaine transforme ces entrées en un tableau unique <code>openings[]</code>. Le générateur applique ensuite la même fonction d'encadrement à chaque ouverture : montants maîtres, montants d'appui et linteau. La fenêtre reçoit une traverse et des montants d'allège ; la porte part du sol et interrompt la lisse basse. Chaque pièce conserve aussi l'identifiant de l'ouverture qui l'a produite.</p>
+    <h3>Règles automatiques</h3>
+    <div class="grid2"><ul><li>bornes des dimensions ;</li><li>distance ouvertures/rives et ouvertures/haut ;</li><li>séparation fenêtre/porte ;</li><li>format des identifiants ;</li><li>longueur positive et limite machine ;</li></ul><ul><li>aucune pièce dans les vides ;</li><li>encadrements complets ;</li><li>composants dans l'enveloppe ;</li><li>rôles minimaux présents ;</li><li>entraxe, unicité et limite de ressources.</li></ul></div>
+    <h3>Hypothèses POC</h3>
+    <p>Le profil <code>POC-FR-TIMBER-2026-01</code> utilise une section 45 × 145 mm, un matériau C24 de démonstration, une tolérance ±1 mm et une longueur maximale de 6 m. Ces hypothèses sont centralisées et versionnées. Elles servent à prouver le mécanisme, mais doivent être remplacées par le catalogue et les règles validés d'Avelis.</p>
+    <div class="warning"><strong>Contrôles non évalués :</strong> charges, résistance et flèche, connexions/ancrages, contreventement, feu, acoustique, thermique, humidité, DTU/Eurocodes et certification machine.</div>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Modèle et règles</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">05 · Décision</span><h2>Exploration et optimisation multicritère</h2></div><small>07 / 12</small></div>
+    <h3>Espace de conception</h3>
+    <p>Pour la même demande client, le programme combine 4 entraxes (400, 450, 500, 600 mm), 2 origines de trame (0 et demi-entraxe) et 2 nombres de couches de linteau. L'espace contient donc 4 × 2 × 2 = 16 candidats. La génération exhaustive est ici préférable à un algorithme opaque : l'espace est petit, la couverture est complète et la démonstration reste explicable.</p>
+    <h3>Objectifs</h3>
+    <table><tr><th>Objectif à minimiser</th><th>Calcul POC</th><th>Sens</th></tr><tr><td>Matière</td><td>somme longueur × section</td><td>volume de bois</td></tr><tr><td>Complexité</td><td>pièces + 0,35 coupes + 0,8 longueurs uniques + 0,5 pièces spéciales</td><td>proxy de diversité et manutention</td></tr><tr><td>Coût</td><td>matière + coupes + assemblage</td><td>comparaison interne, pas devis</td></tr></table>
+    <h3>Normalisation et score</h3>
+    <p>Pour chaque objectif <em>j</em>, la valeur est normalisée entre le minimum et le maximum observés : <code>nᵢⱼ = (xᵢⱼ − minⱼ)/(maxⱼ − minⱼ)</code>. Le score à minimiser vaut <code>100 × Σ wⱼ nᵢⱼ</code>. Les poids changent selon la priorité : équilibrée (45 % matière, 35 % complexité, 20 % coût), matière, fabrication ou coût. L'interface expose le score et toutes les métriques afin d'éviter une recommandation « boîte noire ».</p>
+    <h3>Pareto et interprétation</h3>
+    <p>Une solution est marquée Pareto si aucune autre n'est au moins aussi bonne sur les trois objectifs et strictement meilleure sur l'un d'eux. Le rang pondéré exprime la préférence courante ; le front Pareto montre le compromis intrinsèque. La solution recommandée n'est donc pas décrite comme universellement optimale, mais comme la meilleure au regard des hypothèses et poids sélectionnés.</p>
+    <div class="card"><strong>Limite méthodologique</strong><span class="small">Le stock est actuellement un indicateur conservatif par pièce, sans problème de découpe combinatoire. L'optimisation de débit doit être ajoutée après validation du format matière et des chutes réutilisables.</span></div>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Optimisation</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">06 · Prototype</span><h2>Interface fonctionnelle</h2></div><small>08 / 12</small></div>
+    <img class="screenshot" src="../../docs/assets/app-overview-door.png" alt="Interface Avelis Wall Flow avec la porte activée">
+    <div class="caption">Interface réellement exécutée : cas D, porte activée, 16 candidats valides et BOM synchronisée.</div>
+    <h3>Parcours utilisateur</h3>
+    <p>La colonne gauche limite la saisie aux paramètres nécessaires. Quatre boutons chargent les cas de référence ; le quatrième active la porte et ses trois paramètres. Après validation, la zone principale affiche la solution recommandée, une vue manipulable, les KPI et la table des candidats. Un clic sur une ligne remplace la solution sélectionnée sans relancer le calcul. Les boutons JSON, STL, BOM et ZIP produisent les fichiers depuis l'état courant.</p>
+    <h3>Principes d'usage</h3>
+    <div class="grid3"><div class="card"><strong>Compréhensible</strong><span class="small">unités visibles, étapes numérotées, messages localisés</span></div><div class="card"><strong>Explicable</strong><span class="small">métriques et rang accessibles avant téléchargement</span></div><div class="card"><strong>Sûr</strong><span class="small">sorties désactivées en cas d'entrée invalide, portée répétée</span></div></div>
+    <p>La vue n'est pas une simple illustration indépendante : elle dessine les mêmes composants utilisés pour la BOM et les exports. Les couleurs distinguent les rôles constructifs et l'affichage optionnel des identifiants facilite la démonstration de traçabilité.</p>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Interface</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">07 · Preuves</span><h2>Résultats expérimentaux</h2></div><small>09 / 12</small></div>
+    <h3>Protocole reproductible</h3>
+    <p>Le script d'expérience charge chaque préréglage, exécute le flux complet, exige au moins une solution valide, sélectionne le rang 1 et écrit le paquet dans un dossier dédié. Un manifeste, un JSON de résultat et un CSV synthétique permettent l'audit. Dix tests vérifient les quatre cas, le modèle fenêtre/porte partagé, la complétude du cadre, les conflits entre ouvertures, l'unicité des identifiants, le classement, la BOM et les signatures des exports.</p>
+    <table><tr><th>Cas</th><th>Mur / ouvertures (mm)</th><th>Valides</th><th>Recommandé</th><th>Bois m³</th><th>Pièces</th><th>Coût POC €</th></tr><tr><td>A standard</td><td>3000×2400 / F 900×1000</td><td>16</td><td>CAND-09</td><td>0,19161</td><td>15</td><td>152,55</td></tr><tr><td>B large</td><td>4200×2600 / F 1200×1100</td><td>16</td><td>CAND-13</td><td>0,26863</td><td>19</td><td>209,30</td></tr><tr><td>C compact</td><td>2400×2400 / F 700×900</td><td>16</td><td>CAND-01</td><td>0,17725</td><td>15</td><td>143,65</td></tr><tr><td>D fenêtre + porte</td><td>4200×2600 / F 900×1000 + P 900×2100</td><td>16</td><td>CAND-13</td><td>0,29754</td><td>25</td><td>240,72</td></tr></table>
+    <h3>Interprétation</h3>
+    <p>Les quatre géométries traversent sans ressaisie les mêmes modules et génèrent toutes les sorties. Le cas D prouve que l'extension porte n'est pas une chaîne parallèle : ses 25 pièces apparaissent dans le même modèle, la même BOM et les mêmes formats que le cas A. Le classement choisit des décalages de trame différents selon la largeur : la recommandation n'est pas codée en dur.</p>
+    <h3>Temps</h3>
+    <p>Les exécutions de référence restent inférieures à 25 ms sur la machine de développement. Cette valeur mesure le calcul, pas la manipulation humaine. Pour une preuve défendable, le protocole de soutenance prévoit cinq répétitions du temps entre validation de la saisie et téléchargement du ZIP, avec navigateur et machine consignés.</p>
+    <h3>Ce qui reste à mesurer</h3>
+    <p>L'écart dimensionnel du prototype doit être rempli après impression réelle. La fiche conserve volontairement les cases vides : aucune mesure physique n'a été inventée.</p>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Expériences</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">08 · Continuité</span><h2>Fabrication, qualité et interfaces</h2></div><small>10 / 12</small></div>
+    <h3>Contenu du paquet ZIP</h3>
+    <table><tr><th>Dossier</th><th>Contenu</th><th>Destinataire</th></tr><tr><td>01_entree</td><td>demande Noov proposée</td><td>configuration / audit</td></tr><tr><td>02_conception</td><td>JSON, SVG, DXF, STL</td><td>BE et FabLab</td></tr><tr><td>03_fabrication</td><td>BOM, membres machine, remise production</td><td>Bloc 2 / atelier</td></tr><tr><td>04_qualite</td><td>validation et comparaison des candidats</td><td>qualité / décision</td></tr><tr><td>05_interfaces</td><td>réponse Noov et remise logistique</td><td>Noov / Bloc 3</td></tr></table>
+    <h3>Formats</h3>
+    <p>Le SVG documente l'élévation et peut servir de gabarit. Le DXF utilise des faces 3D neutres lisibles par de nombreux outils CAO. Le STL représente les volumes à l'échelle choisie. Le CSV machine fournit une ligne par pièce et ses opérations ; il reste volontairement neutre en attendant le post-processeur de la machine réelle. Les JSON transportent identité, version, profil de règles, statut et KPI.</p>
+    <h3>Contrats inter-blocs</h3>
+    <p>Trois schémas JSON décrivent la demande Noov, la remise Bloc 1 → Bloc 2 et la remise Bloc 1 → Bloc 3. Ils constituent des propositions à valider en atelier d'interface. La responsabilité du Bloc 1 s'arrête à une solution conceptuellement valide ; la production ne doit passer à <code>APPROVED_FOR_PRODUCTION</code> qu'après revue structurelle et machine.</p>
+    <h3>Gestion des évolutions</h3>
+    <p>La version du schéma identifie le contrat ; la version du logiciel identifie le calcul ; la version du mur identifie la révision métier ; le profil identifie les règles. Une plateforme industrielle doit archiver les anciens paquets, interdire l'écrasement silencieux et enregistrer l'approbateur.</p>
+    <div class="warning">Le simple fait qu'un fichier DXF ou CSV s'ouvre ne prouve pas sa compatibilité avec la machine d'Avelis. L'origine, les axes, outils, tolérances et statuts doivent être confirmés avec le Bloc 2.</div>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Interfaces</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">09 · Déploiement</span><h2>FabLab, valeur et maîtrise des risques</h2></div><small>11 / 12</small></div>
+    <h3>Prototype physique</h3>
+    <p>Le cas A à l'échelle 1:15 mesure environ 200 × 160 × 9,7 mm et tient sur un plateau courant. Le protocole recommande PLA, couche 0,20 mm et impression à plat. Cinq dimensions sont à contrôler au pied à coulisse : longueur, hauteur, baie en largeur/hauteur et épaisseur. Les photographies, la machine, le trancheur, le temps et les écarts doivent rejoindre la remise.</p>
+    <h3>Proposition de valeur</h3>
+    <div class="grid2"><div class="card"><strong>Avant</strong><span class="small">ressaisies, variantes peu comparées, fichiers et BOM potentiellement divergents, hypothèses implicites</span></div><div class="card"><strong>Avec le flux</strong><span class="small">paramètres uniques, alternatives comparables, sorties synchronisées, règles et limites visibles</span></div></div>
+    <p>La valeur annuelle ne doit pas être inventée. Un pilote doit mesurer le temps de bureau d'études par dossier, les erreurs de ressaisie, le délai de devis et la matière. La formule de décision est : volume annuel × gain unitaire × coût de référence, plus erreurs et matière évitées, moins exploitation.</p>
+    <h3>Feuille de route</h3>
+    <ol><li><strong>Pilote ciblé :</strong> un type de mur, une machine, dix dossiers passés et cinq nouveaux.</li><li><strong>Validation métier :</strong> règles Avelis, calcul structurel qualifié, assemblages, norme et responsabilité.</li><li><strong>Intégration :</strong> Noov, post-processeur machine, retour qualité et logistique.</li><li><strong>Industrialisation :</strong> droits, audit, hébergement, supervision et maintenance des profils.</li></ol>
+    <h3>Risques</h3>
+    <table><tr><th>Risque</th><th>Réponse</th></tr><tr><td>résultat interprété comme certifié</td><td>statuts, avertissements et approbation obligatoire</td></tr><tr><td>règle obsolète</td><td>profil versionné, tests et propriétaire métier</td></tr><tr><td>dépendance à une machine</td><td>format neutre + post-processeur séparé</td></tr><tr><td>faible adoption</td><td>parcours court et preuve sur dossiers réels</td></tr></table>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Déploiement</span></div>
+  </section>
+
+  <section class="page">
+    <div class="header"><div><span class="kicker">10 · Bilan</span><h2>Conclusion, limites et références</h2></div><small>12 / 12</small></div>
+    <h3>Conclusion</h3>
+    <p>Avelis Wall Flow répond au cœur du Bloc 1 par une preuve exécutable : une demande paramétrique devient plusieurs ossatures, les incohérences sont bloquées, les compromis sont quantifiés et une solution sélectionnée alimente sans ressaisie tous les fichiers de remise. Le dépôt est structuré, documenté, testé et fonctionne hors ligne. Quatre géométries différentes, dont une avec fenêtre et porte, produisent chacune 16 alternatives et un paquet complet.</p>
+    <p>La contribution principale n'est pas une forme spectaculaire, mais la cohérence du fil numérique. Le même composant garde son rôle, sa géométrie et son identifiant entre la vue, la BOM, la fabrication et les interfaces. Les hypothèses sont versionnées ; les contrôles absents sont déclarés. Cette transparence prépare une discussion industrielle plus utile qu'une simulation de certification.</p>
+    <h3>Limites et suite prioritaire</h3>
+    <p>La première extension doit être une séance de validation avec Avelis et les Blocs 2/3 : formats Noov, catalogue de sections, règles constructives, capacités machine et statuts d'approbation. Ensuite viennent un moteur structurel qualifié, la bibliothèque d'assemblages, l'optimisation combinatoire de débit et les post-processeurs IFC/BTLx ou machine. Le prototype physique doit être imprimé et mesuré par l'équipe.</p>
+    <h3>Références principales</h3>
+    <ol class="small"><li>Avelis / Imagine &amp; Make 2026, présentation générale du challenge et fiche Bloc 1, documents fournis.</li><li>Takzen, <em>Timberframe Studio</em>, GitHub, consulté le 02/11/2026.</li><li>RCEjosephkarl, <em>Lite BIM Simulator</em>, GitHub, consulté le 02/11/2026.</li><li>J. Dorp, <em>build123-timber</em>, GitHub, consulté le 02/11/2026.</li><li>Gramazio Kohler Research, <em>COMPAS Timber Architecture</em>, documentation en ligne.</li><li>Eurocode 5 / références AFNOR sur le calcul des structures bois — à intégrer par un ingénieur dans une phase industrielle.</li></ol>
+    <h3>Transparence IA et reproductibilité</h3>
+    <p>Une assistance IA a contribué à l'analyse, à la structuration, au code et aux brouillons. L'équipe garde la responsabilité de la vérification et de la soutenance. Le journal détaillé se trouve dans <code>docs/AI_USAGE_LOG.md</code>. Le dépôt contient la source du rapport, les scripts, les expériences, le manifeste et les tests pour permettre la reproduction.</p>
+    <div class="quote">Un prototype crédible ne cache pas ce qu'il ignore : il automatise ce qui est défini, trace ce qui a été décidé et rend visibles les validations encore nécessaires.</div>
+    <div class="footer"><span>Avelis Wall Flow · Rapport scientifique</span><span>Conclusion</span></div>
+  </section>
+</body>
+</html>

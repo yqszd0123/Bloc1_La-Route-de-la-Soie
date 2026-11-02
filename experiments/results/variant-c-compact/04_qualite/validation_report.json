@@ -1,0 +1,32 @@
+{
+  "schema": "avelis.quality.validation-report.v1",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "T1",
+    "wallId": "VARIANT-C-COMPACT",
+    "version": "1.0"
+  },
+  "candidateId": "CAND-01",
+  "status": "VALID_WITHIN_POC_RULES",
+  "checkedRuleCount": 10,
+  "issues": [
+    {
+      "code": "STRUCTURAL_SCOPE",
+      "severity": "review",
+      "message": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés.",
+      "componentId": null
+    }
+  ],
+  "dimensionalToleranceMm": 1,
+  "checksNotEvaluated": [
+    "structural_strength",
+    "connections",
+    "bracing",
+    "fire",
+    "acoustics",
+    "thermal",
+    "moisture",
+    "regulatory_certification"
+  ],
+  "requiredNextReview": "Validation par Avelis, le fabricant et un ingénieur structure qualifié avant usage réel."
+}

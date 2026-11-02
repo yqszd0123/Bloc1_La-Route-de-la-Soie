@@ -1,0 +1,488 @@
+{
+  "schema": "avelis.noov.wall-design.response.v1",
+  "status": "ENGINEERING_REVIEW_REQUIRED",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "T1",
+    "wallId": "VARIANT-D-WINDOW-DOOR",
+    "version": "1.0"
+  },
+  "selectedCandidate": "CAND-13",
+  "score": 0,
+  "openings": [
+    {
+      "id": "WINDOW-01",
+      "type": "WINDOW",
+      "xMm": 500,
+      "sillMm": 900,
+      "widthMm": 900,
+      "heightMm": 1000
+    },
+    {
+      "id": "DOOR-01",
+      "type": "DOOR",
+      "xMm": 2300,
+      "sillMm": 0,
+      "widthMm": 900,
+      "heightMm": 2100
+    }
+  ],
+  "metrics": {
+    "timberVolumeM3": 0.29754,
+    "timberLengthM": 45.6,
+    "componentCount": 25,
+    "cutCount": 50,
+    "uniqueLengthCount": 11,
+    "materialCostEur": 184.47,
+    "manufacturingCostEur": 56.25,
+    "estimatedCostEur": 240.72,
+    "manufacturingComplexity": 54.8,
+    "estimatedMachineTimeMin": 21.5,
+    "stockProxy": {
+      "stockLengthMm": 150000,
+      "usedLengthMm": 45600,
+      "wasteLengthMm": 104400,
+      "disclaimer": "Indicateur conservatif par pièce, sans optimisation combinatoire de débit."
+    }
+  },
+  "components": [
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C001",
+      "role": "bottom_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2300,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C002",
+      "role": "bottom_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 1000,
+      "position": {
+        "xMm": 3200,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C003",
+      "role": "top_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 4200,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 2510
+      },
+      "axis": "x",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C004",
+      "role": "top_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 4200,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 2555
+      },
+      "axis": "x",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C005",
+      "role": "boundary_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C006",
+      "role": "boundary_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 4155,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C007",
+      "role": "king_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 410,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C008",
+      "role": "jack_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 1855,
+      "position": {
+        "xMm": 455,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C009",
+      "role": "jack_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 1855,
+      "position": {
+        "xMm": 1400,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C010",
+      "role": "king_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 1445,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C011",
+      "role": "sill",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 900,
+      "position": {
+        "xMm": 500,
+        "yMm": 0,
+        "zMm": 855
+      },
+      "axis": "x",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C012",
+      "role": "header",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 990,
+      "position": {
+        "xMm": 455,
+        "yMm": 0,
+        "zMm": 1900
+      },
+      "axis": "x",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C013",
+      "role": "king_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 2210,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C014",
+      "role": "jack_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2055,
+      "position": {
+        "xMm": 2255,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C015",
+      "role": "jack_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2055,
+      "position": {
+        "xMm": 3200,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C016",
+      "role": "king_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 3245,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C017",
+      "role": "header",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 990,
+      "position": {
+        "xMm": 2255,
+        "yMm": 0,
+        "zMm": 2100
+      },
+      "axis": "x",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C018",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 810,
+      "position": {
+        "xMm": 600,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C019",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 565,
+      "position": {
+        "xMm": 600,
+        "yMm": 0,
+        "zMm": 1945
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C020",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 810,
+      "position": {
+        "xMm": 1200,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C021",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 565,
+      "position": {
+        "xMm": 1200,
+        "yMm": 0,
+        "zMm": 1945
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C022",
+      "role": "common_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 1800,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C023",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 365,
+      "position": {
+        "xMm": 2400,
+        "yMm": 0,
+        "zMm": 2145
+      },
+      "axis": "z",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C024",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 365,
+      "position": {
+        "xMm": 3000,
+        "yMm": 0,
+        "zMm": 2145
+      },
+      "axis": "z",
+      "openingId": "DOOR-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-D-WINDOW-DOOR-V1-0-C025",
+      "role": "common_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2465,
+      "position": {
+        "xMm": 3600,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    }
+  ],
+  "validation": {
+    "valid": true,
+    "checkedRuleCount": 12,
+    "issues": [
+      {
+        "code": "STRUCTURAL_SCOPE",
+        "severity": "review",
+        "message": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés.",
+        "componentId": null
+      }
+    ]
+  },
+  "disclaimer": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés."
+}

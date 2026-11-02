@@ -1,0 +1,38 @@
+{
+  "profileId": "POC-FR-TIMBER-2026-01",
+  "status": "DEMONSTRATION_REQUIRES_ENGINEERING_REVIEW",
+  "material": {
+    "code": "C24-DEMO",
+    "sectionWidthMm": 45,
+    "sectionDepthMm": 145
+  },
+  "generation": {
+    "allowedStudSpacingsMm": [400, 450, 500, 600],
+    "gridOffsetRatios": [0, 0.5],
+    "headerLayers": [1, 2],
+    "maxCandidates": 20
+  },
+  "inputDomainMm": {
+    "wallLength": [1800, 6000],
+    "wallHeight": [2200, 3200],
+    "openingWidth": [450, 1800],
+    "openingHeight": [450, 1600],
+    "doorWidth": [650, 1200],
+    "doorHeight": [1800, 2400],
+    "sillHeight": [500, 1200],
+    "minOpeningEdge": 180,
+    "minOpeningSeparation": 180,
+    "minTopClearance": 270
+  },
+  "manufacturing": {
+    "maxMemberLengthMm": 6000,
+    "toleranceMm": 1,
+    "stockLengthMm": 6000
+  },
+  "costModel": {
+    "timberEurPerM3": 620,
+    "cutEur": 0.55,
+    "assemblyEurPerMember": 1.15
+  },
+  "disclaimer": "Profil POC : validation Avelis, fabrication et ingénierie structure requise avant usage réel."
+}

@@ -1,0 +1,310 @@
+{
+  "schema": "avelis.noov.wall-design.response.v1",
+  "status": "ENGINEERING_REVIEW_REQUIRED",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "T1",
+    "wallId": "VARIANT-C-COMPACT",
+    "version": "1.0"
+  },
+  "selectedCandidate": "CAND-01",
+  "score": 0,
+  "openings": [
+    {
+      "id": "WINDOW-01",
+      "type": "WINDOW",
+      "xMm": 850,
+      "sillMm": 950,
+      "widthMm": 700,
+      "heightMm": 900
+    }
+  ],
+  "metrics": {
+    "timberVolumeM3": 0.17725,
+    "timberLengthM": 27.165,
+    "componentCount": 15,
+    "cutCount": 30,
+    "uniqueLengthCount": 7,
+    "materialCostEur": 109.9,
+    "manufacturingCostEur": 33.75,
+    "estimatedCostEur": 143.65,
+    "manufacturingComplexity": 33.1,
+    "estimatedMachineTimeMin": 12.9,
+    "stockProxy": {
+      "stockLengthMm": 90000,
+      "usedLengthMm": 27165,
+      "wasteLengthMm": 62835,
+      "disclaimer": "Indicateur conservatif par pièce, sans optimisation combinatoire de débit."
+    }
+  },
+  "components": [
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C001",
+      "role": "bottom_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2400,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C002",
+      "role": "top_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2400,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 2310
+      },
+      "axis": "x",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C003",
+      "role": "top_plate",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2400,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 2355
+      },
+      "axis": "x",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C004",
+      "role": "boundary_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2265,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C005",
+      "role": "boundary_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2265,
+      "position": {
+        "xMm": 2355,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C006",
+      "role": "king_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2265,
+      "position": {
+        "xMm": 760,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C007",
+      "role": "jack_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 1805,
+      "position": {
+        "xMm": 805,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C008",
+      "role": "jack_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 1805,
+      "position": {
+        "xMm": 1550,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C009",
+      "role": "king_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2265,
+      "position": {
+        "xMm": 1595,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C010",
+      "role": "sill",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 700,
+      "position": {
+        "xMm": 850,
+        "yMm": 0,
+        "zMm": 905
+      },
+      "axis": "x",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C011",
+      "role": "header",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 790,
+      "position": {
+        "xMm": 805,
+        "yMm": 0,
+        "zMm": 1850
+      },
+      "axis": "x",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C012",
+      "role": "common_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2265,
+      "position": {
+        "xMm": 400,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C013",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 860,
+      "position": {
+        "xMm": 1200,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C014",
+      "role": "cripple_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 415,
+      "position": {
+        "xMm": 1200,
+        "yMm": 0,
+        "zMm": 1895
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01"
+    },
+    {
+      "id": "AVELIS-IAM-2026-VARIANT-C-COMPACT-V1-0-C015",
+      "role": "common_stud",
+      "materialCode": "C24-DEMO",
+      "section": {
+        "widthMm": 45,
+        "depthMm": 145
+      },
+      "lengthMm": 2265,
+      "position": {
+        "xMm": 2000,
+        "yMm": 0,
+        "zMm": 45
+      },
+      "axis": "z",
+      "openingId": null
+    }
+  ],
+  "validation": {
+    "valid": true,
+    "checkedRuleCount": 10,
+    "issues": [
+      {
+        "code": "STRUCTURAL_SCOPE",
+        "severity": "review",
+        "message": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés.",
+        "componentId": null
+      }
+    ]
+  },
+  "disclaimer": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés."
+}

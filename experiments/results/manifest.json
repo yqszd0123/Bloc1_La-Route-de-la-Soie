@@ -1,0 +1,27 @@
+{
+  "schema": "avelis.experiment-manifest.v1",
+  "generatedAt": "2026-11-02T15:38:27.866Z",
+  "softwareVersion": "1.1.1",
+  "cases": [
+    {
+      "caseId": "variant-a-standard",
+      "folder": "variant-a-standard",
+      "result": "variant-a-standard/experiment-result.json"
+    },
+    {
+      "caseId": "variant-b-wide",
+      "folder": "variant-b-wide",
+      "result": "variant-b-wide/experiment-result.json"
+    },
+    {
+      "caseId": "variant-c-compact",
+      "folder": "variant-c-compact",
+      "result": "variant-c-compact/experiment-result.json"
+    },
+    {
+      "caseId": "variant-d-window-door",
+      "folder": "variant-d-window-door",
+      "result": "variant-d-window-door/experiment-result.json"
+    }
+  ]
+}

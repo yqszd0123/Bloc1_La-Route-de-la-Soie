@@ -1,0 +1,48 @@
+{
+  "caseId": "variant-c-compact",
+  "label": "Variante C — mur compact",
+  "input": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "T1",
+    "wallId": "VARIANT-C-COMPACT",
+    "version": "1.0",
+    "wallLengthMm": 2400,
+    "wallHeightMm": 2400,
+    "windowWidthMm": 700,
+    "windowHeightMm": 900,
+    "windowXMm": 850,
+    "sillHeightMm": 950,
+    "doorEnabled": false,
+    "doorWidthMm": 700,
+    "doorHeightMm": 2040,
+    "doorXMm": 180,
+    "priority": "balanced",
+    "prototypeScale": 15
+  },
+  "searchSpaceSize": 16,
+  "validCandidateCount": 16,
+  "rejectedCandidateCount": 0,
+  "processingTimeMs": 2,
+  "recommendedCandidateId": "CAND-01",
+  "recommendedRank": 1,
+  "score": 0,
+  "paretoOptimal": true,
+  "metrics": {
+    "timberVolumeM3": 0.17725,
+    "timberLengthM": 27.165,
+    "componentCount": 15,
+    "cutCount": 30,
+    "uniqueLengthCount": 7,
+    "materialCostEur": 109.9,
+    "manufacturingCostEur": 33.75,
+    "estimatedCostEur": 143.65,
+    "manufacturingComplexity": 33.1,
+    "estimatedMachineTimeMin": 12.9,
+    "stockProxy": {
+      "stockLengthMm": 90000,
+      "usedLengthMm": 27165,
+      "wasteLengthMm": 62835,
+      "disclaimer": "Indicateur conservatif par pièce, sans optimisation combinatoire de débit."
+    }
+  }
+}

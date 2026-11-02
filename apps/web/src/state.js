@@ -1,0 +1,12 @@
+(function initState(global) {
+  'use strict';
+
+  global.AvelisApp = global.AvelisApp || {};
+  global.AvelisApp.state = {
+    result: null,
+    selectedCandidateId: null,
+    rotationDeg: 28,
+    showLabels: false
+  };
+})(window);
+

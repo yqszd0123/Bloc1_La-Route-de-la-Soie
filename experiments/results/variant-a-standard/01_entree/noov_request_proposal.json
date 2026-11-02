@@ -1,0 +1,32 @@
+{
+  "schema": "avelis.noov.wall-configuration.request.v1",
+  "status": "INTERFACE_PROPOSAL_NOT_OFFICIAL_NOOV_FORMAT",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "T1",
+    "wallId": "VARIANT-A-STANDARD",
+    "version": "1.0"
+  },
+  "geometry": {
+    "wallLengthMm": 3000,
+    "wallHeightMm": 2400,
+    "openings": [
+      {
+        "type": "WINDOW",
+        "id": "WINDOW-01",
+        "xMm": 1060,
+        "sillMm": 900,
+        "widthMm": 900,
+        "heightMm": 1000
+      }
+    ]
+  },
+  "objective": "balanced",
+  "requestedOutputs": [
+    "PARAMETRIC_MODEL",
+    "BOM",
+    "MACHINE_NEUTRAL_DATA",
+    "STL_PROTOTYPE",
+    "VALIDATION_REPORT"
+  ]
+}

@@ -1,0 +1,769 @@
+{
+  "project": {
+    "schemaVersion": "1.0",
+    "software": {
+      "name": "Avelis Wall Flow",
+      "version": "1.1.1"
+    },
+    "identity": {
+      "projectId": "AVELIS-IAM-2026",
+      "typology": "T1",
+      "wallId": "VARIANT-A-STANDARD",
+      "version": "1.0"
+    },
+    "configuration": {
+      "projectId": "AVELIS-IAM-2026",
+      "typology": "T1",
+      "wallId": "VARIANT-A-STANDARD",
+      "version": "1.0",
+      "wallLengthMm": 3000,
+      "wallHeightMm": 2400,
+      "windowWidthMm": 900,
+      "windowHeightMm": 1000,
+      "windowXMm": 1060,
+      "sillHeightMm": 900,
+      "doorEnabled": false,
+      "doorWidthMm": 700,
+      "doorHeightMm": 2040,
+      "doorXMm": 180,
+      "priority": "balanced",
+      "prototypeScale": 15
+    },
+    "ruleProfile": {
+      "id": "POC-FR-TIMBER-2026-01",
+      "label": "Profil conceptuel — validation ingénieur requise",
+      "disclaimer": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés."
+    }
+  },
+  "candidate": {
+    "id": "CAND-09",
+    "option": {
+      "studSpacingMm": 500,
+      "gridOffsetMm": 0,
+      "gridOffsetRatio": 0,
+      "headerLayers": 1
+    },
+    "wall": {
+      "lengthMm": 3000,
+      "heightMm": 2400,
+      "depthMm": 145,
+      "openings": [
+        {
+          "id": "WINDOW-01",
+          "type": "WINDOW",
+          "xMm": 1060,
+          "sillMm": 900,
+          "widthMm": 900,
+          "heightMm": 1000
+        }
+      ]
+    },
+    "members": [
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C001",
+        "role": "bottom_plate",
+        "label": "Lisse basse",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "x",
+        "lengthMm": 3000,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 0
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "ENVELOPE",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "max": {
+            "x": 3000,
+            "y": 145,
+            "z": 45
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C002",
+        "role": "top_plate",
+        "label": "Lisse haute 1",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "x",
+        "lengthMm": 3000,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 2310
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "ENVELOPE",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 2310
+          },
+          "max": {
+            "x": 3000,
+            "y": 145,
+            "z": 2355
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C003",
+        "role": "top_plate",
+        "label": "Lisse haute 2",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "x",
+        "lengthMm": 3000,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 2355
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "ENVELOPE",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 2355
+          },
+          "max": {
+            "x": 3000,
+            "y": 145,
+            "z": 2400
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C004",
+        "role": "boundary_stud",
+        "label": "Montant de rive gauche",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 2265,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "ENVELOPE",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 45,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C005",
+        "role": "boundary_stud",
+        "label": "Montant de rive droit",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 2265,
+        "position": {
+          "xMm": 2955,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "ENVELOPE",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 2955,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 3000,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C006",
+        "role": "king_stud",
+        "label": "Montant maître gauche — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 2265,
+        "position": {
+          "xMm": 970,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_FRAME",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 970,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 1015,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C007",
+        "role": "jack_stud",
+        "label": "Montant d’appui gauche — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 1855,
+        "position": {
+          "xMm": 1015,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_FRAME",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 1015,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 1060,
+            "y": 145,
+            "z": 1900
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C008",
+        "role": "jack_stud",
+        "label": "Montant d’appui droit — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 1855,
+        "position": {
+          "xMm": 1960,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_FRAME",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 1960,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 2005,
+            "y": 145,
+            "z": 1900
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C009",
+        "role": "king_stud",
+        "label": "Montant maître droit — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 2265,
+        "position": {
+          "xMm": 2005,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_FRAME",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 2005,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 2050,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C010",
+        "role": "sill",
+        "label": "Traverse d’appui — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "x",
+        "lengthMm": 900,
+        "position": {
+          "xMm": 1060,
+          "yMm": 0,
+          "zMm": 855
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_FRAME",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 1060,
+            "y": 0,
+            "z": 855
+          },
+          "max": {
+            "x": 1960,
+            "y": 145,
+            "z": 900
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C011",
+        "role": "header",
+        "label": "Linteau 1 — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "x",
+        "lengthMm": 990,
+        "position": {
+          "xMm": 1015,
+          "yMm": 0,
+          "zMm": 1900
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_FRAME",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 1015,
+            "y": 0,
+            "z": 1900
+          },
+          "max": {
+            "x": 2005,
+            "y": 145,
+            "z": 1945
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C012",
+        "role": "common_stud",
+        "label": "Montant courant",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 2265,
+        "position": {
+          "xMm": 500,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "GRID",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 500,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 545,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C013",
+        "role": "cripple_stud",
+        "label": "Montant d’allège — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 810,
+        "position": {
+          "xMm": 1500,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_GRID",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 1500,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 1545,
+            "y": 145,
+            "z": 855
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C014",
+        "role": "cripple_stud",
+        "label": "Montant haut — fenêtre",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 365,
+        "position": {
+          "xMm": 1500,
+          "yMm": 0,
+          "zMm": 1945
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "WINDOW_GRID",
+        "openingId": "WINDOW-01",
+        "bounds": {
+          "min": {
+            "x": 1500,
+            "y": 0,
+            "z": 1945
+          },
+          "max": {
+            "x": 1545,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      },
+      {
+        "id": "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C015",
+        "role": "common_stud",
+        "label": "Montant courant",
+        "materialCode": "C24-DEMO",
+        "section": {
+          "widthMm": 45,
+          "depthMm": 145
+        },
+        "axis": "z",
+        "lengthMm": 2265,
+        "position": {
+          "xMm": 2500,
+          "yMm": 0,
+          "zMm": 45
+        },
+        "operations": [
+          "CUT_90",
+          "LABEL"
+        ],
+        "toleranceMm": 1,
+        "source": "GRID",
+        "openingId": null,
+        "bounds": {
+          "min": {
+            "x": 2500,
+            "y": 0,
+            "z": 45
+          },
+          "max": {
+            "x": 2545,
+            "y": 145,
+            "z": 2310
+          }
+        }
+      }
+    ],
+    "assumptions": [
+      "Ossature de démonstration : sections, entraxes et encadrements à valider par Avelis et un ingénieur qualifié.",
+      "Assemblages, contreventement, charges, feu, acoustique et humidité hors du moteur de validation.",
+      "Tolérance de fabrication supposée : ±1 mm."
+    ],
+    "validation": {
+      "valid": true,
+      "checkedRuleCount": 10,
+      "issues": [
+        {
+          "code": "STRUCTURAL_SCOPE",
+          "severity": "review",
+          "message": "Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés.",
+          "componentId": null
+        }
+      ]
+    },
+    "metrics": {
+      "timberVolumeM3": 0.19161,
+      "timberLengthM": 29.365,
+      "componentCount": 15,
+      "cutCount": 30,
+      "uniqueLengthCount": 7,
+      "materialCostEur": 118.8,
+      "manufacturingCostEur": 33.75,
+      "estimatedCostEur": 152.55,
+      "manufacturingComplexity": 33.1,
+      "estimatedMachineTimeMin": 12.9,
+      "stockProxy": {
+        "stockLengthMm": 90000,
+        "usedLengthMm": 29365,
+        "wasteLengthMm": 60635,
+        "disclaimer": "Indicateur conservatif par pièce, sans optimisation combinatoire de débit."
+      }
+    },
+    "bom": [
+      {
+        "role": "bottom_plate",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 3000,
+        "quantity": 1,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C001"
+        ]
+      },
+      {
+        "role": "boundary_stud",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 2265,
+        "quantity": 2,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C004",
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C005"
+        ]
+      },
+      {
+        "role": "common_stud",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 2265,
+        "quantity": 2,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C012",
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C015"
+        ]
+      },
+      {
+        "role": "cripple_stud",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 365,
+        "quantity": 1,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C014"
+        ]
+      },
+      {
+        "role": "cripple_stud",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 810,
+        "quantity": 1,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C013"
+        ]
+      },
+      {
+        "role": "header",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 990,
+        "quantity": 1,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C011"
+        ]
+      },
+      {
+        "role": "jack_stud",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 1855,
+        "quantity": 2,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C007",
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C008"
+        ]
+      },
+      {
+        "role": "king_stud",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 2265,
+        "quantity": 2,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C006",
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C009"
+        ]
+      },
+      {
+        "role": "sill",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 900,
+        "quantity": 1,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C010"
+        ]
+      },
+      {
+        "role": "top_plate",
+        "materialCode": "C24-DEMO",
+        "sectionWidthMm": 45,
+        "sectionDepthMm": 145,
+        "cutLengthMm": 3000,
+        "quantity": 2,
+        "componentIds": [
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C002",
+          "AVELIS-IAM-2026-VARIANT-A-STANDARD-V1-0-C003"
+        ]
+      }
+    ],
+    "scoreBreakdown": {
+      "material": 0,
+      "complexity": 0,
+      "cost": 0,
+      "weights": {
+        "material": 0.45,
+        "complexity": 0.35,
+        "cost": 0.2
+      }
+    },
+    "score": 0,
+    "paretoOptimal": true,
+    "rank": 1
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "avelis.production.wall-handover.v1",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "T1",
+    "wallId": "VARIANT-A-STANDARD",
+    "version": "1.0"
+  },
+  "candidateId": "CAND-09",
+  "toleranceMm": 1,
+  "assemblySequence": [
+    {
+      "step": 1,
+      "operation": "POSITION_BOTTOM_PLATE",
+      "componentRoles": [
+        "bottom_plate"
+      ]
+    },
+    {
+      "step": 2,
+      "operation": "POSITION_BOUNDARY_AND_OPENING_STUDS",
+      "componentRoles": [
+        "boundary_stud",
+        "king_stud",
+        "jack_stud"
+      ]
+    },
+    {
+      "step": 3,
+      "operation": "POSITION_COMMON_AND_CRIPPLE_STUDS",
+      "componentRoles": [
+        "common_stud",
+        "cripple_stud"
+      ]
+    },
+    {
+      "step": 4,
+      "operation": "POSITION_OPENING_HORIZONTAL_FRAMING",
+      "componentRoles": [
+        "sill",
+        "header"
+      ]
+    },
+    {
+      "step": 5,
+      "operation": "POSITION_TOP_PLATES",
+      "componentRoles": [
+        "top_plate"
+      ]
+    },
+    {
+      "step": 6,
+      "operation": "QUALITY_CONTROL",
+      "checks": [
+        "ID",
+        "DIMENSIONS",
+        "OPENING_CLEAR",
+        "SQUARING"
+      ]
+    }
+  ],
+  "machineData": {
+    "format": "CSV_DXF_NEUTRAL",
+    "memberCount": 15
+  },
+  "cellsMustReturn": [
+    "max_member_length_mm",
+    "supported_operations",
+    "positioning_accuracy_mm",
+    "rejected_component_ids",
+    "defect_codes"
+  ]
+}

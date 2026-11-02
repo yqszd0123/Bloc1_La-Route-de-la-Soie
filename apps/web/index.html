@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Chaîne paramétrique, DfMA et aide multicritère pour murs 2D à ossature bois — Avelis, Imagine & Make 2026.">
+  <title>Avelis Wall Flow — Bloc 1</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__brand">
+      <span class="eyebrow">IMAGINE &amp; MAKE 2026 · BLOC 1</span>
+      <h1>Avelis Wall Flow</h1>
+      <p>Du besoin client aux fichiers de fabrication, sans ressaisie.</p>
+    </div>
+    <div class="hero__status" aria-label="État du prototype">
+      <span class="status-dot"></span>
+      Prototype fonctionnel v1.1.1
+    </div>
+  </header>
+
+  <nav class="workflow" aria-label="Fil numérique">
+    <span><b>1</b> Configuration</span><i>→</i>
+    <span><b>2</b> Génération</span><i>→</i>
+    <span><b>3</b> Validation</span><i>→</i>
+    <span><b>4</b> Optimisation</span><i>→</i>
+    <span><b>5</b> Fabrication</span>
+  </nav>
+
+  <main class="app-shell">
+    <aside class="control-panel" aria-label="Configuration du mur">
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">Entrée proposée pour Noov</span>
+          <h2>Configuration client</h2>
+        </div>
+        <button id="reset-button" class="button button--ghost" type="button">Réinitialiser</button>
+      </div>
+
+      <div id="preset-buttons" class="preset-grid" aria-label="Variantes d'expérimentation"></div>
+
+      <form id="configuration-form" novalidate>
+        <fieldset>
+          <legend>Identité et version</legend>
+          <div class="form-grid form-grid--three">
+            <label>Projet<input name="projectId" value="AVELIS-POC" autocomplete="off"></label>
+            <label>Mur<input name="wallId" value="W001" autocomplete="off"></label>
+            <label>Version<input name="version" value="1.0" autocomplete="off"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Enveloppe du mur</legend>
+          <div class="form-grid form-grid--two">
+            <label>Longueur <span>mm</span><input name="wallLengthMm" type="number" min="1800" max="6000" step="50" value="3000"></label>
+            <label>Hauteur <span>mm</span><input name="wallHeightMm" type="number" min="2200" max="3200" step="50" value="2400"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Baie vitrée</legend>
+          <div class="form-grid form-grid--two">
+            <label>Largeur <span>mm</span><input name="windowWidthMm" type="number" min="450" max="1800" step="50" value="900"></label>
+            <label>Hauteur <span>mm</span><input name="windowHeightMm" type="number" min="450" max="1600" step="50" value="1000"></label>
+            <label>Position X <span>mm</span><input name="windowXMm" type="number" min="180" step="10" value="1060"></label>
+            <label>Allège <span>mm</span><input name="sillHeightMm" type="number" min="500" max="1200" step="50" value="900"></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="optional-opening">
+          <legend>Extension — porte</legend>
+          <label class="switch-label" for="door-enabled">
+            <span>
+              <strong>Ajouter une porte</strong>
+              <small>Encadrement, contrôles et exports automatiques</small>
+            </span>
+            <input id="door-enabled" name="doorEnabled" type="checkbox" role="switch">
+          </label>
+          <div id="door-fields" class="door-fields" hidden>
+            <div class="form-grid form-grid--two">
+              <label>Largeur <span>mm</span><input name="doorWidthMm" type="number" min="650" max="1200" step="10" value="700"></label>
+              <label>Hauteur <span>mm</span><input name="doorHeightMm" type="number" min="1800" max="2400" step="10" value="2040"></label>
+              <label>Position X <span>mm</span><input name="doorXMm" type="number" min="180" step="10" value="180"></label>
+            </div>
+            <p class="field-hint">La lisse basse est automatiquement interrompue au passage de la porte.</p>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Décision multicritère</legend>
+          <label>Priorité
+            <select name="priority">
+              <option value="balanced">Équilibre matériau / fabrication / coût</option>
+              <option value="material">Réduire la matière</option>
+              <option value="manufacturing">Simplifier la fabrication</option>
+              <option value="cost">Réduire le coût estimé</option>
+            </select>
+          </label>
+          <label>Échelle du prototype STL
+            <select name="prototypeScale">
+              <option value="10">1:10</option>
+              <option value="15" selected>1:15 — recommandé pour plateau 220 mm</option>
+              <option value="20">1:20</option>
+              <option value="25">1:25</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <button class="button button--primary button--wide" type="submit">Générer, vérifier et optimiser</button>
+      </form>
+      <div id="input-messages" class="message-stack" aria-live="polite"></div>
+    </aside>
+
+    <section class="workspace" aria-label="Résultats">
+      <div class="workspace__toolbar">
+        <div>
+          <span class="eyebrow">Candidat sélectionné</span>
+          <h2 id="candidate-title">—</h2>
+        </div>
+        <div class="toolbar-actions">
+          <button id="download-design" class="button button--secondary" type="button" disabled>JSON</button>
+          <button id="download-stl" class="button button--secondary" type="button" disabled>STL</button>
+          <button id="download-package" class="button button--accent" type="button" disabled>Paquet complet .zip</button>
+        </div>
+      </div>
+
+      <div id="scope-warning" class="scope-warning">
+        <strong>Portée :</strong> démonstrateur DfMA et continuité numérique. Validation structurelle et réglementaire requise avant construction réelle.
+      </div>
+
+      <div class="viewer-card">
+        <canvas id="wall-viewer" width="1200" height="650" aria-label="Vue tridimensionnelle du mur"></canvas>
+        <div class="viewer-controls">
+          <label>Rotation<input id="rotation-slider" type="range" min="-65" max="65" value="28"></label>
+          <label class="check-label"><input id="labels-toggle" type="checkbox"> Afficher les identifiants</label>
+          <span id="viewer-caption">Générez une configuration pour commencer.</span>
+        </div>
+      </div>
+
+      <section class="metrics" aria-label="Indicateurs">
+        <article><span>Temps de calcul</span><strong id="metric-time">—</strong><small>configuration → fichiers</small></article>
+        <article><span>Volume bois</span><strong id="metric-volume">—</strong><small>m³, à minimiser</small></article>
+        <article><span>Composants</span><strong id="metric-components">—</strong><small>pièces identifiées</small></article>
+        <article><span>Complexité</span><strong id="metric-complexity">—</strong><small>indice proxy</small></article>
+        <article><span>Coût estimé</span><strong id="metric-cost">—</strong><small>hypothèse POC</small></article>
+        <article><span>Règles vérifiées</span><strong id="metric-rules">—</strong><small>contrôles automatiques</small></article>
+      </section>
+
+      <section class="results-card">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow">Espace de conception</span>
+            <h2>Comparaison des candidats valides</h2>
+          </div>
+          <span id="candidate-count" class="pill">0 candidat</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Rang</th><th>Solution</th><th>Entraxe</th><th>Décalage</th><th>Linteau</th><th>Bois</th><th>Pièces</th><th>Complexité</th><th>Coût</th><th>Score</th></tr></thead>
+            <tbody id="candidate-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="results-grid">
+        <article class="results-card">
+          <div class="panel-heading"><div><span class="eyebrow">Traçabilité</span><h2>Nomenclature</h2></div><button id="download-bom" class="button button--ghost" disabled>BOM CSV</button></div>
+          <div id="bom-summary" class="bom-summary"></div>
+        </article>
+        <article class="results-card">
+          <div class="panel-heading"><div><span class="eyebrow">Contrôle automatique</span><h2>Rapport de validation</h2></div></div>
+          <div id="validation-summary" class="validation-summary"></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Équipe 3 — La Route de la Soie</strong> · Centrale Lille · Avelis · Imagine &amp; Make 2026</p>
+    <p>Le format Noov et les capacités machines réelles restent à confirmer avec Avelis.</p>
+  </footer>
+
+  <script src="../../packages/core/src/domain/constants.js"></script>
+  <script src="../../packages/core/src/utils/math.js"></script>
+  <script src="../../packages/core/src/domain/project.js"></script>
+  <script src="../../packages/core/src/rules/input-rules.js"></script>
+  <script src="../../packages/core/src/generation/member-factory.js"></script>
+  <script src="../../packages/core/src/generation/wall-generator.js"></script>
+  <script src="../../packages/core/src/rules/candidate-rules.js"></script>
+  <script src="../../packages/core/src/optimization/metrics.js"></script>
+  <script src="../../packages/core/src/optimization/candidate-search.js"></script>
+  <script src="../../packages/core/src/optimization/ranker.js"></script>
+  <script src="../../packages/core/src/export/serialize.js"></script>
+  <script src="../../packages/core/src/export/stl.js"></script>
+  <script src="../../packages/core/src/export/dxf.js"></script>
+  <script src="../../packages/core/src/export/svg.js"></script>
+  <script src="../../packages/core/src/export/zip.js"></script>
+  <script src="../../packages/core/src/export/package-builder.js"></script>
+  <script src="../../packages/core/src/core.js"></script>
+  <script src="src/state.js"></script>
+  <script src="src/form-controller.js"></script>
+  <script src="src/viewer.js"></script>
+  <script src="src/results-view.js"></script>
+  <script src="src/download-controller.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
