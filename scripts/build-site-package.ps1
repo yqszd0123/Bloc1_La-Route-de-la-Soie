@@ -11,7 +11,7 @@ if (Test-Path -LiteralPath $output) {
   throw "Le répertoire de sortie existe déjà : $output"
 }
 
-$site = Join-Path $output 'site'
+$site = Join-Path $output 'dist'
 $hosting = Join-Path $output '.openai'
 New-Item -ItemType Directory -Path $site, $hosting | Out-Null
 
