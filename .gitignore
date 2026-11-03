@@ -4,6 +4,7 @@ node_modules/
 coverage/
 tmp/
 build/
+dist/
 scripts/__pycache__/
 .qa-*/
 *.log
