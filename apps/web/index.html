@@ -25,11 +25,11 @@
   </header>
 
   <nav class="app-tabs" aria-label="Étapes du produit">
-    <button class="tab-button" data-page="ifc-page"><b>1</b> Import IFC / STEP</button>
-    <button class="tab-button is-active" data-page="config-page"><b>2</b> Configuration</button>
-    <button class="tab-button" data-page="design-page"><b>3</b> Conception</button>
-    <button class="tab-button" data-page="manufacturing-page"><b>4</b> Fabrication</button>
-    <button class="tab-button" data-page="engineering-page"><b>5</b> Données &amp; preuves</button>
+    <button class="tab-button" type="button" data-page="ifc-page"><b>1</b> Import IFC / STEP</button>
+    <button class="tab-button is-active" type="button" data-page="config-page" aria-current="step"><b>2</b> Configuration</button>
+    <button class="tab-button" type="button" data-page="design-page"><b>3</b> Conception</button>
+    <button class="tab-button" type="button" data-page="manufacturing-page"><b>4</b> Fabrication</button>
+    <button class="tab-button" type="button" data-page="engineering-page"><b>5</b> Données &amp; preuves</button>
   </nav>
 
   <main class="page-shell">
@@ -104,16 +104,19 @@
         <button id="reset-button" class="button button--ghost" type="button">Réinitialiser</button>
       </div>
       <div class="config-layout">
-        <aside class="reference-rail">
-          <h3>Références chargées</h3>
-          <div class="reference-chip"><strong>Acier Z275</strong><span>fy ≥ 450 N/mm² · produit Metsec de référence</span></div>
-          <div class="reference-chip"><strong>Profils C / rails U</strong><span>kg/m et géométrie issus du fabricant</span></div>
-          <div class="reference-chip"><strong>Entraxe 600 mm</strong><span>cas illustré fabricant, à vérifier par calcul structure</span></div>
-          <div class="reference-chip"><strong>Budget régional</strong><span>3,09 €/kg HT par défaut · fourchette 1,82–4,12</span></div>
-          <p class="field-hint">Ces données décrivent une solution publique de référence. Elles ne prouvent pas que Torcy ou Avelis utilisent ces produits.</p>
-        </aside>
+        <details class="reference-rail">
+          <summary><strong>Références du calcul</strong><span>Matériau, profils et hypothèses utilisés pour ce démonstrateur</span></summary>
+          <div class="reference-rail__content">
+            <div class="reference-chip"><strong>Acier Z275</strong><span>fy ≥ 450 N/mm² · produit Metsec de référence</span></div>
+            <div class="reference-chip"><strong>Profils C / rails U</strong><span>kg/m et géométrie issus du fabricant</span></div>
+            <div class="reference-chip"><strong>Entraxe 600 mm</strong><span>cas illustré fabricant, à vérifier par calcul structure</span></div>
+            <div class="reference-chip"><strong>Budget régional</strong><span>3,09 €/kg HT par défaut · fourchette 1,82–4,12</span></div>
+            <p class="field-hint">Ces données décrivent une solution publique de référence. Elles ne prouvent pas que Torcy ou Avelis utilisent ces produits.</p>
+          </div>
+        </details>
 
         <article class="results-card form-card">
+          <div class="form-card__intro"><div><span class="eyebrow">Pour commencer</span><h3>Partir d’un exemple</h3></div><p>Choisissez un cas, puis ajustez les dimensions et les ouvertures.</p></div>
           <div id="preset-buttons" class="preset-grid" aria-label="Scénarios d’essai"></div>
           <form id="configuration-form" novalidate>
             <fieldset>
@@ -154,18 +157,21 @@
               </div>
             </fieldset>
 
-            <fieldset>
-              <legend>Scénario budgétaire facultatif</legend>
-              <p class="field-hint">Laissez tout vide pour utiliser automatiquement 3,09 €/kg HT, avec la fourchette régionale documentée.</p>
-              <div class="form-grid form-grid--three">
-                <label>Prix central <span>€/kg HT</span><input name="budgetPriceEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="3,09 par défaut"></label>
-                <label>Prix bas <span>€/kg HT</span><input name="budgetLowEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="1,82 par défaut"></label>
-                <label>Prix haut <span>€/kg HT</span><input name="budgetHighEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="4,12 par défaut"></label>
-                <label>Nom du scénario<input name="budgetPriceLabel" placeholder="ex. devis fournisseur"></label>
-                <label>Date<input name="budgetPriceDate" type="date"></label>
-                <label>Source / référence<input name="budgetPriceSource" placeholder="facultatif"></label>
-              </div>
-            </fieldset>
+            <details class="advanced-settings">
+              <summary><strong>Personnaliser le budget matière</strong><span>Facultatif · une estimation documentée est utilisée par défaut</span></summary>
+              <fieldset>
+                <legend>Votre scénario</legend>
+                <p class="field-hint">Laissez tout vide pour utiliser automatiquement 3,09 €/kg HT, avec la fourchette régionale documentée.</p>
+                <div class="form-grid form-grid--three">
+                  <label>Prix central <span>€/kg HT</span><input name="budgetPriceEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="3,09 par défaut"></label>
+                  <label>Prix bas <span>€/kg HT</span><input name="budgetLowEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="1,82 par défaut"></label>
+                  <label>Prix haut <span>€/kg HT</span><input name="budgetHighEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="4,12 par défaut"></label>
+                  <label>Nom du scénario<input name="budgetPriceLabel" placeholder="ex. devis fournisseur"></label>
+                  <label>Date<input name="budgetPriceDate" type="date"></label>
+                  <label>Source / référence<input name="budgetPriceSource" placeholder="facultatif"></label>
+                </div>
+              </fieldset>
+            </details>
 
             <fieldset>
               <legend>Décision et prototype</legend>
@@ -184,7 +190,7 @@
     <section id="design-page" class="app-page" hidden>
       <div class="workspace__toolbar">
         <div><span class="eyebrow">Solution sélectionnée</span><h2 id="candidate-title">—</h2></div>
-        <div class="toolbar-actions"><button id="download-design" class="button button--secondary" disabled>JSON</button><button id="download-step" class="button button--secondary" disabled>STEP CAO</button><button id="download-stl" class="button button--secondary" disabled>STL assemblé</button><button id="download-package" class="button button--accent" disabled>Paquet complet .zip</button></div>
+        <div class="toolbar-actions"><details class="export-options"><summary class="button button--secondary">Autres formats</summary><div class="export-options__menu"><button id="download-design" class="button button--ghost" disabled>JSON du projet</button><button id="download-step" class="button button--ghost" disabled>STEP CAO</button><button id="download-stl" class="button button--ghost" disabled>STL assemblé</button></div></details><button id="download-package" class="button button--primary" disabled>Télécharger le paquet ZIP</button></div>
       </div>
       <div class="scope-warning"><strong id="result-source-label">Portée :</strong> <span id="scope-warning-text">Validation structurelle et industrielle requise.</span></div>
       <div class="viewer-card">

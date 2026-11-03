@@ -9,7 +9,12 @@
 
   function showPage(pageId) {
     document.querySelectorAll('.app-page').forEach((page) => { page.hidden = page.id !== pageId; });
-    document.querySelectorAll('.tab-button').forEach((button) => button.classList.toggle('is-active', button.dataset.page === pageId));
+    document.querySelectorAll('.tab-button').forEach((button) => {
+      const active = button.dataset.page === pageId;
+      button.classList.toggle('is-active', active);
+      if (active) button.setAttribute('aria-current', 'step');
+      else button.removeAttribute('aria-current');
+    });
     app.state.activePage = pageId;
     if (pageId === 'design-page') requestAnimationFrame(redraw);
   }
