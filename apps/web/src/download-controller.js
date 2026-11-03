@@ -22,7 +22,14 @@
   }
 
   function enable(enabled) {
-    ['download-design', 'download-stl', 'download-package', 'download-bom'].forEach((id) => { document.getElementById(id).disabled = !enabled; });
+    ['download-design', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-package-2']
+      .forEach((id) => { document.getElementById(id).disabled = !enabled; });
+  }
+
+  function downloadPackage() {
+    const { result, candidate } = current();
+    const bytes = core.packageBuilder.buildExportZip(result, candidate, result.input.prototypeScale);
+    download(`${result.input.projectId}_${result.input.wallId}_${candidate.id}.zip`, bytes, 'application/zip');
   }
 
   function bind() {
@@ -38,13 +45,17 @@
       const { result, candidate } = current();
       download(`${result.input.wallId}_${candidate.id}_BOM.csv`, core.serialize.bomCsv(candidate), 'text/csv;charset=utf-8');
     });
-    document.getElementById('download-package').addEventListener('click', () => {
+    document.getElementById('download-cutting').addEventListener('click', () => {
       const { result, candidate } = current();
-      const bytes = core.packageBuilder.buildExportZip(result, candidate, result.input.prototypeScale);
-      download(`${result.input.projectId}_${result.input.wallId}_${candidate.id}.zip`, bytes, 'application/zip');
+      download(`${result.input.wallId}_${candidate.id}_CUTTING_LIST.csv`, core.serialize.cuttingListCsv(candidate), 'text/csv;charset=utf-8');
     });
+    document.getElementById('download-labels').addEventListener('click', () => {
+      const { result, candidate } = current();
+      download(`${result.input.wallId}_${candidate.id}_LABELS.csv`, core.serialize.labelsCsv(candidate), 'text/csv;charset=utf-8');
+    });
+    document.getElementById('download-package').addEventListener('click', downloadPackage);
+    document.getElementById('download-package-2').addEventListener('click', downloadPackage);
   }
 
   app.downloadController = { bind, enable };
 })(window);
-

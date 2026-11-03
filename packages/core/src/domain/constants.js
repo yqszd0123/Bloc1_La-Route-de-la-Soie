@@ -3,115 +3,82 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  core.VERSION = '1.1.1';
+  core.VERSION = '2.0.0';
 
   core.DEFAULT_INPUT = Object.freeze({
-    projectId: 'AVELIS-POC',
-    typology: 'T1',
-    wallId: 'W001',
-    version: '1.0',
+    sourceMode: 'MANUAL',
+    projectId: 'AVELIS-BLOC1-REF',
+    typology: 'REFERENCE',
+    wallId: 'WALL-001',
+    version: '2.0',
     wallLengthMm: 3000,
-    wallHeightMm: 2400,
-    windowWidthMm: 900,
+    wallHeightMm: 2000,
+    wallThicknessMm: 300,
+    windowEnabled: true,
+    windowWidthMm: 1000,
     windowHeightMm: 1000,
-    windowXMm: 1060,
-    sillHeightMm: 900,
-    doorEnabled: true,
-    doorWidthMm: 700,
-    doorHeightMm: 2040,
-    doorXMm: 180,
+    windowXMm: 1000,
+    sillHeightMm: 500,
+    doorEnabled: false,
+    doorWidthMm: 900,
+    doorHeightMm: 2000,
+    doorXMm: 1000,
+    budgetPriceEurPerKgExVat: null,
+    budgetLowEurPerKgExVat: null,
+    budgetHighEurPerKgExVat: null,
+    budgetPriceLabel: '',
+    budgetPriceDate: '',
+    budgetPriceSource: '',
     priority: 'balanced',
-    prototypeScale: 15
+    prototypeScale: 20
   });
 
-  core.DEFAULT_RULES = Object.freeze({
-    profileId: 'POC-FR-TIMBER-2026-01',
-    profileLabel: 'Profil conceptuel — validation ingénieur requise',
-    materialCode: 'C24-DEMO',
-    materialLabel: 'Bois C24 (hypothèse de démonstration)',
-    sectionWidthMm: 45,
-    sectionDepthMm: 145,
-    allowedStudSpacingsMm: [400, 450, 500, 600],
-    gridOffsetRatios: [0, 0.5],
-    headerLayers: [1, 2],
-    minWallLengthMm: 1800,
-    maxWallLengthMm: 6000,
-    minWallHeightMm: 2200,
-    maxWallHeightMm: 3200,
-    minOpeningWidthMm: 450,
-    maxOpeningWidthMm: 1800,
-    minOpeningHeightMm: 450,
-    maxOpeningHeightMm: 1600,
-    minDoorWidthMm: 650,
-    maxDoorWidthMm: 1200,
-    minDoorHeightMm: 1800,
-    maxDoorHeightMm: 2400,
-    minOpeningEdgeMm: 180,
-    minOpeningSeparationMm: 180,
-    minTopClearanceMm: 270,
-    minSillHeightMm: 500,
-    maxSillHeightMm: 1200,
-    maxMachineMemberLengthMm: 6000,
-    manufacturingToleranceMm: 1,
-    timberCostEurPerM3: 620,
-    cutCostEur: 0.55,
-    assemblyCostEurPerMember: 1.15,
-    cutTimeMin: 0.22,
-    handlingTimeMinPerMember: 0.42,
-    stockLengthMm: 6000,
-    maxCandidates: 20,
-    engineeringDisclaimer: 'Géométrie conceptuelle et DfMA de démonstration. La résistance, les assemblages, les charges, le feu, l’acoustique et la conformité réglementaire ne sont pas certifiés.'
-  });
-
-  core.PRIORITY_WEIGHTS = Object.freeze({
-    balanced: { material: 0.45, complexity: 0.35, cost: 0.20 },
-    material: { material: 0.65, complexity: 0.20, cost: 0.15 },
-    manufacturing: { material: 0.25, complexity: 0.60, cost: 0.15 },
-    cost: { material: 0.25, complexity: 0.20, cost: 0.55 }
+  core.PRIORITIES = Object.freeze({
+    balanced: { label: 'Équilibre masse / nombre de pièces / longueurs distinctes', metrics: ['steelMassKg', 'componentCount', 'uniqueLengthCount'] },
+    material: { label: 'Masse minimale', metrics: ['steelMassKg'] },
+    manufacturing: { label: 'Fabrication la plus simple', metrics: ['componentCount', 'uniqueLengthCount', 'cutCount'] }
   });
 
   core.ROLE_COLORS = Object.freeze({
-    bottom_plate: '#7c4a2d',
-    top_plate: '#7c4a2d',
-    boundary_stud: '#a4633b',
-    common_stud: '#c8834c',
-    king_stud: '#934b2c',
-    jack_stud: '#d99a5c',
-    sill: '#e0a15d',
-    header: '#70402b',
-    cripple_stud: '#d1a06f'
+    bottom_track: '#315f73',
+    top_track: '#315f73',
+    boundary_stud: '#4d7182',
+    common_stud: '#6f8d99',
+    opening_jamb: '#d06b35',
+    opening_header: '#9e4e2a',
+    window_sill: '#c8873f',
+    cripple_stud: '#88a1aa'
   });
 
   core.EXPERIMENT_PRESETS = Object.freeze([
     {
-      id: 'variant-a-standard',
-      label: 'Variante A — mur standard',
-      input: { wallLengthMm: 3000, wallHeightMm: 2400, windowWidthMm: 900, windowHeightMm: 1000, windowXMm: 1060, sillHeightMm: 900, doorEnabled: false }
-    },
-    {
-      id: 'variant-b-wide',
-      label: 'Variante B — mur large',
-      input: { wallLengthMm: 4200, wallHeightMm: 2600, windowWidthMm: 1200, windowHeightMm: 1100, windowXMm: 1500, sillHeightMm: 850, doorEnabled: false }
-    },
-    {
-      id: 'variant-c-compact',
-      label: 'Variante C — mur compact',
-      input: { wallLengthMm: 2400, wallHeightMm: 2400, windowWidthMm: 700, windowHeightMm: 900, windowXMm: 850, sillHeightMm: 950, doorEnabled: false }
-    },
-    {
-      id: 'variant-d-window-door',
-      label: 'Variante D — fenêtre + porte',
+      id: 'official-ifc-window',
+      label: 'IFC officiel — mur + fenêtre',
+      provenance: 'BUILDINGSMART_IFC4_WALL_SAMPLE',
       input: {
-        wallLengthMm: 4200,
-        wallHeightMm: 2600,
-        windowWidthMm: 900,
-        windowHeightMm: 1000,
-        windowXMm: 500,
-        sillHeightMm: 900,
-        doorEnabled: true,
-        doorWidthMm: 900,
-        doorHeightMm: 2100,
-        doorXMm: 2300
+        wallLengthMm: 3000, wallHeightMm: 2000, wallThicknessMm: 300,
+        windowEnabled: true, windowWidthMm: 1000, windowHeightMm: 1000, windowXMm: 1000, sillHeightMm: 500,
+        doorEnabled: false
+      }
+    },
+    {
+      id: 'ifc-door-reference',
+      label: 'Porte IFC de référence',
+      provenance: 'BUILDINGSMART_IFC2X_IMPLEMENTATION_GUIDE',
+      input: {
+        wallLengthMm: 3000, wallHeightMm: 2400, wallThicknessMm: 100,
+        windowEnabled: false,
+        doorEnabled: true, doorWidthMm: 1000, doorHeightMm: 2000, doorXMm: 1000
+      }
+    },
+    {
+      id: 'window-and-door-test',
+      label: 'Essai géométrique — fenêtre + porte',
+      provenance: 'TEST_GEOMETRY_NOT_ENGINEERING_RULE',
+      input: {
+        wallLengthMm: 4800, wallHeightMm: 2600, wallThicknessMm: 100,
+        windowEnabled: true, windowWidthMm: 1000, windowHeightMm: 1000, windowXMm: 600, sillHeightMm: 800,
+        doorEnabled: true, doorWidthMm: 900, doorHeightMm: 2000, doorXMm: 2900
       }
     }
   ]);

@@ -1,12 +1,20 @@
-# Références open source et provenance
+# Third-party notices
 
-Le code de ce dépôt a été écrit spécifiquement pour le projet Avelis Wall Flow. Aucun fichier provenant des projets ci-dessous n'est redistribué ici. Ils ont servi à comparer les architectures, les objets métier et les pratiques de continuité numérique.
+## Logiciel redistribué
 
-| Projet | Apport étudié | Licence constatée / précaution |
-|---|---|---|
-| `takzen/timberframe-studio` | composants bois individuels, ouvertures, BOM et coût | MIT ; concept étudié, pas de copie |
-| `RCEjosephkarl/Lite-BIM-Simulator` | séparation backend matériaux/géométrie/règles/ossature et frontend 3D | licence non clairement affichée lors de l'étude ; aucune copie |
-| `jopdorp/build123-timber` | pièces paramétriques, assemblages et exports neutres | MIT ; concept étudié, pas de copie |
-| `gramaziokohler/compas_timber` | intention/paramètres comme source de vérité, dérivation vers la fabrication | cadre académique de référence ; aucune copie |
+### occt-import-js 0.0.23
 
-Les liens et dates de consultation sont détaillés dans `docs/REFERENCES.md`. Toute future importation de code doit passer par une vérification de licence et être signalée ici, fichier par fichier.
+- Projet : https://github.com/kovacsv/occt-import-js/tree/0.0.23
+- Usage : lecture STEP/STP dans le navigateur et dans le test d’intégration Node.
+- Licence du wrapper : LGPL-2.1 ; texte conservé dans `third_party/occt-import-js/dist/license.occt-import-js.txt`.
+- Open CASCADE Technology : conditions et exception conservées dans `third_party/occt-import-js/dist/license.occt.txt`.
+- Fichiers redistribués sans modification fonctionnelle : JavaScript, WebAssembly, worker et licences du paquet npm officiel 0.0.23.
+
+## Données de test externes
+
+- IFC : exemple buildingSMART `wall-with-opening-and-window.ifc`, source et URL dans `data/engineering_sources.json`.
+- STEP : fixture `simple-basic-cube/cube.stp` de `occt-import-js` 0.0.23.
+
+## Références sans code copié
+
+La structure du projet suit des principes usuels de logiciels BIM/CAO open source — adaptateurs d’entrée, modèle métier commun, sorties dérivées — mais le domaine Avelis, la génération acier, les contrôles, l’optimisation et les exports ont été écrits dans ce dépôt. Les références de données techniques sont traçables dans `docs/engineering_references.md`.

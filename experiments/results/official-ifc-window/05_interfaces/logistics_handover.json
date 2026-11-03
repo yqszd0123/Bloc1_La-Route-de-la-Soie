@@ -1,0 +1,44 @@
+{
+  "schema": "avelis.logistics.wall-handover.v2",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "OFFICIAL-IFC-WINDOW",
+    "wallGuid": null,
+    "version": "2.0"
+  },
+  "candidateId": "CAND-02",
+  "componentIds": [
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-030Y4HW",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0NRO66V",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0USD4XB",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0W6YBUP",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0N2E2I5",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-00VLEPF",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EVVNRO",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1FTK4F6",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+    "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9"
+  ],
+  "calculatedSteelMassKg": 46.176,
+  "panelEnvelopeMm": {
+    "length": 3000,
+    "height": 2000,
+    "depth": 104
+  },
+  "traceability": {
+    "unit": "STABLE_COMPONENT_ID",
+    "qrPayloadField": "qrPayload",
+    "version": "2.0"
+  },
+  "requiredFromLogistics": [
+    "transport_envelope_mm",
+    "package_mass_limit_kg",
+    "storage_orientation",
+    "delivery_sequence",
+    "damage_feedback_schema"
+  ]
+}

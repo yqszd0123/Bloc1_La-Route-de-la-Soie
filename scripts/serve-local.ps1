@@ -26,7 +26,11 @@ try {
     $context = $listener.GetContext()
     try {
       $relative = [Uri]::UnescapeDataString($context.Request.Url.AbsolutePath.TrimStart('/'))
-      if ([string]::IsNullOrWhiteSpace($relative)) { $relative = 'apps/web/index.html' }
+      if ([string]::IsNullOrWhiteSpace($relative)) {
+        $context.Response.StatusCode = 302
+        $context.Response.RedirectLocation = '/apps/web/index.html'
+        continue
+      }
       $candidate = [IO.Path]::GetFullPath((Join-Path $root $relative.Replace('/', [IO.Path]::DirectorySeparatorChar)))
       if (-not $candidate.StartsWith($root, [StringComparison]::OrdinalIgnoreCase)) {
         $context.Response.StatusCode = 403

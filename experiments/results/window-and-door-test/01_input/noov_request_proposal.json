@@ -1,0 +1,60 @@
+{
+  "schema": "avelis.noov.wall-configuration.request.v2",
+  "status": "INTERFACE_PROPOSAL_NOT_OFFICIAL_NOOV_FORMAT",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "WINDOW-AND-DOOR-TEST",
+    "wallGuid": null,
+    "version": "2.0"
+  },
+  "source": {
+    "mode": "MANUAL",
+    "ifc": null,
+    "step": null
+  },
+  "geometry": {
+    "wallLengthMm": 4800,
+    "wallHeightMm": 2600,
+    "wallThicknessMm": 100,
+    "placement": {
+      "xMm": 0,
+      "yMm": 0,
+      "zMm": 0,
+      "rotationDeg": 0
+    },
+    "openings": [
+      {
+        "id": "WINDOW-01",
+        "guid": null,
+        "type": "WINDOW",
+        "xMm": 600,
+        "sillMm": 800,
+        "widthMm": 1000,
+        "heightMm": 1000,
+        "source": "MANUAL_INPUT",
+        "sourceRef": null
+      },
+      {
+        "id": "DOOR-01",
+        "guid": null,
+        "type": "DOOR",
+        "xMm": 2900,
+        "sillMm": 0,
+        "widthMm": 900,
+        "heightMm": 2000,
+        "source": "MANUAL_INPUT",
+        "sourceRef": null
+      }
+    ]
+  },
+  "objective": "balanced",
+  "requestedOutputs": [
+    "STEEL_PANEL_MODEL",
+    "BOM",
+    "CUTTING_LIST",
+    "MANUFACTURING_NEUTRAL_DATA",
+    "FABLAB_STL",
+    "VALIDATION_REPORT"
+  ]
+}

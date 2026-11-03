@@ -1,0 +1,383 @@
+{
+  "schema": "avelis.noov.wall-design.response.v2",
+  "status": "ENGINEERING_REVIEW_REQUIRED",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "WINDOW-AND-DOOR-TEST",
+    "wallGuid": null,
+    "version": "2.0"
+  },
+  "selectedCandidate": "CAND-01",
+  "decisionScore": 0,
+  "openings": [
+    {
+      "id": "WINDOW-01",
+      "guid": null,
+      "type": "WINDOW",
+      "xMm": 600,
+      "sillMm": 800,
+      "widthMm": 1000,
+      "heightMm": 1000,
+      "source": "MANUAL_INPUT",
+      "sourceRef": null
+    },
+    {
+      "id": "DOOR-01",
+      "guid": null,
+      "type": "DOOR",
+      "xMm": 2900,
+      "sillMm": 0,
+      "widthMm": 900,
+      "heightMm": 2000,
+      "source": "MANUAL_INPUT",
+      "sourceRef": null
+    }
+  ],
+  "metrics": {
+    "steelMassKg": 76.357,
+    "totalProfileLengthM": 36.188,
+    "componentCount": 19,
+    "cutCount": 38,
+    "uniqueLengthCount": 7,
+    "uniqueProfileCount": 2,
+    "materialCostEstimateEurExVat": 235.94,
+    "materialCostRangeEurExVat": {
+      "low": 138.97,
+      "high": 314.59
+    },
+    "priceBasis": {
+      "valueEurPerKgExVat": 3.09,
+      "date": "2026-11-03",
+      "status": "REGIONAL_BUDGET_PROXY_NOT_SUPPLIER_QUOTE",
+      "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation."
+    },
+    "machineTimeMin": null,
+    "carbonKgCo2e": null,
+    "unavailableMetrics": [
+      "machineTimeMin: Avelis equipment cycle data missing",
+      "carbonKgCo2e: applicable product EPD missing"
+    ]
+  },
+  "components": [
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1JCVEVM",
+      "role": "bottom_track",
+      "profile": "104MF12",
+      "lengthMm": 2900,
+      "massKg": 6.119,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1JCVEVM"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1480VFP",
+      "role": "bottom_track",
+      "profile": "104MF12",
+      "lengthMm": 1000,
+      "massKg": 2.11,
+      "position": {
+        "xMm": 3800,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1480VFP"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1JKSRJX",
+      "role": "top_track",
+      "profile": "104MF12",
+      "lengthMm": 4800,
+      "massKg": 10.128,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 2538
+      },
+      "axis": "x",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1JKSRJX"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-05D1CIS",
+      "role": "boundary_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|05D1CIS"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-19OWCFU",
+      "role": "boundary_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 4750,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|19OWCFU"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YC3AHM",
+      "role": "opening_jamb",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 550,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0YC3AHM"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KJYXIP",
+      "role": "opening_jamb",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 1600,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1KJYXIP"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1HGWA2M",
+      "role": "opening_header",
+      "profile": "104MF12",
+      "lengthMm": 1000,
+      "massKg": 2.11,
+      "position": {
+        "xMm": 600,
+        "yMm": 0,
+        "zMm": 1800
+      },
+      "axis": "x",
+      "openingId": "WINDOW-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1HGWA2M"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1AECMKA",
+      "role": "window_sill",
+      "profile": "104MF12",
+      "lengthMm": 1000,
+      "massKg": 2.11,
+      "position": {
+        "xMm": 600,
+        "yMm": 0,
+        "zMm": 738
+      },
+      "axis": "x",
+      "openingId": "WINDOW-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1AECMKA"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1MSWFXH",
+      "role": "opening_jamb",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 2850,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1MSWFXH"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1BFCSEP",
+      "role": "opening_jamb",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 3800,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1BFCSEP"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-09F067C",
+      "role": "opening_header",
+      "profile": "104MF12",
+      "lengthMm": 900,
+      "massKg": 1.899,
+      "position": {
+        "xMm": 2900,
+        "yMm": 0,
+        "zMm": 2000
+      },
+      "axis": "x",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|09F067C"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
+      "role": "cripple_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 676,
+      "massKg": 1.4264,
+      "position": {
+        "xMm": 1175,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GGPSB5"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK",
+      "role": "cripple_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 676,
+      "massKg": 1.4264,
+      "position": {
+        "xMm": 1175,
+        "yMm": 0,
+        "zMm": 1862
+      },
+      "axis": "z",
+      "openingId": "WINDOW-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|18WA7MK"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
+      "role": "common_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 1775,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0FJ0L5P"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
+      "role": "common_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 2375,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1KR6CD2"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
+      "role": "cripple_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 476,
+      "massKg": 1.0044,
+      "position": {
+        "xMm": 2975,
+        "yMm": 0,
+        "zMm": 2062
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1QICXN0"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB",
+      "role": "cripple_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 476,
+      "massKg": 1.0044,
+      "position": {
+        "xMm": 3575,
+        "yMm": 0,
+        "zMm": 2062
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1FVPIUB"
+    },
+    {
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE",
+      "role": "common_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2476,
+      "massKg": 5.2244,
+      "position": {
+        "xMm": 4175,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1EX04SE"
+    }
+  ],
+  "validation": {
+    "geometryValid": true,
+    "valid": true,
+    "engineeringStatus": "ENGINEERING_REVIEW_REQUIRED",
+    "manufacturingRelease": false,
+    "checkedRuleCount": 13,
+    "issues": [
+      {
+        "code": "STRUCTURAL_ANALYSIS_NOT_RUN",
+        "severity": "review",
+        "message": "No structural safety conclusion: project actions, restraints, bracing and connection properties are not available.",
+        "componentId": null,
+        "sourceId": "AFNOR_NF_EN_1993_1_3_NA"
+      },
+      {
+        "code": "MACHINE_RELEASE_BLOCKED",
+        "severity": "review",
+        "message": "No machine-ready release: Torcy equipment, supported operations, stock lengths and tolerances are not confirmed.",
+        "componentId": null,
+        "sourceId": null
+      },
+      {
+        "code": "REFERENCE_PRODUCT_NOT_AVELIS",
+        "severity": "review",
+        "message": "Metsec products and public market prices are reference inputs only; Avelis has not confirmed these products, prices, Torcy equipment or process capabilities.",
+        "componentId": null,
+        "sourceId": "METSEC_COMPONENTS_2026"
+      }
+    ]
+  },
+  "limitations": [
+    "Reference-product geometry and quantity calculation only. Structural capacity, connections, bracing, fire, acoustics, thermal performance, durability and regulatory compliance require project-specific review.",
+    "Metsec products and public market prices are reference inputs only; Avelis has not confirmed these products, prices, Torcy equipment or process capabilities."
+  ]
+}

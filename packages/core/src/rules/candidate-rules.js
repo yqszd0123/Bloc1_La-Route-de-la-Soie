@@ -3,67 +3,62 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  function issue(code, severity, message, componentId) {
-    return { code, severity, message, componentId: componentId || null };
+  function issue(code, severity, message, componentId, sourceId) {
+    return { code, severity, message, componentId: componentId || null, sourceId: sourceId || null };
   }
 
   function overlapsClearOpening(member, opening, tolerance) {
-    const b = member.bounds;
-    const overlapX = Math.min(b.max.x, opening.xMm + opening.widthMm) - Math.max(b.min.x, opening.xMm);
-    const overlapZ = Math.min(b.max.z, opening.sillMm + opening.heightMm) - Math.max(b.min.z, opening.sillMm);
-    return overlapX > tolerance && overlapZ > tolerance;
+    const tol = tolerance == null ? 0.001 : tolerance;
+    const overlapX = Math.min(member.bounds.max.x, opening.xMm + opening.widthMm) - Math.max(member.bounds.min.x, opening.xMm);
+    const overlapZ = Math.min(member.bounds.max.z, opening.sillMm + opening.heightMm) - Math.max(member.bounds.min.z, opening.sillMm);
+    return overlapX > tol && overlapZ > tol;
   }
 
   function validateCandidate(candidate, rules) {
     const issues = [];
     const ids = new Set();
-    const openings = candidate.wall.openings;
-
     candidate.members.forEach((member) => {
-      if (ids.has(member.id)) issues.push(issue('DUPLICATE_COMPONENT_ID', 'error', `Identifiant dupliqué : ${member.id}.`, member.id));
+      if (ids.has(member.id)) issues.push(issue('DUPLICATE_COMPONENT_ID', 'error', `Duplicate stable ID: ${member.id}.`, member.id));
       ids.add(member.id);
-      if (!(member.lengthMm > 0)) issues.push(issue('NON_POSITIVE_LENGTH', 'error', 'Longueur de composant non positive.', member.id));
-      if (member.lengthMm > rules.maxMachineMemberLengthMm) {
-        issues.push(issue('MACHINE_LENGTH_LIMIT', 'error', `Le composant dépasse ${rules.maxMachineMemberLengthMm} mm.`, member.id));
+      if (!(member.lengthMm > 0)) issues.push(issue('NON_POSITIVE_LENGTH', 'error', 'Component length is not positive.', member.id));
+      if (!Number.isFinite(member.massKg) || member.massKg <= 0) issues.push(issue('INVALID_MEMBER_MASS', 'error', 'Component mass calculation failed.', member.id));
+      const collision = candidate.wall.openings.find((opening) => overlapsClearOpening(member, opening));
+      if (collision) issues.push(issue('MEMBER_IN_CLEAR_OPENING', 'error', `${member.id} crosses clear opening ${collision.id}.`, member.id));
+      if (member.bounds.min.x < -0.001 || member.bounds.max.x > candidate.wall.lengthMm + 0.001 || member.bounds.min.z < -0.001 || member.bounds.max.z > candidate.wall.heightMm + 0.001) {
+        issues.push(issue('MEMBER_OUTSIDE_WALL', 'error', `${member.id} extends outside the wall envelope.`, member.id));
       }
-      const collidedOpening = openings.find((opening) => overlapsClearOpening(member, opening, 0.01));
-      if (collidedOpening) {
-        issues.push(issue('MEMBER_IN_OPENING', 'error', `Un composant traverse le vide ${collidedOpening.type === 'DOOR' ? 'de la porte' : 'de la fenêtre'}.`, member.id));
-      }
-      const b = member.bounds;
-      if (b.min.x < -0.01 || b.max.x > candidate.wall.lengthMm + 0.01 || b.min.z < -0.01 || b.max.z > candidate.wall.heightMm + 0.01) {
-        issues.push(issue('MEMBER_OUTSIDE_ENVELOPE', 'error', 'Un composant dépasse l’enveloppe du mur.', member.id));
+      if (!member.profile.sourceId || member.profile.sourceId !== 'METSEC_COMPONENTS_2026') {
+        issues.push(issue('UNTRACEABLE_PROFILE', 'error', `${member.id} has no approved source record.`, member.id));
       }
     });
 
-    const requiredRoles = ['bottom_plate', 'top_plate', 'boundary_stud', 'king_stud', 'jack_stud', 'sill', 'header'];
-    requiredRoles.forEach((role) => {
+    ['top_track', 'boundary_stud'].forEach((role) => {
       if (!candidate.members.some((member) => member.role === role)) {
-        issues.push(issue('MISSING_REQUIRED_ROLE', 'error', `Composant obligatoire absent : ${role}.`));
+        issues.push(issue('MISSING_PANEL_ROLE', 'error', `Required panel role is missing: ${role}.`));
+      }
+    });
+    candidate.wall.openings.forEach((opening) => {
+      const frame = candidate.members.filter((member) => member.openingId === opening.id);
+      if (frame.filter((member) => member.role === 'opening_jamb').length !== 2) {
+        issues.push(issue('OPENING_JAMBS_INCOMPLETE', 'error', `${opening.id} requires exactly two jamb members.`));
+      }
+      if (frame.filter((member) => member.role === 'opening_header').length !== 1) {
+        issues.push(issue('OPENING_HEADER_INCOMPLETE', 'error', `${opening.id} requires one header member.`));
+      }
+      if (opening.type === 'WINDOW' && frame.filter((member) => member.role === 'window_sill').length !== 1) {
+        issues.push(issue('WINDOW_SILL_INCOMPLETE', 'error', `${opening.id} requires one sill member.`));
       }
     });
 
-    openings.forEach((opening) => {
-      const frameMembers = candidate.members.filter((member) => member.openingId === opening.id);
-      const kingCount = frameMembers.filter((member) => member.role === 'king_stud').length;
-      const jackCount = frameMembers.filter((member) => member.role === 'jack_stud').length;
-      const headerCount = frameMembers.filter((member) => member.role === 'header').length;
-      if (kingCount < 2 || jackCount < 2 || headerCount < candidate.option.headerLayers) {
-        issues.push(issue('INCOMPLETE_OPENING_FRAME', 'error', `Encadrement incomplet pour ${opening.id}.`));
-      }
-      if (opening.type === 'WINDOW' && !frameMembers.some((member) => member.role === 'sill')) {
-        issues.push(issue('MISSING_WINDOW_SILL', 'error', `Traverse d’appui absente pour ${opening.id}.`));
-      }
-    });
-
-    const allowedSpacing = rules.allowedStudSpacingsMm.includes(candidate.option.studSpacingMm);
-    if (!allowedSpacing) issues.push(issue('UNAPPROVED_STUD_SPACING', 'error', 'Entraxe non présent dans le catalogue de démonstration.'));
-    if (candidate.members.length > 1000) issues.push(issue('RESOURCE_LIMIT', 'error', 'Nombre de composants anormalement élevé.'));
-
-    issues.push(issue('STRUCTURAL_SCOPE', 'review', rules.engineeringDisclaimer));
+    issues.push(issue('STRUCTURAL_ANALYSIS_NOT_RUN', 'review', 'No structural safety conclusion: project actions, restraints, bracing and connection properties are not available.', null, 'AFNOR_NF_EN_1993_1_3_NA'));
+    issues.push(issue('MACHINE_RELEASE_BLOCKED', 'review', 'No machine-ready release: Torcy equipment, supported operations, stock lengths and tolerances are not confirmed.'));
+    issues.push(issue('REFERENCE_PRODUCT_NOT_AVELIS', 'review', rules.avelisDisclaimer, null, 'METSEC_COMPONENTS_2026'));
     return {
+      geometryValid: issues.every((entry) => entry.severity !== 'error'),
       valid: issues.every((entry) => entry.severity !== 'error'),
-      checkedRuleCount: 8 + openings.length * 2,
+      engineeringStatus: 'ENGINEERING_REVIEW_REQUIRED',
+      manufacturingRelease: false,
+      checkedRuleCount: 7 + candidate.wall.openings.length * 3,
       issues
     };
   }

@@ -3,55 +3,67 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  function pretty(value) {
-    return JSON.stringify(value, null, 2) + '\n';
-  }
+  function pretty(value) { return JSON.stringify(value, null, 2) + '\n'; }
 
   function validationReport(result, candidate) {
     return {
-      schema: 'avelis.quality.validation-report.v1',
+      schema: 'avelis.quality.validation-report.v2',
       project: result.project.identity,
       candidateId: candidate.id,
-      status: candidate.validation.valid ? 'VALID_WITHIN_POC_RULES' : 'REJECTED',
+      geometryStatus: candidate.validation.geometryValid ? 'GEOMETRY_CHECKS_PASSED' : 'REJECTED',
+      engineeringStatus: 'ENGINEERING_REVIEW_REQUIRED',
+      manufacturingRelease: false,
       checkedRuleCount: candidate.validation.checkedRuleCount,
       issues: candidate.validation.issues,
-      dimensionalToleranceMm: result.rules.manufacturingToleranceMm,
-      checksNotEvaluated: ['structural_strength', 'connections', 'bracing', 'fire', 'acoustics', 'thermal', 'moisture', 'regulatory_certification'],
-      requiredNextReview: 'Validation par Avelis, le fabricant et un ingénieur structure qualifié avant usage réel.'
+      crossValidation: candidate.crossValidation,
+      profileDensityCrossChecks: Array.from(new Set(candidate.members.map((member) => member.profile.id)))
+        .map((profileId) => core.engineering.densityCrossCheck(core.engineering.getProfile(profileId))),
+      checksNotEvaluated: [
+        'structural_strength', 'stability_and_bracing', 'connections', 'fire', 'acoustics', 'thermal',
+        'durability', 'project_regulatory_compliance', 'machine_compatibility', 'manufacturing_tolerances'
+      ],
+      requiredNextReview: 'Avelis, the selected manufacturer and a qualified structural engineer must approve project data before production or construction.'
     };
   }
 
   function buildExportFiles(result, candidate, scale) {
     const selected = candidate || result.recommended;
-    if (!selected) throw new Error('Aucun candidat valide à exporter.');
-    const safeScale = Math.max(1, Number(scale) || result.input.prototypeScale || 15);
+    if (!selected) throw new Error('No geometry-valid candidate is available for export.');
+    const safeScale = Math.max(1, Number(scale) || result.input.prototypeScale || 20);
     const files = {
-      '00_LIRE_MOI.txt': [
-        'AVELIS WALL FLOW — paquet de fabrication conceptuel',
-        `Projet : ${result.input.projectId} / ${result.input.wallId} / version ${result.input.version}`,
-        `Candidat : ${selected.id} (rang ${selected.rank}, score ${selected.score})`,
-        `Ouvertures : ${selected.wall.openings.map((opening) => opening.type).join(' + ')}`,
-        `Prototype STL : échelle 1:${safeScale}`,
+      '00_READ_ME.txt': [
+        'AVELIS WALL FLOW 2.0 — IFC-to-manufacturing reference package',
+        `Project: ${result.input.projectId} / ${result.input.wallId} / version ${result.input.version}`,
+        `Candidate: ${selected.id} (rank ${selected.rank}, decision score ${selected.score})`,
+        `Steel mass: ${selected.metrics.steelMassKg} kg`,
+        `Budget material cost: ${selected.metrics.materialCostEstimateEurExVat} EUR ex VAT`,
+        `Engineering status: ${selected.validation.engineeringStatus}`,
         '',
-        'IMPORTANT : ces fichiers démontrent la continuité numérique et les contrôles implémentés.',
-        'Ils ne constituent pas une certification structurelle ou réglementaire.',
-        'Le format machine réel doit être confirmé avec Avelis.',
-        '',
-        'Le même modèle sémantique produit la géométrie, la BOM, les données machine, les interfaces et le rapport de validation.'
+        'IMPORTANT: geometry checks and traceable quantity calculations are automated.',
+        'This package is NOT a structural certificate and is NOT released to an Avelis machine.',
+        'Profiles and prices are public reference inputs, not confirmed Avelis products or procurement data.',
+        'DXF/STL geometry is a profile envelope for coordination and FabLab prototyping, not sheet-metal production geometry.'
       ].join('\r\n'),
-      '01_entree/noov_request_proposal.json': pretty(core.serialize.noovRequest(result)),
-      '02_conception/recommended_design.json': pretty({ project: result.project, candidate: selected }),
-      '02_conception/elevation.svg': core.svg.svgForCandidate(selected),
-      '02_conception/model_3d_neutral.dxf': core.dxf.dxfForCandidate(selected),
-      [`02_conception/prototype_scale_1_${safeScale}.stl`]: core.stl.stlForCandidate(selected, safeScale),
-      '03_fabrication/bom.csv': core.serialize.bomCsv(selected),
-      '03_fabrication/machine_members.csv': core.serialize.machineCsv(selected),
-      '03_fabrication/production_handover.json': pretty(core.serialize.productionHandover(result, selected)),
-      '04_qualite/validation_report.json': pretty(validationReport(result, selected)),
-      '04_qualite/candidate_comparison.csv': core.serialize.comparisonCsv(result),
+      '01_input/noov_request_proposal.json': pretty(core.serialize.noovRequest(result)),
+      '01_input/source_context.json': pretty({ source: result.project.source, ifcAudit: result.ifcAudit || null, stepAudit: result.stepAudit || null }),
+      '02_design/recommended_design.json': pretty({ project: result.project, candidate: selected }),
+      '02_design/elevation.svg': core.svg.svgForCandidate(selected),
+      '02_design/model_3d_profile_envelopes.dxf': core.dxf.dxfForCandidate(selected),
+      [`02_design/fablab/assembly_scale_1_${safeScale}.stl`]: core.stl.stlForCandidate(selected, safeScale),
+      '03_manufacturing/bom.csv': core.serialize.bomCsv(selected),
+      '03_manufacturing/cutting_list.csv': core.serialize.cuttingListCsv(selected),
+      '03_manufacturing/machine_neutral_members.csv': core.serialize.machineCsv(selected),
+      '03_manufacturing/component_labels.csv': core.serialize.labelsCsv(selected),
+      '03_manufacturing/manufacturing_handover.json': pretty(core.serialize.manufacturingHandover(result, selected)),
+      '04_quality/validation_report.json': pretty(validationReport(result, selected)),
+      '04_quality/candidate_comparison.csv': core.serialize.comparisonCsv(result),
+      '04_quality/engineering_data_snapshot.json': pretty(core.ENGINEERING_DATA),
       '05_interfaces/noov_response_proposal.json': pretty(core.serialize.noovResponse(result, selected)),
       '05_interfaces/logistics_handover.json': pretty(core.serialize.logisticsHandover(result, selected))
     };
+    selected.members.forEach((member) => {
+      files[`02_design/fablab/parts/${member.id}_scale_1_${safeScale}.stl`] = core.stl.stlForMember(member, safeScale);
+    });
     return files;
   }
 

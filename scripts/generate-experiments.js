@@ -10,14 +10,14 @@ fs.mkdirSync(outputRoot, { recursive: true });
 
 const summary = [];
 const manifest = {
-  schema: 'avelis.experiment-manifest.v1',
+  schema: 'avelis.experiment-manifest.v2',
   generatedAt: new Date().toISOString(),
   softwareVersion: core.VERSION,
   cases: []
 };
 
 core.EXPERIMENT_PRESETS.forEach((preset) => {
-  const input = { ...core.DEFAULT_INPUT, ...preset.input, projectId: 'AVELIS-IAM-2026', wallId: preset.id.toUpperCase(), version: '1.0' };
+  const input = { ...core.DEFAULT_INPUT, ...preset.input, projectId: 'AVELIS-IAM-2026', wallId: preset.id.toUpperCase(), version: '2.0' };
   const result = core.runWorkflow(input);
   if (!result.ok) throw new Error(`Échec du cas ${preset.id}`);
   const candidate = result.recommended;
@@ -51,24 +51,22 @@ core.EXPERIMENT_PRESETS.forEach((preset) => {
   manifest.cases.push({ caseId: preset.id, folder: preset.id, result: `${preset.id}/experiment-result.json` });
 });
 
-const header = ['caseId', 'wallLengthMm', 'wallHeightMm', 'windowWidthMm', 'windowHeightMm', 'doorEnabled', 'doorWidthMm', 'doorHeightMm', 'validCandidates', 'processingTimeMs', 'candidateId', 'score', 'timberVolumeM3', 'componentCount', 'estimatedCostEur', 'estimatedMachineTimeMin'];
+const header = ['caseId', 'wallLengthMm', 'wallHeightMm', 'windowEnabled', 'doorEnabled', 'validCandidates', 'processingTimeMs', 'candidateId', 'score', 'steelMassKg', 'componentCount', 'uniqueLengthCount', 'materialCostEurExVat', 'engineeringStatus'];
 const rows = summary.map((entry) => [
   entry.caseId,
   entry.input.wallLengthMm,
   entry.input.wallHeightMm,
-  entry.input.windowWidthMm,
-  entry.input.windowHeightMm,
+  entry.input.windowEnabled,
   entry.input.doorEnabled,
-  entry.input.doorEnabled ? entry.input.doorWidthMm : '',
-  entry.input.doorEnabled ? entry.input.doorHeightMm : '',
   entry.validCandidateCount,
   entry.processingTimeMs,
   entry.recommendedCandidateId,
   entry.score,
-  entry.metrics.timberVolumeM3,
+  entry.metrics.steelMassKg,
   entry.metrics.componentCount,
-  entry.metrics.estimatedCostEur,
-  entry.metrics.estimatedMachineTimeMin
+  entry.metrics.uniqueLengthCount,
+  entry.metrics.materialCostEstimateEurExVat,
+  'ENGINEERING_REVIEW_REQUIRED'
 ]);
 fs.writeFileSync(path.join(outputRoot, 'summary.csv'), [header, ...rows].map((row) => row.join(';')).join('\n') + '\n');
 fs.writeFileSync(path.join(outputRoot, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');

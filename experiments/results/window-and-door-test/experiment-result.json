@@ -1,0 +1,64 @@
+{
+  "caseId": "window-and-door-test",
+  "label": "Essai géométrique — fenêtre + porte",
+  "input": {
+    "sourceMode": "MANUAL",
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "WINDOW-AND-DOOR-TEST",
+    "version": "2.0",
+    "wallLengthMm": 4800,
+    "wallHeightMm": 2600,
+    "wallThicknessMm": 100,
+    "windowEnabled": true,
+    "windowWidthMm": 1000,
+    "windowHeightMm": 1000,
+    "windowXMm": 600,
+    "sillHeightMm": 800,
+    "doorEnabled": true,
+    "doorWidthMm": 900,
+    "doorHeightMm": 2000,
+    "doorXMm": 2900,
+    "budgetPriceEurPerKgExVat": null,
+    "budgetLowEurPerKgExVat": null,
+    "budgetHighEurPerKgExVat": null,
+    "budgetPriceLabel": "",
+    "budgetPriceDate": "",
+    "budgetPriceSource": "",
+    "priority": "balanced",
+    "prototypeScale": 20
+  },
+  "searchSpaceSize": 6,
+  "validCandidateCount": 6,
+  "rejectedCandidateCount": 0,
+  "processingTimeMs": 2,
+  "recommendedCandidateId": "CAND-01",
+  "recommendedRank": 1,
+  "score": 0,
+  "paretoOptimal": true,
+  "metrics": {
+    "steelMassKg": 76.357,
+    "totalProfileLengthM": 36.188,
+    "componentCount": 19,
+    "cutCount": 38,
+    "uniqueLengthCount": 7,
+    "uniqueProfileCount": 2,
+    "materialCostEstimateEurExVat": 235.94,
+    "materialCostRangeEurExVat": {
+      "low": 138.97,
+      "high": 314.59
+    },
+    "priceBasis": {
+      "valueEurPerKgExVat": 3.09,
+      "date": "2026-11-03",
+      "status": "REGIONAL_BUDGET_PROXY_NOT_SUPPLIER_QUOTE",
+      "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation."
+    },
+    "machineTimeMin": null,
+    "carbonKgCo2e": null,
+    "unavailableMetrics": [
+      "machineTimeMin: Avelis equipment cycle data missing",
+      "carbonKgCo2e: applicable product EPD missing"
+    ]
+  }
+}

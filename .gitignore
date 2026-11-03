@@ -3,5 +3,8 @@ Thumbs.db
 node_modules/
 coverage/
 tmp/
+build/
+scripts/__pycache__/
+.qa-*/
 *.log
 

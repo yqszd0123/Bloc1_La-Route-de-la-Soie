@@ -6,7 +6,11 @@
     result: null,
     selectedCandidateId: null,
     rotationDeg: 28,
-    showLabels: false
+    showLabels: false,
+    ifcText: null,
+    ifcModel: null,
+    stepModel: null,
+    stepFileName: null,
+    activePage: 'config-page'
   };
 })(window);
-

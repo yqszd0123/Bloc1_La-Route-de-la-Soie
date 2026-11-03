@@ -1,0 +1,512 @@
+{
+  "schema": "avelis.production.wall-handover.v2",
+  "schemaVersion": "2.0",
+  "releaseStatus": "BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "OFFICIAL-IFC-WINDOW",
+    "wallGuid": null,
+    "version": "2.0"
+  },
+  "configurationId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW",
+  "revision": "2.0",
+  "units": {
+    "length": "mm",
+    "mass": "kg"
+  },
+  "candidateId": "CAND-02",
+  "material": {
+    "id": "REF-METSEC-Z275-FY450",
+    "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+    "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+    "densityKgM3": 7850,
+    "minimumYieldStrengthNmm2": 450,
+    "coating": "Z275",
+    "coreThicknessRule": {
+      "nominalCoatingAllowanceMm": 0.04,
+      "note": "ArcelorMittal Orange Book states 0.02 mm coating per face for standard Z275 and references EN 1993-1-3 for core thickness."
+    },
+    "sourceIds": [
+      "METSEC_COMPONENTS_2026",
+      "ARCELORMITTAL_ORANGE_BOOK_CFS"
+    ]
+  },
+  "profiles": [
+    {
+      "id": "104MF12",
+      "manufacturerReference": "104MF12",
+      "family": "TRACK_U",
+      "massKgPerM": 2.11,
+      "webDepthMm": 104,
+      "flange1Mm": 62,
+      "flange2Mm": 62,
+      "lipMm": 0,
+      "nominalThicknessMm": 1.2,
+      "minimumYieldStrengthNmm2": 450,
+      "coating": "Z275",
+      "sourceId": "METSEC_COMPONENTS_2026",
+      "sourceLocation": "Tracks table, row 104MF12"
+    },
+    {
+      "id": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "family": "STUD_C",
+      "massKgPerM": 2.11,
+      "webDepthMm": 100,
+      "flange1Mm": 50,
+      "flange2Mm": 50,
+      "lipMm": 14,
+      "nominalThicknessMm": 1.2,
+      "minimumYieldStrengthNmm2": 450,
+      "coating": "Z275",
+      "sourceId": "METSEC_COMPONENTS_2026",
+      "sourceLocation": "Studs / Joists table, row 100MF12/50"
+    }
+  ],
+  "components": [
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-030Y4HW",
+      "partType": "bottom_track",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "104MF12",
+      "manufacturerReference": "104MF12",
+      "dimensionsMm": {
+        "length": 3000,
+        "sectionDepth": 104,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 6.33,
+      "positionMm": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "axis": "x",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|030Y4HW"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0NRO66V",
+      "partType": "top_track",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "104MF12",
+      "manufacturerReference": "104MF12",
+      "dimensionsMm": {
+        "length": 3000,
+        "sectionDepth": 104,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 6.33,
+      "positionMm": {
+        "x": 0,
+        "y": 0,
+        "z": 1938
+      },
+      "axis": "x",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0NRO66V"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0USD4XB",
+      "partType": "boundary_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 0,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0USD4XB"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0W6YBUP",
+      "partType": "boundary_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 2950,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0W6YBUP"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0N2E2I5",
+      "partType": "opening_jamb",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 950,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0N2E2I5"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-00VLEPF",
+      "partType": "opening_jamb",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 2000,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|00VLEPF"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EVVNRO",
+      "partType": "opening_header",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "104MF12",
+      "manufacturerReference": "104MF12",
+      "dimensionsMm": {
+        "length": 1000,
+        "sectionDepth": 104,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 2.11,
+      "positionMm": {
+        "x": 1000,
+        "y": 0,
+        "z": 1500
+      },
+      "axis": "x",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EVVNRO"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1FTK4F6",
+      "partType": "window_sill",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "104MF12",
+      "manufacturerReference": "104MF12",
+      "dimensionsMm": {
+        "length": 1000,
+        "sectionDepth": 104,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 2.11,
+      "positionMm": {
+        "x": 1000,
+        "y": 0,
+        "z": 438
+      },
+      "axis": "x",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|1FTK4F6"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+      "partType": "common_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 375,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|09AGKL7"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+      "partType": "cripple_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 376,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 0.7934,
+      "positionMm": {
+        "x": 1575,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0FO4WEU"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+      "partType": "cripple_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 376,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 0.7934,
+      "positionMm": {
+        "x": 1575,
+        "y": 0,
+        "z": 1562
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EYDBUK"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+      "partType": "common_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 2175,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0KOABLF"
+    },
+    {
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9",
+      "partType": "common_stud",
+      "materialId": "REF-METSEC-Z275-FY450",
+      "profileId": "100MF12-50",
+      "manufacturerReference": "100MF12/50",
+      "dimensionsMm": {
+        "length": 1876,
+        "sectionDepth": 100,
+        "nominalThickness": 1.2
+      },
+      "calculatedMassKg": 3.9584,
+      "positionMm": {
+        "x": 2775,
+        "y": 0,
+        "z": 62
+      },
+      "axis": "z",
+      "operations": [
+        "CUT_SQUARE",
+        "MARK_ID"
+      ],
+      "toleranceMm": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EG3OG9"
+    }
+  ],
+  "toleranceMm": null,
+  "stockLengthMm": null,
+  "neutralFormats": [
+    "CSV",
+    "JSON",
+    "DXF_ENVELOPE",
+    "STL_FABLAB"
+  ],
+  "assemblySequence": [
+    {
+      "stepId": "STEP-01",
+      "order": 1,
+      "operation": "SET_BOTTOM_TRACK_SEGMENTS",
+      "partIds": [
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-030Y4HW"
+      ],
+      "dependsOn": [],
+      "status": "PROPOSED_PENDING_BLOC2_VALIDATION"
+    },
+    {
+      "stepId": "STEP-02",
+      "order": 2,
+      "operation": "SET_BOUNDARY_AND_OPENING_JAMBS",
+      "partIds": [
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0USD4XB",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0W6YBUP",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0N2E2I5",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-00VLEPF"
+      ],
+      "dependsOn": [
+        "STEP-01"
+      ],
+      "status": "PROPOSED_PENDING_BLOC2_VALIDATION"
+    },
+    {
+      "stepId": "STEP-03",
+      "order": 3,
+      "operation": "SET_COMMON_AND_CRIPPLE_STUDS",
+      "partIds": [
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9"
+      ],
+      "dependsOn": [
+        "STEP-01"
+      ],
+      "status": "PROPOSED_PENDING_BLOC2_VALIDATION"
+    },
+    {
+      "stepId": "STEP-04",
+      "order": 4,
+      "operation": "SET_OPENING_HORIZONTAL_MEMBERS",
+      "partIds": [
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EVVNRO",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1FTK4F6"
+      ],
+      "dependsOn": [
+        "STEP-02",
+        "STEP-03"
+      ],
+      "status": "PROPOSED_PENDING_BLOC2_VALIDATION"
+    },
+    {
+      "stepId": "STEP-05",
+      "order": 5,
+      "operation": "SET_TOP_TRACK",
+      "partIds": [
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0NRO66V"
+      ],
+      "dependsOn": [
+        "STEP-02",
+        "STEP-03",
+        "STEP-04"
+      ],
+      "status": "PROPOSED_PENDING_BLOC2_VALIDATION"
+    },
+    {
+      "stepId": "STEP-06",
+      "order": 6,
+      "operation": "DIMENSIONAL_AND_ID_CONTROL",
+      "partIds": [
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-030Y4HW",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0NRO66V",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0USD4XB",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0W6YBUP",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0N2E2I5",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-00VLEPF",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EVVNRO",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1FTK4F6",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9"
+      ],
+      "dependsOn": [
+        "STEP-05"
+      ],
+      "status": "PROPOSED_PENDING_BLOC2_VALIDATION"
+    }
+  ],
+  "interfaceChecks": {
+    "componentIdsUnique": true,
+    "allSequencePartIdsExist": true,
+    "bomMassMatchesGeometry": true
+  },
+  "requiredFromAvelisOrBloc2": [
+    "machine_identifier",
+    "supported_profile_catalog",
+    "stock_lengths_mm",
+    "supported_operations",
+    "hole_and_fastener_rules",
+    "positioning_accuracy_mm",
+    "manufacturing_tolerances_mm",
+    "native_machine_file_schema"
+  ]
+}

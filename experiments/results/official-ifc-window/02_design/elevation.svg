@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3360 2360" role="img" aria-label="Élévation du mur CAND-02">
+<rect width="100%" height="100%" fill="#f8f6f1"/>
+<g transform="translate(180 2180) scale(1 -1)">
+<rect x="0" y="0" width="3000" height="62" fill="#315f73" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-030Y4HW — Bottom track 1</title></rect>
+<rect x="0" y="1938" width="3000" height="62" fill="#315f73" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0NRO66V — Top track</title></rect>
+<rect x="0" y="62" width="50" height="1876" fill="#4d7182" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0USD4XB — Left boundary stud</title></rect>
+<rect x="2950" y="62" width="50" height="1876" fill="#4d7182" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0W6YBUP — Right boundary stud</title></rect>
+<rect x="950" y="62" width="50" height="1876" fill="#d06b35" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0N2E2I5 — Left jamb — WINDOW</title></rect>
+<rect x="2000" y="62" width="50" height="1876" fill="#d06b35" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-00VLEPF — Right jamb — WINDOW</title></rect>
+<rect x="1000" y="1500" width="1000" height="62" fill="#9e4e2a" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EVVNRO — Header track — WINDOW</title></rect>
+<rect x="1000" y="438" width="1000" height="62" fill="#c8873f" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1FTK4F6 — Window sill track</title></rect>
+<rect x="375" y="62" width="50" height="1876" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7 — Common stud</title></rect>
+<rect x="1575" y="62" width="50" height="376" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU — Window lower cripple stud</title></rect>
+<rect x="1575" y="1562" width="50" height="376" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK — Upper cripple stud — WINDOW</title></rect>
+<rect x="2175" y="62" width="50" height="1876" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF — Common stud</title></rect>
+<rect x="2775" y="62" width="50" height="1876" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9 — Common stud</title></rect>
+<rect x="1000" y="500" width="1000" height="1000" fill="#dff4ff" fill-opacity="0.8" stroke="#1976a3" stroke-width="8"><title>Fenêtre WINDOW-01</title></rect>
+</g>
+<text x="180" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">CAND-02 — mur 3000 × 2000 mm</text>
+<text x="180" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">100MF12-50 · entraxe de référence 600 mm · stratégie OPENING_ALIGNED</text>
+<line x1="180" y1="2290" x2="3180" y2="2290" stroke="#182b36" stroke-width="5"/>
+<text x="1680" y="2275" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" fill="#182b36">3000 mm</text>
+</svg>

@@ -1,13 +1,14 @@
 {
   "name": "avelis-wall-flow",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "private": true,
-  "description": "Chaîne paramétrique et aide à la décision pour murs 2D à ossature bois — Imagine & Make 2026, Bloc 1.",
+  "description": "IFC-to-manufacturing workflow for traceable cold-formed steel wall panels — Imagine & Make 2026, Bloc 1.",
   "license": "MIT",
   "scripts": {
-    "test": "node tests/run-tests.js",
+    "sync-data": "node scripts/sync-engineering-data.js",
+    "test": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/step-integration.js",
     "experiments": "node scripts/generate-experiments.js",
-    "verify": "node tests/run-tests.js && node scripts/generate-experiments.js"
+    "verify": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/step-integration.js && node scripts/generate-experiments.js"
   },
   "engines": {
     "node": ">=18"

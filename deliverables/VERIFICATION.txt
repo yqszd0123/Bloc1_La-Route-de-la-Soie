@@ -1,7 +1,0 @@
-﻿AVELIS WALL FLOW — VÉRIFICATION DES LIVRABLES
-Rapport PDF : 12 pages
-Soutenance : 14 diapositives / 14 pages PDF
-Vidéo : 150s, pistes vidéo + audio / démonstration réelle de l’application
-Formats Open XML : valides
-Manifest SHA-256 : généré
-Statut : OK

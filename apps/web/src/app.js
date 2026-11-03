@@ -7,6 +7,13 @@
   const messages = document.getElementById('input-messages');
   const canvas = document.getElementById('wall-viewer');
 
+  function showPage(pageId) {
+    document.querySelectorAll('.app-page').forEach((page) => { page.hidden = page.id !== pageId; });
+    document.querySelectorAll('.tab-button').forEach((button) => button.classList.toggle('is-active', button.dataset.page === pageId));
+    app.state.activePage = pageId;
+    if (pageId === 'design-page') requestAnimationFrame(redraw);
+  }
+
   function selectedCandidate() {
     return app.state.result ? core.selectCandidate(app.state.result, app.state.selectedCandidateId) : null;
   }
@@ -23,11 +30,8 @@
     redraw();
   }
 
-  function run() {
-    const input = app.formController.readForm(form);
-    const result = core.runWorkflow(input);
+  function acceptResult(result, showDesign) {
     app.state.result = result;
-    app.formController.renderMessages(messages, result.inputValidation);
     app.downloadController.enable(result.ok);
     if (!result.ok) {
       app.state.selectedCandidateId = null;
@@ -36,16 +40,53 @@
       return;
     }
     selectCandidate(result.recommended.id);
+    if (showDesign) showPage('design-page');
   }
 
-  form.addEventListener('submit', (event) => { event.preventDefault(); run(); });
-  document.getElementById('reset-button').addEventListener('click', () => { app.formController.setFormValues(form, core.DEFAULT_INPUT); run(); });
+  function runManual(showDesign) {
+    const input = app.formController.readForm(form);
+    const result = core.runWorkflow(input);
+    app.formController.renderMessages(messages, result.inputValidation);
+    acceptResult(result, showDesign);
+  }
+
+  function runIfcWall(wallEntityId) {
+    if (!app.state.ifcText) return;
+    try {
+      const result = core.runIfcWorkflow(app.state.ifcText, { wallEntityId });
+      acceptResult(result, true);
+    } catch (error) {
+      const container = document.getElementById('ifc-messages');
+      container.innerHTML = `<div class="message message--error">Le mur IFC n’a pas pu être généré : ${error.message}</div>`;
+    }
+  }
+
+  function runStepModel(model, mapping) {
+    try {
+      const result = core.runStepWorkflow(model, mapping);
+      acceptResult(result, true);
+    } catch (error) {
+      const container = document.getElementById('step-messages');
+      container.innerHTML = `<div class="message message--error">Le modèle STEP n’a pas pu être converti : ${error.message}</div>`;
+    }
+  }
+
+  document.querySelectorAll('.tab-button').forEach((button) => button.addEventListener('click', () => showPage(button.dataset.page)));
+  form.addEventListener('submit', (event) => { event.preventDefault(); runManual(true); });
+  document.getElementById('reset-button').addEventListener('click', () => {
+    app.formController.setFormValues(form, core.DEFAULT_INPUT);
+    runManual(false);
+  });
   document.getElementById('rotation-slider').addEventListener('input', (event) => { app.state.rotationDeg = Number(event.target.value); redraw(); });
   document.getElementById('labels-toggle').addEventListener('change', (event) => { app.state.showLabels = event.target.checked; redraw(); });
   global.addEventListener('resize', redraw);
-  app.formController.renderPresets(document.getElementById('preset-buttons'), form, run);
-  app.formController.bindDoorToggle(form, run);
+
+  app.formController.renderPresets(document.getElementById('preset-buttons'), form, () => runManual(false));
+  app.formController.bindOpeningToggles(form, () => runManual(false));
+  app.ifcController.bind(runIfcWall);
+  app.stepController.bind(runStepModel);
   app.downloadController.bind();
   app.formController.setFormValues(form, core.DEFAULT_INPUT);
-  run();
+  runManual(false);
+  showPage('config-page');
 })(window);

@@ -1,0 +1,75 @@
+{
+  "schema": "avelis.quality.validation-report.v2",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "OFFICIAL-IFC-WINDOW",
+    "wallGuid": null,
+    "version": "2.0"
+  },
+  "candidateId": "CAND-02",
+  "geometryStatus": "GEOMETRY_CHECKS_PASSED",
+  "engineeringStatus": "ENGINEERING_REVIEW_REQUIRED",
+  "manufacturingRelease": false,
+  "checkedRuleCount": 10,
+  "issues": [
+    {
+      "code": "STRUCTURAL_ANALYSIS_NOT_RUN",
+      "severity": "review",
+      "message": "No structural safety conclusion: project actions, restraints, bracing and connection properties are not available.",
+      "componentId": null,
+      "sourceId": "AFNOR_NF_EN_1993_1_3_NA"
+    },
+    {
+      "code": "MACHINE_RELEASE_BLOCKED",
+      "severity": "review",
+      "message": "No machine-ready release: Torcy equipment, supported operations, stock lengths and tolerances are not confirmed.",
+      "componentId": null,
+      "sourceId": null
+    },
+    {
+      "code": "REFERENCE_PRODUCT_NOT_AVELIS",
+      "severity": "review",
+      "message": "Metsec products and public market prices are reference inputs only; Avelis has not confirmed these products, prices, Torcy equipment or process capabilities.",
+      "componentId": null,
+      "sourceId": "METSEC_COMPONENTS_2026"
+    }
+  ],
+  "crossValidation": {
+    "massReconciliation": {
+      "memberSumKg": 46.176,
+      "bomSumKg": 46.176,
+      "absoluteDifferenceKg": 0.0004,
+      "status": "MATCH"
+    }
+  },
+  "profileDensityCrossChecks": [
+    {
+      "profileId": "104MF12",
+      "manufacturerMassKgPerM": 2.11,
+      "flatWidthApproximationKgPerM": 2.1478,
+      "relativeDifferencePercent": 1.79,
+      "method": "Flat developed-width × nominal thickness × 7850 kg/m³; bend radii and detailed coating geometry excluded."
+    },
+    {
+      "profileId": "100MF12-50",
+      "manufacturerMassKgPerM": 2.11,
+      "flatWidthApproximationKgPerM": 2.1478,
+      "relativeDifferencePercent": 1.79,
+      "method": "Flat developed-width × nominal thickness × 7850 kg/m³; bend radii and detailed coating geometry excluded."
+    }
+  ],
+  "checksNotEvaluated": [
+    "structural_strength",
+    "stability_and_bracing",
+    "connections",
+    "fire",
+    "acoustics",
+    "thermal",
+    "durability",
+    "project_regulatory_compliance",
+    "machine_compatibility",
+    "manufacturing_tolerances"
+  ],
+  "requiredNextReview": "Avelis, the selected manufacturer and a qualified structural engineer must approve project data before production or construction."
+}

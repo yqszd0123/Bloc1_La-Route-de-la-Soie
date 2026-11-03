@@ -1,0 +1,267 @@
+{
+  "schema": "avelis.noov.wall-design.response.v2",
+  "status": "ENGINEERING_REVIEW_REQUIRED",
+  "project": {
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "IFC-DOOR-REFERENCE",
+    "wallGuid": null,
+    "version": "2.0"
+  },
+  "selectedCandidate": "CAND-01",
+  "decisionScore": 0,
+  "openings": [
+    {
+      "id": "DOOR-01",
+      "guid": null,
+      "type": "DOOR",
+      "xMm": 1000,
+      "sillMm": 0,
+      "widthMm": 1000,
+      "heightMm": 2000,
+      "source": "MANUAL_INPUT",
+      "sourceRef": null
+    }
+  ],
+  "metrics": {
+    "steelMassKg": 42.639,
+    "totalProfileLengthM": 20.208,
+    "componentCount": 12,
+    "cutCount": 24,
+    "uniqueLengthCount": 4,
+    "uniqueProfileCount": 2,
+    "materialCostEstimateEurExVat": 131.76,
+    "materialCostRangeEurExVat": {
+      "low": 77.6,
+      "high": 175.67
+    },
+    "priceBasis": {
+      "valueEurPerKgExVat": 3.09,
+      "date": "2026-11-03",
+      "status": "REGIONAL_BUDGET_PROXY_NOT_SUPPLIER_QUOTE",
+      "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation."
+    },
+    "machineTimeMin": null,
+    "carbonKgCo2e": null,
+    "unavailableMetrics": [
+      "machineTimeMin: Avelis equipment cycle data missing",
+      "carbonKgCo2e: applicable product EPD missing"
+    ]
+  },
+  "components": [
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-01ZII06",
+      "role": "bottom_track",
+      "profile": "104MF12",
+      "lengthMm": 1000,
+      "massKg": 2.11,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|01ZII06"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-07QP292",
+      "role": "bottom_track",
+      "profile": "104MF12",
+      "lengthMm": 1000,
+      "massKg": 2.11,
+      "position": {
+        "xMm": 2000,
+        "yMm": 0,
+        "zMm": 0
+      },
+      "axis": "x",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|07QP292"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RMMV8G",
+      "role": "top_track",
+      "profile": "104MF12",
+      "lengthMm": 3000,
+      "massKg": 6.33,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 2338
+      },
+      "axis": "x",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0RMMV8G"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0UF31VE",
+      "role": "boundary_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2276,
+      "massKg": 4.8024,
+      "position": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0UF31VE"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-08LWQ30",
+      "role": "boundary_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2276,
+      "massKg": 4.8024,
+      "position": {
+        "xMm": 2950,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|08LWQ30"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0Y3V1HK",
+      "role": "opening_jamb",
+      "profile": "100MF12/50",
+      "lengthMm": 2276,
+      "massKg": 4.8024,
+      "position": {
+        "xMm": 950,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0Y3V1HK"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-11AE2EM",
+      "role": "opening_jamb",
+      "profile": "100MF12/50",
+      "lengthMm": 2276,
+      "massKg": 4.8024,
+      "position": {
+        "xMm": 2000,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|11AE2EM"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-09LF8CG",
+      "role": "opening_header",
+      "profile": "104MF12",
+      "lengthMm": 1000,
+      "massKg": 2.11,
+      "position": {
+        "xMm": 1000,
+        "yMm": 0,
+        "zMm": 2000
+      },
+      "axis": "x",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|09LF8CG"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
+      "role": "common_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2276,
+      "massKg": 4.8024,
+      "position": {
+        "xMm": 575,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1QQR8CC"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
+      "role": "cripple_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 276,
+      "massKg": 0.5824,
+      "position": {
+        "xMm": 1175,
+        "yMm": 0,
+        "zMm": 2062
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0T6HXOZ"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
+      "role": "cripple_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 276,
+      "massKg": 0.5824,
+      "position": {
+        "xMm": 1775,
+        "yMm": 0,
+        "zMm": 2062
+      },
+      "axis": "z",
+      "openingId": "DOOR-01",
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1EN9761"
+    },
+    {
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO",
+      "role": "common_stud",
+      "profile": "100MF12/50",
+      "lengthMm": 2276,
+      "massKg": 4.8024,
+      "position": {
+        "xMm": 2375,
+        "yMm": 0,
+        "zMm": 62
+      },
+      "axis": "z",
+      "openingId": null,
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0TH2CCO"
+    }
+  ],
+  "validation": {
+    "geometryValid": true,
+    "valid": true,
+    "engineeringStatus": "ENGINEERING_REVIEW_REQUIRED",
+    "manufacturingRelease": false,
+    "checkedRuleCount": 10,
+    "issues": [
+      {
+        "code": "STRUCTURAL_ANALYSIS_NOT_RUN",
+        "severity": "review",
+        "message": "No structural safety conclusion: project actions, restraints, bracing and connection properties are not available.",
+        "componentId": null,
+        "sourceId": "AFNOR_NF_EN_1993_1_3_NA"
+      },
+      {
+        "code": "MACHINE_RELEASE_BLOCKED",
+        "severity": "review",
+        "message": "No machine-ready release: Torcy equipment, supported operations, stock lengths and tolerances are not confirmed.",
+        "componentId": null,
+        "sourceId": null
+      },
+      {
+        "code": "REFERENCE_PRODUCT_NOT_AVELIS",
+        "severity": "review",
+        "message": "Metsec products and public market prices are reference inputs only; Avelis has not confirmed these products, prices, Torcy equipment or process capabilities.",
+        "componentId": null,
+        "sourceId": "METSEC_COMPONENTS_2026"
+      }
+    ]
+  },
+  "limitations": [
+    "Reference-product geometry and quantity calculation only. Structural capacity, connections, bracing, fire, acoustics, thermal performance, durability and regulatory compliance require project-specific review.",
+    "Metsec products and public market prices are reference inputs only; Avelis has not confirmed these products, prices, Torcy equipment or process capabilities."
+  ]
+}

@@ -9,139 +9,183 @@
   }
 
   function toCsv(rows, columns, delimiter) {
-    const sep = delimiter || ';';
-    const header = columns.map((column) => csvCell(column.label || column.key)).join(sep);
-    const body = rows.map((row) => columns.map((column) => csvCell(column.get ? column.get(row) : row[column.key])).join(sep));
+    const separator = delimiter || ';';
+    const header = columns.map((column) => csvCell(column.label || column.key)).join(separator);
+    const body = rows.map((row) => columns.map((column) => csvCell(column.get ? column.get(row) : row[column.key])).join(separator));
     return [header, ...body].join('\r\n') + '\r\n';
   }
 
   function bomCsv(candidate) {
     return toCsv(candidate.bom, [
-      { key: 'role', label: 'role' },
-      { key: 'materialCode', label: 'material_code' },
-      { key: 'sectionWidthMm', label: 'section_width_mm' },
-      { key: 'sectionDepthMm', label: 'section_depth_mm' },
-      { key: 'cutLengthMm', label: 'cut_length_mm' },
-      { key: 'quantity', label: 'quantity' },
+      { key: 'role' }, { key: 'profileId', label: 'profile_id' }, { key: 'manufacturerReference', label: 'manufacturer_reference' },
+      { key: 'materialId', label: 'material_id' }, { key: 'cutLengthMm', label: 'cut_length_mm' },
+      { key: 'massKgPerM', label: 'manufacturer_mass_kg_per_m' }, { key: 'quantity' },
+      { key: 'totalLengthM', label: 'total_length_m' }, { key: 'totalMassKg', label: 'total_mass_kg' },
       { label: 'component_ids', get: (row) => row.componentIds.join('|') }
+    ]);
+  }
+
+  function cuttingListCsv(candidate) {
+    return toCsv(candidate.members, [
+      { key: 'id', label: 'component_id' }, { key: 'role' }, { key: 'label' }, { key: 'openingId', label: 'opening_id' },
+      { label: 'profile_id', get: (row) => row.profile.id },
+      { label: 'manufacturer_reference', get: (row) => row.profile.manufacturerReference },
+      { key: 'lengthMm', label: 'cut_length_mm' }, { key: 'massKg', label: 'calculated_mass_kg' },
+      { label: 'mass_kg_per_m', get: (row) => row.profile.massKgPerM },
+      { label: 'operations', get: (row) => row.operations.join('|') },
+      { key: 'toleranceMm', label: 'tolerance_mm_pending_avelis' },
+      { key: 'manufacturingRelease', label: 'manufacturing_release' }
     ]);
   }
 
   function machineCsv(candidate) {
     return toCsv(candidate.members, [
-      { key: 'id', label: 'component_id' },
-      { key: 'role', label: 'role' },
-      { key: 'label', label: 'label' },
-      { key: 'openingId', label: 'opening_id' },
-      { key: 'materialCode', label: 'material_code' },
-      { label: 'width_mm', get: (row) => row.section.widthMm },
-      { label: 'depth_mm', get: (row) => row.section.depthMm },
-      { key: 'lengthMm', label: 'cut_length_mm' },
-      { key: 'axis', label: 'axis' },
-      { label: 'x_mm', get: (row) => row.position.xMm },
-      { label: 'y_mm', get: (row) => row.position.yMm },
-      { label: 'z_mm', get: (row) => row.position.zMm },
-      { label: 'operations', get: (row) => row.operations.join('|') },
-      { key: 'toleranceMm', label: 'tolerance_mm' }
+      { key: 'id', label: 'component_id' }, { key: 'role' },
+      { label: 'profile', get: (row) => row.profile.manufacturerReference }, { key: 'lengthMm', label: 'cut_length_mm' },
+      { key: 'axis' }, { label: 'x_mm', get: (row) => row.position.xMm },
+      { label: 'y_mm', get: (row) => row.position.yMm }, { label: 'z_mm', get: (row) => row.position.zMm },
+      { key: 'qrPayload', label: 'qr_payload' }, { key: 'manufacturingRelease', label: 'release_status' }
+    ]);
+  }
+
+  function labelsCsv(candidate) {
+    return toCsv(candidate.members, [
+      { key: 'id', label: 'component_id' }, { key: 'role' },
+      { label: 'profile', get: (row) => row.profile.manufacturerReference },
+      { key: 'lengthMm', label: 'length_mm' }, { key: 'qrPayload', label: 'qr_payload' }
     ]);
   }
 
   function comparisonCsv(result) {
     return toCsv(result.rankedCandidates, [
-      { key: 'rank', label: 'rank' },
-      { key: 'id', label: 'candidate_id' },
+      { key: 'rank' }, { key: 'id', label: 'candidate_id' },
+      { label: 'profile_set', get: (row) => row.option.profileSetId },
+      { label: 'grid_strategy', get: (row) => row.option.gridStrategy },
       { label: 'stud_spacing_mm', get: (row) => row.option.studSpacingMm },
-      { label: 'grid_offset_mm', get: (row) => row.option.gridOffsetMm },
-      { label: 'header_layers', get: (row) => row.option.headerLayers },
-      { label: 'timber_volume_m3', get: (row) => row.metrics.timberVolumeM3 },
+      { label: 'steel_mass_kg', get: (row) => row.metrics.steelMassKg },
       { label: 'component_count', get: (row) => row.metrics.componentCount },
-      { label: 'complexity_index', get: (row) => row.metrics.manufacturingComplexity },
-      { label: 'estimated_cost_eur', get: (row) => row.metrics.estimatedCostEur },
-      { label: 'estimated_machine_time_min', get: (row) => row.metrics.estimatedMachineTimeMin },
-      { key: 'score', label: 'weighted_score_lower_is_better' },
-      { key: 'paretoOptimal', label: 'pareto_optimal' }
+      { label: 'unique_length_count', get: (row) => row.metrics.uniqueLengthCount },
+      { label: 'material_cost_eur_ex_vat', get: (row) => row.metrics.materialCostEstimateEurExVat },
+      { key: 'score', label: 'decision_score_lower_is_better' }, { key: 'paretoOptimal', label: 'pareto_optimal' },
+      { label: 'engineering_status', get: (row) => row.validation.engineeringStatus }
     ]);
   }
 
   function noovRequest(result) {
-    const input = result.input;
-    const openings = core.project.createOpenings(input).map((opening) => ({
-      type: opening.type,
-      id: opening.id,
-      xMm: opening.xMm,
-      sillMm: opening.sillMm,
-      widthMm: opening.widthMm,
-      heightMm: opening.heightMm
-    }));
     return {
-      schema: 'avelis.noov.wall-configuration.request.v1',
+      schema: 'avelis.noov.wall-configuration.request.v2',
       status: 'INTERFACE_PROPOSAL_NOT_OFFICIAL_NOOV_FORMAT',
-      project: { projectId: input.projectId, typology: input.typology, wallId: input.wallId, version: input.version },
+      project: result.project.identity,
+      source: result.project.source,
       geometry: {
-        wallLengthMm: input.wallLengthMm,
-        wallHeightMm: input.wallHeightMm,
-        openings
+        wallLengthMm: result.input.wallLengthMm,
+        wallHeightMm: result.input.wallHeightMm,
+        wallThicknessMm: result.input.wallThicknessMm,
+        placement: result.input.placement,
+        openings: result.input.openings
       },
-      objective: input.priority,
-      requestedOutputs: ['PARAMETRIC_MODEL', 'BOM', 'MACHINE_NEUTRAL_DATA', 'STL_PROTOTYPE', 'VALIDATION_REPORT']
+      objective: result.input.priority,
+      requestedOutputs: ['STEEL_PANEL_MODEL', 'BOM', 'CUTTING_LIST', 'MANUFACTURING_NEUTRAL_DATA', 'FABLAB_STL', 'VALIDATION_REPORT']
     };
   }
 
   function noovResponse(result, candidate) {
     return {
-      schema: 'avelis.noov.wall-design.response.v1',
+      schema: 'avelis.noov.wall-design.response.v2',
       status: 'ENGINEERING_REVIEW_REQUIRED',
       project: result.project.identity,
       selectedCandidate: candidate.id,
-      score: candidate.score,
+      decisionScore: candidate.score,
       openings: candidate.wall.openings,
       metrics: candidate.metrics,
       components: candidate.members.map((member) => ({
-        id: member.id,
-        role: member.role,
-        materialCode: member.materialCode,
-        section: member.section,
-        lengthMm: member.lengthMm,
-        position: member.position,
-        axis: member.axis,
-        openingId: member.openingId
+        id: member.id, role: member.role, profile: member.profile.manufacturerReference,
+        lengthMm: member.lengthMm, massKg: member.massKg, position: member.position,
+        axis: member.axis, openingId: member.openingId, qrPayload: member.qrPayload
       })),
       validation: candidate.validation,
-      disclaimer: result.rules.engineeringDisclaimer
+      limitations: [result.rules.engineeringDisclaimer, result.rules.avelisDisclaimer]
     };
   }
 
-  function productionHandover(result, candidate) {
+  function manufacturingHandover(result, candidate) {
+    const sequenceDefinitions = [
+      { stepId: 'STEP-01', order: 1, operation: 'SET_BOTTOM_TRACK_SEGMENTS', roles: ['bottom_track'], dependsOn: [] },
+      { stepId: 'STEP-02', order: 2, operation: 'SET_BOUNDARY_AND_OPENING_JAMBS', roles: ['boundary_stud', 'opening_jamb'], dependsOn: ['STEP-01'] },
+      { stepId: 'STEP-03', order: 3, operation: 'SET_COMMON_AND_CRIPPLE_STUDS', roles: ['common_stud', 'cripple_stud'], dependsOn: ['STEP-01'] },
+      { stepId: 'STEP-04', order: 4, operation: 'SET_OPENING_HORIZONTAL_MEMBERS', roles: ['window_sill', 'opening_header'], dependsOn: ['STEP-02', 'STEP-03'] },
+      { stepId: 'STEP-05', order: 5, operation: 'SET_TOP_TRACK', roles: ['top_track'], dependsOn: ['STEP-02', 'STEP-03', 'STEP-04'] },
+      { stepId: 'STEP-06', order: 6, operation: 'DIMENSIONAL_AND_ID_CONTROL', roles: [], dependsOn: ['STEP-05'] }
+    ];
+    const components = candidate.members.map((member) => ({
+      partId: member.id,
+      partType: member.role,
+      materialId: result.rules.material.id,
+      profileId: member.profile.id,
+      manufacturerReference: member.profile.manufacturerReference,
+      dimensionsMm: {
+        length: member.lengthMm,
+        sectionDepth: member.profile.webDepthMm,
+        nominalThickness: member.profile.nominalThicknessMm
+      },
+      calculatedMassKg: member.massKg,
+      positionMm: { x: member.position.xMm, y: member.position.yMm, z: member.position.zMm },
+      axis: member.axis,
+      operations: member.operations,
+      toleranceMm: null,
+      qrPayload: member.qrPayload
+    }));
+    const assemblySequence = sequenceDefinitions.map((step) => ({
+      stepId: step.stepId,
+      order: step.order,
+      operation: step.operation,
+      partIds: step.roles.length ? components.filter((component) => step.roles.includes(component.partType)).map((component) => component.partId) : components.map((component) => component.partId),
+      dependsOn: step.dependsOn,
+      status: 'PROPOSED_PENDING_BLOC2_VALIDATION'
+    }));
     return {
-      schema: 'avelis.production.wall-handover.v1',
+      schema: 'avelis.production.wall-handover.v2',
+      schemaVersion: '2.0',
+      releaseStatus: 'BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION',
       project: result.project.identity,
+      configurationId: `${result.input.projectId}-${result.input.wallId}`,
+      revision: result.input.version,
+      units: { length: 'mm', mass: 'kg' },
       candidateId: candidate.id,
-      toleranceMm: result.rules.manufacturingToleranceMm,
-      assemblySequence: [
-        { step: 1, operation: 'POSITION_BOTTOM_PLATE', componentRoles: ['bottom_plate'] },
-        { step: 2, operation: 'POSITION_BOUNDARY_AND_OPENING_STUDS', componentRoles: ['boundary_stud', 'king_stud', 'jack_stud'] },
-        { step: 3, operation: 'POSITION_COMMON_AND_CRIPPLE_STUDS', componentRoles: ['common_stud', 'cripple_stud'] },
-        { step: 4, operation: 'POSITION_OPENING_HORIZONTAL_FRAMING', componentRoles: ['sill', 'header'] },
-        { step: 5, operation: 'POSITION_TOP_PLATES', componentRoles: ['top_plate'] },
-        { step: 6, operation: 'QUALITY_CONTROL', checks: ['ID', 'DIMENSIONS', 'OPENING_CLEAR', 'SQUARING'] }
-      ],
-      machineData: { format: 'CSV_DXF_NEUTRAL', memberCount: candidate.members.length },
-      cellsMustReturn: ['max_member_length_mm', 'supported_operations', 'positioning_accuracy_mm', 'rejected_component_ids', 'defect_codes']
+      material: result.rules.material,
+      profiles: Array.from(new Set(candidate.members.map((member) => member.profile.id))).map((id) => core.engineering.getProfile(id)),
+      components,
+      toleranceMm: null,
+      stockLengthMm: null,
+      neutralFormats: ['CSV', 'JSON', 'DXF_ENVELOPE', 'STL_FABLAB'],
+      assemblySequence,
+      interfaceChecks: {
+        componentIdsUnique: new Set(components.map((component) => component.partId)).size === components.length,
+        allSequencePartIdsExist: assemblySequence.every((step) => step.partIds.every((id) => components.some((component) => component.partId === id))),
+        bomMassMatchesGeometry: candidate.crossValidation.massReconciliation.status === 'MATCH'
+      },
+      requiredFromAvelisOrBloc2: [
+        'machine_identifier', 'supported_profile_catalog', 'stock_lengths_mm', 'supported_operations',
+        'hole_and_fastener_rules', 'positioning_accuracy_mm', 'manufacturing_tolerances_mm', 'native_machine_file_schema'
+      ]
     };
   }
 
   function logisticsHandover(result, candidate) {
     return {
-      schema: 'avelis.logistics.wall-handover.v1',
+      schema: 'avelis.logistics.wall-handover.v2',
       project: result.project.identity,
       candidateId: candidate.id,
       componentIds: candidate.members.map((member) => member.id),
-      packageEnvelopeMm: { length: candidate.wall.lengthMm, height: candidate.wall.heightMm, depth: candidate.wall.depthMm },
-      productionOrder: candidate.rank,
-      traceability: { unit: 'COMPONENT_ID', version: result.input.version, status: 'DESIGN_VALIDATED_WITHIN_POC_RULES' },
-      logisticsMustReturn: ['max_transport_envelope_mm', 'storage_orientation', 'delivery_sequence', 'defect_feedback']
+      calculatedSteelMassKg: candidate.metrics.steelMassKg,
+      panelEnvelopeMm: { length: candidate.wall.lengthMm, height: candidate.wall.heightMm, depth: candidate.wall.displayDepthMm },
+      traceability: { unit: 'STABLE_COMPONENT_ID', qrPayloadField: 'qrPayload', version: result.input.version },
+      requiredFromLogistics: ['transport_envelope_mm', 'package_mass_limit_kg', 'storage_orientation', 'delivery_sequence', 'damage_feedback_schema']
     };
   }
 
-  core.serialize = { toCsv, bomCsv, machineCsv, comparisonCsv, noovRequest, noovResponse, productionHandover, logisticsHandover };
+  core.serialize = {
+    toCsv, bomCsv, cuttingListCsv, machineCsv, labelsCsv, comparisonCsv,
+    noovRequest, noovResponse, manufacturingHandover, logisticsHandover
+  };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

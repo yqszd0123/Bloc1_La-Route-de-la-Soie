@@ -1,0 +1,64 @@
+{
+  "caseId": "ifc-door-reference",
+  "label": "Porte IFC de référence",
+  "input": {
+    "sourceMode": "MANUAL",
+    "projectId": "AVELIS-IAM-2026",
+    "typology": "REFERENCE",
+    "wallId": "IFC-DOOR-REFERENCE",
+    "version": "2.0",
+    "wallLengthMm": 3000,
+    "wallHeightMm": 2400,
+    "wallThicknessMm": 100,
+    "windowEnabled": false,
+    "windowWidthMm": 1000,
+    "windowHeightMm": 1000,
+    "windowXMm": 1000,
+    "sillHeightMm": 500,
+    "doorEnabled": true,
+    "doorWidthMm": 1000,
+    "doorHeightMm": 2000,
+    "doorXMm": 1000,
+    "budgetPriceEurPerKgExVat": null,
+    "budgetLowEurPerKgExVat": null,
+    "budgetHighEurPerKgExVat": null,
+    "budgetPriceLabel": "",
+    "budgetPriceDate": "",
+    "budgetPriceSource": "",
+    "priority": "balanced",
+    "prototypeScale": 20
+  },
+  "searchSpaceSize": 6,
+  "validCandidateCount": 6,
+  "rejectedCandidateCount": 0,
+  "processingTimeMs": 2,
+  "recommendedCandidateId": "CAND-01",
+  "recommendedRank": 1,
+  "score": 0,
+  "paretoOptimal": true,
+  "metrics": {
+    "steelMassKg": 42.639,
+    "totalProfileLengthM": 20.208,
+    "componentCount": 12,
+    "cutCount": 24,
+    "uniqueLengthCount": 4,
+    "uniqueProfileCount": 2,
+    "materialCostEstimateEurExVat": 131.76,
+    "materialCostRangeEurExVat": {
+      "low": 77.6,
+      "high": 175.67
+    },
+    "priceBasis": {
+      "valueEurPerKgExVat": 3.09,
+      "date": "2026-11-03",
+      "status": "REGIONAL_BUDGET_PROXY_NOT_SUPPLIER_QUOTE",
+      "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation."
+    },
+    "machineTimeMin": null,
+    "carbonKgCo2e": null,
+    "unavailableMetrics": [
+      "machineTimeMin: Avelis equipment cycle data missing",
+      "carbonKgCo2e: applicable product EPD missing"
+    ]
+  }
+}

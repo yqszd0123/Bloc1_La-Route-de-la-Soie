@@ -96,7 +96,7 @@
     });
     renderFaces.sort((a, b) => a.depth - b.depth);
     renderFaces.forEach((face) => {
-      const base = colors[face.member.role] || '#b67c4f';
+      const base = colors[face.member.role] || '#6f8791';
       ctx.beginPath();
       face.points.forEach((p, index) => {
         const x = p.x * scale + offsetX; const y = p.y * scale + offsetY;
@@ -105,7 +105,7 @@
       ctx.closePath();
       ctx.fillStyle = shade(base, face.shade);
       ctx.fill();
-      ctx.strokeStyle = 'rgba(48,34,26,.42)';
+      ctx.strokeStyle = 'rgba(24,45,54,.42)';
       ctx.lineWidth = 1;
       ctx.stroke();
     });

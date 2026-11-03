@@ -1,77 +1,43 @@
 # Architecture technique
 
-## Principe directeur
+## Source de vérité unique
 
-Le même modèle sémantique alimente la visualisation, la nomenclature, les métriques, les règles et tous les exports. Ainsi, une pièce affichée porte le même identifiant dans la BOM et dans le fichier machine. Il n'existe pas de seconde maquette reconstruite manuellement pour la remise.
+Les trois modes d’entrée convergent vers le même objet `ProjectInput`, puis vers le même générateur acier. Visualisation, BOM, métriques, comparaison et exports consomment exactement les mêmes composants ; aucune maquette de démonstration parallèle n’est maintenue.
 
 ```text
-Configuration client / Noov (mur + openings[])
-            │
-            ▼
-  normalisation + règles d'entrée
-            │
-            ▼
-   espace de 16 configurations
-            │
-            ▼
- modèle sémantique de chaque candidat
-            │
-      ┌─────┼─────────────┐
-      ▼     ▼             ▼
-  règles  métriques   visualisation
-      │     │
-      └──┬──┘
-         ▼
- classement multicritère + Pareto
-         │
-         ▼
- SVG / DXF / STL / BOM / machine / interfaces / qualité
+IFC ── parseur sémantique ─┐
+STEP ─ Open CASCADE + axes ├─ ProjectInput ─ validation ─ 6 candidats ─ classement ─ paquet Bloc 2
+Manuel ─ formulaire ───────┘
 ```
 
-## Modules et dépendances
+## Frontières des modules
 
-| Module | Responsabilité | Ne connaît pas |
-|---|---|---|
-| `domain` | valeurs par défaut, profil POC, identité/version | interface HTML |
-| `rules/input-rules` | valider le besoin avant calcul | géométrie générée |
-| `generation` | produire des composants sémantiques | classement et fichiers |
-| `rules/candidate-rules` | contrôler les composants générés | DOM et téléchargements |
-| `optimization` | métriques, Pareto et score pondéré | présentation graphique |
-| `export` | sérialiser une solution sélectionnée | saisie de formulaire |
-| `apps/web` | interaction, état, dessin et téléchargement | logique métier interne |
+| Dossier | Responsabilité |
+|---|---|
+| `domain` | normalisation, identité, configuration et provenance |
+| `ifc` | entités STEP physiques IFC, unités, placements et relations |
+| `step` | enveloppe du maillage Open CASCADE et mapping d’axes |
+| `generation` | création des composants acier sémantiques |
+| `rules` | validation des entrées et des candidats |
+| `optimization` | espace exhaustif, métriques, Pareto, classement |
+| `export` | CSV/JSON/SVG/DXF/STL/ZIP et contrats inter-blocs |
+| `apps/web` | interaction, rendu, import local et téléchargement |
 
-Les fichiers JavaScript sont des modules IIFE volontairement compatibles avec un simple fichier HTML et avec Node.js. Ce choix évite une étape de compilation fragile pour la soutenance tout en conservant des frontières de modules nettes.
+## Décisions d’architecture
 
-## Modèle de données
+- modules courts par responsabilité, sans framework obligatoire ni compilation ;
+- données d’ingénierie générées depuis un JSON autoritatif unique ;
+- dépendance externe STEP isolée dans `third_party`, version et licences figées ;
+- sémantique d’ouverture générique : porte et fenêtre utilisent le même modèle ;
+- coûts découplés de la géométrie ;
+- champs industriels inconnus conservés à `null` et libération machine bloquée ;
+- identifiants déterministes issus du projet, mur, version et rôle géométrique ;
+- toute extension modifie la source de vérité et ses consommateurs, sans chaîne historique parallèle.
 
-Une ouverture contient : identifiant, type (`WINDOW` ou `DOOR`), origine, largeur, hauteur et allège. Il n'existe plus de modèle « baie historique » séparé : `openings[]` est la source unique pour la génération, les règles, le visualiseur et les fichiers Noov.
+## STEP versus IFC
 
-Une pièce contient : identifiant, rôle, libellé, matériau, section, axe local, origine, longueur, boîte englobante, opérations, tolérance et éventuellement `openingId`. Ce lien permet de tracer chaque élément de cadre vers la fenêtre ou la porte qui l'a produit. L'identifiant est construit depuis `projectId`, `wallId`, `version` et le numéro de composant. Les exports ne réinventent jamais les identifiants.
+IFC fournit des relations de bâtiment et d’ouverture ; STEP fournit une géométrie CAO. L’adaptateur STEP calcule seulement l’enveloppe X/Y/Z et exige un mapping explicite des axes. Cette séparation empêche une géométrie STEP d’être présentée à tort comme un modèle BIM sémantique.
 
-## Génération et optimisation
+## Contrat Bloc 1 → Bloc 2
 
-Pour une configuration valide, la recherche combine :
-
-- entraxe : 400, 450, 500 ou 600 mm ;
-- origine de trame : 0 ou demi-entraxe ;
-- linteau : une ou deux couches de 45 mm.
-
-Le générateur construit chaque encadrement depuis le même algorithme : montants maîtres, montants d'appui, linteau et montants hauts. Le type d'ouverture ne change que les contraintes nécessaires : une fenêtre reçoit une traverse d'appui et des montants d'allège ; une porte part du sol, ne reçoit pas de traverse basse et interrompt la lisse basse. La trame respecte ensuite toutes les zones réservées et produit 16 candidats. Les candidats en erreur sont exclus. Les valides sont normalisés sur trois objectifs à minimiser : volume, complexité, coût estimé. Le score est une somme pondérée selon la priorité utilisateur ; le statut Pareto est calculé indépendamment.
-
-## Décisions de robustesse
-
-- zéro dépendance d'exécution ou CDN ;
-- calcul déterministe et hors ligne ;
-- règles et hypothèses versionnées ;
-- messages bloquants distincts des avertissements d'ingénierie ;
-- limite de domaine, distance aux rives et séparation fenêtre/porte explicites avant la génération ;
-- ZIP créé localement dans le navigateur ;
-- tests de bout en bout sur les formats remis.
-
-## Règle d'évolution
-
-Une extension ne doit pas créer une deuxième chaîne métier à côté de la première. Elle modifie la source de vérité, adapte les consommateurs existants et supprime l'ancien modèle devenu redondant. Les conditions locales ne sont admises que pour une différence réelle du domaine — par exemple, une porte n'a pas de traverse d'allège — tandis que génération, validation, métriques et exports restent communs.
-
-## Extension industrielle
-
-Ajouter un nouveau système constructif doit se faire par un profil de règles et un générateur séparé, sans modifier l'interface d'export. Les prochaines briques sont : solveur structurel validé, optimisation combinatoire de débit, bibliothèque d'assemblages, export machine réel, IFC/BTLx, authentification et journal d'audit serveur.
+Le paquet contient un JSON `avelis.production.wall-handover.v2`, une BOM et des listes unitaires. Les composants ont le même ID partout. La séquence d’assemblage référence ces IDs et déclare ses dépendances. Les tolérances, outils, fixations et formats natifs restent absents jusqu’à confirmation ; le statut reste `BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION`.

@@ -4,16 +4,21 @@ const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const sourceFiles = [
+  'packages/core/src/data/engineering-catalog.js',
   'packages/core/src/domain/constants.js',
   'packages/core/src/utils/math.js',
+  'packages/core/src/domain/engineering.js',
   'packages/core/src/domain/project.js',
   'packages/core/src/rules/input-rules.js',
   'packages/core/src/generation/member-factory.js',
-  'packages/core/src/generation/wall-generator.js',
+  'packages/core/src/generation/steel-panel-generator.js',
   'packages/core/src/rules/candidate-rules.js',
   'packages/core/src/optimization/metrics.js',
   'packages/core/src/optimization/candidate-search.js',
   'packages/core/src/optimization/ranker.js',
+  'packages/core/src/ifc/step-parser.js',
+  'packages/core/src/ifc/ifc-importer.js',
+  'packages/core/src/step/step-adapter.js',
   'packages/core/src/export/serialize.js',
   'packages/core/src/export/stl.js',
   'packages/core/src/export/dxf.js',

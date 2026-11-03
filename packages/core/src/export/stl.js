@@ -49,6 +49,23 @@
     return lines.join('\n') + '\n';
   }
 
-  core.stl = { stlForCandidate };
+  function stlForMember(member, scale) {
+    const safeScale = Math.max(1, Number(scale) || 20);
+    const points = vertices(member.bounds, safeScale);
+    const lines = [`solid ${member.id}_scale_1_${safeScale}`];
+    FACE_TRIANGLES.forEach((indices) => {
+      const triangle = indices.map((index) => points[index]);
+      const n = normal(...triangle);
+      lines.push(`  facet normal ${n.map((value) => value.toFixed(6)).join(' ')}`);
+      lines.push('    outer loop');
+      triangle.forEach((point) => lines.push(`      vertex ${point.map((value) => value.toFixed(6)).join(' ')}`));
+      lines.push('    endloop');
+      lines.push('  endfacet');
+    });
+    lines.push(`endsolid ${member.id}_scale_1_${safeScale}`);
+    return lines.join('\n') + '\n';
+  }
+
+  core.stl = { stlForCandidate, stlForMember };
 })(typeof globalThis !== 'undefined' ? globalThis : window);
 

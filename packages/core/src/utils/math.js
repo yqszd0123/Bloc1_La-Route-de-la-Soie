@@ -41,9 +41,19 @@
     return String(value).padStart(size || 3, '0');
   }
 
-  function stableComponentId(projectId, wallId, version, index) {
-    const safeVersion = String(version).replace(/[^0-9A-Za-z]+/g, '-');
-    return [projectId, wallId, 'V' + safeVersion, 'C' + pad(index, 3)].join('-');
+  function hash32(value) {
+    let hash = 0x811c9dc5;
+    const text = String(value);
+    for (let index = 0; index < text.length; index += 1) {
+      hash ^= text.charCodeAt(index);
+      hash = Math.imul(hash, 0x01000193);
+    }
+    return (hash >>> 0).toString(36).toUpperCase().padStart(7, '0');
+  }
+
+  function stableComponentId(projectId, wallId, version, semanticKey) {
+    const prefix = [slug(projectId), slug(wallId), 'v' + slug(version)].join('-').toUpperCase();
+    return `${prefix}-C-${hash32(semanticKey)}`;
   }
 
   function normaliseMetric(value, min, max) {
@@ -60,6 +70,7 @@
     deepClone,
     pad,
     stableComponentId,
+    hash32,
     normaliseMetric
   };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

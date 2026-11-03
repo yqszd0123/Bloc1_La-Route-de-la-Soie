@@ -1,0 +1,1077 @@
+{
+  "project": {
+    "schemaVersion": "2.0",
+    "software": {
+      "name": "Avelis Wall Flow",
+      "version": "2.0.0"
+    },
+    "identity": {
+      "projectId": "AVELIS-IAM-2026",
+      "typology": "REFERENCE",
+      "wallId": "IFC-DOOR-REFERENCE",
+      "wallGuid": null,
+      "version": "2.0"
+    },
+    "source": {
+      "mode": "MANUAL",
+      "ifc": null,
+      "step": null
+    },
+    "configuration": {
+      "sourceMode": "MANUAL",
+      "projectId": "AVELIS-IAM-2026",
+      "typology": "REFERENCE",
+      "wallId": "IFC-DOOR-REFERENCE",
+      "wallGuid": null,
+      "version": "2.0",
+      "wallLengthMm": 3000,
+      "wallHeightMm": 2400,
+      "wallThicknessMm": 100,
+      "placement": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 0,
+        "rotationDeg": 0
+      },
+      "openings": [
+        {
+          "id": "DOOR-01",
+          "guid": null,
+          "type": "DOOR",
+          "xMm": 1000,
+          "sillMm": 0,
+          "widthMm": 1000,
+          "heightMm": 2000,
+          "source": "MANUAL_INPUT",
+          "sourceRef": null
+        }
+      ],
+      "budgetInput": {
+        "valueEurPerKgExVat": 0,
+        "lowerEurPerKgExVat": 0,
+        "upperEurPerKgExVat": 0,
+        "label": "",
+        "date": "",
+        "source": ""
+      },
+      "priority": "balanced",
+      "prototypeScale": 20,
+      "ifcContext": null,
+      "stepContext": null,
+      "resolvedBudgetPrice": {
+        "valueEurPerKgExVat": 3.09,
+        "lowerReferenceEurPerKgExVat": 1.82,
+        "upperReferenceEurPerKgExVat": 4.12,
+        "priceDate": "2026-11-03",
+        "status": "REGIONAL_BUDGET_PROXY_NOT_SUPPLIER_QUOTE",
+        "sourceIds": [
+          "CYPE_FR_COLD_FORMED_STEEL_PRICE_2026",
+          "RNOV_WAVRIN_M48_PRICE_2026",
+          "ISOLAVA_M_PROFILE_2026",
+          "LITT_M100_PRICE_2026"
+        ],
+        "method": "Arithmetic mean of 3.32 €/kg (French cold-formed Z275 construction database), 1.00 €/m ÷ 0.55 kg/m = 1.82 €/kg (regional Lille M48 retail cross-check), and 9.96 € ÷ 2.419 kg = 4.12 €/kg (M100 retail cross-check), rounded to 3.09 €/kg ex VAT.",
+        "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation.",
+        "limitation": "No public statistical average was found for the exact Metframe profiles in Hauts-de-France. This is a transparent regional budget proxy using one local listing and two comparable French references.",
+        "origin": "HAUTS_DE_FRANCE_REFERENCE_DEFAULT"
+      }
+    },
+    "ruleProfile": {
+      "id": "CFS-REFERENCE-2026-11-03",
+      "label": "Cold-formed steel reference workflow — engineering review required",
+      "status": "ENGINEERING_REVIEW_REQUIRED",
+      "disclaimer": "Reference-product geometry and quantity calculation only. Structural capacity, connections, bracing, fire, acoustics, thermal performance, durability and regulatory compliance require project-specific review."
+    }
+  },
+  "candidate": {
+    "id": "CAND-01",
+    "option": {
+      "profileSetId": "MF-12-50",
+      "gridStrategy": "WALL_ORIGIN",
+      "studSpacingMm": 600,
+      "studProfileId": "100MF12-50",
+      "trackProfileId": "104MF12"
+    },
+    "wall": {
+      "lengthMm": 3000,
+      "heightMm": 2400,
+      "sourceThicknessMm": 100,
+      "displayDepthMm": 104,
+      "placement": {
+        "xMm": 0,
+        "yMm": 0,
+        "zMm": 0,
+        "rotationDeg": 0
+      },
+      "openings": [
+        {
+          "id": "DOOR-01",
+          "guid": null,
+          "type": "DOOR",
+          "xMm": 1000,
+          "sillMm": 0,
+          "widthMm": 1000,
+          "heightMm": 2000,
+          "source": "MANUAL_INPUT",
+          "sourceRef": null
+        }
+      ]
+    },
+    "members": [
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-01ZII06",
+        "role": "bottom_track",
+        "label": "Bottom track 1",
+        "source": "PANEL_ENVELOPE",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "104MF12",
+          "manufacturerReference": "104MF12",
+          "family": "TRACK_U",
+          "massKgPerM": 2.11,
+          "webDepthMm": 104,
+          "flange1Mm": 62,
+          "flange2Mm": 62,
+          "lipMm": 0,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Tracks table, row 104MF12"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 62,
+          "depthMm": 104
+        },
+        "axis": "x",
+        "lengthMm": 1000,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 0
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|01ZII06",
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "max": {
+            "x": 1000,
+            "y": 104,
+            "z": 62
+          }
+        },
+        "massKg": 2.11
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-07QP292",
+        "role": "bottom_track",
+        "label": "Bottom track 2",
+        "source": "PANEL_ENVELOPE",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "104MF12",
+          "manufacturerReference": "104MF12",
+          "family": "TRACK_U",
+          "massKgPerM": 2.11,
+          "webDepthMm": 104,
+          "flange1Mm": 62,
+          "flange2Mm": 62,
+          "lipMm": 0,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Tracks table, row 104MF12"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 62,
+          "depthMm": 104
+        },
+        "axis": "x",
+        "lengthMm": 1000,
+        "position": {
+          "xMm": 2000,
+          "yMm": 0,
+          "zMm": 0
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|07QP292",
+        "bounds": {
+          "min": {
+            "x": 2000,
+            "y": 0,
+            "z": 0
+          },
+          "max": {
+            "x": 3000,
+            "y": 104,
+            "z": 62
+          }
+        },
+        "massKg": 2.11
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RMMV8G",
+        "role": "top_track",
+        "label": "Top track",
+        "source": "PANEL_ENVELOPE",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "104MF12",
+          "manufacturerReference": "104MF12",
+          "family": "TRACK_U",
+          "massKgPerM": 2.11,
+          "webDepthMm": 104,
+          "flange1Mm": 62,
+          "flange2Mm": 62,
+          "lipMm": 0,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Tracks table, row 104MF12"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 62,
+          "depthMm": 104
+        },
+        "axis": "x",
+        "lengthMm": 3000,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 2338
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0RMMV8G",
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 2338
+          },
+          "max": {
+            "x": 3000,
+            "y": 104,
+            "z": 2400
+          }
+        },
+        "massKg": 6.33
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0UF31VE",
+        "role": "boundary_stud",
+        "label": "Left boundary stud",
+        "source": "PANEL_ENVELOPE",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 2276,
+        "position": {
+          "xMm": 0,
+          "yMm": 0,
+          "zMm": 62
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0UF31VE",
+        "bounds": {
+          "min": {
+            "x": 0,
+            "y": 0,
+            "z": 62
+          },
+          "max": {
+            "x": 50,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 4.8024
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-08LWQ30",
+        "role": "boundary_stud",
+        "label": "Right boundary stud",
+        "source": "PANEL_ENVELOPE",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 2276,
+        "position": {
+          "xMm": 2950,
+          "yMm": 0,
+          "zMm": 62
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|08LWQ30",
+        "bounds": {
+          "min": {
+            "x": 2950,
+            "y": 0,
+            "z": 62
+          },
+          "max": {
+            "x": 3000,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 4.8024
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0Y3V1HK",
+        "role": "opening_jamb",
+        "label": "Left jamb — DOOR",
+        "source": "OPENING_FRAME",
+        "openingId": "DOOR-01",
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 2276,
+        "position": {
+          "xMm": 950,
+          "yMm": 0,
+          "zMm": 62
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0Y3V1HK",
+        "bounds": {
+          "min": {
+            "x": 950,
+            "y": 0,
+            "z": 62
+          },
+          "max": {
+            "x": 1000,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 4.8024
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-11AE2EM",
+        "role": "opening_jamb",
+        "label": "Right jamb — DOOR",
+        "source": "OPENING_FRAME",
+        "openingId": "DOOR-01",
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 2276,
+        "position": {
+          "xMm": 2000,
+          "yMm": 0,
+          "zMm": 62
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|11AE2EM",
+        "bounds": {
+          "min": {
+            "x": 2000,
+            "y": 0,
+            "z": 62
+          },
+          "max": {
+            "x": 2050,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 4.8024
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-09LF8CG",
+        "role": "opening_header",
+        "label": "Header track — DOOR",
+        "source": "OPENING_FRAME",
+        "openingId": "DOOR-01",
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "104MF12",
+          "manufacturerReference": "104MF12",
+          "family": "TRACK_U",
+          "massKgPerM": 2.11,
+          "webDepthMm": 104,
+          "flange1Mm": 62,
+          "flange2Mm": 62,
+          "lipMm": 0,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Tracks table, row 104MF12"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 62,
+          "depthMm": 104
+        },
+        "axis": "x",
+        "lengthMm": 1000,
+        "position": {
+          "xMm": 1000,
+          "yMm": 0,
+          "zMm": 2000
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|09LF8CG",
+        "bounds": {
+          "min": {
+            "x": 1000,
+            "y": 0,
+            "z": 2000
+          },
+          "max": {
+            "x": 2000,
+            "y": 104,
+            "z": 2062
+          }
+        },
+        "massKg": 2.11
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
+        "role": "common_stud",
+        "label": "Common stud",
+        "source": "REFERENCE_GRID",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 2276,
+        "position": {
+          "xMm": 575,
+          "yMm": 0,
+          "zMm": 62
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1QQR8CC",
+        "bounds": {
+          "min": {
+            "x": 575,
+            "y": 0,
+            "z": 62
+          },
+          "max": {
+            "x": 625,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 4.8024
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
+        "role": "cripple_stud",
+        "label": "Upper cripple stud — DOOR",
+        "source": "OPENING_GRID",
+        "openingId": "DOOR-01",
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 276,
+        "position": {
+          "xMm": 1175,
+          "yMm": 0,
+          "zMm": 2062
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0T6HXOZ",
+        "bounds": {
+          "min": {
+            "x": 1175,
+            "y": 0,
+            "z": 2062
+          },
+          "max": {
+            "x": 1225,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 0.5824
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
+        "role": "cripple_stud",
+        "label": "Upper cripple stud — DOOR",
+        "source": "OPENING_GRID",
+        "openingId": "DOOR-01",
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 276,
+        "position": {
+          "xMm": 1775,
+          "yMm": 0,
+          "zMm": 2062
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1EN9761",
+        "bounds": {
+          "min": {
+            "x": 1775,
+            "y": 0,
+            "z": 2062
+          },
+          "max": {
+            "x": 1825,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 0.5824
+      },
+      {
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO",
+        "role": "common_stud",
+        "label": "Common stud",
+        "source": "REFERENCE_GRID",
+        "openingId": null,
+        "material": {
+          "id": "REF-METSEC-Z275-FY450",
+          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
+          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+          "coating": "Z275",
+          "minimumYieldStrengthNmm2": 450
+        },
+        "profile": {
+          "id": "100MF12-50",
+          "manufacturerReference": "100MF12/50",
+          "family": "STUD_C",
+          "massKgPerM": 2.11,
+          "webDepthMm": 100,
+          "flange1Mm": 50,
+          "flange2Mm": 50,
+          "lipMm": 14,
+          "nominalThicknessMm": 1.2,
+          "minimumYieldStrengthNmm2": 450,
+          "coating": "Z275",
+          "sourceId": "METSEC_COMPONENTS_2026",
+          "sourceLocation": "Studs / Joists table, row 100MF12/50"
+        },
+        "representation": {
+          "kind": "PROFILE_ENVELOPE",
+          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
+        },
+        "sectionEnvelope": {
+          "inPlaneWidthMm": 50,
+          "depthMm": 100
+        },
+        "axis": "z",
+        "lengthMm": 2276,
+        "position": {
+          "xMm": 2375,
+          "yMm": 0,
+          "zMm": 62
+        },
+        "operations": [
+          "CUT_SQUARE",
+          "MARK_ID"
+        ],
+        "toleranceMm": null,
+        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0TH2CCO",
+        "bounds": {
+          "min": {
+            "x": 2375,
+            "y": 0,
+            "z": 62
+          },
+          "max": {
+            "x": 2425,
+            "y": 100,
+            "z": 2338
+          }
+        },
+        "massKg": 4.8024
+      }
+    ],
+    "modelStatus": "REFERENCE_GEOMETRY_ENGINEERING_REVIEW_REQUIRED",
+    "reviewItems": [
+      "Profile capacity and stud centres must be verified against project loads and boundary conditions.",
+      "Opening jambs, lintels, sills, bracing and connections require project-specific design.",
+      "Machine limits, stock lengths, holes, fasteners and tolerances require Avelis/Bloc 2 confirmation."
+    ],
+    "validation": {
+      "geometryValid": true,
+      "valid": true,
+      "engineeringStatus": "ENGINEERING_REVIEW_REQUIRED",
+      "manufacturingRelease": false,
+      "checkedRuleCount": 10,
+      "issues": [
+        {
+          "code": "STRUCTURAL_ANALYSIS_NOT_RUN",
+          "severity": "review",
+          "message": "No structural safety conclusion: project actions, restraints, bracing and connection properties are not available.",
+          "componentId": null,
+          "sourceId": "AFNOR_NF_EN_1993_1_3_NA"
+        },
+        {
+          "code": "MACHINE_RELEASE_BLOCKED",
+          "severity": "review",
+          "message": "No machine-ready release: Torcy equipment, supported operations, stock lengths and tolerances are not confirmed.",
+          "componentId": null,
+          "sourceId": null
+        },
+        {
+          "code": "REFERENCE_PRODUCT_NOT_AVELIS",
+          "severity": "review",
+          "message": "Metsec products and public market prices are reference inputs only; Avelis has not confirmed these products, prices, Torcy equipment or process capabilities.",
+          "componentId": null,
+          "sourceId": "METSEC_COMPONENTS_2026"
+        }
+      ]
+    },
+    "metrics": {
+      "steelMassKg": 42.639,
+      "totalProfileLengthM": 20.208,
+      "componentCount": 12,
+      "cutCount": 24,
+      "uniqueLengthCount": 4,
+      "uniqueProfileCount": 2,
+      "materialCostEstimateEurExVat": 131.76,
+      "materialCostRangeEurExVat": {
+        "low": 77.6,
+        "high": 175.67
+      },
+      "priceBasis": {
+        "valueEurPerKgExVat": 3.09,
+        "date": "2026-11-03",
+        "status": "REGIONAL_BUDGET_PROXY_NOT_SUPPLIER_QUOTE",
+        "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation."
+      },
+      "machineTimeMin": null,
+      "carbonKgCo2e": null,
+      "unavailableMetrics": [
+        "machineTimeMin: Avelis equipment cycle data missing",
+        "carbonKgCo2e: applicable product EPD missing"
+      ]
+    },
+    "bom": [
+      {
+        "role": "bottom_track",
+        "profileId": "104MF12",
+        "manufacturerReference": "104MF12",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 1000,
+        "massKgPerM": 2.11,
+        "quantity": 2,
+        "totalLengthM": 2,
+        "totalMassKg": 4.22,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-01ZII06",
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-07QP292"
+        ]
+      },
+      {
+        "role": "boundary_stud",
+        "profileId": "100MF12-50",
+        "manufacturerReference": "100MF12/50",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 2276,
+        "massKgPerM": 2.11,
+        "quantity": 2,
+        "totalLengthM": 4.552,
+        "totalMassKg": 9.605,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0UF31VE",
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-08LWQ30"
+        ]
+      },
+      {
+        "role": "common_stud",
+        "profileId": "100MF12-50",
+        "manufacturerReference": "100MF12/50",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 2276,
+        "massKgPerM": 2.11,
+        "quantity": 2,
+        "totalLengthM": 4.552,
+        "totalMassKg": 9.605,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO"
+        ]
+      },
+      {
+        "role": "cripple_stud",
+        "profileId": "100MF12-50",
+        "manufacturerReference": "100MF12/50",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 276,
+        "massKgPerM": 2.11,
+        "quantity": 2,
+        "totalLengthM": 0.552,
+        "totalMassKg": 1.165,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761"
+        ]
+      },
+      {
+        "role": "opening_header",
+        "profileId": "104MF12",
+        "manufacturerReference": "104MF12",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 1000,
+        "massKgPerM": 2.11,
+        "quantity": 1,
+        "totalLengthM": 1,
+        "totalMassKg": 2.11,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-09LF8CG"
+        ]
+      },
+      {
+        "role": "opening_jamb",
+        "profileId": "100MF12-50",
+        "manufacturerReference": "100MF12/50",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 2276,
+        "massKgPerM": 2.11,
+        "quantity": 2,
+        "totalLengthM": 4.552,
+        "totalMassKg": 9.605,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0Y3V1HK",
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-11AE2EM"
+        ]
+      },
+      {
+        "role": "top_track",
+        "profileId": "104MF12",
+        "manufacturerReference": "104MF12",
+        "materialId": "REF-METSEC-Z275-FY450",
+        "cutLengthMm": 3000,
+        "massKgPerM": 2.11,
+        "quantity": 1,
+        "totalLengthM": 3,
+        "totalMassKg": 6.33,
+        "componentIds": [
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RMMV8G"
+        ]
+      }
+    ],
+    "crossValidation": {
+      "massReconciliation": {
+        "memberSumKg": 42.639,
+        "bomSumKg": 42.64,
+        "absoluteDifferenceKg": 0.0008,
+        "status": "MATCH"
+      }
+    },
+    "score": 0,
+    "scoreBreakdown": {
+      "method": "Equal-weight arithmetic mean of min-max normalized available metrics; lower is better.",
+      "priority": "balanced",
+      "normalized": {
+        "steelMassKg": 0,
+        "componentCount": 0,
+        "uniqueLengthCount": 0
+      }
+    },
+    "paretoOptimal": true,
+    "rank": 1
+  }
+}

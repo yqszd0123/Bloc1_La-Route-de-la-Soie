@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Chaîne paramétrique, DfMA et aide multicritère pour murs 2D à ossature bois — Avelis, Imagine & Make 2026.">
+  <meta name="description" content="Chaîne IFC vers fabrication pour panneaux muraux en acier formé à froid — Avelis, Imagine & Make 2026, Bloc 1.">
   <link rel="canonical" href="https://avelis-wall-flow-2026.bushy-bloom-8799.chatgpt.site/">
   <meta property="og:url" content="https://avelis-wall-flow-2026.bushy-bloom-8799.chatgpt.site/">
-  <title>Avelis Wall Flow — Bloc 1</title>
+  <title>Avelis Wall Flow 2.0 — IFC to Manufacturing</title>
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/components.css">
@@ -16,185 +16,235 @@
     <div class="hero__brand">
       <span class="eyebrow">IMAGINE &amp; MAKE 2026 · BLOC 1</span>
       <h1>Avelis Wall Flow</h1>
-      <p>Du besoin client aux fichiers de fabrication, sans ressaisie.</p>
+      <p>IFC → panneau acier → données de fabrication traçables</p>
     </div>
     <div class="hero__status" aria-label="État du prototype">
       <span class="status-dot"></span>
-      Prototype fonctionnel v1.1.1
+      Version 2.0 · acier uniquement
     </div>
   </header>
 
-  <nav class="workflow" aria-label="Fil numérique">
-    <span><b>1</b> Configuration</span><i>→</i>
-    <span><b>2</b> Génération</span><i>→</i>
-    <span><b>3</b> Validation</span><i>→</i>
-    <span><b>4</b> Optimisation</span><i>→</i>
-    <span><b>5</b> Fabrication</span>
+  <nav class="app-tabs" aria-label="Étapes du produit">
+    <button class="tab-button" data-page="ifc-page"><b>1</b> Import IFC / STEP</button>
+    <button class="tab-button is-active" data-page="config-page"><b>2</b> Configuration</button>
+    <button class="tab-button" data-page="design-page"><b>3</b> Conception</button>
+    <button class="tab-button" data-page="manufacturing-page"><b>4</b> Fabrication</button>
+    <button class="tab-button" data-page="engineering-page"><b>5</b> Données &amp; preuves</button>
   </nav>
 
-  <main class="app-shell">
-    <aside class="control-panel" aria-label="Configuration du mur">
-      <div class="panel-heading">
-        <div>
-          <span class="eyebrow">Entrée proposée pour Noov</span>
-          <h2>Configuration client</h2>
+  <main class="page-shell">
+    <section id="ifc-page" class="app-page" hidden>
+      <div class="page-heading">
+        <div><span class="eyebrow">ISO 16739 / buildingSMART</span><h2>Importer un vrai fichier IFC</h2></div>
+        <span class="pill pill--review">Parseur STEP contrôlé</span>
+      </div>
+      <div class="two-column-cards">
+        <article class="results-card import-card">
+          <h3>Votre modèle</h3>
+          <p>Le fichier reste dans votre navigateur. Le logiciel lit les unités, placements, bâtiments, étages, murs, ouvertures, portes et fenêtres.</p>
+          <label class="file-drop" for="ifc-file">
+            <strong>Choisir un fichier .ifc</strong>
+            <span>IFC2x3 ou IFC4 · STEP physique ISO 10303-21</span>
+            <input id="ifc-file" type="file" accept=".ifc,text/plain">
+          </label>
+        </article>
+        <article class="results-card import-card">
+          <h3>Fichier de vérification officiel</h3>
+          <p>Chargez l’exemple buildingSMART « wall with opening and window » fourni dans le projet. Ce n’est pas un faux fichier renommé.</p>
+          <button id="load-official-ifc" class="button button--primary" type="button">Charger l’IFC buildingSMART</button>
+          <small class="source-note">IFC4 · millimètres · bâtiment → étage → mur → ouverture → fenêtre</small>
+        </article>
+      </div>
+      <div id="ifc-messages" class="message-stack" aria-live="polite"></div>
+      <article id="ifc-summary-card" class="results-card" hidden>
+        <div class="panel-heading"><div><span class="eyebrow">Arbre spatial extrait</span><h2>Choisir un mur</h2></div><span id="ifc-summary-pill" class="pill">—</span></div>
+        <div id="ifc-summary" class="ifc-summary"></div>
+        <div id="ifc-wall-list" class="wall-list"></div>
+      </article>
+      <div class="scope-warning"><strong>Portée IFC :</strong> géométrie extrudée standard et placements locaux. Les représentations BRep/tessellées complexes sont signalées comme non prises en charge au lieu d’être devinées.</div>
+
+      <div class="page-heading page-heading--subsection">
+        <div><span class="eyebrow">ISO 10303-21 / Open CASCADE</span><h2>Importer une géométrie STEP / STP</h2></div>
+        <span class="pill pill--review">Enveloppe contrôlée</span>
+      </div>
+      <div class="two-column-cards">
+        <article class="results-card import-card">
+          <h3>Votre modèle CAO</h3>
+          <p>Le moteur Open CASCADE lit un vrai STEP, calcule son enveloppe 3D puis transmet ses dimensions au même générateur acier.</p>
+          <label class="file-drop" for="step-file">
+            <strong>Choisir un fichier .step ou .stp</strong>
+            <span>Lecture locale dans le navigateur · aucune téléversement</span>
+            <input id="step-file" type="file" accept=".step,.stp,model/step">
+          </label>
+        </article>
+        <article class="results-card import-card">
+          <h3>Fichier de test réel</h3>
+          <p>Chargez le cube STEP officiel du projet open source occt-import-js pour vérifier la chaîne de lecture.</p>
+          <button id="load-official-step" class="button button--primary" type="button">Charger le STEP de test</button>
+          <small class="source-note">Format STEP AP214 · analysé par occt-import-js 0.0.23</small>
+        </article>
+      </div>
+      <div id="step-messages" class="message-stack" aria-live="polite"></div>
+      <article id="step-summary-card" class="results-card" hidden>
+        <div class="panel-heading"><div><span class="eyebrow">Enveloppe 3D extraite</span><h2>Confirmer l’orientation du panneau</h2></div><span id="step-summary-pill" class="pill">—</span></div>
+        <div id="step-summary" class="ifc-summary"></div>
+        <div class="step-axis-grid">
+          <label>Longueur<select id="step-length-axis"><option value="X">X</option><option value="Y">Y</option><option value="Z">Z</option></select></label>
+          <label>Hauteur<select id="step-height-axis"><option value="Z">Z</option><option value="Y">Y</option><option value="X">X</option></select></label>
+          <label>Épaisseur<select id="step-thickness-axis"><option value="Y">Y</option><option value="X">X</option><option value="Z">Z</option></select></label>
+          <button id="generate-step-panel" class="button button--primary" type="button">Générer depuis l’enveloppe</button>
         </div>
+      </article>
+      <div class="scope-warning"><strong>Portée STEP :</strong> le format transporte la géométrie CAO, pas les relations mur/porte/fenêtre d’un IFC. Le logiciel exige donc une confirmation des axes et n’invente aucune ouverture ni opération machine.</div>
+    </section>
+
+    <section id="config-page" class="app-page">
+      <div class="page-heading">
+        <div><span class="eyebrow">Mode manuel · même moteur que l’IFC</span><h2>Configurer un panneau acier</h2></div>
         <button id="reset-button" class="button button--ghost" type="button">Réinitialiser</button>
       </div>
+      <div class="config-layout">
+        <aside class="reference-rail">
+          <h3>Références chargées</h3>
+          <div class="reference-chip"><strong>Acier Z275</strong><span>fy ≥ 450 N/mm² · produit Metsec de référence</span></div>
+          <div class="reference-chip"><strong>Profils C / rails U</strong><span>kg/m et géométrie issus du fabricant</span></div>
+          <div class="reference-chip"><strong>Entraxe 600 mm</strong><span>cas illustré fabricant, à vérifier par calcul structure</span></div>
+          <div class="reference-chip"><strong>Budget régional</strong><span>3,09 €/kg HT par défaut · fourchette 1,82–4,12</span></div>
+          <p class="field-hint">Ces données décrivent une solution publique de référence. Elles ne prouvent pas que Torcy ou Avelis utilisent ces produits.</p>
+        </aside>
 
-      <div id="preset-buttons" class="preset-grid" aria-label="Variantes d'expérimentation"></div>
+        <article class="results-card form-card">
+          <div id="preset-buttons" class="preset-grid" aria-label="Scénarios d’essai"></div>
+          <form id="configuration-form" novalidate>
+            <fieldset>
+              <legend>Identité et enveloppe</legend>
+              <div class="form-grid form-grid--three">
+                <label>Projet<input name="projectId" autocomplete="off"></label>
+                <label>Mur<input name="wallId" autocomplete="off"></label>
+                <label>Version<input name="version" autocomplete="off"></label>
+                <label>Longueur <span>mm</span><input name="wallLengthMm" type="number" min="1" step="1"></label>
+                <label>Hauteur <span>mm</span><input name="wallHeightMm" type="number" min="1" step="1"></label>
+                <label>Épaisseur IFC/source <span>mm</span><input name="wallThicknessMm" type="number" min="1" step="1"></label>
+              </div>
+            </fieldset>
 
-      <form id="configuration-form" novalidate>
-        <fieldset>
-          <legend>Identité et version</legend>
-          <div class="form-grid form-grid--three">
-            <label>Projet<input name="projectId" value="AVELIS-POC" autocomplete="off"></label>
-            <label>Mur<input name="wallId" value="W001" autocomplete="off"></label>
-            <label>Version<input name="version" value="1.0" autocomplete="off"></label>
-          </div>
-        </fieldset>
+            <fieldset class="optional-opening is-enabled">
+              <legend>Fenêtre</legend>
+              <label class="switch-label" for="window-enabled"><span><strong>Inclure une fenêtre</strong><small>Le cadre et les montants interrompus sont calculés</small></span><input id="window-enabled" name="windowEnabled" type="checkbox" role="switch"></label>
+              <div id="window-fields" class="door-fields">
+                <div class="form-grid form-grid--four">
+                  <label>Largeur <span>mm</span><input name="windowWidthMm" type="number" min="1" step="1"></label>
+                  <label>Hauteur <span>mm</span><input name="windowHeightMm" type="number" min="1" step="1"></label>
+                  <label>Position X <span>mm</span><input name="windowXMm" type="number" min="0" step="1"></label>
+                  <label>Allège <span>mm</span><input name="sillHeightMm" type="number" min="0" step="1"></label>
+                </div>
+              </div>
+            </fieldset>
 
-        <fieldset>
-          <legend>Enveloppe du mur</legend>
-          <div class="form-grid form-grid--two">
-            <label>Longueur <span>mm</span><input name="wallLengthMm" type="number" min="1800" max="6000" step="50" value="3000"></label>
-            <label>Hauteur <span>mm</span><input name="wallHeightMm" type="number" min="2200" max="3200" step="50" value="2400"></label>
-          </div>
-        </fieldset>
+            <fieldset class="optional-opening">
+              <legend>Porte</legend>
+              <label class="switch-label" for="door-enabled"><span><strong>Inclure une porte</strong><small>Le rail bas est automatiquement interrompu</small></span><input id="door-enabled" name="doorEnabled" type="checkbox" role="switch"></label>
+              <div id="door-fields" class="door-fields" hidden>
+                <div class="form-grid form-grid--three">
+                  <label>Largeur nominale <span>mm</span><input name="doorWidthMm" type="number" min="1" step="1"></label>
+                  <label>Hauteur <span>mm</span><input name="doorHeightMm" type="number" min="1" step="1"></label>
+                  <label>Position X <span>mm</span><input name="doorXMm" type="number" min="0" step="1"></label>
+                </div>
+                <p class="field-hint">Référence conditionnelle française : 900 mm nominal pour certaines portes accessibles. L’applicabilité doit être confirmée selon le projet.</p>
+              </div>
+            </fieldset>
 
-        <fieldset>
-          <legend>Baie vitrée</legend>
-          <div class="form-grid form-grid--two">
-            <label>Largeur <span>mm</span><input name="windowWidthMm" type="number" min="450" max="1800" step="50" value="900"></label>
-            <label>Hauteur <span>mm</span><input name="windowHeightMm" type="number" min="450" max="1600" step="50" value="1000"></label>
-            <label>Position X <span>mm</span><input name="windowXMm" type="number" min="180" step="10" value="1060"></label>
-            <label>Allège <span>mm</span><input name="sillHeightMm" type="number" min="500" max="1200" step="50" value="900"></label>
-          </div>
-        </fieldset>
+            <fieldset>
+              <legend>Scénario budgétaire facultatif</legend>
+              <p class="field-hint">Laissez tout vide pour utiliser automatiquement 3,09 €/kg HT, avec la fourchette régionale documentée.</p>
+              <div class="form-grid form-grid--three">
+                <label>Prix central <span>€/kg HT</span><input name="budgetPriceEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="3,09 par défaut"></label>
+                <label>Prix bas <span>€/kg HT</span><input name="budgetLowEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="1,82 par défaut"></label>
+                <label>Prix haut <span>€/kg HT</span><input name="budgetHighEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="4,12 par défaut"></label>
+                <label>Nom du scénario<input name="budgetPriceLabel" placeholder="ex. devis fournisseur"></label>
+                <label>Date<input name="budgetPriceDate" type="date"></label>
+                <label>Source / référence<input name="budgetPriceSource" placeholder="facultatif"></label>
+              </div>
+            </fieldset>
 
-        <fieldset class="optional-opening">
-          <legend>Extension — porte</legend>
-          <label class="switch-label" for="door-enabled">
-            <span>
-              <strong>Ajouter une porte</strong>
-              <small>Encadrement, contrôles et exports automatiques</small>
-            </span>
-            <input id="door-enabled" name="doorEnabled" type="checkbox" role="switch">
-          </label>
-          <div id="door-fields" class="door-fields" hidden>
-            <div class="form-grid form-grid--two">
-              <label>Largeur <span>mm</span><input name="doorWidthMm" type="number" min="650" max="1200" step="10" value="700"></label>
-              <label>Hauteur <span>mm</span><input name="doorHeightMm" type="number" min="1800" max="2400" step="10" value="2040"></label>
-              <label>Position X <span>mm</span><input name="doorXMm" type="number" min="180" step="10" value="180"></label>
-            </div>
-            <p class="field-hint">La lisse basse est automatiquement interrompue au passage de la porte.</p>
-          </div>
-        </fieldset>
+            <fieldset>
+              <legend>Décision et prototype</legend>
+              <div class="form-grid form-grid--two">
+                <label>Priorité<select name="priority"><option value="balanced">Équilibre masse / pièces / longueurs</option><option value="material">Masse minimale</option><option value="manufacturing">Fabrication la plus simple</option></select></label>
+                <label>Échelle STL<select name="prototypeScale"><option value="10">1:10</option><option value="15">1:15</option><option value="20">1:20</option><option value="25">1:25</option></select></label>
+              </div>
+            </fieldset>
+            <button class="button button--primary button--wide" type="submit">Calculer et comparer les solutions</button>
+          </form>
+          <div id="input-messages" class="message-stack" aria-live="polite"></div>
+        </article>
+      </div>
+    </section>
 
-        <fieldset>
-          <legend>Décision multicritère</legend>
-          <label>Priorité
-            <select name="priority">
-              <option value="balanced">Équilibre matériau / fabrication / coût</option>
-              <option value="material">Réduire la matière</option>
-              <option value="manufacturing">Simplifier la fabrication</option>
-              <option value="cost">Réduire le coût estimé</option>
-            </select>
-          </label>
-          <label>Échelle du prototype STL
-            <select name="prototypeScale">
-              <option value="10">1:10</option>
-              <option value="15" selected>1:15 — recommandé pour plateau 220 mm</option>
-              <option value="20">1:20</option>
-              <option value="25">1:25</option>
-            </select>
-          </label>
-        </fieldset>
-
-        <button class="button button--primary button--wide" type="submit">Générer, vérifier et optimiser</button>
-      </form>
-      <div id="input-messages" class="message-stack" aria-live="polite"></div>
-    </aside>
-
-    <section class="workspace" aria-label="Résultats">
+    <section id="design-page" class="app-page" hidden>
       <div class="workspace__toolbar">
-        <div>
-          <span class="eyebrow">Candidat sélectionné</span>
-          <h2 id="candidate-title">—</h2>
-        </div>
-        <div class="toolbar-actions">
-          <button id="download-design" class="button button--secondary" type="button" disabled>JSON</button>
-          <button id="download-stl" class="button button--secondary" type="button" disabled>STL</button>
-          <button id="download-package" class="button button--accent" type="button" disabled>Paquet complet .zip</button>
-        </div>
+        <div><span class="eyebrow">Solution sélectionnée</span><h2 id="candidate-title">—</h2></div>
+        <div class="toolbar-actions"><button id="download-design" class="button button--secondary" disabled>JSON</button><button id="download-stl" class="button button--secondary" disabled>STL assemblé</button><button id="download-package" class="button button--accent" disabled>Paquet complet .zip</button></div>
       </div>
-
-      <div id="scope-warning" class="scope-warning">
-        <strong>Portée :</strong> démonstrateur DfMA et continuité numérique. Validation structurelle et réglementaire requise avant construction réelle.
-      </div>
-
+      <div class="scope-warning"><strong id="result-source-label">Portée :</strong> <span id="scope-warning-text">Validation structurelle et industrielle requise.</span></div>
       <div class="viewer-card">
-        <canvas id="wall-viewer" width="1200" height="650" aria-label="Vue tridimensionnelle du mur"></canvas>
-        <div class="viewer-controls">
-          <label>Rotation<input id="rotation-slider" type="range" min="-65" max="65" value="28"></label>
-          <label class="check-label"><input id="labels-toggle" type="checkbox"> Afficher les identifiants</label>
-          <span id="viewer-caption">Générez une configuration pour commencer.</span>
-        </div>
+        <canvas id="wall-viewer" width="1200" height="650" aria-label="Vue tridimensionnelle du panneau acier"></canvas>
+        <div class="viewer-controls"><label>Rotation<input id="rotation-slider" type="range" min="-65" max="65" value="28"></label><label class="check-label"><input id="labels-toggle" type="checkbox"> Identifiants</label><span id="viewer-caption">Aucun résultat.</span></div>
       </div>
-
-      <section class="metrics" aria-label="Indicateurs">
-        <article><span>Temps de calcul</span><strong id="metric-time">—</strong><small>configuration → fichiers</small></article>
-        <article><span>Volume bois</span><strong id="metric-volume">—</strong><small>m³, à minimiser</small></article>
-        <article><span>Composants</span><strong id="metric-components">—</strong><small>pièces identifiées</small></article>
-        <article><span>Complexité</span><strong id="metric-complexity">—</strong><small>indice proxy</small></article>
-        <article><span>Coût estimé</span><strong id="metric-cost">—</strong><small>hypothèse POC</small></article>
-        <article><span>Règles vérifiées</span><strong id="metric-rules">—</strong><small>contrôles automatiques</small></article>
+      <section class="metrics">
+        <article><span>Temps de calcul</span><strong id="metric-time">—</strong><small>entrée → paquet</small></article>
+        <article><span>Masse acier</span><strong id="metric-mass">—</strong><small>kg calculés par kg/m</small></article>
+        <article><span>Budget matière</span><strong id="metric-cost">—</strong><small id="metric-cost-basis">HT · scénario actif</small></article>
+        <article><span>Composants</span><strong id="metric-components">—</strong><small>IDs stables</small></article>
+        <article><span>Longueur profilés</span><strong id="metric-length">—</strong><small>m cumulés</small></article>
+        <article><span>Contrôles</span><strong id="metric-rules">—</strong><small>géométrie + traçabilité</small></article>
       </section>
-
       <section class="results-card">
-        <div class="panel-heading">
-          <div>
-            <span class="eyebrow">Espace de conception</span>
-            <h2>Comparaison des candidats valides</h2>
-          </div>
-          <span id="candidate-count" class="pill">0 candidat</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Rang</th><th>Solution</th><th>Entraxe</th><th>Décalage</th><th>Linteau</th><th>Bois</th><th>Pièces</th><th>Complexité</th><th>Coût</th><th>Score</th></tr></thead>
-            <tbody id="candidate-table-body"></tbody>
-          </table>
-        </div>
+        <div class="panel-heading"><div><span class="eyebrow">Exploration exhaustive</span><h2>Solutions de référence</h2></div><span id="candidate-count" class="pill">0 solution</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Rang</th><th>Solution</th><th>Profils</th><th>Implantation</th><th>Masse</th><th>Pièces</th><th>Longueurs</th><th>Budget HT</th><th>Score</th></tr></thead><tbody id="candidate-table-body"></tbody></table></div>
       </section>
-
       <section class="results-grid">
-        <article class="results-card">
-          <div class="panel-heading"><div><span class="eyebrow">Traçabilité</span><h2>Nomenclature</h2></div><button id="download-bom" class="button button--ghost" disabled>BOM CSV</button></div>
-          <div id="bom-summary" class="bom-summary"></div>
-        </article>
-        <article class="results-card">
-          <div class="panel-heading"><div><span class="eyebrow">Contrôle automatique</span><h2>Rapport de validation</h2></div></div>
-          <div id="validation-summary" class="validation-summary"></div>
-        </article>
+        <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Traçabilité</span><h2>Nomenclature</h2></div><button id="download-bom" class="button button--ghost" disabled>BOM CSV</button></div><div id="bom-summary" class="bom-summary"></div></article>
+        <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Contrôles</span><h2>Validation</h2></div></div><div id="validation-summary" class="validation-summary"></div></article>
       </section>
+    </section>
+
+    <section id="manufacturing-page" class="app-page" hidden>
+      <div class="page-heading"><div><span class="eyebrow">Bloc 1 → Bloc 2 / logistique</span><h2>Paquet de fabrication neutre</h2></div><span class="pill pill--blocked">Machine non libérée</span></div>
+      <div class="release-banner"><strong>BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION</strong><span>La géométrie, la BOM et la liste de débit sont calculées. Les tolérances, longueurs de stock, perçages, fixations et format machine restent volontairement vides.</span></div>
+      <div class="toolbar-actions toolbar-actions--left"><button id="download-cutting" class="button button--secondary" disabled>Liste de débit CSV</button><button id="download-labels" class="button button--secondary" disabled>Étiquettes / QR CSV</button><button id="download-package-2" class="button button--accent" disabled>Paquet ZIP complet</button></div>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Longueur</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
+    </section>
+
+    <section id="engineering-page" class="app-page" hidden>
+      <div class="page-heading"><div><span class="eyebrow">Traçabilité complète</span><h2>Données, calculs et limites</h2></div><span class="pill pill--review">Engineering review required</span></div>
+      <div class="evidence-grid">
+        <article class="results-card"><h3>Produit acier de référence</h3><div id="material-evidence"></div></article>
+        <article class="results-card"><h3>Budget actif</h3><div id="budget-evidence"></div></article>
+        <article class="results-card"><h3>Vérifications croisées</h3><div id="cross-validation-evidence"></div></article>
+      </div>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Avant validation industrielle</span><h2>Données Avelis encore nécessaires</h2></div></div><div id="unresolved-evidence" class="unresolved-grid"></div></article>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Références principales</span><h2>Sources utilisées par le programme</h2></div></div><div id="source-evidence" class="source-list"></div></article>
     </section>
   </main>
 
-  <footer>
-    <p><strong>Équipe 3 — La Route de la Soie</strong> · Centrale Lille · Avelis · Imagine &amp; Make 2026</p>
-    <p>Le format Noov et les capacités machines réelles restent à confirmer avec Avelis.</p>
-  </footer>
+  <footer><p><strong>Équipe 3 — La Route de la Soie</strong> · Centrale Lille · Avelis · Imagine &amp; Make 2026</p><p>Aucune certification structurelle ou libération machine n’est revendiquée.</p></footer>
 
+  <script src="../../packages/core/src/data/engineering-catalog.js"></script>
   <script src="../../packages/core/src/domain/constants.js"></script>
   <script src="../../packages/core/src/utils/math.js"></script>
+  <script src="../../packages/core/src/domain/engineering.js"></script>
   <script src="../../packages/core/src/domain/project.js"></script>
   <script src="../../packages/core/src/rules/input-rules.js"></script>
   <script src="../../packages/core/src/generation/member-factory.js"></script>
-  <script src="../../packages/core/src/generation/wall-generator.js"></script>
+  <script src="../../packages/core/src/generation/steel-panel-generator.js"></script>
   <script src="../../packages/core/src/rules/candidate-rules.js"></script>
   <script src="../../packages/core/src/optimization/metrics.js"></script>
   <script src="../../packages/core/src/optimization/candidate-search.js"></script>
   <script src="../../packages/core/src/optimization/ranker.js"></script>
+  <script src="../../packages/core/src/ifc/step-parser.js"></script>
+  <script src="../../packages/core/src/ifc/ifc-importer.js"></script>
+  <script src="../../packages/core/src/step/step-adapter.js"></script>
   <script src="../../packages/core/src/export/serialize.js"></script>
   <script src="../../packages/core/src/export/stl.js"></script>
   <script src="../../packages/core/src/export/dxf.js"></script>
@@ -202,8 +252,11 @@
   <script src="../../packages/core/src/export/zip.js"></script>
   <script src="../../packages/core/src/export/package-builder.js"></script>
   <script src="../../packages/core/src/core.js"></script>
+  <script src="../../third_party/occt-import-js/dist/occt-import-js.js"></script>
   <script src="src/state.js"></script>
   <script src="src/form-controller.js"></script>
+  <script src="src/ifc-controller.js"></script>
+  <script src="src/step-controller.js"></script>
   <script src="src/viewer.js"></script>
   <script src="src/results-view.js"></script>
   <script src="src/download-controller.js"></script>

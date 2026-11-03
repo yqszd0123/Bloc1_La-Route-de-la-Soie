@@ -3,77 +3,80 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  function memberVolumeMm3(member) {
-    return member.lengthMm * member.section.widthMm * member.section.depthMm;
-  }
-
-  function computeStockProxy(candidate, rules) {
-    let stockMm = 0;
-    let usedMm = 0;
-    candidate.members.forEach((member) => {
-      const blanks = Math.ceil(member.lengthMm / rules.stockLengthMm);
-      stockMm += blanks * rules.stockLengthMm;
-      usedMm += member.lengthMm;
-    });
-    return {
-      stockLengthMm: stockMm,
-      usedLengthMm: usedMm,
-      wasteLengthMm: stockMm - usedMm,
-      disclaimer: 'Indicateur conservatif par pièce, sans optimisation combinatoire de débit.'
-    };
-  }
-
   function computeMetrics(candidate, rules) {
-    const totalVolumeMm3 = candidate.members.reduce((sum, member) => sum + memberVolumeMm3(member), 0);
+    const steelMassKg = candidate.members.reduce((sum, member) => sum + member.massKg, 0);
     const totalLengthMm = candidate.members.reduce((sum, member) => sum + member.lengthMm, 0);
     const componentCount = candidate.members.length;
-    const cutCount = candidate.members.reduce((sum, member) => sum + (member.operations.includes('CUT_90') ? 2 : 0), 0);
-    const uniqueLengths = new Set(candidate.members.map((member) => Math.round(member.lengthMm))).size;
-    const specialMembers = candidate.members.filter((member) => ['header', 'sill', 'jack_stud'].includes(member.role)).length;
-    const volumeM3 = totalVolumeMm3 / 1e9;
-    const materialCostEur = volumeM3 * rules.timberCostEurPerM3;
-    const manufacturingCostEur = cutCount * rules.cutCostEur + componentCount * rules.assemblyCostEurPerMember;
-    const estimatedCostEur = materialCostEur + manufacturingCostEur;
-    const manufacturingComplexity = componentCount + 0.35 * cutCount + 0.8 * uniqueLengths + 0.5 * specialMembers;
-    const estimatedMachineTimeMin = cutCount * rules.cutTimeMin + componentCount * rules.handlingTimeMinPerMember;
-
+    const cutCount = candidate.members.reduce((sum, member) => sum + (member.operations.includes('CUT_SQUARE') ? 2 : 0), 0);
+    const uniqueLengthCount = new Set(candidate.members.map((member) => Math.round(member.lengthMm * 1000) / 1000)).size;
+    const uniqueProfileCount = new Set(candidate.members.map((member) => member.profile.id)).size;
+    const unitPrice = rules.budgetPrice.valueEurPerKgExVat;
+    const lowPrice = rules.budgetPrice.lowerReferenceEurPerKgExVat;
+    const highPrice = rules.budgetPrice.upperReferenceEurPerKgExVat;
     return {
-      timberVolumeM3: core.math.round(volumeM3, 5),
-      timberLengthM: core.math.round(totalLengthMm / 1000, 3),
+      steelMassKg: core.math.round(steelMassKg, 3),
+      totalProfileLengthM: core.math.round(totalLengthMm / 1000, 3),
       componentCount,
       cutCount,
-      uniqueLengthCount: uniqueLengths,
-      materialCostEur: core.math.round(materialCostEur, 2),
-      manufacturingCostEur: core.math.round(manufacturingCostEur, 2),
-      estimatedCostEur: core.math.round(estimatedCostEur, 2),
-      manufacturingComplexity: core.math.round(manufacturingComplexity, 2),
-      estimatedMachineTimeMin: core.math.round(estimatedMachineTimeMin, 2),
-      stockProxy: computeStockProxy(candidate, rules)
+      uniqueLengthCount,
+      uniqueProfileCount,
+      materialCostEstimateEurExVat: core.math.round(steelMassKg * unitPrice, 2),
+      materialCostRangeEurExVat: {
+        low: core.math.round(steelMassKg * lowPrice, 2),
+        high: core.math.round(steelMassKg * highPrice, 2)
+      },
+      priceBasis: {
+        valueEurPerKgExVat: unitPrice,
+        date: rules.budgetPrice.priceDate,
+        status: rules.budgetPrice.status,
+        boundary: rules.budgetPrice.boundary
+      },
+      machineTimeMin: null,
+      carbonKgCo2e: null,
+      unavailableMetrics: ['machineTimeMin: Avelis equipment cycle data missing', 'carbonKgCo2e: applicable product EPD missing']
     };
   }
 
   function aggregateBom(candidate) {
     const groups = new Map();
     candidate.members.forEach((member) => {
-      const key = [member.role, member.section.widthMm, member.section.depthMm, member.lengthMm, member.materialCode].join('|');
+      const key = [member.role, member.profile.id, member.lengthMm].join('|');
       if (!groups.has(key)) {
         groups.set(key, {
           role: member.role,
-          materialCode: member.materialCode,
-          sectionWidthMm: member.section.widthMm,
-          sectionDepthMm: member.section.depthMm,
+          profileId: member.profile.id,
+          manufacturerReference: member.profile.manufacturerReference,
+          materialId: member.material.id,
           cutLengthMm: member.lengthMm,
+          massKgPerM: member.profile.massKgPerM,
           quantity: 0,
+          totalLengthM: 0,
+          totalMassKg: 0,
           componentIds: []
         });
       }
-      const group = groups.get(key);
-      group.quantity += 1;
-      group.componentIds.push(member.id);
+      const row = groups.get(key);
+      row.quantity += 1;
+      row.totalLengthM += member.lengthMm / 1000;
+      row.totalMassKg += member.massKg;
+      row.componentIds.push(member.id);
     });
-    return Array.from(groups.values()).sort((a, b) => a.role.localeCompare(b.role) || a.cutLengthMm - b.cutLengthMm);
+    return Array.from(groups.values()).map((row) => Object.assign(row, {
+      totalLengthM: core.math.round(row.totalLengthM, 3),
+      totalMassKg: core.math.round(row.totalMassKg, 3)
+    })).sort((a, b) => a.role.localeCompare(b.role) || a.profileId.localeCompare(b.profileId) || a.cutLengthMm - b.cutLengthMm);
   }
 
-  core.metrics = { computeMetrics, aggregateBom, memberVolumeMm3 };
-})(typeof globalThis !== 'undefined' ? globalThis : window);
+  function reconcileMass(candidate) {
+    const memberMass = candidate.members.reduce((sum, member) => sum + member.massKg, 0);
+    const bomMass = candidate.bom.reduce((sum, row) => sum + row.totalMassKg, 0);
+    return {
+      memberSumKg: core.math.round(memberMass, 3),
+      bomSumKg: core.math.round(bomMass, 3),
+      absoluteDifferenceKg: core.math.round(Math.abs(memberMass - bomMass), 4),
+      status: Math.abs(memberMass - bomMass) <= 0.01 ? 'MATCH' : 'MISMATCH'
+    };
+  }
 
+  core.metrics = { computeMetrics, aggregateBom, reconcileMass };
+})(typeof globalThis !== 'undefined' ? globalThis : window);
