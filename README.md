@@ -27,7 +27,7 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 
 ## Entrées
 
-- `IFC` : analyse ISO 10303-21, unités, placements, hiérarchie, murs, vides et remplissages ; fixture IFC4 buildingSMART incluse.
+- `IFC` : analyse ISO 10303-21, unités, placements, hiérarchie, murs, vides et remplissages ; profils centrés et murs orientés X/Y normalisés ; fixtures IFC4 buildingSMART et quatre-murs incluses.
 - `STEP/STP` en entrée : lecture réelle par `occt-import-js 0.0.23` et Open CASCADE ; conversion explicite de l’enveloppe 3D, sans inventer de sémantique de porte/fenêtre.
 - `STEP` en sortie : un solide BRep analytique `MANIFOLD_SOLID_BREP` nommé par composant, en millimètres, regroupé dans un vrai fichier ISO 10303-21/AP203 relu automatiquement par Open CASCADE. Il s’agit d’enveloppes de coordination, pas des sections C/U détaillées ni d’un programme machine.
 - `MANUAL` : dimensions et ouvertures paramétrables, porte et fenêtre activables indépendamment.

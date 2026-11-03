@@ -37,6 +37,7 @@
       app.state.selectedCandidateId = null;
       app.resultsView.renderInvalid(result);
       redraw();
+      if (showDesign) showPage('design-page');
       return;
     }
     selectCandidate(result.recommended.id);

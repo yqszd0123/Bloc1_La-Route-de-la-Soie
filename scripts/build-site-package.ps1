@@ -25,6 +25,7 @@ Copy-Item -LiteralPath (Join-Path $root 'packages\core\src') -Destination $publi
 $publicIfc = Join-Path $site 'test-data\ifc'
 New-Item -ItemType Directory -Path $publicIfc -Force | Out-Null
 Copy-Item -LiteralPath (Join-Path $root 'test-data\ifc\wall-with-opening-and-window.ifc') -Destination $publicIfc
+Copy-Item -LiteralPath (Join-Path $root 'test-data\ifc\partie1-four-walls.ifc') -Destination $publicIfc
 
 $publicData = Join-Path $site 'data'
 New-Item -ItemType Directory -Path $publicData -Force | Out-Null

@@ -25,12 +25,34 @@
     return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
   }
 
+  function dot(a, b) {
+    return a.reduce((sum, entry, index) => sum + entry * b[index], 0);
+  }
+
+  function add(a, b) {
+    return a.map((entry, index) => entry + b[index]);
+  }
+
+  function scale(vectorValue, factor) {
+    return vectorValue.map((entry) => entry * factor);
+  }
+
   function identity() {
     return [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]];
   }
 
   function multiply(a, b) {
     return a.map((row, r) => row.map((_, c) => row.reduce((sum, entry, k) => sum + entry * b[k][c], 0)));
+  }
+
+  function transformPoint(matrix, point) {
+    const homogeneous = [point[0], point[1], point[2], 1];
+    return matrix.slice(0, 3).map((row) => row.reduce((sum, entry, index) => sum + entry * homogeneous[index], 0));
+  }
+
+  function transformVector(matrix, value) {
+    const homogeneous = [value[0], value[1], value[2], 0];
+    return matrix.slice(0, 3).map((row) => row.reduce((sum, entry, index) => sum + entry * homogeneous[index], 0));
   }
 
   function inverseRigid(matrix) {
@@ -120,14 +142,27 @@
   function profileBounds(model, reference) {
     const profile = model.get(reference);
     if (!profile) return null;
-    if (profile.type === 'IFCARBITRARYCLOSEDPROFILEDEF') return polylineBounds(model, profile.args[2]);
+    if (profile.type === 'IFCARBITRARYCLOSEDPROFILEDEF') {
+      const bounds = polylineBounds(model, profile.args[2]);
+      return bounds ? Object.assign(bounds, { placement: identity() }) : null;
+    }
     if (profile.type === 'IFCRECTANGLEPROFILEDEF') {
       const width = numeric(profile.args[3]);
       const height = numeric(profile.args[4]);
       if (width == null || height == null) return null;
-      return { minX: -width / 2, maxX: width / 2, minY: -height / 2, maxY: height / 2 };
+      return {
+        minX: -width / 2, maxX: width / 2, minY: -height / 2, maxY: height / 2,
+        placement: axisPlacementMatrix(model, profile.args[2])
+      };
     }
     return null;
+  }
+
+  function baseCorners(bounds) {
+    return [
+      [bounds.minX, bounds.minY, 0], [bounds.maxX, bounds.minY, 0],
+      [bounds.maxX, bounds.maxY, 0], [bounds.minX, bounds.maxY, 0]
+    ];
   }
 
   function productBodySolid(model, product) {
@@ -142,7 +177,22 @@
     const bounds = profileBounds(model, solid.args[0]);
     const depth = numeric(solid.args[3]);
     if (!bounds || depth == null) return null;
-    return { entityId: solid.id, bounds, depth };
+    const solidPlacement = axisPlacementMatrix(model, solid.args[1]);
+    const profilePlacement = bounds.placement || identity();
+    const basePlacement = multiply(solidPlacement, profilePlacement);
+    const extrusionDirection = directionRecord(model, solid.args[2], [0, 0, 1]);
+    const extrusion = scale(transformVector(solidPlacement, extrusionDirection), depth);
+    const base = baseCorners(bounds).map((point) => transformPoint(basePlacement, point));
+    return {
+      entityId: solid.id,
+      bounds,
+      depth,
+      basePlacement,
+      extrusion,
+      cornersProduct: base.concat(base.map((point) => add(point, extrusion))),
+      profileSpanX: bounds.maxX - bounds.minX,
+      profileSpanY: bounds.maxY - bounds.minY
+    };
   }
 
   function productPlacement(model, product, cache) {
@@ -151,6 +201,54 @@
 
   function productIdentity(record) {
     return { entityId: record.id, entityType: record.type, guid: record.args[0] || null, name: record.args[2] || `${record.type} #${record.id}` };
+  }
+
+  function rangeOnAxis(points, axis) {
+    const values = points.map((point) => dot(point, axis));
+    return { min: Math.min(...values), max: Math.max(...values) };
+  }
+
+  function panelGeometry(productWorld, solid) {
+    const cornersWorld = solid.cornersProduct.map((point) => transformPoint(productWorld, point));
+    const sourceLengthAxis = solid.profileSpanY > solid.profileSpanX ? 'Y' : 'X';
+    const sourceLengthVector = transformVector(solid.basePlacement, sourceLengthAxis === 'X' ? [1, 0, 0] : [0, 1, 0]);
+    let lengthAxis = normalize(transformVector(productWorld, sourceLengthVector), [1, 0, 0]);
+    let heightAxis = normalize(transformVector(productWorld, solid.extrusion), [0, 0, 1]);
+    if (heightAxis[2] < 0) heightAxis = scale(heightAxis, -1);
+    if (Math.abs(heightAxis[2]) < 0.9) return null;
+    const thicknessAxis = normalize(cross(heightAxis, lengthAxis), [0, 1, 0]);
+    lengthAxis = normalize(cross(thicknessAxis, heightAxis), lengthAxis);
+
+    const lengthRange = rangeOnAxis(cornersWorld, lengthAxis);
+    const thicknessRange = rangeOnAxis(cornersWorld, thicknessAxis);
+    const heightRange = rangeOnAxis(cornersWorld, heightAxis);
+    const origin = add(add(
+      scale(lengthAxis, lengthRange.min),
+      scale(thicknessAxis, thicknessRange.min)
+    ), scale(heightAxis, heightRange.min));
+    const panelWorld = [
+      [lengthAxis[0], thicknessAxis[0], heightAxis[0], origin[0]],
+      [lengthAxis[1], thicknessAxis[1], heightAxis[1], origin[1]],
+      [lengthAxis[2], thicknessAxis[2], heightAxis[2], origin[2]],
+      [0, 0, 0, 1]
+    ];
+    return {
+      sourceLengthAxis,
+      panelWorld,
+      panelInverse: inverseRigid(panelWorld),
+      length: lengthRange.max - lengthRange.min,
+      thickness: thicknessRange.max - thicknessRange.min,
+      height: heightRange.max - heightRange.min
+    };
+  }
+
+  function solidBoundsInPanel(productWorld, solid, panelInverse) {
+    const points = solid.cornersProduct.map((point) => transformPoint(panelInverse, transformPoint(productWorld, point)));
+    return {
+      minX: Math.min(...points.map((point) => point[0])), maxX: Math.max(...points.map((point) => point[0])),
+      minY: Math.min(...points.map((point) => point[1])), maxY: Math.max(...points.map((point) => point[1])),
+      minZ: Math.min(...points.map((point) => point[2])), maxZ: Math.max(...points.map((point) => point[2]))
+    };
   }
 
   function parseIfc(text) {
@@ -210,7 +308,11 @@
         return null;
       }
       const wallWorld = productPlacement(model, record, placementCache);
-      const wallInverse = inverseRigid(wallWorld);
+      const geometry = panelGeometry(wallWorld, solid);
+      if (!geometry) {
+        warnings.push({ code: 'UNSUPPORTED_WALL_ORIENTATION', entityId: record.id, message: 'Wall extrusion is not vertical enough for the panel workflow.' });
+        return null;
+      }
       const wallIdentity = productIdentity(record);
       const storeyId = spatialContainer.get(record.id) || null;
       const openingRecords = (openingByWall.get(record.id) || []).map((id) => model.get(id)).filter(Boolean);
@@ -221,33 +323,39 @@
           return null;
         }
         const openingWorld = productPlacement(model, openingRecord, placementCache);
-        const relative = multiply(wallInverse, openingWorld);
+        const openingBounds = solidBoundsInPanel(openingWorld, openingSolid, geometry.panelInverse);
         const filler = model.get(fillerByOpening.get(openingRecord.id));
         const type = filler && filler.type === 'IFCDOOR' ? 'DOOR' : filler && filler.type === 'IFCWINDOW' ? 'WINDOW' : 'OPENING';
-        const widthMm = (openingSolid.bounds.maxX - openingSolid.bounds.minX) * factor;
-        const heightMm = openingSolid.depth * factor;
+        const widthMm = (openingBounds.maxX - openingBounds.minX) * factor;
+        const heightMm = (openingBounds.maxZ - openingBounds.minZ) * factor;
         return {
           id: `${type}-${core.math.pad(index + 1, 2)}`,
           guid: openingRecord.args[0] || null,
           type,
-          xMm: core.math.round(relative[0][3] * factor + openingSolid.bounds.minX * factor, 3),
-          sillMm: core.math.round(relative[2][3] * factor, 3),
+          xMm: core.math.round(openingBounds.minX * factor, 3),
+          sillMm: core.math.round(openingBounds.minZ * factor, 3),
           widthMm: core.math.round(widthMm, 3),
           heightMm: core.math.round(heightMm, 3),
           source: 'IFC',
           sourceRef: { openingEntityId: openingRecord.id, fillerEntityId: filler ? filler.id : null, fillerType: filler ? filler.type : null }
         };
       }).filter(Boolean);
+      const panelWorld = geometry.panelWorld;
       const wall = Object.assign(wallIdentity, {
         storeyId,
-        lengthMm: core.math.round((solid.bounds.maxX - solid.bounds.minX) * factor, 3),
-        thicknessMm: core.math.round((solid.bounds.maxY - solid.bounds.minY) * factor, 3),
-        heightMm: core.math.round(solid.depth * factor, 3),
+        lengthMm: core.math.round(geometry.length * factor, 3),
+        thicknessMm: core.math.round(geometry.thickness * factor, 3),
+        heightMm: core.math.round(geometry.height * factor, 3),
         placement: {
-          xMm: core.math.round(wallWorld[0][3] * factor, 3),
-          yMm: core.math.round(wallWorld[1][3] * factor, 3),
-          zMm: core.math.round(wallWorld[2][3] * factor, 3),
-          rotationDeg: core.math.round(Math.atan2(wallWorld[1][0], wallWorld[0][0]) * 180 / Math.PI, 4)
+          xMm: core.math.round(panelWorld[0][3] * factor, 3),
+          yMm: core.math.round(panelWorld[1][3] * factor, 3),
+          zMm: core.math.round(panelWorld[2][3] * factor, 3),
+          rotationDeg: core.math.round(Math.atan2(panelWorld[1][0], panelWorld[0][0]) * 180 / Math.PI, 4)
+        },
+        normalization: {
+          originConvention: 'LOWER_LEFT_BASE_OF_PROFILE_ENVELOPE',
+          sourceLengthAxis: geometry.sourceLengthAxis,
+          panelAxes: 'X_LENGTH_Y_THICKNESS_Z_HEIGHT'
         },
         openings
       });
@@ -292,8 +400,9 @@
         wallEntityId: wall.entityId,
         storeyEntityId: wall.storeyId,
         lengthUnit: ifcModel.unit,
-        parser: 'AVELIS_IFC_STEP_SUBSET_V2',
-        limitations: 'Supports IFC2x3/IFC4 walls and openings represented by local placements plus Body/IfcExtrudedAreaSolid with polyline or rectangle profiles.'
+        parser: 'AVELIS_IFC_STEP_SUBSET_V2_1',
+        normalization: wall.normalization,
+        limitations: 'Supports IFC2x3/IFC4 vertical walls and openings represented by local placements plus Body/IfcExtrudedAreaSolid with polyline or rectangle profiles; profile X/Y axes are normalized to panel length/thickness.'
       }
     });
   }

@@ -8,6 +8,8 @@ const { loadCore, root } = require('./load-core');
 const core = loadCore();
 const officialIfcPath = path.join(root, 'test-data', 'ifc', 'wall-with-opening-and-window.ifc');
 const officialIfc = fs.readFileSync(officialIfcPath, 'utf8');
+const multiWallIfcPath = path.join(root, 'test-data', 'ifc', 'partie1-four-walls.ifc');
+const multiWallIfc = fs.readFileSync(multiWallIfcPath, 'utf8');
 let passed = 0;
 
 function test(label, fn) {
@@ -192,13 +194,45 @@ test('le flux IFC et le flux manuel réutilisent le même générateur', () => {
   assert.equal(ifcResult.recommended.members.length, manualResult.recommended.members.length);
 });
 
-test('une rotation et une translation IFC sont composées dans le placement global', () => {
+test('les placements, profils centrés et axes X/Y IFC sont normalisés', () => {
   const transformed = officialIfc
     .replace('#47 = IFCAXIS2PLACEMENT3D(#24, $, $);', '#47 = IFCAXIS2PLACEMENT3D(#134, #27, #135);')
     .replace('ENDSEC;\nEND-ISO-10303-21;', '#134 = IFCCARTESIANPOINT((100., 200., 0.));\n#135 = IFCDIRECTION((0., 1., 0.));\nENDSEC;\nEND-ISO-10303-21;');
   const wall = core.ifcImporter.parseIfc(transformed).walls[0];
   assert.deepEqual([wall.placement.xMm, wall.placement.yMm, wall.placement.zMm], [100, 200, 0]);
   assert.equal(wall.placement.rotationDeg, 90);
+
+  const model = core.ifcImporter.parseIfc(multiWallIfc);
+  assert.equal(model.schema, 'IFC4');
+  assert.equal(model.unit.name, 'METRE');
+  assert.equal(model.walls.length, 4);
+  assert.equal(model.warnings.length, 0);
+
+  const walls = Object.fromEntries(model.walls.map((wall) => [wall.name, wall]));
+  assert.deepEqual(
+    [walls['Mur Sud'].lengthMm, walls['Mur Sud'].heightMm, walls['Mur Sud'].thicknessMm],
+    [10000, 2500, 300]
+  );
+  assert.deepEqual(
+    [walls['Mur Ouest'].lengthMm, walls['Mur Ouest'].heightMm, walls['Mur Ouest'].thicknessMm],
+    [1900, 2500, 300]
+  );
+  assert.deepEqual(
+    [walls['Mur Est'].lengthMm, walls['Mur Est'].heightMm, walls['Mur Est'].thicknessMm],
+    [1900, 2500, 300]
+  );
+  assert.equal(walls['Mur Ouest'].normalization.sourceLengthAxis, 'Y');
+  assert.equal(walls['Mur Ouest'].placement.rotationDeg, 90);
+  assert.deepEqual(
+    walls['Mur Sud'].openings.map((opening) => [opening.type, opening.xMm, opening.sillMm, opening.widthMm, opening.heightMm]),
+    [['WINDOW', 1750, 500, 1500, 1500], ['DOOR', 7100, 0, 800, 1750]]
+  );
+
+  model.walls.forEach((wall) => {
+    const result = core.runIfcWorkflow(multiWallIfc, { wallEntityId: wall.entityId });
+    assert.equal(result.ok, true, wall.name);
+    assert.equal(result.search.validCandidates.length, 6, wall.name);
+  });
 });
 
 test('un faux fichier renommé .ifc est rejeté', () => {

@@ -13,6 +13,7 @@
 ## Données de test externes
 
 - IFC : exemple buildingSMART `wall-with-opening-and-window.ifc`, source et URL dans `data/engineering_sources.json`.
+- IFC : `partie1-four-walls.ifc`, fichier de vérification fourni par l’équipe et conservé comme régression interne ; il ne constitue pas une source normative.
 - STEP : fixture `simple-basic-cube/cube.stp` de `occt-import-js` 0.0.23.
 
 ## Références sans code copié

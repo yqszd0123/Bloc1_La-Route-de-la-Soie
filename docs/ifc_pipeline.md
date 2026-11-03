@@ -23,10 +23,10 @@ The implementation reads the ISO 10303-21 physical file, including:
 3. Resolve the project length unit and convert once to millimetres.
 4. Reconstruct the project → building → storey containment graph.
 5. Compose nested local-placement matrices into world coordinates.
-6. Select each wall Body representation and derive length, height and thickness.
+6. Select each wall Body representation, project its eight solid corners, then normalize the dominant horizontal profile axis to panel X (length), the other horizontal axis to panel Y (thickness), and the extrusion axis to panel Z (height).
 7. Resolve wall → opening through `IfcRelVoidsElement`.
 8. Resolve opening → door/window through `IfcRelFillsElement`.
-9. Express opening coordinates in the local coordinate system of the wall.
+9. Project every opening solid into the same normalized panel coordinate system; this removes the IFC profile-origin convention from door/window positions.
 10. Convert the chosen wall to the shared `WallInput` and run the normal steel-panel chain.
 
 ## Verified fixture
@@ -44,6 +44,17 @@ The implementation reads the ISO 10303-21 physical file, including:
 
 Automated tests also modify the fixture placement to verify a 100/200 mm translation and 90° rotation.
 
+`test-data/ifc/partie1-four-walls.ifc` is the four-wall IFC4 model supplied by the team. It verifies two interoperability cases that the single-wall fixture does not cover: centred rectangular profiles and wall length carried by either local profile X or local profile Y.
+
+| Wall | Program result | Source length axis | Openings |
+|---|---:|---:|---|
+| Mur Sud | 10000 × 300 × 2500 mm | X | window x=1750/sill=500/1500 × 1500 mm; door x=7100/sill=0/800 × 1750 mm |
+| Mur Nord | 10000 × 300 × 2500 mm | X | none |
+| Mur Ouest | 1900 × 300 × 2500 mm | Y | none |
+| Mur Est | 1900 × 300 × 2500 mm | Y | none |
+
+All four walls are passed independently through the same variant generator; the regression test requires six valid candidates for each wall. This fixture is an internal verification model, not an engineering-data or standards source.
+
 ## Supported and unsupported geometry
 
 The parser intentionally supports a documented subset that is sufficient for standard extruded walls and openings. It rejects files with no supported wall Body instead of inventing dimensions. Advanced BRep, mapped, tessellated, curved and boolean geometry should be delegated to a full geometry kernel in a later industrial version.
@@ -56,4 +67,5 @@ The parser intentionally supports a documented subset that is sufficient for sta
 - wall Body and opening Body are present;
 - opening coordinates are compared to the wall envelope downstream;
 - the filler entity class determines `DOOR`, `WINDOW` or unfilled `OPENING`;
+- centred or offset profile origins and local X/Y wall orientations produce the same lower-left panel convention;
 - the source fingerprint and IFC entity IDs are retained in exports.
