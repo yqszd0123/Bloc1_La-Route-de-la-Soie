@@ -3,14 +3,14 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  core.VERSION = '2.0.0';
+  core.VERSION = '2.1.0';
 
   core.DEFAULT_INPUT = Object.freeze({
     sourceMode: 'MANUAL',
     projectId: 'AVELIS-BLOC1-REF',
     typology: 'REFERENCE',
     wallId: 'WALL-001',
-    version: '2.0',
+    version: '2.1',
     wallLengthMm: 3000,
     wallHeightMm: 2000,
     wallThicknessMm: 300,

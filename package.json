@@ -1,6 +1,6 @@
 {
   "name": "avelis-wall-flow",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "IFC-to-manufacturing workflow for traceable cold-formed steel wall panels — Imagine & Make 2026, Bloc 1.",
   "license": "MIT",

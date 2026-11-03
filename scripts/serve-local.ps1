@@ -17,6 +17,8 @@ $mime = @{
   '.png' = 'image/png'
   '.csv' = 'text/csv; charset=utf-8'
   '.stl' = 'model/stl'
+  '.step' = 'model/step'
+  '.stp' = 'model/step'
   '.dxf' = 'application/dxf'
   '.zip' = 'application/zip'
 }

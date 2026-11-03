@@ -32,7 +32,7 @@
     const safeScale = Math.max(1, Number(scale) || result.input.prototypeScale || 20);
     const files = {
       '00_READ_ME.txt': [
-        'AVELIS WALL FLOW 2.0 — IFC-to-manufacturing reference package',
+        'AVELIS WALL FLOW 2.1 — IFC-to-manufacturing reference package',
         `Project: ${result.input.projectId} / ${result.input.wallId} / version ${result.input.version}`,
         `Candidate: ${selected.id} (rank ${selected.rank}, decision score ${selected.score})`,
         `Steel mass: ${selected.metrics.steelMassKg} kg`,
@@ -42,12 +42,15 @@
         'IMPORTANT: geometry checks and traceable quantity calculations are automated.',
         'This package is NOT a structural certificate and is NOT released to an Avelis machine.',
         'Profiles and prices are public reference inputs, not confirmed Avelis products or procurement data.',
-        'DXF/STL geometry is a profile envelope for coordination and FabLab prototyping, not sheet-metal production geometry.'
+        'STEP/DXF/STL geometry is a profile envelope for coordination and FabLab prototyping, not detailed sheet-metal production geometry.'
       ].join('\r\n'),
       '01_input/noov_request_proposal.json': pretty(core.serialize.noovRequest(result)),
       '01_input/source_context.json': pretty({ source: result.project.source, ifcAudit: result.ifcAudit || null, stepAudit: result.stepAudit || null }),
       '02_design/recommended_design.json': pretty({ project: result.project, candidate: selected }),
       '02_design/elevation.svg': core.svg.svgForCandidate(selected),
+      '02_design/model_3d_profile_envelopes.step': core.stepExport.stepForCandidate(selected, {
+        fileName: `${result.input.wallId}_${selected.id}_profile_envelopes.step`
+      }),
       '02_design/model_3d_profile_envelopes.dxf': core.dxf.dxfForCandidate(selected),
       [`02_design/fablab/assembly_scale_1_${safeScale}.stl`]: core.stl.stlForCandidate(selected, safeScale),
       '03_manufacturing/bom.csv': core.serialize.bomCsv(selected),
@@ -59,7 +62,8 @@
       '04_quality/candidate_comparison.csv': core.serialize.comparisonCsv(result),
       '04_quality/engineering_data_snapshot.json': pretty(core.ENGINEERING_DATA),
       '05_interfaces/noov_response_proposal.json': pretty(core.serialize.noovResponse(result, selected)),
-      '05_interfaces/logistics_handover.json': pretty(core.serialize.logisticsHandover(result, selected))
+      '05_interfaces/logistics_handover.json': pretty(core.serialize.logisticsHandover(result, selected)),
+      '05_interfaces/Bloc1_Bloc2_Interface_Schema.md': core.BLOC1_BLOC2_INTERFACE_MD
     };
     selected.members.forEach((member) => {
       files[`02_design/fablab/parts/${member.id}_scale_1_${safeScale}.stl`] = core.stl.stlForMember(member, safeScale);

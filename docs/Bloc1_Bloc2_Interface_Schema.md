@@ -15,10 +15,13 @@ Transmettre au Bloc 2 une configuration versionnée, des composants unitaires tr
 - `machine_neutral_members.csv` : positions X/Y/Z, axe et QR ;
 - `component_labels.csv` : identifiants et QR ;
 - `manufacturing_handover.json` : contrat complet ci-dessous ;
+- `model_3d_profile_envelopes.step` : assemblage CAO STEP AP203 en millimètres, composé de solides BRep `MANIFOLD_SOLID_BREP` nommés par identifiant de composant ;
 - `model_3d_profile_envelopes.dxf` : géométrie neutre de coordination ;
 - `validation_report.json` : contrôles et exclusions.
 
 CSV : UTF-8, séparateur point-virgule, ligne d’en-tête. Longueurs en mm, masses en kg.
+
+Le STEP est un vrai fichier ISO 10303-21 relu automatiquement par Open CASCADE pendant les tests. Il représente les enveloppes externes des profils et non leur section C/U détaillée, les perçages, fixations ou trajectoires machine.
 
 ## 3. JSON réellement généré
 
@@ -119,10 +122,10 @@ Cette séquence exprime une dépendance de conception, pas un temps de cycle ni 
 ## 8. Questions à valider avec Bloc 2
 
 1. Le JSON v2 et les quatre CSV sont-ils acceptables comme contrat amont ?
-2. Le Bloc 2 veut-il des positions d’axes, des surfaces de contact ou une géométrie BRep complète ?
+2. Le STEP AP203 d’enveloppes BRep planes suffit-il pour la coordination, ou le Bloc 2 exige-t-il des sections C/U détaillées et leurs rayons de pliage ?
 3. Quelles machines, longueurs de stock, outils et opérations sont réellement disponibles ?
 4. Quelles tolérances de coupe, position et assemblage faut-il appliquer ?
 5. Quels perçages, fixations et contrôles qualité sont obligatoires ?
 6. Quel format natif et quel mécanisme d’accusé réception doivent être ajoutés ?
 
-Ce document reprend la structure du modèle fourni par l’équipe, mais remplace entièrement les données fictives historiques par le contrat acier réellement généré par la version 2.0.
+Ce document reprend la structure du modèle fourni par l’équipe, mais remplace entièrement les données fictives historiques par le contrat acier réellement généré par Avelis Wall Flow 2.1. Le schéma d’échange reste versionné `v2.0` tant que ses champs n’ont pas subi de rupture de compatibilité.

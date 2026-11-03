@@ -6,7 +6,7 @@
   <meta name="description" content="Chaîne IFC vers fabrication pour panneaux muraux en acier formé à froid — Avelis, Imagine & Make 2026, Bloc 1.">
   <link rel="canonical" href="https://avelis-wall-flow-2026.bushy-bloom-8799.chatgpt.site/">
   <meta property="og:url" content="https://avelis-wall-flow-2026.bushy-bloom-8799.chatgpt.site/">
-  <title>Avelis Wall Flow 2.0 — IFC to Manufacturing</title>
+  <title>Avelis Wall Flow 2.1 — IFC to Manufacturing</title>
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/components.css">
@@ -20,7 +20,7 @@
     </div>
     <div class="hero__status" aria-label="État du prototype">
       <span class="status-dot"></span>
-      Version 2.0 · acier uniquement
+      Version 2.1 · acier uniquement
     </div>
   </header>
 
@@ -184,7 +184,7 @@
     <section id="design-page" class="app-page" hidden>
       <div class="workspace__toolbar">
         <div><span class="eyebrow">Solution sélectionnée</span><h2 id="candidate-title">—</h2></div>
-        <div class="toolbar-actions"><button id="download-design" class="button button--secondary" disabled>JSON</button><button id="download-stl" class="button button--secondary" disabled>STL assemblé</button><button id="download-package" class="button button--accent" disabled>Paquet complet .zip</button></div>
+        <div class="toolbar-actions"><button id="download-design" class="button button--secondary" disabled>JSON</button><button id="download-step" class="button button--secondary" disabled>STEP CAO</button><button id="download-stl" class="button button--secondary" disabled>STL assemblé</button><button id="download-package" class="button button--accent" disabled>Paquet complet .zip</button></div>
       </div>
       <div class="scope-warning"><strong id="result-source-label">Portée :</strong> <span id="scope-warning-text">Validation structurelle et industrielle requise.</span></div>
       <div class="viewer-card">
@@ -231,6 +231,7 @@
   <footer><p><strong>Équipe 3 — La Route de la Soie</strong> · Centrale Lille · Avelis · Imagine &amp; Make 2026</p><p>Aucune certification structurelle ou libération machine n’est revendiquée.</p></footer>
 
   <script src="../../packages/core/src/data/engineering-catalog.js"></script>
+  <script src="../../packages/core/src/data/bloc1-bloc2-interface.js"></script>
   <script src="../../packages/core/src/domain/constants.js"></script>
   <script src="../../packages/core/src/utils/math.js"></script>
   <script src="../../packages/core/src/domain/engineering.js"></script>
@@ -248,6 +249,7 @@
   <script src="../../packages/core/src/export/serialize.js"></script>
   <script src="../../packages/core/src/export/stl.js"></script>
   <script src="../../packages/core/src/export/dxf.js"></script>
+  <script src="../../packages/core/src/export/step.js"></script>
   <script src="../../packages/core/src/export/svg.js"></script>
   <script src="../../packages/core/src/export/zip.js"></script>
   <script src="../../packages/core/src/export/package-builder.js"></script>

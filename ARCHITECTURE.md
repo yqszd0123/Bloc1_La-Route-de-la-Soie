@@ -20,7 +20,7 @@ Manuel ─ formulaire ───────┘
 | `generation` | création des composants acier sémantiques |
 | `rules` | validation des entrées et des candidats |
 | `optimization` | espace exhaustif, métriques, Pareto, classement |
-| `export` | CSV/JSON/SVG/DXF/STL/ZIP et contrats inter-blocs |
+| `export` | CSV/JSON/SVG/DXF/STL/STEP/ZIP et contrats inter-blocs |
 | `apps/web` | interaction, rendu, import local et téléchargement |
 
 ## Décisions d’architecture
@@ -37,6 +37,8 @@ Manuel ─ formulaire ───────┘
 ## STEP versus IFC
 
 IFC fournit des relations de bâtiment et d’ouverture ; STEP fournit une géométrie CAO. L’adaptateur STEP calcule seulement l’enveloppe X/Y/Z et exige un mapping explicite des axes. Cette séparation empêche une géométrie STEP d’être présentée à tort comme un modèle BIM sémantique.
+
+L’export STEP suit le chemin inverse à partir du même candidat : chaque enveloppe de composant devient un solide BRep fermé `MANIFOLD_SOLID_BREP` AP203 en millimètres, avec arêtes et faces planes explicites. Le test d’intégration relit ensuite ce fichier avec Open CASCADE et compare son enveloppe globale au modèle source. Aucune seconde géométrie parallèle n’est maintenue.
 
 ## Contrat Bloc 1 → Bloc 2
 
