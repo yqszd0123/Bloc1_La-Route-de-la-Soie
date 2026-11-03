@@ -15,7 +15,7 @@ from reportlab.platypus import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT.parents[1] / "outputs" / "Engineering_Data_Report_Avelis_Wall_Flow_2.0.pdf"
+OUTPUT = ROOT / "outputs" / "Engineering_Data_Report_Avelis_Wall_Flow_2.1.pdf"
 DATA = json.loads((ROOT / "data" / "engineering_sources.json").read_text(encoding="utf-8"))
 EXPERIMENT = json.loads((ROOT / "experiments" / "results" / "official-ifc-window" / "experiment-result.json").read_text(encoding="utf-8"))
 
@@ -111,7 +111,7 @@ def header_footer(canvas, doc):
     canvas.rect(0, A4[1]-15*mm, A4[0], 15*mm, fill=1, stroke=0)
     canvas.setFillColor(WHITE)
     canvas.setFont("Avelis-Bold", 8)
-    canvas.drawString(18*mm, A4[1]-9.5*mm, "AVELIS WALL FLOW 2.0 — ENGINEERING DATA REPORT")
+    canvas.drawString(18*mm, A4[1]-9.5*mm, "AVELIS WALL FLOW 2.1 — ENGINEERING DATA REPORT")
     canvas.setStrokeColor(LINE)
     canvas.line(18*mm, 14*mm, A4[0]-18*mm, 14*mm)
     canvas.setFillColor(MUTED)
@@ -133,7 +133,7 @@ def cover(canvas, doc):
     canvas.setFont("Avelis-Bold", 9)
     canvas.drawString(20*mm, A4[1]-23*mm, "IMAGINE & MAKE 2026 · AVELIS · BLOC 1")
     canvas.setFont("Avelis", 8)
-    canvas.drawString(20*mm, 20*mm, "Version 2.0 · 3 novembre 2026 · ENGINEERING_REVIEW_REQUIRED")
+    canvas.drawString(20*mm, 20*mm, "Version 2.1 · 3 novembre 2026 · ENGINEERING_REVIEW_REQUIRED")
     canvas.restoreState()
 
 
@@ -161,7 +161,7 @@ story += bullets([
     "Statut : démonstrateur conceptuel. Aucun certificat structurel, aucune tolérance inventée, aucune libération machine."
 ])
 story.append(P("Décision recommandée", "H2A"))
-story.append(P("Utiliser la version 2.0 comme contrat numérique de discussion entre Bloc 1, Bloc 2 et Avelis ; remplacer progressivement les produits, prix et capacités de référence par les données industrielles confirmées.", "Callout"))
+story.append(P("Utiliser la version 2.1 comme contrat numérique de discussion entre Bloc 1, Bloc 2 et Avelis ; remplacer progressivement les produits, prix et capacités de référence par les données industrielles confirmées.", "Callout"))
 story.append(PageBreak())
 
 story += section("2. Architecture et principe de conception")
@@ -172,7 +172,7 @@ story.append(table(["Couche", "Responsabilité", "Garantie"], [
     ["Génération", "Créer rails, montants et cadres", "Même composant dans visuel, BOM et JSON"],
     ["Règles", "Contrôler enveloppe, collisions, valeurs", "Erreurs bloquantes avant export"],
     ["Optimisation", "Évaluer 6 variantes", "Recherche exhaustive et classement stable"],
-    ["Exports", "CSV, JSON, SVG, DXF, STL, ZIP", "Paquet cohérent et statut explicite"]
+    ["Exports", "CSV, JSON, SVG, DXF, STL, STEP, ZIP", "Paquet cohérent et statut explicite"]
 ], [27*mm, 65*mm, 78*mm]))
 story.append(P("Règle d’évolution", "H2A"))
 story.append(P("Toute modification change le modèle métier commun et supprime la logique devenue redondante. La porte et la fenêtre sont deux instances d’un même objet ouverture ; seule leur différence réelle — notamment l’absence d’appui bas pour une porte — reste spécifique."))
@@ -188,7 +188,7 @@ story.append(table(["Mode", "Lecture", "Données conservées", "Limite affichée
 story.append(P("Cas de test IFC", "H2A"))
 story += bullets(["IFC4 réel, 133 entités, unité millimètre.", "Mur 3000 × 2000 × 300 mm.", "Fenêtre 1000 × 1000 mm à x=1000 mm et allège 500 mm.", "Relations mur → ouverture → fenêtre et placement global testés."])
 story.append(P("Cas de test STEP", "H2A"))
-story += bullets(["STEP AP214 réel lu par le moteur géométrique.", "1 maillage, 24 sommets, enveloppe 300 × 300 × 300 mm.", "Trois axes distincts obligatoires ; un doublon X/Y/Z bloque la conversion."])
+story += bullets(["Entrée STEP AP214 réelle lue par le moteur géométrique : 1 maillage, 24 sommets et enveloppe 300 × 300 × 300 mm.", "Sortie STEP AP203 générée depuis le candidat : 13 solides BRep nommés, 312 sommets après triangulation et enveloppe 3000 × 104 × 2000 mm.", "Le fichier exporté est relu par Open CASCADE et ses dimensions sont comparées au modèle source.", "Trois axes distincts restent obligatoires à l’import ; un doublon X/Y/Z bloque la conversion."])
 story.append(PageBreak())
 
 story += section("4. Catalogue acier de référence")
@@ -258,7 +258,9 @@ story.append(table(["Fichier", "Contenu", "Usage"], [
     ["cutting_list.csv", "une ligne par composant", "préparation de débit"],
     ["machine_neutral_members.csv", "position, axe, QR", "mapping Bloc 2"],
     ["manufacturing_handover.json", "composants + séquence + dépendances", "contrat v2 proposé"],
+    ["STEP AP203", "solides BRep d’enveloppe nommés", "coordination CAO Bloc 2"],
     ["DXF / STL", "enveloppes et maquette", "coordination / FabLab"],
+    ["Bloc1_Bloc2_Interface_Schema.md", "champs, responsabilités et questions", "contrat d’interface"],
     ["validation_report.json", "contrôles et exclusions", "audit"]
 ], [43*mm, 67*mm, 50*mm]))
 story.append(P("Séquence proposée", "H2A"))
@@ -272,14 +274,15 @@ story.append(table(["Contrôle", "Méthode", "Résultat"], [
     ["Masse profil", "fabricant vs approximation densité", "PASS < 5 %"],
     ["Masse panneau", "somme pièces vs BOM", "MATCH, 0,0004 kg"],
     ["IFC", "fixture réel et géométrie connue", "PASS"],
-    ["STEP", "fixture réel Open CASCADE", "PASS, 24 sommets"],
+    ["STEP entrée", "fixture réel Open CASCADE", "PASS, 24 sommets"],
+    ["STEP sortie", "export puis réimport Open CASCADE", "PASS, 13 solides / dimensions MATCH"],
     ["Porte", "rail bas interrompu, cadre générique", "PASS"],
     ["Ouvertures", "hors enveloppe, chevauchement, tête", "PASS"],
     ["Optimisation", "6 générés = 6 déclarés", "PASS"],
     ["Exports", "signatures STL/DXF/SVG/ZIP et contrat", "PASS"]
 ], [38*mm, 82*mm, 40*mm]))
 story.append(P("Bilan automatisé", "H2A"))
-story.append(P("23 vérifications réussies : 22 tests du moteur et 1 intégration réelle STEP/Open CASCADE. Les valeurs de présentation sont produites par le même programme que les exports."))
+story.append(P("25 vérifications réussies : 24 tests du moteur et 1 intégration STEP/Open CASCADE couvrant import et réimport de la sortie générée. Les valeurs de présentation sont produites par le même programme que les exports."))
 story.append(PageBreak())
 
 story += section("10. Limites et données à obtenir")
@@ -327,7 +330,7 @@ def build():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     doc = BaseDocTemplate(
         str(OUTPUT), pagesize=A4, rightMargin=18*mm, leftMargin=18*mm,
-        topMargin=22*mm, bottomMargin=19*mm, title="Engineering Data Report — Avelis Wall Flow 2.0",
+        topMargin=22*mm, bottomMargin=19*mm, title="Engineering Data Report — Avelis Wall Flow 2.1",
         author="Équipe 3 — La Route de la Soie"
     )
     frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="normal")

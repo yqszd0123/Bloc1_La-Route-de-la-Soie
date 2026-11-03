@@ -27,6 +27,12 @@ test('le catalogue navigateur est synchronisé avec la source JSON autoritative'
   assert.equal(source.scope.certificationStatus, 'ENGINEERING_REVIEW_REQUIRED');
 });
 
+test('le contrat Bloc 1 vers Bloc 2 embarqué reste synchronisé avec le Markdown autoritatif', () => {
+  const source = fs.readFileSync(path.join(root, 'docs', 'Bloc1_Bloc2_Interface_Schema.md'), 'utf8');
+  assert.equal(core.BLOC1_BLOC2_INTERFACE_MD, source);
+  assert.match(source, /model_3d_profile_envelopes\.step/);
+});
+
 test('le modèle de domaine est exclusivement acier', () => {
   assert.match(core.ENGINEERING_DATA.catalog.material.id, /^REF-METSEC-Z275/);
   assert.ok(core.ENGINEERING_DATA.catalog.profiles.every((profile) => ['STUD_C', 'TRACK_U'].includes(profile.family)));
@@ -219,6 +225,10 @@ test('les exports neutres et FabLab proviennent du même modèle', () => {
   assert.ok(core.stl.stlForCandidate(candidate, 20).startsWith('solid'));
   assert.ok(core.stl.stlForMember(candidate.members[0], 20).startsWith('solid'));
   assert.match(core.dxf.dxfForCandidate(candidate), /3DFACE/);
+  const step = core.stepExport.stepForCandidate(candidate, { timestamp: '2026-11-03T00:00:00Z' });
+  assert.match(step, /^ISO-10303-21;/);
+  assert.match(step, /FILE_SCHEMA\(\('CONFIG_CONTROL_DESIGN'\)\)/);
+  assert.equal((step.match(/MANIFOLD_SOLID_BREP\(/g) || []).length, candidate.members.length);
   assert.match(core.svg.svgForCandidate(candidate), /<svg/);
   assert.match(core.serialize.bomCsv(candidate), /total_mass_kg/);
   assert.match(core.serialize.cuttingListCsv(candidate), /manufacturing_release/);
@@ -229,12 +239,16 @@ test('le paquet complet contient les interfaces et bloque explicitement la machi
   const files = core.packageBuilder.buildExportFiles(result, result.recommended, 20);
   [
     '01_input/noov_request_proposal.json',
+    '02_design/model_3d_profile_envelopes.step',
     '02_design/model_3d_profile_envelopes.dxf',
     '03_manufacturing/bom.csv',
     '03_manufacturing/cutting_list.csv',
     '04_quality/validation_report.json',
-    '05_interfaces/logistics_handover.json'
+    '05_interfaces/logistics_handover.json',
+    '05_interfaces/Bloc1_Bloc2_Interface_Schema.md'
   ].forEach((name) => assert.ok(Object.hasOwn(files, name), name));
+  assert.match(files['02_design/model_3d_profile_envelopes.step'], /^ISO-10303-21;/);
+  assert.equal(files['05_interfaces/Bloc1_Bloc2_Interface_Schema.md'], core.BLOC1_BLOC2_INTERFACE_MD);
   const handover = JSON.parse(files['03_manufacturing/manufacturing_handover.json']);
   assert.equal(handover.releaseStatus, 'BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION');
   assert.equal(handover.toleranceMm, null);

@@ -31,7 +31,7 @@
   "searchSpaceSize": 6,
   "validCandidateCount": 6,
   "rejectedCandidateCount": 0,
-  "processingTimeMs": 14,
+  "processingTimeMs": 19,
   "recommendedCandidateId": "CAND-02",
   "recommendedRank": 1,
   "score": 5.17,

@@ -68,8 +68,18 @@
       "license": "LGPL-2.1 with Open CASCADE exception; wrapper license retained in third_party",
       "retrieved": "2026-11-03",
       "locationInProject": "third_party/occt-import-js",
-      "usedFor": ["Browser and Node STEP parsing", "tessellated geometry extraction", "real STEP integration test"],
+      "usedFor": ["Browser and Node STEP parsing", "tessellated geometry extraction", "real STEP integration test", "round-trip validation of generated STEP output"],
       "applicability": "Geometry interoperability only; does not infer IFC semantics or Avelis manufacturing operations."
+    },
+    "NIST_STEP_PART21": {
+      "kind": "official_technical_reference",
+      "title": "NIST STEP Part 21 Exchange File Toolkit and STEP file resources",
+      "url": "https://www.nist.gov/ctl/smart-connected-systems-division/smart-connected-manufacturing-systems-group/step-nist",
+      "identifier": "ISO 10303-21",
+      "region": "International",
+      "locationInSource": "Part 21 clear-text exchange structure; HEADER and DATA sections; entity instances and schema declaration",
+      "usedFor": ["STEP output structure", "AP203 CONFIG_CONTROL_DESIGN header", "traceable neutral CAD exchange"],
+      "applicability": "The exporter emits millimetre MANIFOLD_SOLID_BREP profile envelopes with explicit planar faces and edges. It does not claim detailed C/U profile geometry, PMI or machine readiness."
     },
     "OCCT_IMPORT_JS_CUBE_STEP": {
       "kind": "open_source_test_model",
@@ -339,6 +349,14 @@
       "inputs": ["steelMassKg", "referenceRules.hautsDeFranceSteelBudgetPrice.valueEurPerKgExVat"],
       "rangeFormula": "steel_mass_kg × [1.82, 4.12] EUR/kg ex VAT",
       "verification": "Program reproduces all three normalized source prices and their arithmetic mean."
+    },
+    "stepProfileEnvelopeGeometry": {
+      "formula": "one closed six-face MANIFOLD_SOLID_BREP box per generated member bounds[min,max]",
+      "inputs": ["member.id", "member.bounds.min", "member.bounds.max"],
+      "units": "millimetre",
+      "sourceIds": ["NIST_STEP_PART21", "OCCT_IMPORT_JS_0_0_23"],
+      "verification": "Generated ISO 10303-21 output is re-imported with Open CASCADE; mesh count, positive geometry and overall bounding box are compared with the candidate model.",
+      "limitation": "Coordination envelope only; not the detailed C/U sheet-metal section, holes, fasteners, tolerances or machine path."
     }
   },
   "unresolvedAvelisInputs": [

@@ -1,4 +1,4 @@
-# Avelis Wall Flow 2.0
+# Avelis Wall Flow 2.1
 
 Application Bloc 1 de continuité numérique pour panneaux muraux en acier formé à froid. Elle accepte une configuration manuelle, un vrai fichier IFC ou une géométrie STEP/STP, génère plusieurs variantes traçables, compare leurs métrés et prépare un paquet neutre pour le Bloc 2.
 
@@ -22,13 +22,14 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 - longueur, masse par `longueur × kg/m fabricant`, BOM, débit et coût matière ;
 - comparaison normalisée et Pareto sur les métriques disponibles ;
 - contrôles de collision, enveloppe, cohérence BOM/géométrie et traçabilité ;
-- exports CSV, JSON, SVG, DXF, STL et ZIP ;
+- exports CSV, JSON, SVG, DXF, STL, STEP AP203 et ZIP ;
 - contrat proposé Bloc 1 → Bloc 2 avec composants, positions, dépendances et statut de libération bloqué.
 
 ## Entrées
 
 - `IFC` : analyse ISO 10303-21, unités, placements, hiérarchie, murs, vides et remplissages ; fixture IFC4 buildingSMART incluse.
-- `STEP/STP` : lecture réelle par `occt-import-js 0.0.23` et Open CASCADE ; conversion explicite de l’enveloppe 3D, sans inventer de sémantique de porte/fenêtre.
+- `STEP/STP` en entrée : lecture réelle par `occt-import-js 0.0.23` et Open CASCADE ; conversion explicite de l’enveloppe 3D, sans inventer de sémantique de porte/fenêtre.
+- `STEP` en sortie : un solide BRep analytique `MANIFOLD_SOLID_BREP` nommé par composant, en millimètres, regroupé dans un vrai fichier ISO 10303-21/AP203 relu automatiquement par Open CASCADE. Il s’agit d’enveloppes de coordination, pas des sections C/U détaillées ni d’un programme machine.
 - `MANUAL` : dimensions et ouvertures paramétrables, porte et fenêtre activables indépendamment.
 
 ## Résultat de référence reproductible
@@ -58,7 +59,9 @@ npm test
 npm run experiments
 ```
 
-Les tests couvrent les sources, profils, masses, porte, collisions, IDs, budget, classement, vrai IFC, vrai STEP, exports et blocage de la libération machine.
+Les tests couvrent les sources, profils, masses, porte, collisions, IDs, budget, classement, vrai IFC, import STEP réel, export STEP relu par Open CASCADE, autres exports et blocage de la libération machine.
+
+Le contrat documenté Bloc 1 → Bloc 2 est `docs/Bloc1_Bloc2_Interface_Schema.md`. La même version est intégrée automatiquement au paquet ZIP téléchargé.
 
 ## Références et licences
 

@@ -22,7 +22,7 @@
   }
 
   function enable(enabled) {
-    ['download-design', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-package-2']
+    ['download-design', 'download-step', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-package-2']
       .forEach((id) => { document.getElementById(id).disabled = !enabled; });
   }
 
@@ -40,6 +40,11 @@
     document.getElementById('download-stl').addEventListener('click', () => {
       const { result, candidate } = current();
       download(`${result.input.wallId}_${candidate.id}_scale_1_${result.input.prototypeScale}.stl`, core.stl.stlForCandidate(candidate, result.input.prototypeScale), 'model/stl');
+    });
+    document.getElementById('download-step').addEventListener('click', () => {
+      const { result, candidate } = current();
+      const fileName = `${result.input.wallId}_${candidate.id}_profile_envelopes.step`;
+      download(fileName, core.stepExport.stepForCandidate(candidate, { fileName }), 'model/step');
     });
     document.getElementById('download-bom').addEventListener('click', () => {
       const { result, candidate } = current();

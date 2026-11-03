@@ -19,7 +19,7 @@ Date de vérification : 3 novembre 2026. La source machine autoritative est `dat
 | buildingSMART IFC 4.3.2.0 | murs, vides, remplissages, placements et unités | le parseur cible les représentations extrudées standard |
 | NF EN 1993-1-3/NA | domaine français des éléments minces formés à froid | texte complet payant non consulté ; aucun calcul de résistance déclaré |
 | NF EN 1090-2+A1, mai 2024 | domaine d’exécution acier | aucune tolérance extraite sans accès aux clauses applicables |
-| ISO 10303-21 STEP | format physique des entrées IFC/STEP | STEP CAO ne porte pas à lui seul la sémantique BIM |
+| ISO 10303-21 STEP | format physique des entrées IFC/STEP et de la sortie CAO neutre | STEP CAO ne porte pas à lui seul la sémantique BIM |
 
 ## Produits acier publics de référence
 
@@ -69,6 +69,8 @@ Le fixture `test-data/ifc/wall-with-opening-and-window.ifc` est un vrai fichier 
 
 `occt-import-js 0.0.23` et Open CASCADE lisent le fichier réel `test-data/step/cube.stp`. Le test obtient un maillage, 24 sommets et une enveloppe 300 × 300 × 300 mm. Le logiciel ne transforme pas cette enveloppe en sémantique IFC : l’utilisateur assigne explicitement les axes longueur, hauteur et épaisseur.
 
+Pour la sortie, le logiciel écrit un échange clair ISO 10303-21 avec schéma AP203 `CONFIG_CONTROL_DESIGN`. Chaque composant généré devient un solide BRep fermé `MANIFOLD_SOLID_BREP` à six faces planes et douze arêtes explicites, nommé par son ID stable et exprimé en millimètres. Le même test recharge le STEP produit avec Open CASCADE, exige une géométrie positive et compare l’enveloppe globale à celle du candidat. Cette validation prouve la lisibilité géométrique du fichier ; elle ne transforme pas les enveloppes rectangulaires en sections C/U détaillées et ne vaut pas validation industrielle.
+
 ## Données encore nécessaires
 
 Catalogue de profils Avelis, cas de charges, conditions d’appui et de contreventement, bibliothèque d’assemblages, tolérances, longueurs de stock, capacités machines de Torcy, prix datés, EPD applicable et contrat Noov officiel. Tant qu’elles manquent, le logiciel affiche `ENGINEERING_REVIEW_REQUIRED` et bloque la libération machine.
@@ -80,5 +82,7 @@ Catalogue de profils Avelis, cas de charges, conditions d’appui et de contreve
 - Metsec : https://www.metsec.com/products/metframe/components/
 - ArcelorMittal : https://orangebook.arcelormittal.com/explanatory-notes/cold-formed-sections/dimensions-of-sections
 - occt-import-js : https://github.com/kovacsv/occt-import-js/tree/0.0.23
+- NIST STEP : https://www.nist.gov/ctl/smart-connected-systems-division/smart-connected-manufacturing-systems-group/step-nist
+- Open CASCADE, entités STEP de forme : https://dev.opencascade.org/doc/occt-7.4.0/refman/html/package_rwstepshape.html
 
 Les URLs, dates, chapitres et données brutes supplémentaires sont conservés dans le JSON autoritatif.

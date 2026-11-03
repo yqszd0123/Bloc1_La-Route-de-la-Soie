@@ -5,6 +5,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const sourceFiles = [
   'packages/core/src/data/engineering-catalog.js',
+  'packages/core/src/data/bloc1-bloc2-interface.js',
   'packages/core/src/domain/constants.js',
   'packages/core/src/utils/math.js',
   'packages/core/src/domain/engineering.js',
@@ -22,6 +23,7 @@ const sourceFiles = [
   'packages/core/src/export/serialize.js',
   'packages/core/src/export/stl.js',
   'packages/core/src/export/dxf.js',
+  'packages/core/src/export/step.js',
   'packages/core/src/export/svg.js',
   'packages/core/src/export/zip.js',
   'packages/core/src/export/package-builder.js',
