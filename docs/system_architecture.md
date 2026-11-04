@@ -18,6 +18,7 @@ packages/core/src/
   domain/                       project, source catalog and rule-profile model
   ifc/                          ISO 10303-21 parser and IFC semantic adapter
   generation/                   steel panel and component generation
+  manufacturing/                source-backed component loading/assembly priority
   rules/                        geometry and release gates
   optimization/                 search, metrics, Pareto and ranking
   export/                       CSV, JSON, SVG, DXF, STL, STEP and ZIP
@@ -40,7 +41,7 @@ engineering-catalog.js → domain → IFC/manual adapters
                                     ↓
                      steel candidate generation
                                     ↓
-                      checks → metrics → ranking
+              assembly priority → checks → metrics → ranking
                                     ↓
              UI + BOM + cutting list + neutral package
               ↓ read-only steel candidate
@@ -60,6 +61,7 @@ No UI module performs an engineering calculation. The UI reads objects returned 
 7. Insulation is derived from the free X/Z space between generated steel envelopes and openings; other layers are one logical wall contour with opening cutouts.
 8. Prototype-layer parts cannot mutate a steel candidate or enter IFC, STEP, steel BOM, steel cutting list or the manufacturing ZIP; their only export is a dedicated CSV.
 9. Steel developed area is always marked approximate because bend radii are not represented.
+10. Assembly order is calculated once in `manufacturing/assembly-priority.js`, remains continuous from 1 to the component count, and is reused by the UI and every manufacturing export.
 
 ## Browser visualisation boundary
 

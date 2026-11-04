@@ -77,13 +77,13 @@
   function renderManufacturing(candidate) {
     const body = document.getElementById('manufacturing-table-body');
     body.innerHTML = '';
-    candidate.members.forEach((member) => {
+    core.assemblyPriority.orderedMembers(candidate).forEach((member) => {
       const row = document.createElement('tr');
       const geometry = member.fabricationGeometry;
-      row.innerHTML = `<td>${member.id}</td><td>${member.role}</td><td>${member.profile.manufacturerReference}</td><td>${geometry.webDepthMm} × ${geometry.flange1Mm}/${geometry.flange2Mm} mm</td><td>${member.lengthMm.toFixed(1)} mm</td><td>${geometry.nominalThicknessMm.toFixed(1)} mm</td><td>${geometry.developedAreaApproxM2.toFixed(4)} m²</td><td>${member.massKg.toFixed(3)} kg</td><td>${member.qrPayload}</td>`;
+      row.innerHTML = `<td><span class="rank-badge" title="${member.assemblyGroup}">${member.assemblyOrder}</span></td><td>${member.id}</td><td>${member.role}</td><td>${member.profile.manufacturerReference}</td><td>${geometry.webDepthMm} × ${geometry.flange1Mm}/${geometry.flange2Mm} mm</td><td>${member.lengthMm.toFixed(1)} mm</td><td>${geometry.nominalThicknessMm.toFixed(1)} mm</td><td>${geometry.developedAreaApproxM2.toFixed(4)} m²</td><td>${member.massKg.toFixed(3)} kg</td><td>${member.qrPayload}</td>`;
       body.appendChild(row);
     });
-    text('manufacturing-count', `${candidate.members.length} pièces · ${candidate.metrics.cutCount} coupes proxy`);
+    text('manufacturing-count', `${candidate.members.length} pièces · ordre 1–${candidate.members.length}`);
   }
 
   function evidenceRow(label, value) { return `<div><strong>${label}</strong><span>${value}</span></div>`; }

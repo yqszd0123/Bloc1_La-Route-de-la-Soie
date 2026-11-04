@@ -16,6 +16,7 @@
       checkedRuleCount: candidate.validation.checkedRuleCount,
       issues: candidate.validation.issues,
       crossValidation: candidate.crossValidation,
+      assemblyPriorityValidation: core.assemblyPriority.validate(candidate),
       profileDensityCrossChecks: Array.from(new Set(candidate.members.map((member) => member.profile.id)))
         .map((profileId) => core.engineering.densityCrossCheck(core.engineering.getProfile(profileId))),
       checksNotEvaluated: [
@@ -42,6 +43,7 @@
         'IMPORTANT: geometry checks and traceable quantity calculations are automated.',
         'This package is NOT a structural certificate and is NOT released to an Avelis machine.',
         'Profiles and prices are public reference inputs, not confirmed Avelis products or procurement data.',
+        'Assembly order 1..N follows the documented FRAMECAD role priority, extended left-to-right for multiple openings; it is not an RFY or an Avelis-approved machine sequence.',
         'STEP/DXF/STL geometry is a profile envelope for coordination and FabLab prototyping, not detailed sheet-metal production geometry.'
       ].join('\r\n'),
       '01_input/noov_request_proposal.json': pretty(core.serialize.noovRequest(result)),
