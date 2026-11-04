@@ -28,8 +28,8 @@
     <button class="tab-button" data-page="ifc-page"><b>1</b> Import IFC / STEP</button>
     <button class="tab-button is-active" data-page="config-page"><b>2</b> Configuration</button>
     <button class="tab-button" data-page="design-page"><b>3</b> Conception</button>
-    <button class="tab-button" data-page="manufacturing-page"><b>4</b> Fabrication</button>
-    <button class="tab-button" data-page="prototype-page"><b>5</b> Maquette en couches</button>
+    <button class="tab-button" data-page="prototype-page"><b>4</b> Maquette en couches</button>
+    <button class="tab-button" data-page="manufacturing-page"><b>5</b> Fabrication</button>
     <button class="tab-button" data-page="engineering-page"><b>6</b> Données &amp; preuves</button>
   </nav>
 
@@ -210,13 +210,6 @@
       </section>
     </section>
 
-    <section id="manufacturing-page" class="app-page" hidden>
-      <div class="page-heading"><div><span class="eyebrow">Bloc 1 → Bloc 2 / logistique</span><h2>Paquet de fabrication neutre</h2></div><span class="pill pill--blocked">Machine non libérée</span></div>
-      <div class="release-banner"><strong>BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION</strong><span>La géométrie, la BOM et la liste de débit sont calculées. Les tolérances, longueurs de stock, perçages, fixations et format machine restent volontairement vides.</span></div>
-      <div class="toolbar-actions toolbar-actions--left"><button id="download-cutting" class="button button--secondary" disabled>Liste de débit CSV</button><button id="download-labels" class="button button--secondary" disabled>Étiquettes / QR CSV</button><button id="download-package-2" class="button button--accent" disabled>Paquet ZIP complet</button></div>
-      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Longueur</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
-    </section>
-
     <section id="prototype-page" class="app-page" hidden>
       <div class="page-heading">
         <div><span class="eyebrow">Maquette pédagogique · même mur sélectionné</span><h2>Du squelette acier au mur assemblé</h2></div>
@@ -243,11 +236,18 @@
         <aside class="results-card prototype-guide">
           <span class="eyebrow">Couches visibles à cette étape</span>
           <h3>Lecture de la maquette</h3>
-          <p>Les portes et fenêtres restent vides dans chaque couche. Le curseur sépare visuellement les faces pour expliquer l’ordre d’assemblage.</p>
+          <p>Les portes et fenêtres restent vides dans chaque couche. Comme sur une vue éclatée constructive, les repères relient chaque face à son nom et le curseur montre l’ordre d’assemblage.</p>
           <div id="prototype-layer-list" class="prototype-layer-list"></div>
           <div class="prototype-note"><strong>Choix matière à confirmer</strong><span>Les échantillons physiques seront choisis avec le FabLab et le Bloc 2. Aucun produit d’isolation ou de parement n’est attribué à Avelis sans confirmation.</span></div>
         </aside>
       </div>
+    </section>
+
+    <section id="manufacturing-page" class="app-page" hidden>
+      <div class="page-heading"><div><span class="eyebrow">Bloc 1 → Bloc 2 / logistique</span><h2>Paquet de fabrication neutre</h2></div><span class="pill pill--blocked">Machine non libérée</span></div>
+      <div class="release-banner"><strong>BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION</strong><span>La géométrie, la BOM et la liste de débit sont calculées. Les tolérances, longueurs de stock, perçages, fixations et format machine restent volontairement vides.</span></div>
+      <div class="toolbar-actions toolbar-actions--left"><button id="download-cutting" class="button button--secondary" disabled>Liste de débit CSV</button><button id="download-labels" class="button button--secondary" disabled>Étiquettes / QR CSV</button><button id="download-package-2" class="button button--accent" disabled>Paquet ZIP complet</button></div>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Longueur</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
     </section>
 
     <section id="engineering-page" class="app-page" hidden>

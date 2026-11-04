@@ -10,8 +10,8 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 2. Choisir l’entrée : IFC, STEP/STP ou configuration manuelle.
 3. Pour STEP, confirmer les axes longueur/hauteur/épaisseur ; pour IFC, choisir le mur extrait.
 4. Activer ou désactiver fenêtre et porte en mode manuel.
-5. Comparer jusqu’à neuf solutions distinctes et télécharger le paquet ZIP.
-6. Ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
+5. Après la conception, ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
+6. Passer ensuite à la fabrication et télécharger le paquet ZIP.
 
 La maquette en couches est une visualisation pédagogique séparée du modèle de fabrication. Les échantillons d’isolation, panneaux et finitions ne sont ajoutés ni aux IFC/STEP, ni à la BOM, ni à la liste de débit, ni au ZIP.
 

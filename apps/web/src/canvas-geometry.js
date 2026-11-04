@@ -125,7 +125,7 @@
       .forEach((polygon) => drawPolygon(viewport.context, polygon, transform));
     polygons.filter((polygon) => polygon.overlay).sort((left, right) => left.depth - right.depth)
       .forEach((polygon) => drawPolygon(viewport.context, polygon, transform));
-    return { context: viewport.context, transform, yaw, pitch };
+    return { context: viewport.context, transform, yaw, pitch, width: viewport.width, height: viewport.height };
   }
 
   app.canvasGeometry = { shade, projectPoint, boxVertices, render };

@@ -4,6 +4,14 @@
   const app = global.AvelisApp;
   const core = global.AvelisCore;
   const roleColors = core.ROLE_COLORS;
+  const layerShortLabels = {
+    FRAME: 'Ossature acier',
+    INSULATION: 'Isolation témoin',
+    EXTERIOR_BOARD: 'Panneau extérieur',
+    INTERIOR_BOARD: 'Parement intérieur',
+    EXTERIOR_FINISH: 'Finition extérieure',
+    INTERIOR_FINISH: 'Finition intérieure'
+  };
 
   function layerY(layer, wall, explodePercent) {
     const frameDepth = wall.displayDepthMm || wall.sourceThicknessMm || 100;
@@ -40,6 +48,48 @@
     `).join('');
   }
 
+  function drawLayerLabels(view, model) {
+    if (!(view && app.state.prototypeExplode >= 18)) return;
+    const anchors = model.layers.map((layer) => {
+      const point = [model.wall.lengthMm / 2, layerY(layer, model.wall, app.state.prototypeExplode), model.wall.heightMm];
+      const projected = app.canvasGeometry.projectPoint(point, view.yaw, view.pitch);
+      return {
+        layer,
+        anchorX: projected.x * view.transform.scale + view.transform.offsetX,
+        anchorY: projected.y * view.transform.scale + view.transform.offsetY
+      };
+    }).sort((left, right) => left.anchorX - right.anchorX);
+
+    const context = view.context;
+    context.save();
+    context.font = '700 11px system-ui';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    anchors.forEach((entry, index) => {
+      const labelX = anchors.length === 1 ? view.width / 2 : 80 + index * ((view.width - 160) / (anchors.length - 1));
+      const labelY = 24 + (index % 2) * 24;
+      const elbowY = Math.max(labelY + 18, entry.anchorY - 20);
+      context.beginPath();
+      context.moveTo(entry.anchorX, entry.anchorY);
+      context.lineTo(entry.anchorX, elbowY);
+      context.lineTo(labelX, labelY + 9);
+      context.strokeStyle = 'rgba(16,45,52,.55)';
+      context.lineWidth = 1;
+      context.stroke();
+      context.beginPath();
+      context.arc(entry.anchorX, entry.anchorY, 2.6, 0, Math.PI * 2);
+      context.fillStyle = entry.layer.color;
+      context.fill();
+      const label = layerShortLabels[entry.layer.id] || entry.layer.label;
+      const textWidth = context.measureText(label).width;
+      context.fillStyle = 'rgba(255,255,255,.92)';
+      context.fillRect(labelX - textWidth / 2 - 6, labelY - 9, textWidth + 12, 18);
+      context.fillStyle = '#16343b';
+      context.fillText(label, labelX, labelY);
+    });
+    context.restore();
+  }
+
   function render(candidate) {
     const canvas = document.getElementById('prototype-viewer');
     if (!canvas) return;
@@ -58,7 +108,8 @@
         type: 'box', bounds: member.bounds, color: roleColors[member.role] || '#6f8791', alpha: .98
       }));
     });
-    app.canvasGeometry.render(canvas, primitives, { rotationDeg: app.state.prototypeRotationDeg, padding: 120 });
+    const view = app.canvasGeometry.render(canvas, primitives, { rotationDeg: app.state.prototypeRotationDeg, padding: 170 });
+    drawLayerLabels(view, model);
     renderLegend(model);
     document.querySelectorAll('.prototype-stage-button').forEach((button) => {
       const active = button.dataset.stage === model.stage.id;
