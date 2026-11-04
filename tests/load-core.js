@@ -13,6 +13,7 @@ const sourceFiles = [
   'packages/core/src/rules/input-rules.js',
   'packages/core/src/generation/member-factory.js',
   'packages/core/src/generation/steel-panel-generator.js',
+  'packages/core/src/manufacturing/assembly-priority.js',
   'packages/core/src/rules/candidate-rules.js',
   'packages/core/src/optimization/metrics.js',
   'packages/core/src/optimization/candidate-search.js',

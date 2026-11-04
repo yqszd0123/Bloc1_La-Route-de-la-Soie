@@ -26,7 +26,9 @@
   }
 
   function cuttingListCsv(candidate) {
-    return toCsv(candidate.members, [
+    return toCsv(core.assemblyPriority.orderedMembers(candidate), [
+      { key: 'assemblyOrder', label: 'assembly_order' },
+      { key: 'assemblyGroup', label: 'assembly_priority_group' },
       { key: 'id', label: 'component_id' }, { key: 'role' }, { key: 'label' }, { key: 'openingId', label: 'opening_id' },
       { label: 'profile_id', get: (row) => row.profile.id },
       { label: 'manufacturer_reference', get: (row) => row.profile.manufacturerReference },
@@ -47,7 +49,8 @@
   }
 
   function machineCsv(candidate) {
-    return toCsv(candidate.members, [
+    return toCsv(core.assemblyPriority.orderedMembers(candidate), [
+      { key: 'assemblyOrder', label: 'assembly_order' },
       { key: 'id', label: 'component_id' }, { key: 'role' },
       { label: 'profile', get: (row) => row.profile.manufacturerReference }, { key: 'lengthMm', label: 'cut_length_mm' },
       { label: 'nominal_thickness_mm', get: (row) => row.fabricationGeometry.nominalThicknessMm },
@@ -59,7 +62,8 @@
   }
 
   function labelsCsv(candidate) {
-    return toCsv(candidate.members, [
+    return toCsv(core.assemblyPriority.orderedMembers(candidate), [
+      { key: 'assemblyOrder', label: 'assembly_order' },
       { key: 'id', label: 'component_id' }, { key: 'role' },
       { label: 'profile', get: (row) => row.profile.manufacturerReference },
       { key: 'lengthMm', label: 'length_mm' }, { key: 'qrPayload', label: 'qr_payload' }
@@ -111,8 +115,10 @@
       decisionScore: candidate.score,
       openings: candidate.wall.openings,
       metrics: candidate.metrics,
-      components: candidate.members.map((member) => ({
+      components: core.assemblyPriority.orderedMembers(candidate).map((member) => ({
         id: member.id, role: member.role, profile: member.profile.manufacturerReference,
+        assemblyOrder: member.assemblyOrder,
+        assemblyGroup: member.assemblyGroup,
         lengthMm: member.lengthMm,
         sectionMm: {
           webDepth: member.fabricationGeometry.webDepthMm,
@@ -131,17 +137,14 @@
   }
 
   function manufacturingHandover(result, candidate) {
-    const sequenceDefinitions = [
-      { stepId: 'STEP-01', order: 1, operation: 'SET_BOTTOM_TRACK_SEGMENTS', roles: ['bottom_track'], dependsOn: [] },
-      { stepId: 'STEP-02', order: 2, operation: 'SET_BOUNDARY_AND_OPENING_JAMBS', roles: ['boundary_stud', 'opening_jamb'], dependsOn: ['STEP-01'] },
-      { stepId: 'STEP-03', order: 3, operation: 'SET_COMMON_AND_CRIPPLE_STUDS', roles: ['common_stud', 'cripple_stud'], dependsOn: ['STEP-01'] },
-      { stepId: 'STEP-04', order: 4, operation: 'SET_OPENING_HORIZONTAL_MEMBERS', roles: ['window_sill', 'opening_header'], dependsOn: ['STEP-02', 'STEP-03'] },
-      { stepId: 'STEP-05', order: 5, operation: 'SET_TOP_TRACK', roles: ['top_track'], dependsOn: ['STEP-02', 'STEP-03', 'STEP-04'] },
-      { stepId: 'STEP-06', order: 6, operation: 'DIMENSIONAL_AND_ID_CONTROL', roles: [], dependsOn: ['STEP-05'] }
-    ];
-    const components = candidate.members.map((member) => ({
+    const orderedMembers = core.assemblyPriority.orderedMembers(candidate);
+    const priorityValidation = core.assemblyPriority.validate(candidate);
+    const components = orderedMembers.map((member) => ({
       partId: member.id,
       partType: member.role,
+      assemblyOrder: member.assemblyOrder,
+      assemblyPriorityGroup: member.assemblyGroup,
+      assemblyPrioritySourceId: member.assemblySourceId,
       materialId: result.rules.material.id,
       profileId: member.profile.id,
       manufacturerReference: member.profile.manufacturerReference,
@@ -162,12 +165,13 @@
       toleranceMm: null,
       qrPayload: member.qrPayload
     }));
-    const assemblySequence = sequenceDefinitions.map((step) => ({
-      stepId: step.stepId,
-      order: step.order,
-      operation: step.operation,
-      partIds: step.roles.length ? components.filter((component) => step.roles.includes(component.partType)).map((component) => component.partId) : components.map((component) => component.partId),
-      dependsOn: step.dependsOn,
+    const assemblySequence = components.map((component, index) => ({
+      stepId: `STICK-${core.math.pad(component.assemblyOrder, 3)}`,
+      order: component.assemblyOrder,
+      operation: 'ROLLFORM_AND_LOAD_IN_ASSEMBLY_ORDER',
+      partIds: [component.partId],
+      priorityGroup: component.assemblyPriorityGroup,
+      dependsOn: index ? [`STICK-${core.math.pad(components[index - 1].assemblyOrder, 3)}`] : [],
       status: 'PROPOSED_PENDING_BLOC2_VALIDATION'
     }));
     return {
@@ -185,10 +189,19 @@
       toleranceMm: null,
       stockLengthMm: null,
       neutralFormats: ['CSV', 'JSON', 'DXF_ENVELOPE', 'STL_FABLAB'],
+      assemblyPriority: {
+        sourceId: core.assemblyPriority.SOURCE_ID,
+        frameType: priorityValidation.frameType,
+        method: 'FRAMECAD role priority extended deterministically to multiple openings from left to right; absent member types are skipped.',
+        applicability: 'Reference loading/assembly order only; RFY export and Avelis/Torcy roll-former compatibility are not claimed.'
+      },
       assemblySequence,
       interfaceChecks: {
         componentIdsUnique: new Set(components.map((component) => component.partId)).size === components.length,
         allSequencePartIdsExist: assemblySequence.every((step) => step.partIds.every((id) => components.some((component) => component.partId === id))),
+        assemblyOrderContinuous: priorityValidation.continuous,
+        assemblyOrderUnique: priorityValidation.unique,
+        assemblyOrderComplete: priorityValidation.complete,
         bomMassMatchesGeometry: candidate.crossValidation.massReconciliation.status === 'MATCH'
       },
       requiredFromAvelisOrBloc2: [

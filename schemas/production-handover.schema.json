@@ -13,8 +13,8 @@
     "revision": { "type": "string", "minLength": 1 },
     "units": {
       "type": "object",
-      "required": ["length", "mass"],
-      "properties": { "length": { "const": "mm" }, "mass": { "const": "kg" } }
+      "required": ["length", "area", "mass"],
+      "properties": { "length": { "const": "mm" }, "area": { "const": "m2" }, "mass": { "const": "kg" } }
     },
     "candidateId": { "type": "string", "minLength": 1 },
     "components": {
@@ -22,10 +22,13 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["partId", "partType", "materialId", "profileId", "manufacturerReference", "dimensionsMm", "calculatedMassKg", "positionMm", "axis", "operations", "toleranceMm", "qrPayload"],
+        "required": ["partId", "partType", "assemblyOrder", "assemblyPriorityGroup", "assemblyPrioritySourceId", "materialId", "profileId", "manufacturerReference", "dimensionsMm", "calculatedMassKg", "positionMm", "axis", "operations", "toleranceMm", "qrPayload"],
         "properties": {
           "partId": { "type": "string", "minLength": 1 },
           "partType": { "type": "string", "minLength": 1 },
+          "assemblyOrder": { "type": "integer", "minimum": 1 },
+          "assemblyPriorityGroup": { "type": "string", "minLength": 1 },
+          "assemblyPrioritySourceId": { "const": "FRAMECAD_ASSEMBLY_PRIORITY_2025" },
           "materialId": { "type": "string", "minLength": 1 },
           "profileId": { "type": "string", "minLength": 1 },
           "manufacturerReference": { "type": "string", "minLength": 1 },

@@ -23,6 +23,7 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 - lisses, montants et cadres d’ouverture avec identifiants stables ;
 - jusqu’à neuf candidats distincts : trois couples de profils Metsec publics × module symétrique, travées uniformes et zones d’ouvertures ;
 - longueur, épaisseur nominale, section, surface développée approximative, masse par `longueur × kg/m fabricant`, BOM, débit et coût matière pour chaque profilé acier ;
+- ordre de chargement continu `1…N` pour chaque pièce, dérivé de la priorité FRAMECAD selon le type de mur et étendu aux ouvertures multiples de gauche à droite ;
 - comparaison normalisée et Pareto sur les métriques disponibles ;
 - contrôles de collision, enveloppe, cohérence BOM/géométrie et traçabilité ;
 - exports CSV, JSON, SVG, DXF, STL, STEP AP203 et ZIP ;

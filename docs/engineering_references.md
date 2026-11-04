@@ -10,6 +10,7 @@ Date de vérification : 4 novembre 2026. La source machine autoritative est `dat
 4. Fabricants : géométrie, masse linéique et propriétés déclarées des produits publics de référence.
 5. Open source versionné : parseur STEP et vrais fichiers d’intégration.
 6. Marché public : proxy budgétaire transparent, jamais assimilé à un devis Avelis.
+7. Documentation fabricant fournie : priorité d’ordre FRAMECAD, utilisée comme règle de séquencement et non comme preuve de compatibilité machine Avelis.
 
 ## Normes et spécifications
 
@@ -74,6 +75,12 @@ Cette information est ajoutée à chaque ligne de fabrication avec l’épaisseu
 Le domaine X/Z du mur est découpé par toutes les limites des enveloppes acier et des ouvertures. Les cellules libres adjacentes ayant la même largeur sont fusionnées verticalement ; chaque rectangle restant devient une pièce d’isolant. Les tests interdisent tout recouvrement positif entre une pièce d’isolant et un profilé ou une ouverture.
 
 Pour les autres couches : `surface_nette = longueur_mur × hauteur_mur − somme(surface_portes_et_fenêtres)`. Le volume est `surface_nette_m² × épaisseur_mm ÷ 1000`. Le CSV conserve tous les intrants, les évidements et la source d’épaisseur ; il ne contient aucun prix.
+
+### Ordre de chargement / assemblage des profilés
+
+Le document fourni « FRAMECAD Detailer — Stick Order Assembly Priority », octobre 2025, donne deux règles : pour un mur plein, rail haut, montant gauche, montant droit, entretoises, montants centraux/contreventements, puis rail bas ; pour un mur avec ouverture, il insère les jambages, montants de remplissage, linteau et appui avant le montant droit, les autres montants et le rail bas.
+
+Le programme applique ces priorités uniquement aux composants réellement générés. Les types absents, notamment les entretoises non modélisées, sont ignorés. Pour plusieurs portes ou fenêtres, l’extension explicite traite les ouvertures de gauche à droite, puis renumérote chaque pièce sans trou de `1` à `N`. La même valeur est affichée dans Fabrication et exportée dans les trois CSV de composants ainsi que dans `manufacturing_handover.json`. Il s’agit d’un ordre de référence ; aucun RFY, temps de cycle ou accord machine Avelis/Torcy n’est revendiqué.
 
 ### Coût matière
 

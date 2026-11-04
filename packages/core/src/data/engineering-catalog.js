@@ -7,7 +7,7 @@
   const core = global.AvelisCore = global.AvelisCore || {};
   core.ENGINEERING_DATA = Object.freeze({
   "schemaVersion": "2.0",
-  "verifiedOn": "2026-11-03",
+  "verifiedOn": "2026-11-04",
   "scope": {
     "product": "Reference IFC-to-manufacturing workflow for cold-formed steel wall panels",
     "companyStatus": "Concept demonstrator for Avelis Bloc 1; reference products are not confirmed Avelis products or Torcy equipment.",
@@ -173,6 +173,22 @@
         "validation and responsibility split"
       ],
       "applicability": "Template structure only. Its fictional legacy material values are not imported; this project defines a steel-specific v2 contract from actual program outputs."
+    },
+    "FRAMECAD_ASSEMBLY_PRIORITY_2025": {
+      "kind": "manufacturer_software_guidance",
+      "manufacturer": "FRAMECAD",
+      "title": "FRAMECAD Detailer — Stick Order Assembly Priority",
+      "version": "October 2025",
+      "location": "FRAMECAD-Detailer-Stick-Order-Assembly-Priority.pdf",
+      "access": "internal_user_supplied",
+      "locationInSource": "Sections 1.3 (solid wall frames), page 2; 1.4 (wall frames with openings), page 3",
+      "usedFor": [
+        "continuous component loading order",
+        "solid-wall role priority",
+        "wall-with-openings role priority"
+      ],
+      "applicability": "Reference sequence for FRAMECAD Detailer/RFY workflows. The project applies the published role priority to its generated members and extends multiple openings from left to right. It does not claim RFY export or compatibility with Avelis/Torcy equipment.",
+      "publicUseRestriction": "User-supplied document marked confidential by FRAMECAD; do not redistribute the PDF. Only the implemented ordering rule and citation metadata are retained."
     },
     "METSEC_COMPONENTS_2026": {
       "kind": "manufacturer_technical_data",
@@ -636,6 +652,21 @@
       "unit": "m3",
       "verification": "Layer totals equal the sum of their individual part volumes.",
       "limitation": "Reference-product quantity only; no price or procurement claim."
+    },
+    "assemblyPriorityOrder": {
+      "formula": "sort actual generated members by FRAMECAD wall-type role priority; for multiple openings, process openings by increasing x coordinate; skip member types absent from the generated model; renumber every remaining member continuously from 1",
+      "inputs": [
+        "candidate.wall.openings",
+        "candidate.members[].role",
+        "candidate.members[].openingId",
+        "candidate.members[].position"
+      ],
+      "unit": "integer sequence",
+      "sourceIds": [
+        "FRAMECAD_ASSEMBLY_PRIORITY_2025"
+      ],
+      "verification": "Orders must be continuous from 1 to component count, unique, complete, and identical in the Fabrication table, cutting list, machine-neutral CSV, labels CSV and manufacturing handover JSON.",
+      "limitation": "Deterministic reference loading/assembly order only. The project does not generate RFY, machine paths, cycle times or an Avelis-approved production sequence."
     },
     "materialCostEur": {
       "formula": "steel_mass_kg × 3.09 EUR/kg ex VAT",

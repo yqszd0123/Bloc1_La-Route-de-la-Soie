@@ -253,7 +253,7 @@
       <div class="page-heading"><div><span class="eyebrow">Bloc 1 → Bloc 2 / logistique</span><h2>Paquet de fabrication neutre</h2></div><span class="pill pill--blocked">Machine non libérée</span></div>
       <div class="release-banner"><strong>BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION</strong><span>La géométrie, la BOM et la liste de débit sont calculées. Les tolérances, longueurs de stock, perçages, fixations et format machine restent volontairement vides.</span></div>
       <div class="toolbar-actions toolbar-actions--left"><button id="download-cutting" class="button button--secondary" disabled>Liste de débit CSV</button><button id="download-labels" class="button button--secondary" disabled>Étiquettes / QR CSV</button><button id="download-package-2" class="button button--accent" disabled>Paquet ZIP complet</button></div>
-      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Section</th><th>Longueur</th><th>Épaisseur acier</th><th>Surface développée</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués · ordre de chargement continu</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>Ordre</th><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Section</th><th>Longueur</th><th>Épaisseur acier</th><th>Surface développée</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div><p class="source-note">Ordre proposé d’après FRAMECAD Detailer — Stick Order Assembly Priority (octobre 2025), sections 1.3–1.4. L’extension à plusieurs portes/fenêtres traite les ouvertures de gauche à droite et ignore les types de pièces absents du modèle. Aucun export RFY ni compatibilité machine Avelis n’est revendiqué.</p></article>
     </section>
 
     <section id="engineering-page" class="app-page" hidden>
@@ -279,6 +279,7 @@
   <script src="../../packages/core/src/rules/input-rules.js"></script>
   <script src="../../packages/core/src/generation/member-factory.js"></script>
   <script src="../../packages/core/src/generation/steel-panel-generator.js"></script>
+  <script src="../../packages/core/src/manufacturing/assembly-priority.js"></script>
   <script src="../../packages/core/src/rules/candidate-rules.js"></script>
   <script src="../../packages/core/src/optimization/metrics.js"></script>
   <script src="../../packages/core/src/optimization/candidate-search.js"></script>

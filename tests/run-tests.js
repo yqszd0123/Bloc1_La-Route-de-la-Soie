@@ -61,6 +61,14 @@ test('les couches de maquette utilisent uniquement des épaisseurs de référenc
   assert.equal(core.ENGINEERING_DATA.sources.STEICO_FLEX_036_2025.rawData.supportedThicknessMm.includes(100), true);
 });
 
+test('la règle de priorité FRAMECAD est traçable et limitée à un ordre de référence', () => {
+  const source = core.ENGINEERING_DATA.sources.FRAMECAD_ASSEMBLY_PRIORITY_2025;
+  assert.equal(source.version, 'October 2025');
+  assert.match(source.locationInSource, /Sections 1\.3/);
+  assert.match(source.applicability, /does not claim RFY export/);
+  assert.deepEqual(core.ENGINEERING_DATA.calculations.assemblyPriorityOrder.sourceIds, [core.assemblyPriority.SOURCE_ID]);
+});
+
 test('la masse linéique fabricant est recoupée par une méthode indépendante', () => {
   core.ENGINEERING_DATA.catalog.profiles.forEach((profile) => {
     const check = core.engineering.densityCrossCheck(profile);
@@ -343,6 +351,83 @@ test('le contrat de fabrication expose dimensions, épaisseur, surface développ
   });
 });
 
+test('le mur avec ouverture reçoit un ordre continu FRAMECAD adapté de 1 à N', () => {
+  const candidate = core.runWorkflow(core.DEFAULT_INPUT).recommended;
+  const ordered = core.assemblyPriority.orderedMembers(candidate);
+  const validation = core.assemblyPriority.validate(candidate);
+  assert.deepEqual(validation, {
+    continuous: true,
+    unique: true,
+    complete: true,
+    sourceId: 'FRAMECAD_ASSEMBLY_PRIORITY_2025',
+    frameType: 'WALL_WITH_OPENINGS'
+  });
+  assert.deepEqual(ordered.map((member) => member.assemblyOrder), Array.from({ length: ordered.length }, (_, index) => index + 1));
+  assert.equal(ordered[0].role, 'top_track');
+  assert.equal(ordered[1].label, 'Left boundary stud');
+  assert.equal(ordered.at(-1).role, 'bottom_track');
+  const jambs = ordered.filter((member) => member.role === 'opening_jamb').sort((a, b) => a.position.xMm - b.position.xMm);
+  const header = ordered.find((member) => member.role === 'opening_header');
+  const sill = ordered.find((member) => member.role === 'window_sill');
+  const rightBoundary = ordered.find((member) => member.label === 'Right boundary stud');
+  assert.ok(jambs[0].assemblyOrder < jambs[1].assemblyOrder);
+  assert.ok(jambs[1].assemblyOrder < header.assemblyOrder);
+  assert.ok(header.assemblyOrder < sill.assemblyOrder);
+  assert.ok(sill.assemblyOrder < rightBoundary.assemblyOrder);
+});
+
+test('le mur plein suit rail haut, rive gauche, rive droite, centre puis rail bas', () => {
+  const candidate = core.runWorkflow({ ...core.DEFAULT_INPUT, windowEnabled: false, doorEnabled: false }).recommended;
+  const ordered = core.assemblyPriority.orderedMembers(candidate);
+  assert.equal(ordered[0].role, 'top_track');
+  assert.equal(ordered[1].label, 'Left boundary stud');
+  assert.equal(ordered[2].label, 'Right boundary stud');
+  assert.ok(ordered.slice(3, -1).every((member) => ['common_stud', 'cripple_stud', 'bracing'].includes(member.role)));
+  assert.equal(ordered.at(-1).role, 'bottom_track');
+  assert.equal(core.assemblyPriority.validate(candidate).frameType, 'SOLID_WALL');
+});
+
+test('plusieurs ouvertures sont séquencées de gauche à droite sans doublon', () => {
+  const candidate = core.runWorkflow({
+    ...core.DEFAULT_INPUT,
+    wallLengthMm: 4800,
+    windowXMm: 500,
+    doorEnabled: true,
+    doorXMm: 2900,
+    doorWidthMm: 900,
+    doorHeightMm: 1800
+  }).recommended;
+  const ordered = core.assemblyPriority.orderedMembers(candidate);
+  const firstOpeningOrder = Math.min(...ordered.filter((member) => member.openingId === candidate.wall.openings[0].id).map((member) => member.assemblyOrder));
+  const secondOpeningOrder = Math.min(...ordered.filter((member) => member.openingId === candidate.wall.openings[1].id).map((member) => member.assemblyOrder));
+  assert.ok(firstOpeningOrder < secondOpeningOrder);
+  assert.equal(new Set(ordered.map((member) => member.id)).size, candidate.members.length);
+  assert.equal(core.assemblyPriority.validate(candidate).complete, true);
+});
+
+test('table, CSV et contrat partagent exactement le même ordre de chargement', () => {
+  const result = core.runWorkflow(core.DEFAULT_INPUT);
+  const candidate = result.recommended;
+  const orderedIds = core.assemblyPriority.orderedMembers(candidate).map((member) => member.id);
+  const cuttingRows = core.serialize.cuttingListCsv(candidate).trim().split(/\r?\n/);
+  const machineRows = core.serialize.machineCsv(candidate).trim().split(/\r?\n/);
+  const labelRows = core.serialize.labelsCsv(candidate).trim().split(/\r?\n/);
+  assert.match(cuttingRows[0], /^assembly_order;assembly_priority_group;component_id/);
+  assert.match(machineRows[0], /^assembly_order;component_id/);
+  assert.match(labelRows[0], /^assembly_order;component_id/);
+  assert.deepEqual(cuttingRows.slice(1).map((row) => row.split(';')[2]), orderedIds);
+  assert.deepEqual(machineRows.slice(1).map((row) => row.split(';')[1]), orderedIds);
+  assert.deepEqual(labelRows.slice(1).map((row) => row.split(';')[1]), orderedIds);
+  const handover = core.serialize.manufacturingHandover(result, candidate);
+  assert.deepEqual(handover.components.map((component) => component.partId), orderedIds);
+  assert.deepEqual(handover.components.map((component) => component.assemblyOrder), Array.from({ length: orderedIds.length }, (_, index) => index + 1));
+  assert.equal(handover.assemblySequence.length, orderedIds.length);
+  handover.assemblySequence.forEach((step, index) => {
+    assert.deepEqual(step.partIds, [orderedIds[index]]);
+    assert.deepEqual(step.dependsOn, index ? [`STICK-${core.math.pad(index, 3)}`] : []);
+  });
+});
+
 test('la maquette pédagogique expose quatre étapes sans modifier le candidat acier', () => {
   const candidate = core.runWorkflow(core.DEFAULT_INPUT).recommended;
   const before = JSON.stringify(candidate);
@@ -414,6 +499,9 @@ test('l’interface présente une étape dédiée et sa limite d’export', () =
   assert.match(html, /id="prototype-explode-slider" type="range" min="0" max="200" value="100"/);
   assert.match(html, /id="download-prototype-parts"/);
   assert.match(html, /id="prototype-parts-body"/);
+  assert.match(html, /<th>Ordre<\/th><th>ID<\/th>/);
+  assert.match(html, /FRAMECAD Detailer — Stick Order Assembly Priority/);
+  assert.match(html, /plusieurs portes\/fenêtres traite les ouvertures de gauche à droite/);
   assert.ok(html.indexOf('data-page="design-page"') < html.indexOf('data-page="prototype-page"'));
   assert.ok(html.indexOf('data-page="prototype-page"') < html.indexOf('data-page="manufacturing-page"'));
   assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM acier, ni la liste de débit acier, ni le paquet ZIP/);
@@ -437,6 +525,11 @@ test('le paquet complet contient les interfaces et bloque explicitement la machi
   const handover = JSON.parse(files['03_manufacturing/manufacturing_handover.json']);
   assert.equal(handover.releaseStatus, 'BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION');
   assert.equal(handover.toleranceMm, null);
+  assert.equal(handover.interfaceChecks.assemblyOrderContinuous, true);
+  assert.equal(handover.interfaceChecks.assemblyOrderUnique, true);
+  assert.equal(handover.interfaceChecks.assemblyOrderComplete, true);
+  const validation = JSON.parse(files['04_quality/validation_report.json']);
+  assert.equal(validation.assemblyPriorityValidation.complete, true);
   assert.equal(Object.keys(files).filter((name) => name.includes('/parts/')).length, result.recommended.members.length);
   const zip = core.packageBuilder.buildExportZip(result, result.recommended, 20);
   assert.deepEqual(Array.from(zip.slice(0, 2)), [0x50, 0x4b]);
