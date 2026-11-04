@@ -1,14 +1,14 @@
 {
   "name": "avelis-wall-flow",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
-  "description": "IFC-to-manufacturing workflow for traceable cold-formed steel wall panels — Imagine & Make 2026, Bloc 1.",
+  "description": "IFC-to-manufacturing workflow for steel and timber wall frames — Avelis, Bloc 1.",
   "license": "MIT",
   "scripts": {
     "sync-data": "node scripts/sync-engineering-data.js",
-    "test": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/step-integration.js",
+    "test": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/timber-tests.js && node tests/step-integration.js",
     "experiments": "node scripts/generate-experiments.js",
-    "verify": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/step-integration.js && node scripts/generate-experiments.js"
+    "verify": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/timber-tests.js && node tests/step-integration.js && node scripts/generate-experiments.js"
   },
   "engines": {
     "node": ">=18"

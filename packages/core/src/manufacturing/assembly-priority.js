@@ -10,7 +10,18 @@
       || a.id.localeCompare(b.id);
   }
 
+  function timberSequence(candidate) {
+    const groups = ['bottom_plate', 'boundary_stud', 'king_stud', 'jack_stud', 'header', 'sill', 'common_stud', 'cripple_stud', 'top_plate'];
+    return candidate.members.slice().sort((a, b) => groups.indexOf(a.role) - groups.indexOf(b.role) || byPosition(a, b))
+      .map((member, i) => ({
+        order: i + 1, memberId: member.id, role: member.role, label: member.label, openingId: member.openingId,
+        group: 'TIMBER_' + member.role.toUpperCase(),
+        frameType: candidate.wall.openings.length ? 'WALL_WITH_OPENINGS' : 'SOLID_WALL', sourceId: 'TIMBER_POC_ASSEMBLY'
+      }));
+  }
+
   function sequence(candidate) {
+    if (candidate.frameMaterial === 'TIMBER') return timberSequence(candidate);
     const members = candidate && Array.isArray(candidate.members) ? candidate.members : [];
     const openings = candidate && candidate.wall && Array.isArray(candidate.wall.openings)
       ? candidate.wall.openings.slice().sort((a, b) => a.xMm - b.xMm || a.id.localeCompare(b.id))
@@ -92,7 +103,7 @@
       continuous: entries.every((entry, index) => entry.order === index + 1),
       unique: new Set(entries.map((entry) => entry.memberId)).size === entries.length,
       complete: entries.length === candidate.members.length,
-      sourceId: SOURCE_ID,
+      sourceId: candidate.frameMaterial === 'TIMBER' ? 'TIMBER_POC_ASSEMBLY' : SOURCE_ID,
       frameType: entries[0] ? entries[0].frameType : (candidate.wall.openings.length ? 'WALL_WITH_OPENINGS' : 'SOLID_WALL')
     };
   }

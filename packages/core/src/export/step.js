@@ -106,7 +106,7 @@
     const applicationContext = writer.add("APPLICATION_CONTEXT('configuration controlled 3d designs of mechanical parts and assemblies')");
     writer.add(`APPLICATION_PROTOCOL_DEFINITION('international standard','config_control_design',1994,${writer.reference(applicationContext)})`);
     const productContext = writer.add(`PRODUCT_CONTEXT('',${writer.reference(applicationContext)},'mechanical')`);
-    const product = writer.add(`PRODUCT(${stepString(candidate.id)},${stepString(candidate.id)},'Avelis steel wall profile-envelope coordination model',(${writer.reference(productContext)}))`);
+    const product = writer.add(`PRODUCT(${stepString(candidate.id)},${stepString(candidate.id)},'Avelis wall frame coordination model',(${writer.reference(productContext)}))`);
     const formation = writer.add(`PRODUCT_DEFINITION_FORMATION_WITH_SPECIFIED_SOURCE('','',${writer.reference(product)},.NOT_KNOWN.)`);
     const definitionContext = writer.add(`PRODUCT_DEFINITION_CONTEXT('part definition',${writer.reference(applicationContext)},'design')`);
     const definition = writer.add(`PRODUCT_DEFINITION('design','',${writer.reference(formation)},${writer.reference(definitionContext)})`);

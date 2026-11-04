@@ -5,7 +5,7 @@
   const core = global.AvelisCore;
   const roleColors = core.ROLE_COLORS;
   const layerShortLabels = {
-    FRAME: 'Ossature acier',
+    FRAME: 'Ossature',
     INSULATION: 'Isolation témoin',
     EXTERIOR_BOARD: 'Panneau extérieur',
     INTERIOR_BOARD: 'Parement intérieur',
@@ -41,14 +41,14 @@
   function renderLegend(model) {
     const container = document.getElementById('prototype-layer-list');
     if (!model) {
-      container.innerHTML = '<div class="empty-state">Générez ou sélectionnez d’abord une solution acier.</div>';
+      container.innerHTML = '<div class="empty-state">Générez ou sélectionnez d’abord une solution.</div>';
       return;
     }
     container.innerHTML = model.layers.map((layer) => `
       <article class="prototype-layer-item ${layer.id === 'FRAME' ? 'is-generated' : 'is-calculated'}">
         <span class="prototype-layer-swatch" style="--layer-color:${layer.color}"></span>
         <div><strong>${layer.label}</strong><small>${layer.id === 'FRAME'
-          ? 'Modèle acier · présent dans les exports de fabrication'
+          ? 'Ossature · présente dans les exports de fabrication'
           : `${layer.parts.length} pièce(s) · ${layer.thicknessMm} mm · ${layer.referenceProduct}`}</small></div>
       </article>
     `).join('');
@@ -143,7 +143,7 @@
     model.layers.forEach((layer) => {
       layer.surfaces.forEach((surface) => primitives.push(surfacePrimitive(surface, layer, model.wall, app.state.prototypeExplode)));
       layer.members.forEach((member) => primitives.push({
-        type: 'box', bounds: member.bounds, color: roleColors[member.role] || '#6f8791', alpha: .98
+        type: 'box', bounds: member.bounds, color: core.memberColor(member, candidate.frameMaterial), alpha: .98
       }));
     });
     const view = app.canvasGeometry.render(canvas, primitives, { rotationDeg: app.state.prototypeRotationDeg, padding: 170 });

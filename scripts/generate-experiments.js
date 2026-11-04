@@ -5,7 +5,7 @@ const path = require('node:path');
 const { loadCore, root } = require('../tests/load-core');
 
 const core = loadCore();
-const outputRoot = path.join(root, 'experiments', 'results');
+const outputRoot = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root, 'experiments', 'results');
 fs.mkdirSync(outputRoot, { recursive: true });
 
 const summary = [];
@@ -16,8 +16,13 @@ const manifest = {
   cases: []
 };
 
-core.EXPERIMENT_PRESETS.forEach((preset) => {
-  const input = { ...core.DEFAULT_INPUT, ...preset.input, projectId: 'AVELIS-IAM-2026', wallId: preset.id.toUpperCase(), version: '2.0' };
+const cases = ['STEEL', 'TIMBER'].flatMap((frameMaterial) => core.EXPERIMENT_PRESETS.map((preset) => ({
+  ...preset,
+  id: frameMaterial === 'STEEL' ? preset.id : `${preset.id}-timber`,
+  input: { ...preset.input, frameMaterial }
+})));
+cases.forEach((preset) => {
+  const input = { ...core.DEFAULT_INPUT, ...preset.input, projectId: 'AVELIS-IAM-2026', wallId: preset.id.toUpperCase(), version: core.VERSION };
   const result = core.runWorkflow(input);
   if (!result.ok) throw new Error(`Échec du cas ${preset.id}`);
   const candidate = result.recommended;
@@ -51,9 +56,10 @@ core.EXPERIMENT_PRESETS.forEach((preset) => {
   manifest.cases.push({ caseId: preset.id, folder: preset.id, result: `${preset.id}/experiment-result.json` });
 });
 
-const header = ['caseId', 'wallLengthMm', 'wallHeightMm', 'windowEnabled', 'doorEnabled', 'validCandidates', 'processingTimeMs', 'candidateId', 'score', 'steelMassKg', 'componentCount', 'uniqueLengthCount', 'materialCostEurExVat', 'engineeringStatus'];
+const header = ['caseId', 'frameMaterial', 'wallLengthMm', 'wallHeightMm', 'windowEnabled', 'doorEnabled', 'validCandidates', 'processingTimeMs', 'candidateId', 'score', 'materialMassKg', 'timberVolumeM3', 'componentCount', 'uniqueLengthCount', 'materialCostEurExVat', 'engineeringStatus'];
 const rows = summary.map((entry) => [
   entry.caseId,
+  entry.input.frameMaterial,
   entry.input.wallLengthMm,
   entry.input.wallHeightMm,
   entry.input.windowEnabled,
@@ -62,7 +68,8 @@ const rows = summary.map((entry) => [
   entry.processingTimeMs,
   entry.recommendedCandidateId,
   entry.score,
-  entry.metrics.steelMassKg,
+  entry.metrics.materialMassKg,
+  entry.metrics.timberVolumeM3 ?? '',
   entry.metrics.componentCount,
   entry.metrics.uniqueLengthCount,
   entry.metrics.materialCostEstimateEurExVat,

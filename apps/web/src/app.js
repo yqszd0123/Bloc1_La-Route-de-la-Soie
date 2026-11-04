@@ -53,6 +53,7 @@
   }
 
   function runManual(showDesign) {
+    app.state.sourceRequest = { mode: 'MANUAL' };
     const input = app.formController.readForm(form);
     const result = core.runWorkflow(input);
     app.formController.renderMessages(messages, result.inputValidation);
@@ -62,7 +63,8 @@
   function runIfcWall(wallEntityId) {
     if (!app.state.ifcText) return;
     try {
-      const result = core.runIfcWorkflow(app.state.ifcText, { wallEntityId });
+      app.state.sourceRequest = { mode: 'IFC', wallEntityId };
+      const result = core.runIfcWorkflow(app.state.ifcText, { wallEntityId, inputOverrides: app.materialController.settings(form) });
       acceptResult(result, true);
     } catch (error) {
       const container = document.getElementById('ifc-messages');
@@ -72,7 +74,8 @@
 
   function runStepModel(model, mapping) {
     try {
-      const result = core.runStepWorkflow(model, mapping);
+      app.state.sourceRequest = { mode: 'STEP', model, mapping };
+      const result = core.runStepWorkflow(model, mapping, app.materialController.settings(form));
       acceptResult(result, true);
     } catch (error) {
       const container = document.getElementById('step-messages');
@@ -83,7 +86,7 @@
   document.querySelectorAll('.tab-button').forEach((button) => button.addEventListener('click', () => showPage(button.dataset.page)));
   form.addEventListener('submit', (event) => { event.preventDefault(); runManual(true); });
   document.getElementById('reset-button').addEventListener('click', () => {
-    app.formController.setFormValues(form, core.DEFAULT_INPUT);
+    app.formController.setFormValues(form, { ...core.DEFAULT_INPUT, ...app.materialController.settings(form) });
     runManual(false);
   });
   document.getElementById('rotation-slider').addEventListener('input', (event) => { app.state.rotationDeg = Number(event.target.value); redraw(); });
@@ -95,6 +98,12 @@
 
   app.formController.renderPresets(document.getElementById('preset-buttons'), form, () => runManual(false));
   app.formController.bindOpeningToggles(form, () => runManual(false));
+  app.materialController.bind(form, () => {
+    const source = app.state.sourceRequest;
+    if (source && source.mode === 'IFC') runIfcWall(source.wallEntityId);
+    else if (source && source.mode === 'STEP') runStepModel(source.model, source.mapping);
+    else runManual(false);
+  });
   app.ifcController.bind(runIfcWall);
   app.stepController.bind(runStepModel);
   app.downloadController.bind();

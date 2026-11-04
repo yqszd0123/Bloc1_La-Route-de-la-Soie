@@ -1,23 +1,26 @@
 (function initResultsView(global) {
   'use strict';
-
   const app = global.AvelisApp;
   const core = global.AvelisCore;
-
-  function text(id, value) {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value;
-  }
+  const timber = (candidate) => candidate.frameMaterial === 'TIMBER';
+  const escape = (value) => String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fixed = (value, places) => Number.isFinite(value) ? value.toFixed(places) : '—';
+  function text(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
+  function cells(values) { return values.map((value) => '<td>' + value + '</td>').join(''); }
+  function evidenceRow(label, value) { return '<div><strong>' + escape(label) + '</strong><span>' + escape(value) + '</span></div>'; }
 
   function renderMetrics(result, candidate) {
-    text('metric-time', `${result.processingTimeMs} ms`);
-    text('metric-mass', `${candidate.metrics.steelMassKg.toFixed(2)} kg`);
-    text('metric-cost', `${candidate.metrics.materialCostEstimateEurExVat.toFixed(2)} €`);
-    text('metric-components', candidate.metrics.componentCount);
-    text('metric-length', `${candidate.metrics.totalProfileLengthM.toFixed(2)} m`);
+    const m = candidate.metrics;
+    text('metric-time', result.processingTimeMs + ' ms');
+    text('metric-mass', timber(candidate) ? fixed(m.timberVolumeM3, 4) + ' m³' : fixed(m.materialMassKg, 2) + ' kg');
+    text('metric-material-note', timber(candidate) ? 'Masse estimée ' + fixed(m.materialMassKg, 2) + ' kg · ' + result.rules.material.densityKgM3 + ' kg/m³' : 'kg · longueur × kg/m fabricant');
+    text('metric-cost', fixed(m.materialCostEstimateEurExVat, 2) + ' €');
+    text('metric-components', m.componentCount);
+    text('metric-length', fixed(m.totalProfileLengthM, 2) + ' m');
     text('metric-rules', candidate.validation.checkedRuleCount);
-    const basis = candidate.metrics.priceBasis;
-    text('metric-cost-basis', `${basis.valueEurPerKgExVat.toFixed(2)} €/kg HT · ${basis.status === 'USER_COST_SCENARIO' ? 'saisie équipe' : 'référence régionale'}`);
+    const price = m.priceBasis;
+    text('metric-cost-basis', fixed(price.valueEurPerUnitExVat, 2) + (timber(candidate) ? ' €/m³ HT · ' : ' €/kg HT · ') +
+      (price.status === 'USER_COST_SCENARIO' ? 'saisie équipe' : timber(candidate) ? 'hypothèse de démonstration' : 'référence régionale'));
   }
 
   function renderTable(result, selectedId, onSelect) {
@@ -26,148 +29,112 @@
     result.rankedCandidates.forEach((candidate) => {
       const row = document.createElement('tr');
       row.className = candidate.id === selectedId ? 'is-selected' : '';
-      row.innerHTML = [
-        `<td><span class="rank-badge">${candidate.rank}</span></td>`,
-        `<td>${candidate.id}${candidate.paretoOptimal ? '<span class="pareto">PARETO</span>' : ''}</td>`,
-        `<td>${candidate.option.studProfileId} + ${candidate.option.trackProfileId}</td>`,
-        `<td><strong>${candidate.option.gridStrategyLabel}</strong><br><small>${candidate.layout.minimumBayMm.toFixed(0)}–${candidate.layout.maximumBayMm.toFixed(0)} mm réels</small></td>`,
-        `<td>${candidate.metrics.steelMassKg.toFixed(2)} kg</td>`,
-        `<td>${candidate.metrics.componentCount}</td>`,
-        `<td>${candidate.metrics.uniqueLengthCount}</td>`,
-        `<td>${candidate.metrics.materialCostEstimateEurExVat.toFixed(2)} €</td>`,
-        `<td>${candidate.score.toFixed(2)}</td>`
-      ].join('');
+      const quantity = timber(candidate)
+        ? fixed(candidate.metrics.timberVolumeM3, 4) + ' m³<br><small>' + fixed(candidate.metrics.materialMassKg, 2) + ' kg estimés</small>'
+        : fixed(candidate.metrics.materialMassKg, 2) + ' kg';
+      row.innerHTML = cells([
+        '<span class="rank-badge">' + candidate.rank + '</span>',
+        escape(candidate.id) + (candidate.paretoOptimal ? '<span class="pareto">PARETO</span>' : ''),
+        escape(timber(candidate) ? candidate.option.studProfileId : candidate.option.studProfileId + ' + ' + candidate.option.trackProfileId),
+        '<strong>' + escape(candidate.option.gridStrategyLabel) + '</strong><br><small>' + fixed(candidate.layout.minimumBayMm, 0) + '–' + fixed(candidate.layout.maximumBayMm, 0) + ' mm réels</small>',
+        quantity, candidate.metrics.componentCount, candidate.metrics.uniqueLengthCount,
+        fixed(candidate.metrics.materialCostEstimateEurExVat, 2) + ' €', fixed(candidate.score, 2)
+      ]);
       row.addEventListener('click', () => onSelect(candidate.id));
       body.appendChild(row);
     });
-    const duplicates = result.search.duplicateCandidates.length;
-    text('candidate-count', `${result.rankedCandidates.length} distinctes / ${result.search.searchSpaceSize} combinaisons${duplicates ? ` · ${duplicates} doublon(s) retiré(s)` : ''}`);
+    text('candidate-count', result.rankedCandidates.length + ' distinctes / ' + result.search.searchSpaceSize + ' combinaisons · ' + result.search.duplicateCandidates.length + ' doublon(s)');
   }
 
   function renderBom(candidate) {
     const container = document.getElementById('bom-summary');
     container.innerHTML = '';
     candidate.bom.forEach((row) => {
-      const item = document.createElement('div');
-      item.className = 'bom-item';
-      item.innerHTML = `<strong>${row.quantity} × ${row.role.replace(/_/g, ' ')}</strong><span>${row.manufacturerReference} · ${row.cutLengthMm} mm<br>${row.totalLengthM.toFixed(3)} m · ${row.totalMassKg.toFixed(3)} kg</span>`;
+      const item = document.createElement('div'); item.className = 'bom-item';
+      item.innerHTML = '<strong>' + row.quantity + ' × ' + escape(row.role.replace(/_/g, ' ')) + '</strong><span>' +
+        escape(row.manufacturerReference) + ' · ' + row.cutLengthMm + ' mm<br>' +
+        fixed(row.totalLengthM, 3) + ' m · ' + fixed(row.totalMassKg, 3) + ' kg' +
+        (timber(candidate) ? ' · ' + fixed(row.totalVolumeM3, 5) + ' m³' : '') + '</span>';
       container.appendChild(item);
     });
   }
 
   function renderValidation(candidate) {
     const container = document.getElementById('validation-summary');
-    container.innerHTML = '';
-    const geometry = document.createElement('div');
-    geometry.className = 'validation-row';
-    geometry.innerHTML = `<span class="validation-icon">✓</span><span><strong>${candidate.validation.checkedRuleCount} contrôles géométriques et de traçabilité</strong><br>IDs uniques, longueurs positives, profils sourcés, enveloppe et vides contrôlés.</span>`;
-    container.appendChild(geometry);
-    const reconciliation = document.createElement('div');
-    reconciliation.className = 'validation-row';
-    reconciliation.innerHTML = `<span class="validation-icon">✓</span><span><strong>BOM ↔ composants : ${candidate.crossValidation.massReconciliation.status}</strong><br>Écart ${candidate.crossValidation.massReconciliation.absoluteDifferenceKg.toFixed(4)} kg.</span>`;
-    container.appendChild(reconciliation);
+    container.innerHTML = '<div class="validation-row"><span class="validation-icon">✓</span><span><strong>Géométrie et traçabilité contrôlées</strong><br>IDs, sections, longueurs, cadres, enveloppe et ouvertures.</span></div>' +
+      '<div class="validation-row"><span class="validation-icon">✓</span><span>BOM ↔ composants : ' + escape(candidate.crossValidation.massReconciliation.status) +
+      ' · écart ' + fixed(candidate.crossValidation.massReconciliation.absoluteDifferenceKg, 4) + ' kg</span></div>';
     candidate.validation.issues.forEach((issue) => {
-      const row = document.createElement('div');
-      row.className = `validation-row ${issue.severity === 'error' ? 'is-error' : 'is-review'}`;
-      row.innerHTML = `<span class="validation-icon">!</span><span><strong>${issue.code}</strong><br>${issue.message}</span>`;
+      const row = document.createElement('div'); row.className = 'validation-row ' + (issue.severity === 'error' ? 'is-error' : 'is-review');
+      row.innerHTML = '<span class="validation-icon">!</span><span><strong>' + escape(issue.code) + '</strong><br>' + escape(issue.message) + '</span>';
       container.appendChild(row);
     });
   }
 
   function renderManufacturing(candidate) {
-    const body = document.getElementById('manufacturing-table-body');
-    body.innerHTML = '';
+    const body = document.getElementById('manufacturing-table-body'); body.innerHTML = '';
     core.assemblyPriority.orderedMembers(candidate).forEach((member) => {
-      const row = document.createElement('tr');
       const geometry = member.fabricationGeometry;
-      row.innerHTML = `<td><span class="rank-badge" title="${member.assemblyGroup}">${member.assemblyOrder}</span></td><td>${member.id}</td><td>${member.role}</td><td>${member.profile.manufacturerReference}</td><td>${geometry.webDepthMm} × ${geometry.flange1Mm}/${geometry.flange2Mm} mm</td><td>${member.lengthMm.toFixed(1)} mm</td><td>${geometry.nominalThicknessMm.toFixed(1)} mm</td><td>${geometry.developedAreaApproxM2.toFixed(4)} m²</td><td>${member.massKg.toFixed(3)} kg</td><td>${member.qrPayload}</td>`;
+      const row = document.createElement('tr');
+      row.innerHTML = cells([
+        '<span class="rank-badge">' + member.assemblyOrder + '</span>', escape(member.id), escape(member.role),
+        escape(member.profile.manufacturerReference),
+        timber(candidate) ? geometry.sectionWidthMm + ' × ' + geometry.sectionDepthMm + ' mm' : geometry.webDepthMm + ' × ' + geometry.flange1Mm + '/' + geometry.flange2Mm + ' mm',
+        fixed(member.lengthMm, 1) + ' mm',
+        fixed(timber(candidate) ? geometry.sectionWidthMm : geometry.nominalThicknessMm, 1) + ' mm',
+        timber(candidate) ? fixed(member.volumeM3, 5) + ' m³' : fixed(geometry.developedAreaApproxM2, 4) + ' m²',
+        fixed(member.massKg, 3) + ' kg', escape(member.qrPayload)
+      ]);
       body.appendChild(row);
     });
-    text('manufacturing-count', `${candidate.members.length} pièces · ordre 1–${candidate.members.length}`);
+    text('manufacturing-count', candidate.members.length + ' pièces · ordre 1–' + candidate.members.length);
   }
-
-  function evidenceRow(label, value) { return `<div><strong>${label}</strong><span>${value}</span></div>`; }
 
   function renderEngineering(result, candidate) {
     const material = result.rules.material;
-    document.getElementById('material-evidence').innerHTML = `<div class="evidence-list">${[
+    document.getElementById('material-evidence').innerHTML = '<div class="evidence-list">' + [
       evidenceRow('Référence', material.id), evidenceRow('Statut', material.status),
-      evidenceRow('Masse volumique', `${material.densityKgM3} kg/m³`),
-      evidenceRow('Limite élastique mini', `${material.minimumYieldStrengthNmm2} N/mm²`),
-      evidenceRow('Revêtement', material.coating), evidenceRow('Usage', 'Produit public de référence, non confirmé Avelis')
-    ].join('')}</div>`;
-
+      evidenceRow('Masse volumique', material.densityKgM3 + ' kg/m³'),
+      ...(timber(candidate)
+        ? [evidenceRow('Classe de référence', material.strengthClass), evidenceRow('Masse', 'Estimation volume × densité moyenne ; pas une pesée')]
+        : [evidenceRow('Limite élastique mini', material.minimumYieldStrengthNmm2 + ' N/mm²'), evidenceRow('Revêtement', material.coating)]),
+      evidenceRow('Usage', 'Référence non confirmée par Avelis ; dimensionnement structurel requis')
+    ].join('') + '</div>';
     const budget = result.rules.budgetPrice;
-    document.getElementById('budget-evidence').innerHTML = `<div class="evidence-list">${[
-      evidenceRow('Origine', budget.origin === 'USER_OVERRIDE' ? 'Scénario saisi' : 'Estimation Hauts-de-France'),
-      evidenceRow('Prix central', `${budget.valueEurPerKgExVat.toFixed(2)} €/kg HT`),
-      evidenceRow('Fourchette', `${budget.lowerReferenceEurPerKgExVat.toFixed(2)}–${budget.upperReferenceEurPerKgExVat.toFixed(2)} €/kg HT`),
-      evidenceRow('Date', budget.priceDate || 'non renseignée'), evidenceRow('Périmètre', budget.boundary)
-    ].join('')}</div>`;
-
-    const profileIds = Array.from(new Set(candidate.members.map((member) => member.profile.id)));
-    const checks = profileIds.map((id) => core.engineering.densityCrossCheck(core.engineering.getProfile(id)));
-    document.getElementById('cross-validation-evidence').innerHTML = `<div class="evidence-list">${[
+    const unit = timber(candidate) ? ' €/m³ HT' : ' €/kg HT';
+    document.getElementById('budget-evidence').innerHTML = '<div class="evidence-list">' + [
+      evidenceRow('Origine', budget.origin === 'USER_OVERRIDE' ? 'Scénario saisi' : timber(candidate) ? 'Hypothèse de démonstration' : 'Estimation Hauts-de-France'),
+      evidenceRow('Prix central', fixed(budget.valueEurPerUnitExVat, 2) + unit),
+      evidenceRow('Fourchette', fixed(budget.lowerReferenceEurPerUnitExVat, 2) + '–' + fixed(budget.upperReferenceEurPerUnitExVat, 2) + unit),
+      evidenceRow('Date', budget.priceDate || 'non renseignée'), evidenceRow('Périmètre', budget.boundary), evidenceRow('Limite', budget.limitation)
+    ].join('') + '</div>';
+    const checks = [...new Set(candidate.members.map((m) => m.profile.id))].map((id) => core.engineering.densityCrossCheck(core.engineering.getProfile(id)));
+    document.getElementById('cross-validation-evidence').innerHTML = '<div class="evidence-list">' + [
       evidenceRow('BOM / pièces', candidate.crossValidation.massReconciliation.status),
-      ...checks.map((check) => evidenceRow(check.profileId, `écart ${check.relativeDifferencePercent.toFixed(2)} % vs approximation densité`)),
-      evidenceRow('Entrée', result.ifcAudit
-        ? `IFC · ${result.ifcAudit.entityCount} entités · ${result.ifcAudit.wallCount} mur(s)`
-        : result.stepAudit
-          ? `STEP · ${result.stepAudit.meshCount} maillage(s) · ${result.stepAudit.vertexCount} sommets`
-          : 'Mode manuel')
-    ].join('')}</div>`;
-
-    const unresolved = document.getElementById('unresolved-evidence');
-    unresolved.innerHTML = '';
-    core.ENGINEERING_DATA.unresolvedAvelisInputs.forEach((entry) => {
-      const item = document.createElement('div');
-      item.className = 'unresolved-item';
-      item.innerHTML = `<strong>${entry.id}</strong><span>${entry.description}</span>`;
-      unresolved.appendChild(item);
-    });
-
-    const sourceList = document.getElementById('source-evidence');
-    sourceList.innerHTML = '';
-    Object.entries(core.ENGINEERING_DATA.sources).forEach(([id, source]) => {
-      const item = document.createElement('div');
-      item.className = 'source-item';
-      const link = source.url ? `<a href="${source.url}" target="_blank" rel="noopener">Ouvrir</a>` : '<span>Document interne</span>';
-      item.innerHTML = `<strong>${id}</strong><span>${source.title}</span>${link}`;
-      sourceList.appendChild(item);
-    });
+      ...checks.map((check) => evidenceRow(check.profileId, timber(candidate) ? 'Cohérence section × longueur × densité ; pas de mesure indépendante' : 'Écart ' + fixed(check.relativeDifferencePercent, 2) + ' % vs approximation densité')),
+      evidenceRow('Entrée', result.ifcAudit ? 'IFC · ' + result.ifcAudit.wallCount + ' mur(s)' : result.stepAudit ? 'STEP · ' + result.stepAudit.meshCount + ' maillage(s)' : 'Mode manuel')
+    ].join('') + '</div>';
+    document.getElementById('unresolved-evidence').innerHTML = core.ENGINEERING_DATA.unresolvedAvelisInputs.map((entry) => '<div class="unresolved-item"><strong>' + escape(entry.id) + '</strong><span>' + escape(entry.description) + '</span></div>').join('');
+    document.getElementById('source-evidence').innerHTML = Object.entries(core.ENGINEERING_DATA.sources).map(([id, source]) => '<div class="source-item"><strong>' + escape(id) + '</strong><span>' + escape(source.title) + '</span>' +
+      (source.url ? '<a href="' + escape(source.url) + '" target="_blank" rel="noopener">Ouvrir</a>' : '<span>Hypothèse documentée</span>') + '</div>').join('');
   }
 
   function renderSelected(result, candidate) {
-    text('candidate-title', `${candidate.id} · rang ${candidate.rank} · score ${candidate.score}`);
-    const openingLabel = candidate.wall.openings.length ? candidate.wall.openings.map((opening) => opening.type.toLowerCase()).join(' + ') : 'sans ouverture';
-    text('viewer-caption', `${openingLabel} · ${candidate.option.gridStrategyLabel} · ${candidate.layout.minimumBayMm.toFixed(0)}–${candidate.layout.maximumBayMm.toFixed(0)} mm réels · module cible ${candidate.option.studSpacingMm} mm`);
-    const sourceLabels = { IFC: 'Source IFC :', STEP: 'Source STEP :', MANUAL: 'Source manuelle :' };
-    const sourceScopes = {
-      IFC: 'dimensions, placements et ouvertures extraits du fichier. ',
-      STEP: 'enveloppe Open CASCADE et axes confirmés ; aucune ouverture sémantique déduite. ',
-      MANUAL: ''
-    };
-    text('result-source-label', sourceLabels[result.input.sourceMode] || 'Source :');
-    text('scope-warning-text', `${sourceScopes[result.input.sourceMode] || ''}Géométrie et quantités contrôlées ; calcul structurel et libération machine requis.`);
-    renderMetrics(result, candidate);
-    renderBom(candidate);
-    renderValidation(candidate);
-    renderManufacturing(candidate);
-    renderEngineering(result, candidate);
+    text('candidate-title', (timber(candidate) ? 'Bois C24' : 'Acier') + ' · ' + candidate.id + ' · rang ' + candidate.rank + ' · score ' + candidate.score);
+    const openings = candidate.wall.openings.map((o) => o.type.toLowerCase()).join(' + ') || 'sans ouverture';
+    text('viewer-caption', openings + ' · ' + candidate.option.gridStrategyLabel + ' · module cible ' + candidate.option.studSpacingMm + ' mm');
+    text('result-source-label', 'Source ' + result.input.sourceMode + ' :');
+    text('scope-warning-text', (timber(candidate) ? 'Bois C24, sections et linteaux conceptuels. ' : '') + 'Géométrie et quantités contrôlées ; calcul structurel et libération machine requis.');
+    renderMetrics(result, candidate); renderBom(candidate); renderValidation(candidate); renderManufacturing(candidate); renderEngineering(result, candidate);
   }
 
   function renderInvalid(result) {
-    text('candidate-title', 'Configuration bloquée');
-    text('viewer-caption', 'Corrigez la géométrie pour recalculer.');
+    text('candidate-title', 'Configuration bloquée'); text('viewer-caption', 'Corrigez la géométrie pour recalculer.');
     ['metric-time', 'metric-mass', 'metric-cost', 'metric-components', 'metric-length', 'metric-rules'].forEach((id) => text(id, '—'));
-    text('candidate-count', '0 solution');
-    text('manufacturing-count', '—');
-    document.getElementById('candidate-table-body').innerHTML = '';
-    document.getElementById('manufacturing-table-body').innerHTML = '';
-    document.getElementById('bom-summary').innerHTML = '<div class="empty-state">Aucun fichier n’est produit.</div>';
-    const errors = result.inputValidation.issues.filter((issue) => issue.severity === 'error');
-    document.getElementById('validation-summary').innerHTML = errors.map((error) => `<div class="validation-row is-error"><span class="validation-icon">×</span><span><strong>${error.code}</strong><br>${error.message}</span></div>`).join('');
+    text('candidate-count', '0 solution'); text('manufacturing-count', '—');
+    ['candidate-table-body', 'manufacturing-table-body', 'bom-summary', 'material-evidence', 'budget-evidence', 'cross-validation-evidence'].forEach((id) => { document.getElementById(id).innerHTML = ''; });
+    const errors = [...result.inputValidation.issues, ...result.search.rejectedCandidates.flatMap((c) => c.validation.issues)].filter((i) => i.severity === 'error');
+    document.getElementById('validation-summary').innerHTML = errors.map((error) => '<div class="validation-row is-error"><span class="validation-icon">×</span><span><strong>' + escape(error.code) + '</strong><br>' + escape(error.message) + '</span></div>').join('');
   }
-
   app.resultsView = { renderTable, renderSelected, renderInvalid };
 })(window);

@@ -4,12 +4,14 @@
   const core = global.AvelisCore = global.AvelisCore || {};
 
   function profileEnvelopeWidth(profile) {
-    return Math.max(profile.flange1Mm, profile.flange2Mm);
+    return profile.family === 'TIMBER_RECTANGLE' ? profile.sectionWidthMm : Math.max(profile.flange1Mm, profile.flange2Mm);
   }
 
   function createMember(context, spec) {
     const profile = spec.profileKind === 'track' ? context.trackProfile : context.studProfile;
     const envelopeWidthMm = profileEnvelopeWidth(profile);
+    const timber = context.rules.frameMaterial === 'TIMBER';
+    const depthMm = timber ? profile.sectionDepthMm : profile.webDepthMm;
     const semanticKey = [
       spec.role, spec.openingId || 'WALL', profile.id, spec.axis,
       core.math.round(spec.xMm, 3), core.math.round(spec.zMm, 3), core.math.round(spec.lengthMm, 3)
@@ -22,6 +24,8 @@
       openingId: spec.openingId || null,
       material: {
         id: context.rules.material.id,
+        frameMaterial: context.rules.frameMaterial,
+        densityKgM3: context.rules.material.densityKgM3,
         label: context.rules.material.label,
         status: context.rules.material.status,
         coating: profile.coating,
@@ -29,10 +33,10 @@
       },
       profile: core.math.deepClone(profile),
       representation: {
-        kind: 'PROFILE_ENVELOPE',
-        note: 'The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities.'
+        kind: timber ? 'SOLID_RECTANGULAR_TIMBER' : 'PROFILE_ENVELOPE',
+        note: timber ? 'Solid rectangular timber; volume from section × length, mass estimated from reference mean density.' : 'The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities.'
       },
-      sectionEnvelope: { inPlaneWidthMm: envelopeWidthMm, depthMm: profile.webDepthMm },
+      sectionEnvelope: { inPlaneWidthMm: envelopeWidthMm, depthMm },
       axis: spec.axis,
       lengthMm: core.math.round(spec.lengthMm, 3),
       position: {
@@ -49,16 +53,21 @@
     if (member.axis === 'x') {
       member.bounds = {
         min: { x: member.position.xMm, y: member.position.yMm, z: member.position.zMm },
-        max: { x: member.position.xMm + member.lengthMm, y: member.position.yMm + profile.webDepthMm, z: member.position.zMm + envelopeWidthMm }
+        max: { x: member.position.xMm + member.lengthMm, y: member.position.yMm + depthMm, z: member.position.zMm + envelopeWidthMm }
       };
     } else {
       member.bounds = {
         min: { x: member.position.xMm, y: member.position.yMm, z: member.position.zMm },
-        max: { x: member.position.xMm + envelopeWidthMm, y: member.position.yMm + profile.webDepthMm, z: member.position.zMm + member.lengthMm }
+        max: { x: member.position.xMm + envelopeWidthMm, y: member.position.yMm + depthMm, z: member.position.zMm + member.lengthMm }
       };
     }
     member.massKg = core.math.round(member.lengthMm / 1000 * profile.massKgPerM, 4);
-    member.fabricationGeometry = {
+    member.volumeM3 = timber ? core.math.round(member.lengthMm * envelopeWidthMm * depthMm / 1e9, 9) : null;
+    member.fabricationGeometry = timber ? {
+      sectionWidthMm: envelopeWidthMm, sectionDepthMm: depthMm,
+      volumeM3: member.volumeM3, densityKgM3: context.rules.material.densityKgM3,
+      method: 'Rectangular timber volume; mass from reference mean density.'
+    } : {
       webDepthMm: profile.webDepthMm,
       flange1Mm: profile.flange1Mm,
       flange2Mm: profile.flange2Mm,

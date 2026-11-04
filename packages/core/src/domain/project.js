@@ -55,6 +55,9 @@
       ? raw.openings.map(openingFromRaw)
       : openingsFromForm(merged, defaults);
     return {
+      frameMaterial: String(raw.frameMaterial || defaults.frameMaterial).toUpperCase(),
+      timberSection: String(raw.timberSection || defaults.timberSection),
+      timberStudSpacingMm: numberValue(raw.timberStudSpacingMm, defaults.timberStudSpacingMm),
       sourceMode: String(raw.sourceMode || defaults.sourceMode).toUpperCase(),
       projectId: String(raw.projectId || defaults.projectId).trim().toUpperCase(),
       typology: String(raw.typology || defaults.typology).trim().toUpperCase(),
@@ -67,6 +70,9 @@
       placement: raw.placement ? core.math.deepClone(raw.placement) : { xMm: 0, yMm: 0, zMm: 0, rotationDeg: 0 },
       openings: openings.sort((a, b) => a.xMm - b.xMm || a.sillMm - b.sillMm),
       budgetInput: {
+        valueEurPerM3ExVat: numberValue(raw.timberBudgetPriceEurPerM3ExVat, null),
+        lowerEurPerM3ExVat: numberValue(raw.timberBudgetLowEurPerM3ExVat, null),
+        upperEurPerM3ExVat: numberValue(raw.timberBudgetHighEurPerM3ExVat, null),
         valueEurPerKgExVat: numberValue(raw.budgetPriceEurPerKgExVat, null),
         lowerEurPerKgExVat: numberValue(raw.budgetLowEurPerKgExVat, null),
         upperEurPerKgExVat: numberValue(raw.budgetHighEurPerKgExVat, null),

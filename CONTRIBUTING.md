@@ -9,4 +9,4 @@
 7. Garder des identifiants de composants stables dans tous les fichiers.
 8. Vérifier la licence avant toute réutilisation de code externe.
 
-Critères d'acceptation : `npm test` réussit, les quatre expériences se régénèrent, l'application fonctionne hors ligne et le paquet ZIP contient entrée, conception, fabrication, qualité et interfaces.
+Critères d'acceptation : `npm test` réussit, les six expériences (trois acier, trois bois) se régénèrent, l'application fonctionne hors ligne et le paquet ZIP contient entrée, conception, fabrication, qualité et interfaces.

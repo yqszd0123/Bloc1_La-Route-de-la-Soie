@@ -10,6 +10,7 @@
       schema: 'avelis.quality.validation-report.v2',
       project: result.project.identity,
       candidateId: candidate.id,
+      frameMaterial: candidate.frameMaterial,
       geometryStatus: candidate.validation.geometryValid ? 'GEOMETRY_CHECKS_PASSED' : 'REJECTED',
       engineeringStatus: 'ENGINEERING_REVIEW_REQUIRED',
       manufacturingRelease: false,
@@ -33,18 +34,20 @@
     const safeScale = Math.max(1, Number(scale) || result.input.prototypeScale || 20);
     const files = {
       '00_READ_ME.txt': [
-        'AVELIS WALL FLOW 2.2 — IFC-to-manufacturing reference package',
+        'AVELIS WALL FLOW 2.3 — steel / timber manufacturing reference package',
         `Project: ${result.input.projectId} / ${result.input.wallId} / version ${result.input.version}`,
         `Candidate: ${selected.id} (rank ${selected.rank}, decision score ${selected.score})`,
-        `Steel mass: ${selected.metrics.steelMassKg} kg`,
+        'Frame material: ' + selected.frameMaterial,
+        'Material mass: ' + selected.metrics.materialMassKg + ' kg',
+        selected.frameMaterial === 'TIMBER' ? 'Timber volume: ' + selected.metrics.timberVolumeM3 + ' m3; reference density 420 kg/m3' : 'Steel mass calculated from manufacturer kg/m',
         `Budget material cost: ${selected.metrics.materialCostEstimateEurExVat} EUR ex VAT`,
         `Engineering status: ${selected.validation.engineeringStatus}`,
         '',
         'IMPORTANT: geometry checks and traceable quantity calculations are automated.',
         'This package is NOT a structural certificate and is NOT released to an Avelis machine.',
         'Profiles and prices are public reference inputs, not confirmed Avelis products or procurement data.',
-        'Assembly order 1..N follows the documented FRAMECAD role priority, extended left-to-right for multiple openings; it is not an RFY or an Avelis-approved machine sequence.',
-        'STEP/DXF/STL geometry is a profile envelope for coordination and FabLab prototyping, not detailed sheet-metal production geometry.'
+        selected.frameMaterial === 'TIMBER' ? 'Timber order 1..N is a conceptual preparation sequence, not a FRAMECAD sequence or an approved assembly instruction.' : 'Assembly order 1..N follows the documented FRAMECAD role priority, extended left-to-right for multiple openings; it is not an RFY or an Avelis-approved machine sequence.',
+        selected.frameMaterial === 'TIMBER' ? 'STEP/DXF/STL geometry represents solid rectangular timber; joints, fixings and machining details are not designed.' : 'STEP/DXF/STL geometry is a profile envelope for coordination and FabLab prototyping, not detailed sheet-metal production geometry.'
       ].join('\r\n'),
       '01_input/noov_request_proposal.json': pretty(core.serialize.noovRequest(result)),
       '01_input/source_context.json': pretty({ source: result.project.source, ifcAudit: result.ifcAudit || null, stepAudit: result.stepAudit || null }),

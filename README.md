@@ -1,13 +1,26 @@
-# Avelis Wall Flow 2.2
+# Avelis Wall Flow 2.3 — acier et bois
 
-Application Bloc 1 de continuité numérique pour panneaux muraux en acier formé à froid. Elle accepte une configuration manuelle, un vrai fichier IFC ou une géométrie STEP/STP, génère plusieurs variantes traçables, compare leurs métrés et prépare un paquet neutre pour le Bloc 2.
+Le sélecteur « Ossature » est disponible sur toutes les pages. Choisir « Bois C24 »
+active des pièces pleines, doubles lisses hautes, montants principaux/d’appui,
+linteaux conceptuels et interruptions de lisse à chaque porte. Section par défaut :
+45 × 145 mm ; alternatives 45 × 95 et 45 × 120 mm, ou comparaison des trois.
+Les entraxes 400/450/500/600 mm sont des paramètres géométriques à valider.
+
+Les entrées manuelles, IFC et STEP utilisent le matériau choisi. Le bois conserve
+les vues 3D, couches, comparaison, BOM, débit, STEP/DXF/STL et ZIP ; ses quantités
+sont en m³, sa masse est estimée avec 420 kg/m³ et son budget en €/m³.
+Le prix initial de 620 €/m³ est une hypothèse de démonstration, pas un tarif vérifié.
+Les sections, linteaux, assemblages et capacités de fabrication ne sont pas certifiés.
+Le catalogue et le comportement acier restent disponibles.
+
+Application Bloc 1 de continuité numérique pour panneaux muraux en acier formé à froid ou à ossature bois. Elle accepte une configuration manuelle, un vrai fichier IFC ou une géométrie STEP/STP, génère plusieurs variantes traçables, compare leurs métrés et prépare un paquet neutre pour le Bloc 2.
 
 > Statut : démonstrateur d’ingénierie, pas certificat structurel et pas programme machine. Les charges, assemblages, tolérances, capacités de Torcy et produits réellement employés par Avelis restent à confirmer.
 
 ## Utilisation
 
 1. Double-cliquer sur `START_APP.bat`.
-2. Choisir l’entrée : IFC, STEP/STP ou configuration manuelle.
+2. Choisir l’ossature (acier ou bois) et l’entrée : IFC, STEP/STP ou configuration manuelle.
 3. Pour STEP, confirmer les axes longueur/hauteur/épaisseur ; pour IFC, choisir le mur extrait.
 4. Activer ou désactiver fenêtre et porte en mode manuel.
 5. Après la conception, ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
@@ -15,7 +28,7 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 
 La maquette en couches possède son propre calcul de pièces et son CSV. Les deux vues 3D disposent d’une rotation complète sur 360° ; la maquette permet en plus un éclatement renforcé de 0 à 200. L’isolant est découpé en rectangles correspondant aux vides réels entre les profilés ; les autres couches sont des contours muraux logiques dont les portes et fenêtres sont déduites. Elles ne sont ajoutées ni aux IFC/STEP, ni à la BOM acier, ni à la liste de débit acier, ni au ZIP.
 
-Le prix matière est facultatif. Si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
+Le prix matière est facultatif. Pour l’acier, si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Pour le bois, il utilise l’hypothèse de 620 €/m³ HT. Les prix acier et bois sont indépendants. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
 
 ## Ce que le logiciel calcule réellement
 
@@ -23,6 +36,7 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 - lisses, montants et cadres d’ouverture avec identifiants stables ;
 - jusqu’à neuf candidats distincts : trois couples de profils Metsec publics × module symétrique, travées uniformes et zones d’ouvertures ;
 - longueur, épaisseur nominale, section, surface développée approximative, masse par `longueur × kg/m fabricant`, BOM, débit et coût matière pour chaque profilé acier ;
+- pour le bois : sections pleines, volume par `largeur × profondeur × longueur`, masse indicative par `volume × 420 kg/m³`, BOM, débit et coût par m³ ;
 - ordre de chargement continu `1…N` pour chaque pièce, dérivé de la priorité FRAMECAD selon le type de mur et étendu aux ouvertures multiples de gauche à droite ;
 - comparaison normalisée et Pareto sur les métriques disponibles ;
 - contrôles de collision, enveloppe, cohérence BOM/géométrie et traçabilité ;
@@ -65,7 +79,7 @@ npm test
 npm run experiments
 ```
 
-Les tests couvrent les sources, profils, masses, porte, collisions, IDs, budget, classement, vrai IFC, import STEP réel, export STEP relu par Open CASCADE, autres exports et blocage de la libération machine.
+Les tests couvrent les deux matériaux : sources, profils, volumes et masses, portes, collisions, IDs, budgets indépendants, classement, vrai IFC, import STEP réel, export STEP relu par Open CASCADE, autres exports et blocage de la libération machine. Les expériences génèrent trois cas acier et trois cas bois. Sans npm, utiliser `node tests/run-tests.js`, `node tests/timber-tests.js`, `node tests/step-integration.js` et `node scripts/generate-experiments.js`.
 
 Le contrat documenté Bloc 1 → Bloc 2 est `docs/Bloc1_Bloc2_Interface_Schema.md`. La même version est intégrée automatiquement au paquet ZIP téléchargé.
 

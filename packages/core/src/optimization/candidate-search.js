@@ -11,7 +11,8 @@
   }
 
   function evaluateCandidate(input, rules, option, index) {
-    const candidate = core.steelPanelGenerator.generateCandidate(input, rules, option, index + 1);
+    const generator = input.frameMaterial === 'TIMBER' ? core.timberPanelGenerator : core.steelPanelGenerator;
+    const candidate = generator.generateCandidate(input, rules, option, index + 1);
     candidate.validation = core.candidateRules.validateCandidate(candidate, rules);
     candidate.metrics = core.metrics.computeMetrics(candidate, rules);
     candidate.bom = core.metrics.aggregateBom(candidate);
