@@ -28,7 +28,9 @@
       if (member.bounds.min.x < -0.001 || member.bounds.max.x > candidate.wall.lengthMm + 0.001 || member.bounds.min.z < -0.001 || member.bounds.max.z > candidate.wall.heightMm + 0.001) {
         issues.push(issue('MEMBER_OUTSIDE_WALL', 'error', `${member.id} extends outside the wall envelope.`, member.id));
       }
-      if (!member.profile.sourceId || member.profile.sourceId !== (timber ? 'SCHILLIGER_TIMBER_C24' : 'METSEC_COMPONENTS_2026')) {
+      if (!member.profile.sourceId || (timber
+        ? !['SCHILLIGER_TIMBER_C24', 'AVELIS_EMAIL_2026_11_04'].includes(member.profile.sourceId)
+        : member.profile.sourceId !== 'METSEC_COMPONENTS_2026')) {
         issues.push(issue('UNTRACEABLE_PROFILE', 'error', `${member.id} has no approved source record.`, member.id));
       }
     });

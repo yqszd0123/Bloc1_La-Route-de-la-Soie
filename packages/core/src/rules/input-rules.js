@@ -18,14 +18,18 @@
     if (!['STEEL', 'TIMBER'].includes(input.frameMaterial)) issues.push(issue('MATERIAL_UNKNOWN', 'error', 'Choisissez une ossature acier ou bois.', 'frameMaterial'));
     if (new Set(input.openings.map((o) => o.id)).size !== input.openings.length) issues.push(issue('OPENING_IDS_DUPLICATED', 'error', 'Chaque ouverture doit avoir un identifiant unique.', 'openings'));
     if (input.frameMaterial === 'TIMBER') {
+      if (input.timberReferenceId && input.timberReferenceId !== core.timberReference.preset().id) issues.push(issue('TIMBER_REFERENCE_UNKNOWN', 'error', 'Référence bois inconnue.', 'timberReferenceId'));
       if (!rules.profileSets.length) issues.push(issue('TIMBER_SECTION_UNKNOWN', 'error', 'Section de bois inconnue.', 'timberSection'));
-      if (!core.ENGINEERING_DATA.referenceRules.timber.allowedStudSpacingsMm.includes(input.timberStudSpacingMm)) issues.push(issue('TIMBER_SPACING_UNKNOWN', 'error', 'Entraxe bois attendu : 400, 450, 500 ou 600 mm.', 'timberStudSpacingMm'));
+      if (!core.ENGINEERING_DATA.referenceRules.timber.allowedStudSpacingsMm.includes(input.timberStudSpacingMm)) issues.push(issue('TIMBER_SPACING_UNKNOWN', 'error', 'Entraxe bois attendu : 400, 450, 500, 600 ou 625 mm.', 'timberStudSpacingMm'));
+      if (input.timberReferenceId) issues.push(issue('AVELIS_DRAWING_PENDING', 'review', 'Référence Avelis : hauteur nette, niveau bas, positions et fonction des traverses basses non vérifiés. Toute géométrie saisie est une adaptation, pas la reproduction du dessin.', 'timberReferenceId', 'AVELIS_ELEVATION_COUP'));
       const width = Math.max(...rules.profileSets.map((set) => core.engineering.getProfile(set.studProfileId).sectionWidthMm));
       const { topPlateLayers, headerLayers } = rules.timberGeometry;
       if (input.wallLengthMm <= 2 * width || input.wallHeightMm <= (topPlateLayers + 1) * width) issues.push(issue('TIMBER_ENVELOPE_TOO_SMALL', 'error', 'Le mur doit contenir les lisses et montants de rive.'));
       input.openings.forEach((o) => {
+        if (o.widthMm < width) issues.push(issue('TIMBER_OPENING_TOO_NARROW', 'error', 'La baie doit permettre au moins un montant court de 45 mm.', 'openings'));
+        if (o.type === 'DOOR' && o.sillMm > 0 && o.sillMm < 2 * width) issues.push(issue('TIMBER_RAISED_BASE_CLEARANCE', 'error', 'La baie surélevée doit laisser au moins 90 mm pour la lisse et la traverse basse.', 'openings'));
         if (o.xMm < 3 * width || o.xMm + o.widthMm > input.wallLengthMm - 3 * width) issues.push(issue('TIMBER_FRAME_EDGE', 'error', 'Réservez 135 mm à chaque rive pour les montants de ce modèle bois.', 'openings'));
-        if (o.sillMm + o.heightMm > input.wallHeightMm - (topPlateLayers + headerLayers) * width) issues.push(issue('TIMBER_HEADER_CLEARANCE', 'error', 'Ce modèle exige 180 mm au-dessus de l’ouverture pour deux traverses et deux lisses hautes.', 'openings'));
+        if (o.sillMm + o.heightMm > input.wallHeightMm - (topPlateLayers + headerLayers) * width) issues.push(issue('TIMBER_HEADER_CLEARANCE', 'error', 'Ce modèle exige ' + (topPlateLayers + headerLayers) * width + ' mm au-dessus de l’ouverture pour ' + headerLayers + ' traverses et ' + topPlateLayers + ' lisse(s) haute(s).', 'openings'));
         if (o.type !== 'DOOR' && o.sillMm < 2 * width) issues.push(issue('TIMBER_SILL_CLEARANCE', 'error', 'Réservez au moins 90 mm sous l’ouverture pour la lisse et la traverse d’allège.', 'openings'));
       });
       for (let i = 1; i < input.openings.length; i += 1) {
@@ -60,7 +64,7 @@
       if (opening.sillMm + opening.heightMm >= input.wallHeightMm - 0.001) {
         issues.push(issue('OPENING_HEAD_ZONE_REQUIRED', 'error', `${opening.id} reaches the panel top; this framed-panel workflow requires a positive zone above every opening.`, `openings[${index}].heightMm`));
       }
-      if (opening.type === 'DOOR' && opening.sillMm !== 0) {
+      if (opening.type === 'DOOR' && opening.sillMm !== 0 && !(input.frameMaterial === 'TIMBER' && input.timberReferenceId)) {
         issues.push(issue('DOOR_SILL_NOT_ZERO', 'error', `${opening.id}: a door opening must start at wall base in this panel workflow.`, `openings[${index}].sillMm`));
       }
       if (opening.type === 'DOOR' && opening.widthMm < core.ENGINEERING_DATA.referenceRules.doorNominalWidthMm.value) {

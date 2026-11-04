@@ -11,7 +11,7 @@
   }
 
   function timberSequence(candidate) {
-    const groups = ['bottom_plate', 'boundary_stud', 'king_stud', 'jack_stud', 'header', 'sill', 'common_stud', 'cripple_stud', 'top_plate'];
+    const groups = ['bottom_plate', 'boundary_stud', 'king_stud', 'jack_stud', 'header', 'sill', 'opening_base_member', 'common_stud', 'cripple_stud', 'top_plate'];
     return candidate.members.slice().sort((a, b) => groups.indexOf(a.role) - groups.indexOf(b.role) || byPosition(a, b))
       .map((member, i) => ({
         order: i + 1, memberId: member.id, role: member.role, label: member.label, openingId: member.openingId,

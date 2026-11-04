@@ -171,6 +171,7 @@
   }
 
   function buildPartsSchedule(candidate) {
+    if (candidate.frameMaterial === 'TIMBER') return core.timberWallAssembly.buildPartsSchedule(candidate);
     const reference = core.ENGINEERING_DATA.catalog.prototypeLayers;
     if (!(reference && Array.isArray(reference.layers))) throw new Error('Le catalogue des couches de référence n’est pas chargé.');
     const cavityGeometry = cavityRectangles(candidate);
@@ -229,6 +230,7 @@
   }
 
   function build(candidate, stageId) {
+    if (candidate && candidate.frameMaterial === 'TIMBER') return core.timberWallAssembly.build(candidate, stageId);
     if (!(candidate && candidate.wall && Array.isArray(candidate.members))) {
       throw new Error('Un candidat valide est requis pour la maquette en couches.');
     }
@@ -289,6 +291,7 @@
       { key: 'id', label: 'part_id' }, { key: 'layerId', label: 'layer_id' },
       { key: 'layerLabel', label: 'layer_label' }, { key: 'referenceProduct', label: 'reference_product' },
       { key: 'geometryType', label: 'geometry_type' }, { key: 'xMm', label: 'x_mm' }, { key: 'zMm', label: 'z_mm' },
+      ...(model.frameMaterial === 'TIMBER' ? [{key:'yMm',label:'y_mm'},{key:'openingId',label:'opening_id'}] : []),
       { key: 'widthMm', label: 'width_mm' }, { key: 'heightMm', label: 'height_mm' }, { key: 'thicknessMm', label: 'thickness_mm' },
       { key: 'grossAreaM2', label: 'gross_area_m2' }, { key: 'cutoutAreaM2', label: 'cutout_area_m2' },
       { key: 'netAreaM2', label: 'net_area_m2' }, { key: 'volumeM3', label: 'volume_m3' },

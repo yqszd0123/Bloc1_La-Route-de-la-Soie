@@ -29,7 +29,7 @@
       profileSets: core.math.deepClone(selectedCatalog.compatibleProfileSets.filter((set) => !timber || !input || input.timberSection === 'ALL' || set.id === input.timberSection)),
       studSpacingMm: timber ? (input && input.timberStudSpacingMm || timberRules.defaultStudSpacingMm) : data.referenceRules.studSpacingMm.value,
       studSpacingStatus: timber ? timberRules.status : data.referenceRules.studSpacingMm.status,
-      timberGeometry: timber ? { topPlateLayers: timberRules.topPlateLayers, headerLayers: timberRules.headerLayers } : null,
+      timberGeometry: timber ? { topPlateLayers: input && input.timberReferenceId ? timberRules.referencePreset.topPlateLayers : timberRules.topPlateLayers, headerLayers: timberRules.headerLayers } : null,
       gridStrategies: Object.keys(core.GRID_STRATEGIES),
       budgetPrice: core.math.deepClone(price),
       machineCapabilities: null,

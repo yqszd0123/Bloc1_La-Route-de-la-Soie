@@ -139,4 +139,8 @@ tbody tr.is-selected { color: var(--primary-dark); background: #dcebe7; font-wei
 body[data-material="TIMBER"] .material-toolbar { background: #fbf0e2; border-color: #d9b78f; }
 body[data-material="TIMBER"] .material-toolbar p { color: #76502c; }
 [hidden] { display: none !important; }
+body[data-material="TIMBER"] .prototype-layer-item { grid-template-columns: 16px 20px minmax(0,1fr); align-items: start; }
+body[data-material="TIMBER"] .prototype-layer-item input { margin: 2px 0 0; width: 16px; height: 16px; }
+body[data-material="TIMBER"] .prototype-layer-item div { min-width: 0; }
+body[data-material="TIMBER"] [data-timber-view].is-active { background: var(--primary); color: white; }
 @media (max-width: 720px) { .material-toolbar { margin: 12px; padding: 16px; gap: 14px; } .material-toolbar label { flex: 1 1 130px; min-width: 0; } }

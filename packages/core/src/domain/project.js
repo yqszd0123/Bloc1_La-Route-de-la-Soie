@@ -39,7 +39,8 @@
     }
     if (booleanValue(raw.doorEnabled, defaults.doorEnabled)) {
       openings.push(openingFromRaw({
-        id: 'DOOR-01', type: 'DOOR', xMm: raw.doorXMm, sillMm: 0,
+        id: 'DOOR-01', type: 'DOOR', xMm: raw.doorXMm,
+        sillMm: raw.frameMaterial === 'TIMBER' && raw.timberReferenceId ? raw.timberDoorBaseMm || 0 : 0,
         widthMm: raw.doorWidthMm, heightMm: raw.doorHeightMm,
         source: raw.sourceMode === 'IFC' ? 'IFC' : 'MANUAL_INPUT'
       }, openings.length));
@@ -56,6 +57,8 @@
       : openingsFromForm(merged, defaults);
     return {
       frameMaterial: String(raw.frameMaterial || defaults.frameMaterial).toUpperCase(),
+      ...(String(raw.frameMaterial || defaults.frameMaterial).toUpperCase() === 'TIMBER'
+        ? { timberReferenceId: raw.timberReferenceId || null, timberDoorBaseMm: numberValue(raw.timberDoorBaseMm, 0) } : {}),
       timberSection: String(raw.timberSection || defaults.timberSection),
       timberStudSpacingMm: numberValue(raw.timberStudSpacingMm, defaults.timberStudSpacingMm),
       sourceMode: String(raw.sourceMode || defaults.sourceMode).toUpperCase(),

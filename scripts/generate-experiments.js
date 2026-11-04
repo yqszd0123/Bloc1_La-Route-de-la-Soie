@@ -21,6 +21,7 @@ const cases = ['STEEL', 'TIMBER'].flatMap((frameMaterial) => core.EXPERIMENT_PRE
   id: frameMaterial === 'STEEL' ? preset.id : `${preset.id}-timber`,
   input: { ...preset.input, frameMaterial }
 })));
+cases.push({id:'avelis-reference-timber',label:core.timberReference.preset().label,input:{...core.timberReference.preset().input,frameMaterial:'TIMBER',timberReferenceId:core.timberReference.preset().id}});
 cases.forEach((preset) => {
   const input = { ...core.DEFAULT_INPUT, ...preset.input, projectId: 'AVELIS-IAM-2026', wallId: preset.id.toUpperCase(), version: core.VERSION };
   const result = core.runWorkflow(input);

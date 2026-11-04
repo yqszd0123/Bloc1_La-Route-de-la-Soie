@@ -432,6 +432,88 @@
         "budgetEurPerM3": 620
       },
       "limitation": "Conceptual ordering and 620 EUR/m³ scenario; no market quote, structural design or machine sequence."
+    },
+    "AVELIS_EMAIL_2026_11_04": {
+      "title": "Paramètres Avelis du 4 novembre 2026 — transcription fournie par l’équipe",
+      "status": "USER_SUPPLIED_ENTERPRISE_PARAMETERS",
+      "rawData": {
+        "timberSectionsMm": [
+          [
+            45,
+            145
+          ],
+          [
+            45,
+            160
+          ]
+        ],
+        "referenceStudSpacingMm": 625,
+        "referenceInsulationWidthMm": 580,
+        "referencePlasterboardWidthMm": 1250,
+        "futureInsulationMethod": "MACHINE_SPRAYING_UNCONFIRMED",
+        "finishedFrameToleranceText": "+0/-2",
+        "toleranceUnit": null,
+        "toleranceApplicableDimensions": null
+      },
+      "limitation": "Classe mécanique, tolérance et procédés à confirmer. Le message original n’est pas publié."
+    },
+    "AVELIS_ELEVATION_COUP": {
+      "title": "Avelis ÉLÉVATION / COUPE — dessin fourni, original conservé hors dépôt",
+      "status": "PARTIALLY_READABLE_PRIVATE_DRAWING",
+      "rawData": {
+        "wallWidthMm": 2720,
+        "wallHeightMm": 2963,
+        "boundaryStudLengthMm": 2873,
+        "outerPlateWidthMm": 45,
+        "baseSectionDepthMm": 145,
+        "doorClearHeightMm": null,
+        "openingWidthMm": null,
+        "openingXMm": null,
+        "openingBaseMm": null,
+        "lowerMemberFunction": null
+      },
+      "limitation": "Image 734×558 : 2873 + 45 + 45 = 2963. Longueur du montant C-2045 distincte de la hauteur nette. Dimensions de baie et fonction des traverses basses à confirmer sur original lisible. Aucune reproduction certifiée."
+    },
+    "AVELIS_EXPLODED_COMPONENTS": {
+      "title": "Schéma Avelis : Bardage ventilé, Pare-pluie rigide, Isolant biosourcé, Ossature bois, Menuiseries sur mesure",
+      "status": "USER_SUPPLIED_COMPONENT_TAXONOMY",
+      "limitation": "Confirme cinq familles, pas les épaisseurs, marques, performances ni assemblages. Image originale non publiée."
+    },
+    "PNNL_OPENING_FRAMING": {
+      "title": "US DOE / PNNL — Advanced Framing: Minimal Framing at Doors and Windows",
+      "url": "https://basc.pnnl.gov/resource-guides/advanced-framing-minimal-framing-doors-and-windows",
+      "status": "PROFESSIONAL_CONSTRUCTION_REFERENCE",
+      "limitation": "King/jack/header, sill for windows and grid-aligned cripples; not French project structural certification. Header and fasteners require sizing."
+    },
+    "STEICO_UNIVERSAL_BLACK": {
+      "title": "STEICO universal black — fiche technique, 22 mm, format utile 2210 × 585 mm",
+      "url": "https://www.steico.com/fileadmin/user_upload/importer/downloads/produktinformationen_holzfaser-dmmstoffe/STEICO_technical-data-sheet_universal-black_FRA_fr_i.pdf",
+      "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+      "rawData": {
+        "thicknessMm": 22,
+        "netLengthMm": 2210,
+        "netWidthMm": 585,
+        "maxStudSpacingMm": 625
+      },
+      "limitation": "Le produit 22 mm ne valide pas l’insufflation. Calepinage, appuis, fixation et produit réel à confirmer."
+    },
+    "SILVERWOOD_VENTILATION": {
+      "title": "Silverwood — guide technique 2023, lame d’air nominale minimale 20 mm",
+      "url": "https://www.silverwood.fr/sites/default/files/2023-11/2023-11-Silverwood-PagesGuideTechnique.pdf",
+      "status": "REFERENCE_DETAIL_NOT_CONFIRMED_BY_AVELIS",
+      "rawData": {
+        "minimumVentilationCavityMm": 20
+      },
+      "limitation": "20 mm est une référence minimale de visualisation, pas la validation du système Avelis, des tasseaux ni des fixations."
+    },
+    "SILVERWOOD_DOUGLAS_FOREZ": {
+      "title": "Silverwood / Groupe ISB Douglas Forez — 21 × 132 mm",
+      "url": "https://www.groupe-isb.fr/product/preserves-naturels-essence-douglas/",
+      "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+      "rawData": {
+        "thicknessMm": 21
+      },
+      "limitation": "Épaisseur de référence uniquement ; calepinage, profil de lame, tasseaux et fixations non modélisés."
     }
   },
   "catalog": {
@@ -638,6 +720,18 @@
           "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
           "sourceId": "SCHILLIGER_TIMBER_C24",
           "densitySourceId": "SODRA_C24_DENSITY_2025"
+        },
+        {
+          "id": "TIMBER-45-160",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "45 × 160 mm — dimension Avelis, classe C24 de référence à confirmer",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 160,
+          "massKgPerM": 3.024,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "AVELIS_EMAIL_2026_11_04",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
         }
       ],
       "compatibleProfileSets": [
@@ -698,7 +792,8 @@
         400,
         450,
         500,
-        600
+        600,
+        625
       ],
       "defaultStudSpacingMm": 600,
       "topPlateLayers": 2,
@@ -716,6 +811,77 @@
         "method": "Explicit demonstration scenario; replace with supplier quotation.",
         "boundary": "Timber only; excludes cuts, connections, labour, taxes and delivery.",
         "limitation": "620 EUR/m³ is a POC assumption, not a verified current price."
+      },
+      "doorProfileId": "TIMBER-45-160",
+      "openingPrinciplesSourceId": "PNNL_OPENING_FRAMING",
+      "referencePreset": {
+        "id": "AVELIS_ELEVATION_DOOR",
+        "label": "Référence Avelis — mur bois avec porte",
+        "sourceId": "AVELIS_ELEVATION_COUP",
+        "verificationStatus": "EDITABLE_DRAFT_NOT_EXACT_REPRODUCTION",
+        "input": {
+          "wallLengthMm": 2720,
+          "wallHeightMm": 2963,
+          "wallThicknessMm": 145,
+          "timberSection": "TIMBER-45-145",
+          "timberStudSpacingMm": 625,
+          "windowEnabled": false,
+          "doorEnabled": true,
+          "doorWidthMm": 1610,
+          "doorHeightMm": 2000,
+          "doorXMm": 565,
+          "timberDoorBaseMm": 302
+        },
+        "unresolved": [
+          "largeur de baie",
+          "hauteur nette de baie",
+          "position X",
+          "niveau bas de baie",
+          "fonction et implantation des éléments bas",
+          "implantation complète des montants"
+        ],
+        "defaultAssumptions": {
+          "doorWidthMm": "1610 : valeur de travail inspirée du repère A-1610, largeur nette non certifiée",
+          "doorHeightMm": "2000 : hauteur nette provisoire autorisée par l’utilisateur, non cotée comme telle sur le dessin",
+          "doorXMm": "565 : position de travail non vérifiée",
+          "timberDoorBaseMm": "302 : hypothèse de montage 45 + 212 + 45 ; fonction de la traverse basse non vérifiée",
+          "grid": "625 mm : référence du mail, pas reproduction des positions exactes du dessin",
+          "topPlateLayers": "1 : lisse haute de 45 mm, cohérente avec la chaîne 2873+45+45"
+        },
+        "topPlateLayers": 1
+      },
+      "wallAssembly": {
+        "taxonomySourceId": "AVELIS_EXPLODED_COMPONENTS",
+        "rainBarrier": {
+          "thicknessMm": 22,
+          "panelWidthMm": 585,
+          "panelHeightMm": 2210,
+          "sourceId": "STEICO_UNIVERSAL_BLACK",
+          "referenceProduct": "STEICO universal black 22 — référence à confirmer"
+        },
+        "cladding": {
+          "thicknessMm": 21,
+          "sourceId": "SILVERWOOD_DOUGLAS_FOREZ",
+          "referenceProduct": "Douglas Forez 21 mm — référence à confirmer"
+        },
+        "cavity": {
+          "depthMm": 20,
+          "sourceId": "SILVERWOOD_VENTILATION",
+          "status": "REFERENCE_MINIMUM_NOT_AVELIS_SPECIFICATION"
+        },
+        "insulation": {
+          "sourceId": "AVELIS_EMAIL_2026_11_04",
+          "referenceProduct": "Isolant biosourcé — produit à confirmer",
+          "method": "PRE_CUT_CAVITY_FILL",
+          "futureMethod": "MACHINE_SPRAYING_PENDING_PRODUCT_AND_PROCESS_VALIDATION",
+          "referenceWidthMm": 580
+        },
+        "joinery": {
+          "sourceId": "AVELIS_EXPLODED_COMPONENTS",
+          "geometryStatus": "OPENING_ENVELOPE_ONLY",
+          "productThicknessMm": null,
+          "manufacturerData": null
+        }
       }
     }
   },

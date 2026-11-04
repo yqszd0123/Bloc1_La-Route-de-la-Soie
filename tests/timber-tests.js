@@ -129,7 +129,7 @@ test('timber layered model follows frame depth and leaves the manufacturing mode
   const c = core.runWorkflow(base).recommended, before = JSON.stringify(c);
   const model = core.prototypeLayers.build(c, 'COMPLETE');
   assert.equal(model.layers.find((layer) => layer.id === 'INSULATION').thicknessMm, 145);
-  assert.equal(model.layers[0].label, 'Ossature bois générée');
+  assert.equal(model.layers[0].label, 'Ossature bois');
   assert.equal(JSON.stringify(c), before);
   assert.match(core.prototypeLayers.partsCsv(model), /net_area_m2/);
 });

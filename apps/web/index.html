@@ -28,7 +28,7 @@
     <div><span class="eyebrow">SYSTÈME CONSTRUCTIF</span><p id="material-mode-note">Acier formé à froid · profils C / rails U de référence</p></div>
     <label>Ossature<select id="frame-material" name="frameMaterial" form="configuration-form"><option value="STEEL">Acier</option><option value="TIMBER">Bois C24</option></select></label>
     <label data-material-only="TIMBER" hidden>Section de bois<select name="timberSection" form="configuration-form"><option value="TIMBER-45-145">45 × 145 mm</option><option value="TIMBER-45-120">45 × 120 mm</option><option value="TIMBER-45-95">45 × 95 mm</option><option value="ALL">Comparer les 3 sections</option></select></label>
-    <label data-material-only="TIMBER" hidden>Entraxe cible<select name="timberStudSpacingMm" form="configuration-form"><option value="600">600 mm</option><option value="500">500 mm</option><option value="450">450 mm</option><option value="400">400 mm</option></select></label>
+    <label data-material-only="TIMBER" hidden>Entraxe cible<select name="timberStudSpacingMm" form="configuration-form"><option value="625">625 mm · référence Avelis</option><option value="600">600 mm</option><option value="500">500 mm</option><option value="450">450 mm</option><option value="400">400 mm</option></select></label>
   </section>
 
   <nav class="app-tabs" aria-label="Étapes du produit">
@@ -116,7 +116,9 @@
 
         <article class="results-card form-card">
           <div id="preset-buttons" class="preset-grid" aria-label="Scénarios d’essai"></div>
+          <div id="timber-reference-note" class="message message--warning" hidden></div>
           <form id="configuration-form" novalidate>
+            <input type="hidden" name="timberReferenceId" value="">
             <fieldset>
               <legend>Identité et enveloppe</legend>
               <div class="form-grid form-grid--three">
@@ -150,6 +152,7 @@
                   <label>Largeur nominale <span>mm</span><input name="doorWidthMm" type="number" min="1" step="1"></label>
                   <label>Hauteur <span>mm</span><input name="doorHeightMm" type="number" min="1" step="1"></label>
                   <label>Position X <span>mm</span><input name="doorXMm" type="number" min="0" step="1"></label>
+                  <label id="timber-door-base-field" hidden>Niveau bas de baie <span>mm</span><input name="timberDoorBaseMm" type="number" min="0" step="1" value="0"></label>
                 </div>
                 <p class="field-hint">Référence conditionnelle française : 900 mm nominal pour certaines portes accessibles. L’applicabilité doit être confirmée selon le projet.</p>
               </div>
@@ -211,7 +214,7 @@
       <section class="metrics">
         <article><span>Temps de calcul</span><strong id="metric-time">—</strong><small>entrée → paquet</small></article>
         <article><span id="metric-material-label">Masse acier</span><strong id="metric-mass">—</strong><small id="metric-material-note">kg calculés par kg/m</small></article>
-        <article><span>Budget matière</span><strong id="metric-cost">—</strong><small id="metric-cost-basis">HT · scénario actif</small></article>
+        <article><span id="metric-budget-label">Budget matière</span><strong id="metric-cost">—</strong><small id="metric-cost-basis">HT · scénario actif</small></article>
         <article><span>Composants</span><strong id="metric-components">—</strong><small>IDs stables</small></article>
         <article><span>Longueur profilés</span><strong id="metric-length">—</strong><small>m cumulés</small></article>
         <article><span>Contrôles</span><strong id="metric-rules">—</strong><small>géométrie + traçabilité</small></article>
@@ -231,15 +234,22 @@
         <div><span class="eyebrow">Maquette pédagogique · même mur sélectionné</span><h2>De l’ossature au mur assemblé</h2></div>
         <span class="pill pill--demo">Pièces de maquette calculées</span>
       </div>
-      <div class="scope-warning"><strong>Portée de la maquette :</strong> les dimensions, épaisseurs de référence, surfaces et volumes sont calculés dans un CSV séparé. Ces pièces ne modifient ni l’IFC/STEP, ni la BOM de l’ossature, ni la liste de débit, ni le paquet ZIP de fabrication.</div>
+      <div class="scope-warning" data-material-only="STEEL"><strong>Portée de la maquette :</strong> les dimensions, épaisseurs de référence, surfaces et volumes sont calculés dans un CSV séparé. Ces pièces ne modifient ni l’IFC/STEP, ni la BOM de l’ossature, ni la liste de débit, ni le paquet ZIP de fabrication.</div>
 
-      <div class="prototype-stage-grid" role="group" aria-label="Degré d’achèvement de la maquette">
+      <div class="prototype-stage-grid" data-material-only="STEEL" role="group" aria-label="Degré d’achèvement de la maquette">
         <button class="prototype-stage-button" data-stage="FRAME" type="button" aria-pressed="false"><b>1</b><span><strong>Ossature nue</strong><small>Ossature et cadres d’ouverture</small></span></button>
         <button class="prototype-stage-button" data-stage="INSULATED" type="button" aria-pressed="false"><b>2</b><span><strong>Isolation</strong><small>Échantillon placé entre les montants</small></span></button>
         <button class="prototype-stage-button" data-stage="LINED" type="button" aria-pressed="false"><b>3</b><span><strong>Parois</strong><small>Panneaux témoins intérieur et extérieur</small></span></button>
         <button class="prototype-stage-button is-active" data-stage="COMPLETE" type="button" aria-pressed="true"><b>4</b><span><strong>Mur assemblé</strong><small>Finitions de démonstration ajoutées</small></span></button>
       </div>
 
+      <div class="prototype-stage-grid" data-material-only="TIMBER" hidden aria-label="Vues du mur bois">
+        <button type="button" class="button button--secondary" data-timber-view="COMPLETE">Vue complète</button>
+        <button type="button" class="button button--secondary" data-timber-view="EXPLODED">Vue éclatée</button>
+        <button type="button" class="button button--secondary" data-timber-view="FRAME">Vue structurelle</button>
+        <button type="button" class="button button--secondary" data-timber-view="COMPONENTS">Vue par composants</button>
+      </div>
+      <div class="scope-warning" data-material-only="TIMBER" hidden>Les cinq familles suivent le schéma Avelis. Épaisseurs de référence : pare-pluie STEICO 22 mm, bardage Douglas 21 mm, lame d’air minimale 20 mm — composition réelle, tasseaux, appuis et fixations à confirmer. Les menuiseries représentent les réservations, sans profil fabricant inventé.</div>
       <div class="prototype-layout">
         <div class="viewer-card prototype-viewer-card">
           <canvas id="prototype-viewer" width="1200" height="650" aria-label="Vue éclatée de la maquette pédagogique en couches"></canvas>
@@ -252,13 +262,13 @@
         <aside class="results-card prototype-guide">
           <span class="eyebrow">Couches visibles à cette étape</span>
           <h3>Lecture de la maquette</h3>
-          <p>Les portes et fenêtres restent vides dans chaque couche. Comme sur une vue éclatée constructive, les repères relient chaque face à son nom et le curseur montre l’ordre d’assemblage.</p>
-          <div id="prototype-layer-list" class="prototype-layer-list"></div>
-          <div class="prototype-note"><strong>Produits publics de référence</strong><span>L’isolant suit automatiquement la profondeur du montant choisi. Les références et épaisseurs servent au calcul de maquette mais restent à confirmer avec Avelis, le FabLab et le Bloc 2.</span></div>
+          <p data-material-only="STEEL">Les portes et fenêtres restent vides dans chaque couche. Comme sur une vue éclatée constructive, les repères relient chaque face à son nom et le curseur montre l’ordre d’assemblage.</p>
+          <p data-material-only="TIMBER" hidden>Activez chaque famille séparément. L’isolant remplit les cavités ; les menuiseries occupent leurs baies. Les matériaux sont inclus dans un BOM et un JSON dédiés du ZIP, séparés du débit bois.</p><div id="prototype-layer-list" class="prototype-layer-list"></div>
+          <div class="prototype-note" data-material-only="STEEL"><strong>Produits publics de référence</strong><span>L’isolant suit automatiquement la profondeur du montant choisi. Les références et épaisseurs servent au calcul de maquette mais restent à confirmer avec Avelis, le FabLab et le Bloc 2.</span></div>
         </aside>
       </div>
       <section class="results-card">
-        <div class="panel-heading"><div><span class="eyebrow">Isolation découpée par cavité · autres couches avec portes/fenêtres déduites</span><h2>Pièces des couches</h2></div><div class="toolbar-actions"><span id="prototype-parts-count" class="pill">—</span><button id="download-prototype-parts" class="button button--secondary" disabled>Pièces couches CSV</button></div></div>
+        <div class="panel-heading"><div><span class="eyebrow">Isolation découpée par cavité · autres couches avec portes/fenêtres déduites</span><h2>Pièces des couches</h2></div><div class="toolbar-actions"><span id="prototype-parts-count" class="pill">—</span><button id="download-materials" class="button button--secondary" data-material-only="TIMBER" hidden disabled>BOM matériaux CSV</button><button id="download-prototype-parts" class="button button--secondary" disabled>Pièces couches CSV</button></div></div>
         <div id="prototype-parts-metrics" class="prototype-parts-metrics"></div>
         <div class="table-wrap"><table><thead><tr><th>ID</th><th>Couche / référence</th><th>Géométrie</th><th>Dimensions L × H × E</th><th>Ouvertures</th><th>Surface nette</th><th>Volume</th></tr></thead><tbody id="prototype-parts-body"></tbody></table></div>
         <p class="source-note">Les panneaux sont des contours logiques de maquette. Le calepinage selon formats commerciaux, les joints, fixations et chutes restent à définir.</p>
@@ -292,6 +302,7 @@
   <script src="../../packages/core/src/utils/math.js"></script>
   <script src="../../packages/core/src/domain/engineering.js"></script>
   <script src="../../packages/core/src/domain/project.js"></script>
+  <script src="../../packages/core/src/domain/timber-reference.js"></script>
   <script src="../../packages/core/src/rules/input-rules.js"></script>
   <script src="../../packages/core/src/generation/member-factory.js"></script>
   <script src="../../packages/core/src/generation/frame-layout.js"></script>
@@ -313,6 +324,7 @@
   <script src="../../packages/core/src/export/zip.js"></script>
   <script src="../../packages/core/src/export/package-builder.js"></script>
   <script src="../../packages/core/src/prototype/layered-wall-model.js"></script>
+  <script src="../../packages/core/src/prototype/timber-wall-assembly.js"></script>
   <script src="../../packages/core/src/core.js"></script>
   <script src="../../third_party/occt-import-js/dist/occt-import-js.js"></script>
   <script src="src/state.js"></script>

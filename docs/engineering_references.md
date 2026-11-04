@@ -126,3 +126,47 @@ Catalogue de profils Avelis, cas de charges, conditions d’appui et de contreve
 - Open CASCADE, entités STEP de forme : https://dev.opencascade.org/doc/occt-7.4.0/refman/html/package_rwstepshape.html
 
 Les URLs, dates, chapitres et données brutes supplémentaires sont conservés dans le JSON autoritatif.
+
+
+## Extension bois Avelis — 4 novembre 2026
+
+L’original ÉLÉVATION / COUPE est privé et conservé hors dépôt. L’image fournie
+(734 × 558) permet de vérifier 2720 mm de large, 2963 mm de haut, un montant
+A-2873 et deux épaisseurs de 45 mm (`2873 + 45 + 45 = 2963`), ainsi que 145 mm
+de profondeur principale. Le repère C-2045 est une longueur de pièce ; il ne
+prouve pas la hauteur nette de porte. Aucune cote nette officielle n’est déduite
+par mesure de pixels.
+
+À la demande de l’utilisateur, le cas propose des valeurs de travail modifiables :
+baie 1610 × 2000 mm, X 565 mm, niveau bas 302 mm. Les 2000 mm sont une hypothèse
+explicite, les 1610 mm s’inspirent du repère A-1610 sans certifier la baie nette,
+X 565 mm reste à contrôler et 302 mm correspond à l’hypothèse `45 + 212 + 45`.
+La traverse basse s’appelle `opening_base_member`, sans lui attribuer un rôle
+structurel, de seuil ou de transport non confirmé. Les positions de trame et les
+pièces hautes constituent une reconstruction paramétrique, pas une copie du dessin.
+Tous ces points sont enregistrés dans le JSON exporté et signalés dans l’interface.
+
+Le message d’équipe du 4 novembre confirme les sections 45 × 145 / 45 × 160 mm,
+l’entraxe de référence 625 mm, la largeur d’isolant 580 mm, la largeur de plaque
+1250 mm, le projet futur de projection d’isolant et le texte de tolérance +0/-2.
+Unité et périmètre de cette tolérance non confirmés : `toleranceMm` reste null.
+La classe C24 et la masse volumique 420 kg/m³ restent des références publiques,
+pas des propriétés certifiées du bois Avelis.
+
+Les principes de king/jack/header, traverse d’allège réservée à la fenêtre et
+montants courts sont documentés par [PNNL / US DOE](https://basc.pnnl.gov/resource-guides/advanced-framing-minimal-framing-doors-and-windows).
+Ils servent à la cohérence géométrique ; les linteaux et assemblages ne sont pas
+calculés pour les charges du projet.
+
+Les cinq familles proviennent du schéma Avelis fourni. Les produits et dimensions
+suivants sont des **références indépendantes non approuvées par Avelis** :
+
+- [STEICO universal black](https://www.steico.com/fileadmin/user_upload/importer/downloads/produktinformationen_holzfaser-dmmstoffe/STEICO_technical-data-sheet_universal-black_FRA_fr_i.pdf) : pare-pluie rigide en fibre de bois 22 mm, format utile 2210 × 585 mm. Les pièces sont calculées sur ce format ; calepinage, appuis, jonctions et fixations sont indicatifs. Le 22 mm ne valide pas l’insufflation.
+- [Groupe ISB / Silverwood Douglas Forez](https://www.groupe-isb.fr/product/preserves-naturels-essence-douglas/) : bardage de référence 21 mm. Le modèle calcule la surface nette, pas un nombre de lames ou leurs usinages.
+- [Guide Silverwood](https://www.silverwood.fr/sites/default/files/2023-11/2023-11-Silverwood-PagesGuideTechnique.pdf) : lame d’air nominale minimale de référence 20 mm. Les tasseaux et fixations ne sont pas dimensionnés ni ajoutés au débit bois.
+
+L’isolant suit les cavités réelles et la profondeur du bois principal ; le système
+ne force pas chaque vide à 580 mm. Son objet `installation` réserve une extension
+pour projection mécanisée, actuellement non validée. Les menuiseries sont des
+composants individuels liés aux IDs d’ouverture, sans produit fabricant choisi.
+Leur volume reste null car aucune épaisseur fiable n’a été fournie.

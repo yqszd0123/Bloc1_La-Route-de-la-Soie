@@ -10,6 +10,7 @@ const sourceFiles = [
   'packages/core/src/utils/math.js',
   'packages/core/src/domain/engineering.js',
   'packages/core/src/domain/project.js',
+  'packages/core/src/domain/timber-reference.js',
   'packages/core/src/rules/input-rules.js',
   'packages/core/src/generation/member-factory.js',
   'packages/core/src/generation/frame-layout.js',
@@ -31,6 +32,7 @@ const sourceFiles = [
   'packages/core/src/export/zip.js',
   'packages/core/src/export/package-builder.js',
   'packages/core/src/prototype/layered-wall-model.js',
+  'packages/core/src/prototype/timber-wall-assembly.js',
   'packages/core/src/core.js'
 ];
 

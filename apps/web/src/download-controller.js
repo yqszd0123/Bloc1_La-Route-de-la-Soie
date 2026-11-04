@@ -22,7 +22,7 @@
   }
 
   function enable(enabled) {
-    ['download-design', 'download-step', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-prototype-parts', 'download-package-2']
+    ['download-design', 'download-step', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-materials', 'download-prototype-parts', 'download-package-2']
       .forEach((id) => { document.getElementById(id).disabled = !enabled; });
   }
 
@@ -35,7 +35,7 @@
   function bind() {
     document.getElementById('download-design').addEventListener('click', () => {
       const { result, candidate } = current();
-      download(`${result.input.wallId}_${candidate.frameMaterial}_${candidate.id}.json`, JSON.stringify({ project: result.project, candidate }, null, 2), 'application/json');
+      download(`${result.input.wallId}_${candidate.frameMaterial}_${candidate.id}.json`, JSON.stringify({ project: result.project, candidate, ...(candidate.frameMaterial === 'TIMBER' ? {wallAssembly:core.timberWallAssembly.build(candidate)} : {}) }, null, 2), 'application/json');
     });
     document.getElementById('download-stl').addEventListener('click', () => {
       const { result, candidate } = current();
@@ -62,6 +62,10 @@
       const { result, candidate } = current();
       const model = core.prototypeLayers.build(candidate, 'COMPLETE');
       download(`${result.input.wallId}_${candidate.frameMaterial}_${candidate.id}_LAYER_PARTS.csv`, core.prototypeLayers.partsCsv(model), 'text/csv;charset=utf-8');
+    });
+    document.getElementById('download-materials').addEventListener('click', () => {
+      const {result,candidate} = current();
+      download(result.input.wallId + '_TIMBER_MATERIALS_BOM.csv', core.timberWallAssembly.bomCsv(candidate), 'text/csv;charset=utf-8');
     });
     document.getElementById('download-package').addEventListener('click', downloadPackage);
     document.getElementById('download-package-2').addEventListener('click', downloadPackage);

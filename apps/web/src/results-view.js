@@ -35,7 +35,7 @@
       row.innerHTML = cells([
         '<span class="rank-badge">' + candidate.rank + '</span>',
         escape(candidate.id) + (candidate.paretoOptimal ? '<span class="pareto">PARETO</span>' : ''),
-        escape(timber(candidate) ? candidate.option.studProfileId : candidate.option.studProfileId + ' + ' + candidate.option.trackProfileId),
+        escape(timber(candidate) ? [...new Set(candidate.members.map((m)=>m.profile.id))].join(' + ') : candidate.option.studProfileId + ' + ' + candidate.option.trackProfileId),
         '<strong>' + escape(candidate.option.gridStrategyLabel) + '</strong><br><small>' + fixed(candidate.layout.minimumBayMm, 0) + '–' + fixed(candidate.layout.maximumBayMm, 0) + ' mm réels</small>',
         quantity, candidate.metrics.componentCount, candidate.metrics.uniqueLengthCount,
         fixed(candidate.metrics.materialCostEstimateEurExVat, 2) + ' €', fixed(candidate.score, 2)
@@ -55,6 +55,11 @@
         escape(row.manufacturerReference) + ' · ' + row.cutLengthMm + ' mm<br>' +
         fixed(row.totalLengthM, 3) + ' m · ' + fixed(row.totalMassKg, 3) + ' kg' +
         (timber(candidate) ? ' · ' + fixed(row.totalVolumeM3, 5) + ' m³' : '') + '</span>';
+      container.appendChild(item);
+    });
+    if (timber(candidate)) core.timberWallAssembly.bomRows(candidate).filter((r)=>r.category!=='FRAME').forEach((row)=>{
+      const item=document.createElement('div'); item.className='bom-item';
+      item.innerHTML='<strong>'+escape(row.label)+'</strong><span>'+escape(row.quantity)+' '+escape(({cavity_piece:'pièces de cavité',reference_panel_piece:'pièces de panneau',opening_unit:'menuiserie(s)',m2:'m²'}[row.unit]||row.unit))+' · '+fixed(row.netAreaM2,3)+' m²<br>Matériau séparé du débit bois · référence à confirmer</span>';
       container.appendChild(item);
     });
   }
@@ -125,6 +130,7 @@
     text('viewer-caption', openings + ' · ' + candidate.option.gridStrategyLabel + ' · module cible ' + candidate.option.studSpacingMm + ' mm');
     text('result-source-label', 'Source ' + result.input.sourceMode + ' :');
     text('scope-warning-text', (timber(candidate) ? 'Bois C24, sections et linteaux conceptuels. ' : '') + 'Géométrie et quantités contrôlées ; calcul structurel et libération machine requis.');
+    if(candidate.reference) text('scope-warning-text',candidate.reference.message+' Les cotes de baie sont des valeurs de travail. Fonction des pièces basses à confirmer.');
     renderMetrics(result, candidate); renderBom(candidate); renderValidation(candidate); renderManufacturing(candidate); renderEngineering(result, candidate);
   }
 

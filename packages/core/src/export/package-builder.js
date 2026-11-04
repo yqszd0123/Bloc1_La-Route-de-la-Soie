@@ -73,6 +73,16 @@
     selected.members.forEach((member) => {
       files[`02_design/fablab/parts/${member.id}_scale_1_${safeScale}.stl`] = core.stl.stlForMember(member, safeScale);
     });
+    if (selected.frameMaterial === 'TIMBER') {
+      const assembly=core.timberWallAssembly.build(selected,'COMPLETE');
+      files['02_design/recommended_design.json']=pretty({project:result.project,candidate:selected,wallAssembly:assembly});
+      files['06_wall_materials/materials_bom.csv']=core.timberWallAssembly.bomCsv(selected);
+      files['06_wall_materials/material_parts.csv']=core.prototypeLayers.partsCsv(assembly);
+      files['06_wall_materials/wall_assembly.json']=pretty(assembly);
+      files['06_wall_materials/avelis_reference_status.json']=pretty(selected.reference);
+      files['00_READ_ME.txt'] += '\r\nFive component families: separate material quantities in 06_wall_materials; timber cutting and CAD remain frame-only. Joinery dimensions are opening envelopes; product thickness and installation clearances are unspecified.\r\n';
+      if(selected.reference) files['00_READ_ME.txt'] += selected.reference.message + '\r\n';
+    }
     return files;
   }
 

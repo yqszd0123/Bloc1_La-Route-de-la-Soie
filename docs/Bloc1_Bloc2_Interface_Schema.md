@@ -147,3 +147,18 @@ Le contrat v2 accepte également une ossature bois, distinguée par le champ add
 - Les deux lisses hautes et deux couches de linteau de 45 mm décrivent uniquement une géométrie conceptuelle : charges, portée, contreventement et assemblages restent à dimensionner.
 - Les jeux réservés (135 mm aux rives, 180 mm entre cadres et au-dessus des ouvertures) sont dérivés des pièces de ce modèle, pas des prescriptions réglementaires.
 - La libération machine reste bloquée pour les deux matériaux.
+
+
+### Complément bois Avelis (2026-11-04)
+
+Le bois peut mélanger des sections : la section effective est portée par chaque
+composant (`profileId`, `dimensionsMm.sectionWidth`, `dimensionsMm.sectionDepth`).
+Les pièces autour d’une porte utilisent 45 × 160 mm ; le bois principal conserve
+la section choisie. Le ZIP ajoute `06_wall_materials/materials_bom.csv`,
+`material_parts.csv`, `wall_assembly.json` et `avelis_reference_status.json`.
+Ces composants hors ossature ne font pas partie de la liste de débit ou des STL bois.
+La menuiserie est une enveloppe de réservation ; épaisseur, jeu de pose et performances
+restent null. Le cas Avelis possède toujours `exactReproduction: false` tant que
+les cotes et les pièces basses ne sont pas confirmées. Ses valeurs de travail ne
+sont pas des cotes officielles. Le contrat et les sorties opérationnelles acier
+restent inchangés.

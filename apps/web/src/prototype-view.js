@@ -3,6 +3,21 @@
 
   const app = global.AvelisApp;
   const core = global.AvelisCore;
+  const hiddenTimberLayers = new Set();
+  let timberView = 'COMPLETE';
+  let timberExplode = 0;
+  function timberOffset(layer,wall,explode) {
+    const gap = Math.max(140,wall.lengthMm*.45)*explode/100;
+    return ({FRAME:0,INSULATION:-1,JOINERY:-2,RAIN_BARRIER:1,CLADDING:2}[layer.id] || 0)*gap;
+  }
+  function shiftedBounds(bounds,offset) {
+    return {min:{...bounds.min,y:bounds.min.y+offset},max:{...bounds.max,y:bounds.max.y+offset}};
+  }
+  function timberLayerBias(layer,wall,explode) {
+    // Parallel material planes need consistent painter order across tiled faces.
+    // Geometry/quantities remain at their physical coordinates in the core model.
+    return layerY(layer,wall,explode)*Math.cos(app.state.prototypeRotationDeg*Math.PI/180)*10000;
+  }
   const roleColors = core.ROLE_COLORS;
   const layerShortLabels = {
     FRAME: 'Ossature',
@@ -14,6 +29,7 @@
   };
 
   function layerY(layer, wall, explodePercent) {
+    if (layer.timberAssembly) return (layer.solids[0] ? (layer.solids[0].min.y+layer.solids[0].max.y)/2 : wall.displayDepthMm/2) + timberOffset(layer,wall,explodePercent);
     const frameDepth = wall.displayDepthMm || wall.sourceThicknessMm || 100;
     const frameCenter = frameDepth / 2;
     const gap = Math.max(140, frameDepth * 1.4) * (explodePercent / 100);
@@ -23,7 +39,7 @@
   }
 
   function surfacePrimitive(surface, layer, wall, explodePercent) {
-    const y = layerY(layer, wall, explodePercent);
+    const y = layer.timberAssembly && Number.isFinite(surface.yMm) ? surface.yMm+timberOffset(layer,wall,explodePercent) : layerY(layer, wall, explodePercent);
     return {
       type: 'polygon',
       points: [[surface.xMin, y, surface.zMin], [surface.xMax, y, surface.zMin], [surface.xMax, y, surface.zMax], [surface.xMin, y, surface.zMax]],
@@ -34,7 +50,7 @@
       fill: app.canvasGeometry.shade(layer.color, 1, layer.id === 'INSULATION' ? .76 : .9),
       stroke: app.canvasGeometry.shade(layer.color, .68, .72),
       lineWidth: 1.1,
-      orderBias: layer.displayOrder * .001
+      orderBias: layer.timberAssembly ? timberLayerBias(layer,wall,explodePercent) : layer.displayOrder * .001
     };
   }
 
@@ -47,9 +63,10 @@
     container.innerHTML = model.layers.map((layer) => `
       <article class="prototype-layer-item ${layer.id === 'FRAME' ? 'is-generated' : 'is-calculated'}">
         <span class="prototype-layer-swatch" style="--layer-color:${layer.color}"></span>
+        ${model.frameMaterial === 'TIMBER' ? `<input type="checkbox" data-timber-layer="${layer.id}" aria-label="Afficher ${layer.label}" ${hiddenTimberLayers.has(layer.id)?'':'checked'}>` : ''}
         <div><strong>${layer.label}</strong><small>${layer.id === 'FRAME'
           ? 'Ossature · présente dans les exports de fabrication'
-          : `${layer.parts.length} pièce(s) · ${layer.thicknessMm} mm · ${layer.referenceProduct}`}</small></div>
+          : `${layer.parts.length} ${layer.id==='CLADDING'?'surface(s)':layer.id==='JOINERY'?'réservation(s)':'pièce(s)'} · ${layer.thicknessMm===null?'épaisseur non spécifiée':layer.thicknessMm+' mm'} · ${layer.referenceProduct}`}</small></div>
       </article>
     `).join('');
   }
@@ -68,11 +85,11 @@
       <tr>
         <td>${part.id}</td>
         <td><strong>${part.layerLabel}</strong><br><small>${part.referenceProduct}</small></td>
-        <td>${part.geometryType === 'RECTANGLE' ? 'Rectangle de cavité' : 'Contour mural avec évidements'}</td>
-        <td>${part.widthMm.toFixed(1)} × ${part.heightMm.toFixed(1)} × ${part.thicknessMm.toFixed(1)} mm</td>
+        <td>${part.geometryType === 'JOINERY_OPENING_ENVELOPE' ? 'Réservation de menuiserie' : part.geometryType === 'RECTANGLE' ? (model.frameMaterial==='TIMBER'?'Pièce rectangulaire':'Rectangle de cavité') : (model.frameMaterial==='TIMBER'?'Contour avec évidements':'Contour mural avec évidements')}</td>
+        <td>${part.widthMm.toFixed(1)} × ${part.heightMm.toFixed(1)} × ${part.thicknessMm===null?'à définir':part.thicknessMm.toFixed(1)} mm</td>
         <td>${part.cutouts.length ? `${part.cutouts.length} · ${part.cutoutAreaM2.toFixed(3)} m²` : '0'}</td>
         <td>${part.netAreaM2.toFixed(3)} m²</td>
-        <td>${part.volumeM3.toFixed(4)} m³</td>
+        <td>${part.volumeM3===null?'non spécifié':part.volumeM3.toFixed(4)+' m³'}</td>
       </tr>
     `).join('');
     const insulation = schedule.layers.find((layer) => layer.id === 'INSULATION');
@@ -85,10 +102,10 @@
     document.getElementById('prototype-parts-count').textContent = `${schedule.totals.partCount} pièces`;
   }
 
-  function drawLayerLabels(view, model) {
-    if (!(view && app.state.prototypeExplode >= 18)) return;
+  function drawLayerLabels(view, model, explode) {
+    if (!(view && explode >= 18)) return;
     const anchors = model.layers.map((layer) => {
-      const point = [model.wall.lengthMm / 2, layerY(layer, model.wall, app.state.prototypeExplode), model.wall.heightMm];
+      const point = [model.wall.lengthMm / 2, layerY(layer, model.wall, explode), model.wall.heightMm];
       const projected = app.canvasGeometry.projectPoint(point, view.yaw, view.pitch);
       return {
         layer,
@@ -138,16 +155,23 @@
       return;
     }
 
-    const model = core.prototypeLayers.build(candidate, app.state.prototypeStage);
+    const isTimber = candidate.frameMaterial === 'TIMBER';
+    const explode = isTimber ? timberExplode : app.state.prototypeExplode;
+    document.getElementById('prototype-explode-slider').value=explode;
+    const model = core.prototypeLayers.build(candidate, isTimber ? (timberView==='FRAME'?'FRAME':'COMPLETE') : app.state.prototypeStage);
+    if (isTimber) model.layers.forEach((layer) => { layer.timberAssembly=true; });
+    const visibleModel = {...model,layers:model.layers.filter((l)=>!isTimber || !hiddenTimberLayers.has(l.id))};
     const primitives = [];
-    model.layers.forEach((layer) => {
-      layer.surfaces.forEach((surface) => primitives.push(surfacePrimitive(surface, layer, model.wall, app.state.prototypeExplode)));
+    visibleModel.layers.forEach((layer) => {
+      layer.surfaces.forEach((surface) => primitives.push(surfacePrimitive(surface, layer, model.wall, explode)));
+      if (isTimber) (layer.solids || []).forEach((bounds)=>primitives.push({type:'box',bounds:shiftedBounds(bounds,timberOffset(layer,model.wall,explode)),color:layer.color,alpha:layer.id==='INSULATION'?.82:1,orderBias:timberLayerBias(layer,model.wall,explode)}));
       layer.members.forEach((member) => primitives.push({
-        type: 'box', bounds: member.bounds, color: core.memberColor(member, candidate.frameMaterial), alpha: .98
+        type: 'box', bounds: member.bounds, color: core.memberColor(member, candidate.frameMaterial), alpha: .98,
+        orderBias: isTimber ? timberLayerBias(layer,model.wall,explode) : 0
       }));
     });
     const view = app.canvasGeometry.render(canvas, primitives, { rotationDeg: app.state.prototypeRotationDeg, padding: 170 });
-    drawLayerLabels(view, model);
+    drawLayerLabels(view, visibleModel, explode);
     renderLegend(model);
     renderPartsSchedule(model);
     document.querySelectorAll('.prototype-stage-button').forEach((button) => {
@@ -155,11 +179,29 @@
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', String(active));
     });
-    const mode = app.state.prototypeExplode === 0 ? 'assemblée' : `éclatement ${app.state.prototypeExplode}/200`;
+    const mode = explode === 0 ? 'assemblée' : `éclatement ${explode}/200`;
     document.getElementById('prototype-caption').textContent = `Étape ${model.stage.number}/4 · ${model.stage.label} · vue ${mode}`;
+    if (isTimber) document.getElementById('prototype-caption').textContent = `${model.stage.label} · ${mode} · cinq familles Avelis, produits de référence à confirmer`;
+    document.querySelectorAll('[data-timber-view]').forEach((button)=>{
+      button.classList.toggle('is-active',button.dataset.timberView===timberView);
+      button.setAttribute('aria-pressed',String(button.dataset.timberView===timberView));
+    });
   }
 
   function bind(getCandidate) {
+    document.querySelectorAll('[data-timber-view]').forEach((button)=>button.addEventListener('click',()=>{
+      timberView=button.dataset.timberView;
+      hiddenTimberLayers.clear();
+      timberExplode=timberView==='EXPLODED'?100:0;
+      document.getElementById('prototype-explode-slider').value=timberExplode;
+      render(getCandidate());
+    }));
+    document.getElementById('prototype-layer-list').addEventListener('change',(event)=>{
+      const id=event.target.dataset.timberLayer;
+      if(!id)return;
+      if(event.target.checked)hiddenTimberLayers.delete(id);else hiddenTimberLayers.add(id);
+      render(getCandidate());
+    });
     document.querySelectorAll('.prototype-stage-button').forEach((button) => button.addEventListener('click', () => {
       app.state.prototypeStage = button.dataset.stage;
       render(getCandidate());
@@ -169,7 +211,8 @@
       render(getCandidate());
     });
     document.getElementById('prototype-explode-slider').addEventListener('input', (event) => {
-      app.state.prototypeExplode = Number(event.target.value);
+      if(getCandidate()?.frameMaterial==='TIMBER') timberExplode=Number(event.target.value);
+      else app.state.prototypeExplode = Number(event.target.value);
       render(getCandidate());
     });
   }

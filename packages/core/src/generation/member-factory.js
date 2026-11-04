@@ -8,7 +8,9 @@
   }
 
   function createMember(context, spec) {
-    const profile = spec.profileKind === 'track' ? context.trackProfile : context.studProfile;
+    const profile = context.rules.frameMaterial === 'TIMBER' && spec.profileId
+      ? core.engineering.getProfile(spec.profileId)
+      : spec.profileKind === 'track' ? context.trackProfile : context.studProfile;
     const envelopeWidthMm = profileEnvelopeWidth(profile);
     const timber = context.rules.frameMaterial === 'TIMBER';
     const depthMm = timber ? profile.sectionDepthMm : profile.webDepthMm;

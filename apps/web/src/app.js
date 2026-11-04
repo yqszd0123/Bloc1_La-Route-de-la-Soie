@@ -39,6 +39,12 @@
 
   function acceptResult(result, showDesign) {
     app.state.result = result;
+    const note = document.getElementById('timber-reference-note');
+    note.hidden = !(result.input.frameMaterial === 'TIMBER' && result.input.timberReferenceId);
+    if (!note.hidden) {
+      const reference = core.timberReference.describe(result.input);
+      note.textContent = reference.message + ' Dimensions confirmées : 2720 × 2963 mm, profondeur 145 mm. Baie par défaut : 1610 × 2000 mm, X 565 mm, niveau bas 302 mm — valeurs de travail à vérifier, usage des pièces basses non confirmé.';
+    }
     app.downloadController.enable(result.ok);
     if (!result.ok) {
       app.state.selectedCandidateId = null;
@@ -84,9 +90,15 @@
   }
 
   document.querySelectorAll('.tab-button').forEach((button) => button.addEventListener('click', () => showPage(button.dataset.page)));
+  form.addEventListener('input', () => {
+    if(form.elements.frameMaterial.value==='TIMBER' && form.elements.timberReferenceId.value) {
+      const note=document.getElementById('timber-reference-note');
+      note.hidden=false; note.textContent='Paramètres modifiés à partir de la référence Avelis — recalculer pour actualiser la géométrie. Reproduction exacte non vérifiée.';
+    }
+  });
   form.addEventListener('submit', (event) => { event.preventDefault(); runManual(true); });
   document.getElementById('reset-button').addEventListener('click', () => {
-    app.formController.setFormValues(form, { ...core.DEFAULT_INPUT, ...app.materialController.settings(form) });
+    app.formController.setFormValues(form, { ...core.DEFAULT_INPUT, ...app.materialController.settings(form), timberReferenceId:'', timberDoorBaseMm:0 });
     runManual(false);
   });
   document.getElementById('rotation-slider').addEventListener('input', (event) => { app.state.rotationDeg = Number(event.target.value); redraw(); });

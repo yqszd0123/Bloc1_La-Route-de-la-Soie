@@ -60,11 +60,23 @@
       button.textContent = preset.label;
       button.title = `Provenance : ${preset.provenance}`;
       button.addEventListener('click', () => {
-        setFormValues(form, Object.assign({}, core.DEFAULT_INPUT, preset.input, app.materialController.settings(form)));
+        setFormValues(form, Object.assign({}, core.DEFAULT_INPUT, preset.input, app.materialController.settings(form), { timberReferenceId: '', timberDoorBaseMm: 0 }));
         onApply();
       });
       container.appendChild(button);
     });
+    const reference = core.timberReference.preset();
+    const button = document.createElement('button');
+    button.type = 'button'; button.textContent = reference.label;
+    button.dataset.materialOnly = 'TIMBER'; button.dataset.preset = reference.id;
+    button.hidden = true;
+    button.title = 'Dessin Avelis : dimensions de baie provisoires, modifiables et non certifiées';
+    button.addEventListener('click', () => {
+      setFormValues(form, { ...core.DEFAULT_INPUT, ...app.materialController.settings(form), ...reference.input,
+        frameMaterial:'TIMBER', timberReferenceId:reference.id });
+      onApply();
+    });
+    container.appendChild(button);
   }
 
   function renderMessages(container, validation) {

@@ -1,10 +1,35 @@
 # Avelis Wall Flow 2.3 — acier et bois
 
+
+Le quatrième exemple « Référence Avelis — mur bois avec porte » apparaît seulement
+pour le bois. Il charge une reconstruction de travail : enveloppe confirmée
+2720 × 2963 mm, bois principal 45 × 145 mm ; baie provisoire 1610 × 2000 mm,
+X = 565 mm, niveau bas = 302 mm. **La hauteur nette 2000 mm est un défaut de
+conception autorisé par l’utilisateur, pas une cote officielle lisible.** Le dessin
+contient des pièces basses dont le rôle reste à confirmer. La mention de référence
+reste provisoire et devient « paramètres modifiés » après changement de géométrie.
+
+Les encadrements de porte (king/jack, linteaux, montants courts et traverse basse
+éventuelle) emploient 45 × 160 mm ; le reste conserve la section sélectionnée.
+Le nouvel entraxe 625 mm vient du message Avelis du 4 novembre 2026. Les fenêtres
+conservent leurs propres traverses et ont des montants courts au-dessus et au-dessous,
+avec un montant centré de secours si la trame ne traverse pas la petite baie.
+
+Pour le bois, la vue en couches propose les cinq familles Avelis : bardage ventilé,
+pare-pluie rigide, isolant biosourcé, ossature bois et menuiseries sur mesure.
+Quatre vues et des cases par composant permettent de les explorer. Les épaisseurs
+21 mm (bardage), 22 mm (pare-pluie) et la lame d’air minimale 20 mm proviennent de
+produits/détails publics de référence ; Avelis ne les a pas validées. Les menuiseries
+sont des enveloppes de réservation sans épaisseur, jeu de pose ou performances inventés.
+Les matériaux figurent dans `06_wall_materials/` du ZIP et dans un BOM distinct.
+Le budget, le débit, les STEP et les STL restent limités à l’ossature.
+Les originaux privés du dessin et du schéma ne sont pas distribués.
+
 Le sélecteur « Ossature » est disponible sur toutes les pages. Choisir « Bois C24 »
 active des pièces pleines, doubles lisses hautes, montants principaux/d’appui,
 linteaux conceptuels et interruptions de lisse à chaque porte. Section par défaut :
 45 × 145 mm ; alternatives 45 × 95 et 45 × 120 mm, ou comparaison des trois.
-Les entraxes 400/450/500/600 mm sont des paramètres géométriques à valider.
+Les entraxes 400/450/500/600/625 mm sont des paramètres géométriques à valider.
 
 Les entrées manuelles, IFC et STEP utilisent le matériau choisi. Le bois conserve
 les vues 3D, couches, comparaison, BOM, débit, STEP/DXF/STL et ZIP ; ses quantités
@@ -79,10 +104,19 @@ npm test
 npm run experiments
 ```
 
-Les tests couvrent les deux matériaux : sources, profils, volumes et masses, portes, collisions, IDs, budgets indépendants, classement, vrai IFC, import STEP réel, export STEP relu par Open CASCADE, autres exports et blocage de la libération machine. Les expériences génèrent trois cas acier et trois cas bois. Sans npm, utiliser `node tests/run-tests.js`, `node tests/timber-tests.js`, `node tests/step-integration.js` et `node scripts/generate-experiments.js`.
+Les tests couvrent les deux matériaux : sources, profils, volumes et masses, portes, collisions, IDs, budgets indépendants, classement, vrai IFC, import STEP réel, export STEP relu par Open CASCADE, autres exports et blocage de la libération machine. Les expériences génèrent trois cas acier, trois cas bois et le cas Avelis provisoire. Sans npm, utiliser `node tests/run-tests.js`, `node tests/timber-tests.js`, `node tests/step-integration.js` et `node scripts/generate-experiments.js`.
 
 Le contrat documenté Bloc 1 → Bloc 2 est `docs/Bloc1_Bloc2_Interface_Schema.md`. La même version est intégrée automatiquement au paquet ZIP téléchargé.
 
 ## Références et licences
 
 Les paramètres techniques sont dans `data/engineering_sources.json` et expliqués dans `docs/engineering_references.md`. Le parseur STEP redistribué conserve ses licences dans `third_party/occt-import-js/dist`. Le code propre au projet est sous licence MIT.
+
+
+Régression Avelis : `node tests/avelis-timber-tests.js` et
+`node tests/steel-baseline.js`. La base acier a été figée avant modification au
+commit dd3627f : sept entrées, tous candidats et tous fichiers opérationnels
+(y compris BOM, STEP, STL unitaires et contrats), ainsi que les couches acier.
+La bibliographie commune et le document d’interface sont exclus de la comparaison
+binaire car ils peuvent recevoir des informations bois. Les calculs et fichiers
+opérationnels acier doivent rester identiques.
