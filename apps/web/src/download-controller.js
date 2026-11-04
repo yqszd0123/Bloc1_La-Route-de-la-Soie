@@ -22,7 +22,7 @@
   }
 
   function enable(enabled) {
-    ['download-design', 'download-step', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-materials', 'download-prototype-parts', 'download-package-2']
+    ['download-design', 'download-step', 'download-stl', 'download-dxf2d', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-materials', 'download-prototype-parts', 'download-package-2']
       .forEach((id) => { document.getElementById(id).disabled = !enabled; });
   }
 
@@ -40,6 +40,10 @@
     document.getElementById('download-stl').addEventListener('click', () => {
       const { result, candidate } = current();
       download(`${result.input.wallId}_${candidate.frameMaterial}_${candidate.id}_scale_1_${result.input.prototypeScale}.stl`, core.stl.stlForCandidate(candidate, result.input.prototypeScale), 'model/stl');
+    });
+    document.getElementById('download-dxf2d').addEventListener('click', () => {
+      const { result, candidate } = current();
+      download(`${result.input.wallId}_${candidate.frameMaterial}_${candidate.id}_face_2D.dxf`, core.dxf.dxf2dForCandidate(candidate), 'application/dxf');
     });
     document.getElementById('download-step').addEventListener('click', () => {
       const { result, candidate } = current();

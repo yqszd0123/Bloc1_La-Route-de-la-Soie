@@ -57,6 +57,7 @@
         fileName: `${result.input.wallId}_${selected.id}_profile_envelopes.step`
       }),
       '02_design/model_3d_profile_envelopes.dxf': core.dxf.dxfForCandidate(selected),
+      '02_design/model_2d_frame_face.dxf': core.dxf.dxf2dForCandidate(selected),
       [`02_design/fablab/assembly_scale_1_${safeScale}.stl`]: core.stl.stlForCandidate(selected, safeScale),
       '03_manufacturing/bom.csv': core.serialize.bomCsv(selected),
       '03_manufacturing/cutting_list.csv': core.serialize.cuttingListCsv(selected),

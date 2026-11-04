@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "sync-data": "node scripts/sync-engineering-data.js",
-    "test": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/timber-tests.js && node tests/avelis-timber-tests.js && node tests/steel-baseline.js && node tests/step-integration.js",
+    "test": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/timber-tests.js && node tests/avelis-timber-tests.js && node tests/steel-baseline.js && node tests/dxf-2d-tests.js && node tests/canvas-geometry-tests.js && node tests/step-integration.js",
     "experiments": "node scripts/generate-experiments.js",
-    "verify": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/timber-tests.js && node tests/avelis-timber-tests.js && node tests/steel-baseline.js && node tests/step-integration.js && node scripts/generate-experiments.js"
+    "verify": "node scripts/sync-engineering-data.js && node tests/run-tests.js && node tests/timber-tests.js && node tests/avelis-timber-tests.js && node tests/steel-baseline.js && node tests/dxf-2d-tests.js && node tests/canvas-geometry-tests.js && node tests/step-integration.js && node scripts/generate-experiments.js"
   },
   "engines": {
     "node": ">=18"

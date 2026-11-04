@@ -2,11 +2,14 @@
   'use strict';
 
   const app = global.AvelisApp;
+  // Chaque face porte sa normale sortante : elle sert à éliminer les faces arrière.
   const BOX_FACES = [
-    { ids: [0, 1, 5, 4], shade: .9 }, { ids: [1, 2, 6, 5], shade: .72 },
-    { ids: [2, 3, 7, 6], shade: .82 }, { ids: [3, 0, 4, 7], shade: .68 },
-    { ids: [4, 5, 6, 7], shade: 1.05 }, { ids: [0, 3, 2, 1], shade: .62 }
+    { ids: [0, 1, 5, 4], shade: .9, normal: [0, -1, 0] }, { ids: [1, 2, 6, 5], shade: .72, normal: [1, 0, 0] },
+    { ids: [2, 3, 7, 6], shade: .82, normal: [0, 1, 0] }, { ids: [3, 0, 4, 7], shade: .68, normal: [-1, 0, 0] },
+    { ids: [4, 5, 6, 7], shade: 1.05, normal: [0, 0, 1] }, { ids: [0, 3, 2, 1], shade: .62, normal: [0, 0, -1] }
   ];
+  const AXES = ['x', 'y', 'z'];
+  const EPS_MM = 1e-3;
 
   function hexToRgb(hex) {
     const value = parseInt(hex.slice(1), 16);
@@ -41,18 +44,125 @@
     ];
   }
 
-  function expandPrimitive(primitive) {
-    if (primitive.type !== 'box') return [primitive];
+  // Direction pointant vers l'observateur, dans le repère monde (x, y, z).
+  // Cohérente avec projectPoint : « profondeur » = produit scalaire avec ce vecteur.
+  function viewDirection(yaw, pitch) {
+    return [Math.sin(yaw) * Math.cos(pitch), Math.cos(yaw) * Math.cos(pitch), Math.sin(pitch)];
+  }
+
+  function expandBox(primitive, direction) {
     const vertices = boxVertices(primitive.bounds);
-    return BOX_FACES.map((face) => ({
-      type: 'polygon',
-      points: face.ids.map((id) => vertices[id]),
-      fill: shade(primitive.color, face.shade, primitive.alpha),
-      stroke: primitive.stroke || 'rgba(24,45,54,.42)',
-      lineWidth: primitive.lineWidth || 1,
-      orderBias: primitive.orderBias || 0,
-      overlay: false
+    return BOX_FACES
+      .filter((face) => face.normal[0] * direction[0] + face.normal[1] * direction[1] + face.normal[2] * direction[2] > 1e-9)
+      .map((face) => ({
+        type: 'polygon',
+        points: face.ids.map((id) => vertices[id]),
+        fill: shade(primitive.color, face.shade, primitive.alpha),
+        stroke: primitive.stroke || 'rgba(24,45,54,.42)',
+        lineWidth: primitive.lineWidth || 1,
+        overlay: false
+      }));
+  }
+
+  function pointsBounds(points) {
+    const bounds = { min: { x: Infinity, y: Infinity, z: Infinity }, max: { x: -Infinity, y: -Infinity, z: -Infinity } };
+    points.forEach((point) => AXES.forEach((axis, index) => {
+      bounds.min[axis] = Math.min(bounds.min[axis], point[index]);
+      bounds.max[axis] = Math.max(bounds.max[axis], point[index]);
     }));
+    return bounds;
+  }
+
+  /**
+   * Transforme les primitives en « éléments » triables : un élément = un solide (boîte)
+   * ou une surface plane, avec son volume englobant aligné sur les axes.
+   * Les polygones à contour sans overlay forment des éléments plats (épaisseur nulle).
+   */
+  function buildItems(primitives, direction, yaw, pitch) {
+    const items = [];
+    const overlays = [];
+    primitives.forEach((primitive) => {
+      if (primitive.type === 'box') {
+        const bounds = primitive.bounds;
+        items.push({ polygons: expandBox(primitive, direction), bounds, corners: boxVertices(bounds), bias: primitive.orderBias || 0 });
+        return;
+      }
+      if (primitive.overlay) { overlays.push(primitive); return; }
+      items.push({ polygons: [primitive], bounds: pointsBounds(primitive.points), corners: primitive.points, bias: primitive.orderBias || 0 });
+    });
+
+    items.forEach((item) => {
+      const projected = item.corners.map((point) => projectPoint(point, yaw, pitch));
+      item.screen = {
+        minX: Math.min(...projected.map((point) => point.x)), maxX: Math.max(...projected.map((point) => point.x)),
+        minY: Math.min(...projected.map((point) => point.y)), maxY: Math.max(...projected.map((point) => point.y))
+      };
+      const center = AXES.map((axis) => (item.bounds.min[axis] + item.bounds.max[axis]) / 2);
+      item.depth = projectPoint(center, yaw, pitch).depth + item.bias;
+    });
+    return { items, overlays };
+  }
+
+  /**
+   * Compare deux éléments : retourne -1 si `a` doit être dessiné avant `b` (a est derrière),
+   * 1 si après, 0 si aucun plan axial ne les sépare (solides qui se pénètrent),
+   * null si les plans imposent des sens opposés : aucun rayon ne traverse les deux solides.
+   */
+  function compareBySeparatingPlane(a, b, direction) {
+    let order = 0;
+    let conflict = false;
+    AXES.forEach((axis, index) => {
+      const weight = Math.abs(direction[index]);
+      if (weight < 1e-9) return;
+      let axisOrder = 0;
+      if (a.bounds.max[axis] <= b.bounds.min[axis] + EPS_MM) {
+        axisOrder = direction[index] > 0 ? -1 : 1;
+      } else if (b.bounds.max[axis] <= a.bounds.min[axis] + EPS_MM) {
+        axisOrder = direction[index] > 0 ? 1 : -1;
+      }
+      if (axisOrder && order && axisOrder !== order) conflict = true;
+      if (axisOrder) order = axisOrder;
+    });
+    return conflict ? null : order;
+  }
+
+  function screenOverlap(a, b) {
+    return a.screen.minX < b.screen.maxX - .01 && b.screen.minX < a.screen.maxX - .01
+      && a.screen.minY < b.screen.maxY - .01 && b.screen.minY < a.screen.maxY - .01;
+  }
+
+  /** Tri topologique : tout élément est dessiné après ceux qu'il masque. */
+  function sortItems(items, direction) {
+    const count = items.length;
+    const behind = items.map(() => []);   // behind[i] = indices à dessiner après i
+    const blockers = new Array(count).fill(0);
+    for (let i = 0; i < count; i += 1) {
+      for (let j = i + 1; j < count; j += 1) {
+        if (!screenOverlap(items[i], items[j])) continue;
+        let order = compareBySeparatingPlane(items[i], items[j], direction);
+        // Screen rectangles can overlap even when the projected solids do not.
+        // Do not introduce false dependencies/cycles between those items.
+        if (order === null) continue;
+        if (order === 0) order = items[i].depth <= items[j].depth ? -1 : 1;   // solides imbriqués : repli sur la profondeur
+        if (order < 0) { behind[i].push(j); blockers[j] += 1; } else { behind[j].push(i); blockers[i] += 1; }
+      }
+    }
+    const done = new Array(count).fill(false);
+    const sorted = [];
+    for (let step = 0; step < count; step += 1) {
+      let pick = -1;
+      for (let i = 0; i < count; i += 1) {
+        if (done[i]) continue;
+        if (pick < 0) { pick = i; continue; }
+        const better = blockers[i] < blockers[pick]
+          || (blockers[i] === blockers[pick] && items[i].depth < items[pick].depth);
+        if (better) pick = i;
+      }
+      done[pick] = true;
+      sorted.push(items[pick]);
+      behind[pick].forEach((next) => { blockers[next] -= 1; });
+    }
+    return sorted;
   }
 
   function setupCanvas(canvas) {
@@ -105,17 +215,23 @@
     const settings = options || {};
     const yaw = ((settings.rotationDeg || 0) * Math.PI) / 180;
     const pitch = ((settings.pitchDeg === undefined ? 16 : settings.pitchDeg) * Math.PI) / 180;
-    const polygons = primitives.flatMap(expandPrimitive).map((primitive) => {
-      const projected = primitive.points.map((point) => projectPoint(point, yaw, pitch));
-      const projectedHoles = (primitive.holes || []).map((hole) => hole.map((point) => projectPoint(point, yaw, pitch)));
-      return {
-        ...primitive,
-        projected,
-        projectedHoles,
-        depth: projected.reduce((sum, point) => sum + point.depth, 0) / projected.length + (primitive.orderBias || 0)
-      };
+    const direction = viewDirection(yaw, pitch);
+    const built = buildItems(primitives, direction, yaw, pitch);
+    const ordered = sortItems(built.items, direction);
+
+    const project = (polygon) => ({
+      ...polygon,
+      projected: polygon.points.map((point) => projectPoint(point, yaw, pitch)),
+      projectedHoles: (polygon.holes || []).map((hole) => hole.map((point) => projectPoint(point, yaw, pitch)))
     });
-    const allPoints = polygons.flatMap((polygon) => polygon.projected);
+    const drawable = ordered.map((item) => item.polygons.map(project));
+    const overlays = built.overlays.map(project);
+
+    // Cadrage calculé sur tous les sommets (y compris faces masquées) : l'échelle ne saute pas pendant la rotation.
+    const allPoints = [
+      ...built.items.flatMap((item) => item.corners.map((point) => projectPoint(point, yaw, pitch))),
+      ...overlays.flatMap((polygon) => polygon.projected)
+    ];
     const minX = Math.min(...allPoints.map((point) => point.x));
     const maxX = Math.max(...allPoints.map((point) => point.x));
     const minY = Math.min(...allPoints.map((point) => point.y));
@@ -131,10 +247,8 @@
       offsetY: (viewport.height - (maxY - minY) * scale) / 2 - minY * scale
     };
 
-    polygons.filter((polygon) => !polygon.overlay).sort((left, right) => left.depth - right.depth)
-      .forEach((polygon) => drawPolygon(viewport.context, polygon, transform));
-    polygons.filter((polygon) => polygon.overlay).sort((left, right) => left.depth - right.depth)
-      .forEach((polygon) => drawPolygon(viewport.context, polygon, transform));
+    drawable.forEach((polygons) => polygons.forEach((polygon) => drawPolygon(viewport.context, polygon, transform)));
+    overlays.forEach((polygon) => drawPolygon(viewport.context, polygon, transform));
     return { context: viewport.context, transform, yaw, pitch, width: viewport.width, height: viewport.height };
   }
 

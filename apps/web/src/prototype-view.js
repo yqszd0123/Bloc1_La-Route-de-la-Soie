@@ -13,11 +13,7 @@
   function shiftedBounds(bounds,offset) {
     return {min:{...bounds.min,y:bounds.min.y+offset},max:{...bounds.max,y:bounds.max.y+offset}};
   }
-  function timberLayerBias(layer,wall,explode) {
-    // Parallel material planes need consistent painter order across tiled faces.
-    // Geometry/quantities remain at their physical coordinates in the core model.
-    return layerY(layer,wall,explode)*Math.cos(app.state.prototypeRotationDeg*Math.PI/180)*10000;
-  }
+
   const roleColors = core.ROLE_COLORS;
   const layerShortLabels = {
     FRAME: 'Ossature',
@@ -50,7 +46,7 @@
       fill: app.canvasGeometry.shade(layer.color, 1, layer.id === 'INSULATION' ? .76 : .9),
       stroke: app.canvasGeometry.shade(layer.color, .68, .72),
       lineWidth: 1.1,
-      orderBias: layer.timberAssembly ? timberLayerBias(layer,wall,explodePercent) : layer.displayOrder * .001
+      orderBias: layer.timberAssembly ? 0 : layer.displayOrder * .001
     };
   }
 
@@ -164,10 +160,9 @@
     const primitives = [];
     visibleModel.layers.forEach((layer) => {
       layer.surfaces.forEach((surface) => primitives.push(surfacePrimitive(surface, layer, model.wall, explode)));
-      if (isTimber) (layer.solids || []).forEach((bounds)=>primitives.push({type:'box',bounds:shiftedBounds(bounds,timberOffset(layer,model.wall,explode)),color:layer.color,alpha:layer.id==='INSULATION'?.82:1,orderBias:timberLayerBias(layer,model.wall,explode)}));
+      if (isTimber) (layer.solids || []).forEach((bounds)=>primitives.push({type:'box',bounds:shiftedBounds(bounds,timberOffset(layer,model.wall,explode)),color:layer.color,alpha:layer.id==='INSULATION'?.82:1}));
       layer.members.forEach((member) => primitives.push({
-        type: 'box', bounds: member.bounds, color: core.memberColor(member, candidate.frameMaterial), alpha: .98,
-        orderBias: isTimber ? timberLayerBias(layer,model.wall,explode) : 0
+        type: 'box', bounds: member.bounds, color: core.memberColor(member, candidate.frameMaterial), alpha: .98
       }));
     });
     const view = app.canvasGeometry.render(canvas, primitives, { rotationDeg: app.state.prototypeRotationDeg, padding: 170 });

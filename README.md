@@ -51,6 +51,21 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 5. Après la conception, ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
 6. Passer ensuite à la fabrication et télécharger le paquet ZIP.
 
+Le bouton **DXF 2D** de « Conception » exporte la face de l’ossature sélectionnée,
+en acier ou en bois : X = longueur, Y = hauteur, coordonnées en millimètres à
+l’échelle 1:1, indépendantes de la rotation 3D et de l’échelle STL. Les rectangles
+projetés sont fusionnés : les joints internes disparaissent, les cavités et baies
+restent des contours fermés sur le calque `CUT`. Le format DXF R12 utilise des
+polylignes ; choisir les millimètres à l’import dans le logiciel CAO.
+Le même fichier figure dans `02_design/model_2d_frame_face.dxf` du ZIP, à côté du
+DXF 3D existant. Il représente la silhouette globale de l’ossature, sans les couches
+du mur, le placement de pièces individuelles ni la compensation d’outil.
+
+La correction 3D et l’export 2D sont intégrés depuis l’archive `claude_web.zip`
+fournie pour ce projet. Le rendu élimine les faces arrière et ordonne les solides
+selon leur séparation dans l’espace. L’intégration traite aussi les fausses
+dépendances entre couches projetées et les contours qui se touchent par un coin.
+
 La maquette en couches possède son propre calcul de pièces et son CSV. Les deux vues 3D disposent d’une rotation complète sur 360° ; la maquette permet en plus un éclatement renforcé de 0 à 200. L’isolant est découpé en rectangles correspondant aux vides réels entre les profilés ; les autres couches sont des contours muraux logiques dont les portes et fenêtres sont déduites. Elles ne sont ajoutées ni aux IFC/STEP, ni à la BOM acier, ni à la liste de débit acier, ni au ZIP.
 
 Le prix matière est facultatif. Pour l’acier, si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Pour le bois, il utilise l’hypothèse de 620 €/m³ HT. Les prix acier et bois sont indépendants. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
@@ -120,3 +135,10 @@ commit dd3627f : sept entrées, tous candidats et tous fichiers opérationnels
 La bibliographie commune et le document d’interface sont exclus de la comparaison
 binaire car ils peuvent recevoir des informations bois. Les calculs et fichiers
 opérationnels acier doivent rester identiques.
+
+Régressions d’intégration : `node tests/canvas-geometry-tests.js` confronte le rendu
+à un calcul indépendant de visibilité par rayons pour les vues acier, bois,
+référence Avelis, couches assemblées et éclatées ; `node tests/dxf-2d-tests.js`
+relit les entités DXF et vérifie contours, surfaces et dimensions des candidats.
+Le nouveau DXF 2D est testé séparément ; aucun hash des exports acier antérieurs
+n’est remplacé dans la base figée.

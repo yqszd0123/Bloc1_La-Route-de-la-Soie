@@ -20,6 +20,9 @@ runs.push(core.runIfcWorkflow(fs.readFileSync(path.join(root,'test-data/ifc/wall
 const snapshot = runs.map((result) => {
   assert.ok(result.ok);
   const files = core.packageBuilder.buildExportFiles(result);
+  // The new 2D silhouette is tested independently in dxf-2d-tests.js. Keep every legacy hash.
+  assert.ok(files['02_design/model_2d_frame_face.dxf']);
+  delete files['02_design/model_2d_frame_face.dxf'];
   // Shared source bibliography/docs may gain timber references; operational files must be identical.
   const operational = Object.fromEntries(Object.entries(files).filter(([name]) =>
     name !== '04_quality/engineering_data_snapshot.json' && name !== '05_interfaces/Bloc1_Bloc2_Interface_Schema.md')
