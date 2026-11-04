@@ -16,7 +16,7 @@
   function layerY(layer, wall, explodePercent) {
     const frameDepth = wall.displayDepthMm || wall.sourceThicknessMm || 100;
     const frameCenter = frameDepth / 2;
-    const gap = Math.max(70, frameDepth * .7) * (explodePercent / 100);
+    const gap = Math.max(140, frameDepth * 1.4) * (explodePercent / 100);
     if (layer.side === 'EXTERIOR') return frameDepth + gap * layer.displayOrder;
     if (layer.side === 'INTERIOR') return -gap * layer.displayOrder;
     return frameCenter;
@@ -116,7 +116,7 @@
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', String(active));
     });
-    const mode = app.state.prototypeExplode === 0 ? 'assemblée' : `éclatée à ${app.state.prototypeExplode} %`;
+    const mode = app.state.prototypeExplode === 0 ? 'assemblée' : `éclatement ${app.state.prototypeExplode}/200`;
     document.getElementById('prototype-caption').textContent = `Étape ${model.stage.number}/4 · ${model.stage.label} · vue ${mode}`;
   }
 

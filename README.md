@@ -13,7 +13,7 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 5. Après la conception, ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
 6. Passer ensuite à la fabrication et télécharger le paquet ZIP.
 
-La maquette en couches est une visualisation pédagogique séparée du modèle de fabrication. Les échantillons d’isolation, panneaux et finitions ne sont ajoutés ni aux IFC/STEP, ni à la BOM, ni à la liste de débit, ni au ZIP.
+La maquette en couches est une visualisation pédagogique séparée du modèle de fabrication. Les deux vues 3D disposent d’une rotation complète sur 360° ; la maquette permet en plus un éclatement renforcé de 0 à 200. Les échantillons d’isolation, panneaux et finitions ne sont ajoutés ni aux IFC/STEP, ni à la BOM, ni à la liste de débit, ni au ZIP.
 
 Le prix matière est facultatif. Si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
 

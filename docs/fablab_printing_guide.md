@@ -11,6 +11,6 @@ Les STL sont des enveloppes de présentation. Ils ne reproduisent pas les plis, 
 
 ## Présentation en couches
 
-L’étape « Maquette en couches » du site permet de montrer le même mur dans quatre états : ossature acier, ajout d’un échantillon d’isolation, ajout de panneaux témoins, puis apparence assemblée. Le curseur « Assemblé ↔ éclaté » sert uniquement à expliquer la superposition.
+L’étape « Maquette en couches » du site permet de montrer le même mur dans quatre états : ossature acier, ajout d’un échantillon d’isolation, ajout de panneaux témoins, puis apparence assemblée. La vue tourne sur 360° et le curseur « Assemblé ↔ éclaté », gradué de 0 à 200, sert uniquement à expliquer la superposition.
 
 Seule l’ossature acier provient des fichiers de fabrication du logiciel. L’isolation, les panneaux et les finitions sont des échantillons physiques à choisir avec le FabLab et le Bloc 2. Ils ne sont pas générés dans l’IFC, le STEP, la BOM, la liste de débit ou le paquet ZIP et ne représentent pas une composition de mur confirmée par Avelis.

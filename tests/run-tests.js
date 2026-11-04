@@ -353,6 +353,9 @@ test('l’interface présente une étape dédiée et sa limite d’export', () =
   assert.match(html, /id="prototype-page"/);
   assert.match(html, /Maquette en couches/);
   assert.match(html, /vue éclatée constructive/);
+  assert.match(html, /id="rotation-slider" type="range" min="0" max="360"/);
+  assert.match(html, /id="prototype-rotation-slider" type="range" min="0" max="360"/);
+  assert.match(html, /id="prototype-explode-slider" type="range" min="0" max="200" value="100"/);
   assert.ok(html.indexOf('data-page="design-page"') < html.indexOf('data-page="prototype-page"'));
   assert.ok(html.indexOf('data-page="prototype-page"') < html.indexOf('data-page="manufacturing-page"'));
   assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM, ni la liste de débit, ni le paquet ZIP/);

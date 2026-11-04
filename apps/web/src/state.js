@@ -9,7 +9,7 @@
     showLabels: false,
     prototypeStage: 'COMPLETE',
     prototypeRotationDeg: 28,
-    prototypeExplode: 58,
+    prototypeExplode: 100,
     ifcText: null,
     ifcModel: null,
     stepModel: null,

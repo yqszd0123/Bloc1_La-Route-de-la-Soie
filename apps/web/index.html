@@ -190,7 +190,7 @@
       <div class="scope-warning"><strong id="result-source-label">Portée :</strong> <span id="scope-warning-text">Validation structurelle et industrielle requise.</span></div>
       <div class="viewer-card">
         <canvas id="wall-viewer" width="1200" height="650" aria-label="Vue tridimensionnelle du panneau acier"></canvas>
-        <div class="viewer-controls"><label>Rotation<input id="rotation-slider" type="range" min="-65" max="65" value="28"></label><label class="check-label"><input id="labels-toggle" type="checkbox"> Identifiants</label><span id="viewer-caption">Aucun résultat.</span></div>
+        <div class="viewer-controls"><label>Rotation 360°<input id="rotation-slider" type="range" min="0" max="360" value="28"></label><label class="check-label"><input id="labels-toggle" type="checkbox"> Identifiants</label><span id="viewer-caption">Aucun résultat.</span></div>
       </div>
       <section class="metrics">
         <article><span>Temps de calcul</span><strong id="metric-time">—</strong><small>entrée → paquet</small></article>
@@ -228,9 +228,9 @@
         <div class="viewer-card prototype-viewer-card">
           <canvas id="prototype-viewer" width="1200" height="650" aria-label="Vue éclatée de la maquette pédagogique en couches"></canvas>
           <div class="viewer-controls prototype-controls">
-            <label>Rotation<input id="prototype-rotation-slider" type="range" min="-65" max="65" value="28"></label>
-            <label>Assemblé ↔ éclaté<input id="prototype-explode-slider" type="range" min="0" max="100" value="58"></label>
-            <span id="prototype-caption">Étape 4/4 · Mur assemblé · vue éclatée à 58 %</span>
+            <label>Rotation 360°<input id="prototype-rotation-slider" type="range" min="0" max="360" value="28"></label>
+            <label>Assemblé ↔ éclaté<input id="prototype-explode-slider" type="range" min="0" max="200" value="100"></label>
+            <span id="prototype-caption">Étape 4/4 · Mur assemblé · éclatement 100/200</span>
           </div>
         </div>
         <aside class="results-card prototype-guide">
