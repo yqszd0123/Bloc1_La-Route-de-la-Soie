@@ -27,6 +27,10 @@
     return {
       type: 'polygon',
       points: [[surface.xMin, y, surface.zMin], [surface.xMax, y, surface.zMin], [surface.xMax, y, surface.zMax], [surface.xMin, y, surface.zMax]],
+      holes: (surface.cutouts || []).map((cutout) => [
+        [cutout.xMm, y, cutout.zMm], [cutout.xMm + cutout.widthMm, y, cutout.zMm],
+        [cutout.xMm + cutout.widthMm, y, cutout.zMm + cutout.heightMm], [cutout.xMm, y, cutout.zMm + cutout.heightMm]
+      ]),
       fill: app.canvasGeometry.shade(layer.color, 1, layer.id === 'INSULATION' ? .76 : .9),
       stroke: app.canvasGeometry.shade(layer.color, .68, .72),
       lineWidth: 1.1,
@@ -41,11 +45,44 @@
       return;
     }
     container.innerHTML = model.layers.map((layer) => `
-      <article class="prototype-layer-item ${layer.displayOnly ? 'is-display-only' : 'is-generated'}">
+      <article class="prototype-layer-item ${layer.id === 'FRAME' ? 'is-generated' : 'is-calculated'}">
         <span class="prototype-layer-swatch" style="--layer-color:${layer.color}"></span>
-        <div><strong>${layer.label}</strong><small>${layer.displayOnly ? 'Démonstration visuelle · aucun fichier généré' : 'Issu du modèle acier · présent dans les exports existants'}</small></div>
+        <div><strong>${layer.label}</strong><small>${layer.id === 'FRAME'
+          ? 'Modèle acier · présent dans les exports de fabrication'
+          : `${layer.parts.length} pièce(s) · ${layer.thicknessMm} mm · ${layer.referenceProduct}`}</small></div>
       </article>
     `).join('');
+  }
+
+  function renderPartsSchedule(model) {
+    const body = document.getElementById('prototype-parts-body');
+    const metrics = document.getElementById('prototype-parts-metrics');
+    if (!model) {
+      body.innerHTML = '';
+      metrics.innerHTML = '<div class="empty-state">Aucune pièce calculée.</div>';
+      document.getElementById('prototype-parts-count').textContent = '—';
+      return;
+    }
+    const schedule = model.partsSchedule;
+    body.innerHTML = schedule.parts.map((part) => `
+      <tr>
+        <td>${part.id}</td>
+        <td><strong>${part.layerLabel}</strong><br><small>${part.referenceProduct}</small></td>
+        <td>${part.geometryType === 'RECTANGLE' ? 'Rectangle de cavité' : 'Contour mural avec évidements'}</td>
+        <td>${part.widthMm.toFixed(1)} × ${part.heightMm.toFixed(1)} × ${part.thicknessMm.toFixed(1)} mm</td>
+        <td>${part.cutouts.length ? `${part.cutouts.length} · ${part.cutoutAreaM2.toFixed(3)} m²` : '0'}</td>
+        <td>${part.netAreaM2.toFixed(3)} m²</td>
+        <td>${part.volumeM3.toFixed(4)} m³</td>
+      </tr>
+    `).join('');
+    const insulation = schedule.layers.find((layer) => layer.id === 'INSULATION');
+    metrics.innerHTML = `
+      <article><span>Pièces totales</span><strong>${schedule.totals.partCount}</strong></article>
+      <article><span>Rectangles d’isolant</span><strong>${insulation.partCount}</strong><small>vides entre profilés</small></article>
+      <article><span>Surface nette cumulée</span><strong>${schedule.totals.netAreaM2.toFixed(3)} m²</strong></article>
+      <article><span>Volume cumulé</span><strong>${schedule.totals.volumeM3.toFixed(4)} m³</strong></article>
+    `;
+    document.getElementById('prototype-parts-count').textContent = `${schedule.totals.partCount} pièces`;
   }
 
   function drawLayerLabels(view, model) {
@@ -96,6 +133,7 @@
     if (!candidate) {
       app.canvasGeometry.render(canvas, [], { rotationDeg: app.state.prototypeRotationDeg });
       renderLegend(null);
+      renderPartsSchedule(null);
       document.getElementById('prototype-caption').textContent = 'Aucune solution sélectionnée.';
       return;
     }
@@ -111,6 +149,7 @@
     const view = app.canvasGeometry.render(canvas, primitives, { rotationDeg: app.state.prototypeRotationDeg, padding: 170 });
     drawLayerLabels(view, model);
     renderLegend(model);
+    renderPartsSchedule(model);
     document.querySelectorAll('.prototype-stage-button').forEach((button) => {
       const active = button.dataset.stage === model.stage.id;
       button.classList.toggle('is-active', active);

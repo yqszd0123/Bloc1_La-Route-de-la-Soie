@@ -13,7 +13,7 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 5. Après la conception, ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
 6. Passer ensuite à la fabrication et télécharger le paquet ZIP.
 
-La maquette en couches est une visualisation pédagogique séparée du modèle de fabrication. Les deux vues 3D disposent d’une rotation complète sur 360° ; la maquette permet en plus un éclatement renforcé de 0 à 200. Les échantillons d’isolation, panneaux et finitions ne sont ajoutés ni aux IFC/STEP, ni à la BOM, ni à la liste de débit, ni au ZIP.
+La maquette en couches possède son propre calcul de pièces et son CSV. Les deux vues 3D disposent d’une rotation complète sur 360° ; la maquette permet en plus un éclatement renforcé de 0 à 200. L’isolant est découpé en rectangles correspondant aux vides réels entre les profilés ; les autres couches sont des contours muraux logiques dont les portes et fenêtres sont déduites. Elles ne sont ajoutées ni aux IFC/STEP, ni à la BOM acier, ni à la liste de débit acier, ni au ZIP.
 
 Le prix matière est facultatif. Si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
 
@@ -22,12 +22,13 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 - géométrie de l’enveloppe et des ouvertures ;
 - lisses, montants et cadres d’ouverture avec identifiants stables ;
 - jusqu’à neuf candidats distincts : trois couples de profils Metsec publics × module symétrique, travées uniformes et zones d’ouvertures ;
-- longueur, masse par `longueur × kg/m fabricant`, BOM, débit et coût matière ;
+- longueur, épaisseur nominale, section, surface développée approximative, masse par `longueur × kg/m fabricant`, BOM, débit et coût matière pour chaque profilé acier ;
 - comparaison normalisée et Pareto sur les métriques disponibles ;
 - contrôles de collision, enveloppe, cohérence BOM/géométrie et traçabilité ;
 - exports CSV, JSON, SVG, DXF, STL, STEP AP203 et ZIP ;
 - contrat proposé Bloc 1 → Bloc 2 avec composants, positions, dépendances et statut de libération bloqué.
-- démonstration interactive du montage par couches, avec vues assemblée et éclatée, sans altérer les données de fabrication.
+- calcul des pièces de maquette : rectangles d’isolant ajustés aux cavités, panneaux avec évidements, épaisseur, surface nette, volume et CSV sans prix ;
+- démonstration interactive du montage par couches, avec vues assemblée et éclatée, sans altérer les données de fabrication acier.
 
 ## Entrées
 

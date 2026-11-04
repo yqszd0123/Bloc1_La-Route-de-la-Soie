@@ -58,6 +58,16 @@
       };
     }
     member.massKg = core.math.round(member.lengthMm / 1000 * profile.massKgPerM, 4);
+    member.fabricationGeometry = {
+      webDepthMm: profile.webDepthMm,
+      flange1Mm: profile.flange1Mm,
+      flange2Mm: profile.flange2Mm,
+      lipMm: profile.lipMm || 0,
+      nominalThicknessMm: profile.nominalThicknessMm,
+      developedWidthApproxMm: core.engineering.developedWidthMm(profile),
+      developedAreaApproxM2: core.math.round(core.engineering.developedWidthMm(profile) * member.lengthMm / 1e6, 6),
+      method: 'Flat developed width × cut length; bend radii excluded.'
+    };
     context.members.push(member);
     return member;
   }

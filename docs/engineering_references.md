@@ -1,6 +1,6 @@
 # Références d’ingénierie et traçabilité
 
-Date de vérification : 3 novembre 2026. La source machine autoritative est `data/engineering_sources.json`; ce document en expose la portée humaine.
+Date de vérification : 4 novembre 2026. La source machine autoritative est `data/engineering_sources.json`; ce document en expose la portée humaine.
 
 ## Niveaux de preuve
 
@@ -35,6 +35,20 @@ Les produits sont issus de la table « Metframe Components » de voestalpine Met
 
 Produit de référence : acier galvanisé Z275, limite d’élasticité minimale annoncée 450 N/mm². Densité de recoupement : 7 850 kg/m³ selon l’Orange Book ArcelorMittal. La masse fabricant reste la valeur de calcul principale.
 
+## Produits publics de référence pour la maquette en couches
+
+Ces produits servent uniquement à fournir des épaisseurs traçables au calcul de pièces. Ils ne représentent pas une composition de mur confirmée par Avelis.
+
+| Couche | Référence publique | Épaisseur utilisée | Géométrie calculée |
+|---|---|---:|---|
+| isolant biosourcé | STEICOflex 036 | 100 mm, automatiquement égale au web du montant sélectionné | un rectangle par cavité libre entre acier et ouvertures |
+| panneau extérieur | Knauf AQUAPANEL Cement Board Outdoor | 12,5 mm | un contour logique du mur avec portes/fenêtres déduites |
+| parement intérieur | Placoplatre BA 13 | 12,5 mm | un contour logique du mur avec portes/fenêtres déduites |
+| finition extérieure | EQUITONE tectiva | 8 mm | un contour logique du mur avec portes/fenêtres déduites |
+| finition intérieure | Placomix PRO Finition | 1 mm | une zone continue avec portes/fenêtres déduites |
+
+Le logiciel ne prétend pas qu’un contour logique de grande taille peut être acheté ou posé en une seule plaque. Formats commerciaux, joints, fixations, jeux, compression d’isolant et chutes ne sont pas optimisés.
+
 ## Calculs
 
 ### Masse d’une pièce
@@ -48,6 +62,18 @@ Chaque pièce conserve le profil et la source. La somme des pièces est recoupé
 `masse_approchée_kg/m = largeur_développée_mm × épaisseur_mm × 10⁻⁶ × 7850`
 
 Ce contrôle n’est qu’un test de plausibilité : rayons de pliage et géométrie détaillée du revêtement ne sont pas modélisés. Les tests exigent un écart relatif inférieur à 5 % pour les profils du catalogue.
+
+### Surface développée approximative d’un profilé acier
+
+`surface_m² = (web_mm + semelle_1_mm + semelle_2_mm + 2 × lèvre_mm) × longueur_mm ÷ 10⁶`
+
+Cette information est ajoutée à chaque ligne de fabrication avec l’épaisseur nominale. Elle exclut les rayons de pliage et ne remplace pas un développé de tôlerie détaillé.
+
+### Pièces d’isolant et panneaux de maquette
+
+Le domaine X/Z du mur est découpé par toutes les limites des enveloppes acier et des ouvertures. Les cellules libres adjacentes ayant la même largeur sont fusionnées verticalement ; chaque rectangle restant devient une pièce d’isolant. Les tests interdisent tout recouvrement positif entre une pièce d’isolant et un profilé ou une ouverture.
+
+Pour les autres couches : `surface_nette = longueur_mur × hauteur_mur − somme(surface_portes_et_fenêtres)`. Le volume est `surface_nette_m² × épaisseur_mm ÷ 1000`. Le CSV conserve tous les intrants, les évidements et la source d’épaisseur ; il ne contient aucun prix.
 
 ### Coût matière
 
@@ -85,6 +111,11 @@ Catalogue de profils Avelis, cas de charges, conditions d’appui et de contreve
 - ArcelorMittal : https://orangebook.arcelormittal.com/explanatory-notes/cold-formed-sections/dimensions-of-sections
 - occt-import-js : https://github.com/kovacsv/occt-import-js/tree/0.0.23
 - NIST STEP : https://www.nist.gov/ctl/smart-connected-systems-division/smart-connected-manufacturing-systems-group/step-nist
+- STEICOflex 036 : https://www.steico.com/fileadmin/user_upload/Public_Docs/CONTAINER_en/CONTAINER_en_Technical_Data_Sheets/STEICO_technical-data-sheet_flex-036_CONTAINER_en_i.pdf
+- Knauf AQUAPANEL Outdoor : https://knauf.com/de-DE/p/produkt/aquapanel-r-cement-board-outdoor-12-5-11077_0010
+- Placoplatre BA 13 : https://www.placo.fr/documents/fiche-technique/fichetechnique-placoplatre-ba-13.pdf
+- EQUITONE tectiva : https://www.equitone.com/fr-fr/materiaux-facade/tectiva/
+- Placomix PRO Finition : https://www.placo.fr/documents/fiche-technique/fichetechnique-placomix-pro-finition.pdf
 - Open CASCADE, entités STEP de forme : https://dev.opencascade.org/doc/occt-7.4.0/refman/html/package_rwstepshape.html
 
 Les URLs, dates, chapitres et données brutes supplémentaires sont conservés dans le JSON autoritatif.

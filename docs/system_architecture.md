@@ -21,7 +21,7 @@ packages/core/src/
   rules/                        geometry and release gates
   optimization/                 search, metrics, Pareto and ranking
   export/                       CSV, JSON, SVG, DXF, STL, STEP and ZIP
-  prototype/                    display-only layered wall model
+  prototype/                    layered-prototype geometry, quantities and dedicated CSV
 schemas/                        proposed inter-block JSON contracts
 test-data/ifc/                  real buildingSMART IFC fixture
 tests/                          deterministic automated verification
@@ -43,8 +43,8 @@ engineering-catalog.js → domain → IFC/manual adapters
                       checks → metrics → ranking
                                     ↓
              UI + BOM + cutting list + neutral package
-              ↓ read-only
-      pedagogical layers (never included in exports)
+              ↓ read-only steel candidate
+       cavity/panel part calculator → dedicated prototype CSV
 ```
 
 No UI module performs an engineering calculation. The UI reads objects returned by `packages/core`; exports are also generated from those same objects.
@@ -57,11 +57,13 @@ No UI module performs an engineering calculation. The UI reads objects returned 
 4. IFC and manual inputs call the same candidate generator.
 5. Missing Avelis machine data produces a release block, not a guessed value.
 6. Every exported package includes the engineering data snapshot used for the calculation.
-7. Insulation, boards and finishes in the layered prototype are display-only objects. They cannot mutate a steel candidate or enter any manufacturing export.
+7. Insulation is derived from the free X/Z space between generated steel envelopes and openings; other layers are one logical wall contour with opening cutouts.
+8. Prototype-layer parts cannot mutate a steel candidate or enter IFC, STEP, steel BOM, steel cutting list or the manufacturing ZIP; their only export is a dedicated CSV.
+9. Steel developed area is always marked approximate because bend radii are not represented.
 
 ## Browser visualisation boundary
 
-`canvas-geometry.js` owns the shared projection and polygon renderer. The steel viewer and layered-prototype viewer both consume it, so the project has one rendering foundation instead of duplicated 3D maths. `prototype-view.js` reads the selected steel candidate through `prototype/layered-wall-model.js`; it has no dependency on the download controller or package builder.
+`canvas-geometry.js` owns the shared projection and compound-polygon renderer, including opening holes. The steel viewer and layered-prototype viewer both consume it, so the project has one rendering foundation instead of duplicated 3D maths. `prototype-view.js` reads the selected steel candidate through `prototype/layered-wall-model.js`; the model calculates cavity rectangles, logical sheet contours, areas, volumes and the dedicated CSV without changing the steel package builder.
 
 ## Runtime
 

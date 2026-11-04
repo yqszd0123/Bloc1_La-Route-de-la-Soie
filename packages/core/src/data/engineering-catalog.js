@@ -184,6 +184,95 @@
       "locationInSource": "Examples of section references; Studs / Joists table; Tracks table",
       "applicability": "Public reference product for concept verification only; not confirmed for Avelis."
     },
+    "STEICO_FLEX_036_2025": {
+      "kind": "manufacturer_technical_data",
+      "manufacturer": "STEICO",
+      "title": "STEICOflex 036 — flexible wood-fibre insulation technical data sheet",
+      "url": "https://www.steico.com/fileadmin/user_upload/Public_Docs/CONTAINER_en/CONTAINER_en_Technical_Data_Sheets/STEICO_technical-data-sheet_flex-036_CONTAINER_en_i.pdf",
+      "version": "Container_en_V1_20250523",
+      "retrieved": "2026-11-04",
+      "locationInSource": "Technical data and forms of delivery tables",
+      "rawData": {
+        "supportedThicknessMm": [
+          30,
+          40,
+          50,
+          60,
+          80,
+          90,
+          100,
+          120,
+          140,
+          160,
+          180,
+          200,
+          220,
+          240
+        ],
+        "referenceThicknessMm": 100
+      },
+      "applicability": "Public reference product for cavity-part calculation only; not confirmed for Avelis. The current 100 mm reference matches the selected Metsec stud web depth."
+    },
+    "KNAUF_AQUAPANEL_OUTDOOR_12_5": {
+      "kind": "manufacturer_technical_data",
+      "manufacturer": "Knauf",
+      "title": "AQUAPANEL Cement Board Outdoor 12.5",
+      "url": "https://knauf.com/de-DE/p/produkt/aquapanel-r-cement-board-outdoor-12-5-11077_0010",
+      "retrieved": "2026-11-04",
+      "locationInSource": "Product name and nominal thickness",
+      "rawData": {
+        "referenceThicknessMm": 12.5
+      },
+      "applicability": "Public reference exterior sheathing for the prototype schedule only; not confirmed for Avelis."
+    },
+    "EQUITONE_TECTIVA_8": {
+      "kind": "manufacturer_technical_data",
+      "manufacturer": "EQUITONE",
+      "title": "EQUITONE tectiva fibre-cement facade panel",
+      "url": "https://www.equitone.com/fr-fr/materiaux-facade/tectiva/",
+      "retrieved": "2026-11-04",
+      "locationInSource": "Spécifications techniques — épaisseur 8 mm",
+      "rawData": {
+        "referenceThicknessMm": 8,
+        "stockSizesMm": [
+          [
+            2500,
+            1220
+          ],
+          [
+            3050,
+            1220
+          ]
+        ]
+      },
+      "applicability": "Public reference exterior finish for logical prototype contours only; actual stock-sheet subdivision and fixings are not calculated and the product is not confirmed for Avelis."
+    },
+    "PLACOPLATRE_BA13_2025": {
+      "kind": "manufacturer_technical_data",
+      "manufacturer": "Placo Saint-Gobain",
+      "title": "Placoplatre BA 13 technical sheet",
+      "url": "https://www.placo.fr/documents/fiche-technique/fichetechnique-placoplatre-ba-13.pdf",
+      "versionDate": "2025-07-22",
+      "retrieved": "2026-11-04",
+      "locationInSource": "Description — épaisseur réelle 12,5 mm",
+      "rawData": {
+        "referenceThicknessMm": 12.5
+      },
+      "applicability": "Public reference interior lining for the prototype schedule only; not confirmed for Avelis."
+    },
+    "PLACOMIX_PRO_FINITION_2026": {
+      "kind": "manufacturer_technical_data",
+      "manufacturer": "Placo Saint-Gobain",
+      "title": "Placomix PRO Finition surface compound",
+      "url": "https://www.placo.fr/documents/fiche-technique/fichetechnique-placomix-pro-finition.pdf",
+      "versionDate": "2026-03-31",
+      "retrieved": "2026-11-04",
+      "locationInSource": "Product application; manufacturer guidance limits each finish coat to 1 mm",
+      "rawData": {
+        "referenceThicknessMm": 1
+      },
+      "applicability": "Public reference interior finish layer for area and volume demonstration only; not a rigid cut part and not confirmed for Avelis."
+    },
     "METSEC_SFS_BROCHURE_2024": {
       "kind": "manufacturer_technical_guide",
       "manufacturer": "voestalpine Metsec",
@@ -304,6 +393,52 @@
       "sourceIds": [
         "METSEC_COMPONENTS_2026",
         "ARCELORMITTAL_ORANGE_BOOK_CFS"
+      ]
+    },
+    "prototypeLayers": {
+      "status": "PUBLIC_REFERENCE_COMPOSITION_NOT_CONFIRMED_BY_AVELIS",
+      "scope": "Logical parts schedule for the layered physical prototype; no price, fixings, stock optimization or machine release.",
+      "layers": [
+        {
+          "id": "INSULATION",
+          "label": "Isolant biosourcé",
+          "referenceProduct": "STEICOflex 036",
+          "geometryMode": "STEEL_CAVITY_RECTANGLES",
+          "thicknessRule": "MATCH_SELECTED_STUD_WEB",
+          "sourceId": "STEICO_FLEX_036_2025"
+        },
+        {
+          "id": "EXTERIOR_BOARD",
+          "label": "Panneau extérieur",
+          "referenceProduct": "AQUAPANEL Cement Board Outdoor",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 12.5,
+          "sourceId": "KNAUF_AQUAPANEL_OUTDOOR_12_5"
+        },
+        {
+          "id": "INTERIOR_BOARD",
+          "label": "Parement intérieur",
+          "referenceProduct": "Placoplatre BA 13",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 12.5,
+          "sourceId": "PLACOPLATRE_BA13_2025"
+        },
+        {
+          "id": "EXTERIOR_FINISH",
+          "label": "Finition extérieure",
+          "referenceProduct": "EQUITONE tectiva",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 8,
+          "sourceId": "EQUITONE_TECTIVA_8"
+        },
+        {
+          "id": "INTERIOR_FINISH",
+          "label": "Finition intérieure",
+          "referenceProduct": "Placomix PRO Finition",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 1,
+          "sourceId": "PLACOMIX_PRO_FINITION_2026"
+        }
       ]
     },
     "profiles": [
@@ -456,6 +591,51 @@
         "densityKgM3"
       ],
       "limitation": "Flat-width approximation excludes bend radii and detailed coating geometry; used only as an independent plausibility check."
+    },
+    "steelMemberDevelopedAreaApproxM2": {
+      "formula": "(web_mm + flange_1_mm + flange_2_mm + 2 × lip_mm) × member_length_mm ÷ 1000000",
+      "inputs": [
+        "member.profile.webDepthMm",
+        "member.profile.flange1Mm",
+        "member.profile.flange2Mm",
+        "member.profile.lipMm",
+        "member.lengthMm"
+      ],
+      "unit": "m2",
+      "verification": "Calculated independently for every steel member and exported in the cutting list.",
+      "limitation": "Flat developed-area approximation; bend radii and detailed coating geometry are excluded."
+    },
+    "prototypeInsulationCavityParts": {
+      "formula": "wall X/Z domain minus the projected union of every generated steel-member envelope and every door/window opening; adjacent free atomic cells with equal X span are merged vertically",
+      "inputs": [
+        "candidate.wall",
+        "candidate.members[].bounds",
+        "candidate.wall.openings"
+      ],
+      "unit": "mm",
+      "verification": "Every output rectangle is checked for zero positive-area overlap with steel envelopes and openings; merged area is reconciled with the part sum.",
+      "limitation": "Logical rectangular prototype pieces only; compression allowance, joints, installation clearance and cutting waste are not added."
+    },
+    "prototypePanelNetAreaM2": {
+      "formula": "wall_length_mm × wall_height_mm ÷ 1000000 − sum(opening_width_mm × opening_height_mm ÷ 1000000)",
+      "inputs": [
+        "candidate.wall.lengthMm",
+        "candidate.wall.heightMm",
+        "candidate.wall.openings"
+      ],
+      "unit": "m2",
+      "verification": "Each non-insulation layer carries one logical wall contour and the same number of cutouts as the source wall openings.",
+      "limitation": "One logical prototype contour; commercial stock-sheet subdivision, joints, fasteners and waste are not optimized."
+    },
+    "prototypePartVolumeM3": {
+      "formula": "net_area_m2 × thickness_mm ÷ 1000",
+      "inputs": [
+        "part.netAreaM2",
+        "layer.thicknessMm"
+      ],
+      "unit": "m3",
+      "verification": "Layer totals equal the sum of their individual part volumes.",
+      "limitation": "Reference-product quantity only; no price or procurement claim."
     },
     "materialCostEur": {
       "formula": "steel_mass_kg × 3.09 EUR/kg ex VAT",

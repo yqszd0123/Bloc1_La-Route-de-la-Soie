@@ -78,9 +78,17 @@
       if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
     });
     if (polygon.closed !== false) context.closePath();
+    (polygon.projectedHoles || []).forEach((hole) => {
+      hole.forEach((point, index) => {
+        const x = point.x * transform.scale + transform.offsetX;
+        const y = point.y * transform.scale + transform.offsetY;
+        if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+      });
+      context.closePath();
+    });
     if (polygon.fill) {
       context.fillStyle = polygon.fill;
-      context.fill();
+      context.fill('evenodd');
     }
     if (polygon.stroke) {
       context.strokeStyle = polygon.stroke;
@@ -99,9 +107,11 @@
     const pitch = ((settings.pitchDeg === undefined ? 16 : settings.pitchDeg) * Math.PI) / 180;
     const polygons = primitives.flatMap(expandPrimitive).map((primitive) => {
       const projected = primitive.points.map((point) => projectPoint(point, yaw, pitch));
+      const projectedHoles = (primitive.holes || []).map((hole) => hole.map((point) => projectPoint(point, yaw, pitch)));
       return {
         ...primitive,
         projected,
+        projectedHoles,
         depth: projected.reduce((sum, point) => sum + point.depth, 0) / projected.length + (primitive.orderBias || 0)
       };
     });

@@ -79,7 +79,8 @@
     body.innerHTML = '';
     candidate.members.forEach((member) => {
       const row = document.createElement('tr');
-      row.innerHTML = `<td>${member.id}</td><td>${member.role}</td><td>${member.profile.manufacturerReference}</td><td>${member.lengthMm.toFixed(1)} mm</td><td>${member.massKg.toFixed(3)} kg</td><td>${member.qrPayload}</td>`;
+      const geometry = member.fabricationGeometry;
+      row.innerHTML = `<td>${member.id}</td><td>${member.role}</td><td>${member.profile.manufacturerReference}</td><td>${geometry.webDepthMm} × ${geometry.flange1Mm}/${geometry.flange2Mm} mm</td><td>${member.lengthMm.toFixed(1)} mm</td><td>${geometry.nominalThicknessMm.toFixed(1)} mm</td><td>${geometry.developedAreaApproxM2.toFixed(4)} m²</td><td>${member.massKg.toFixed(3)} kg</td><td>${member.qrPayload}</td>`;
       body.appendChild(row);
     });
     text('manufacturing-count', `${candidate.members.length} pièces · ${candidate.metrics.cutCount} coupes proxy`);
