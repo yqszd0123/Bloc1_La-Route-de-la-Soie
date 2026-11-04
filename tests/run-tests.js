@@ -30,12 +30,12 @@ test('le catalogue navigateur est synchronisé avec la source JSON autoritative'
 });
 
 test('le contrat Bloc 1 vers Bloc 2 embarqué reste synchronisé avec le Markdown autoritatif', () => {
-  const source = fs.readFileSync(path.join(root, 'docs', 'Bloc1_Bloc2_Interface_Schema.md'), 'utf8');
+  const source = fs.readFileSync(path.join(root, 'docs', 'Bloc1_Bloc2_Interface_Schema.md'), 'utf8').replace(/\r\n/g, '\n');
   assert.equal(core.BLOC1_BLOC2_INTERFACE_MD, source);
   assert.match(source, /model_3d_profile_envelopes\.step/);
 });
 
-test('le modèle de domaine est exclusivement acier', () => {
+test('le catalogue acier reste disponible avec ses profils de référence', () => {
   assert.match(core.ENGINEERING_DATA.catalog.material.id, /^REF-METSEC-Z275/);
   assert.ok(core.ENGINEERING_DATA.catalog.profiles.every((profile) => ['STUD_C', 'TRACK_U'].includes(profile.family)));
   assert.ok(core.ENGINEERING_DATA.catalog.profiles.every((profile) => profile.coating === 'Z275'));
@@ -248,7 +248,7 @@ test('le flux IFC et le flux manuel réutilisent le même générateur', () => {
 });
 
 test('les placements, profils centrés et axes X/Y IFC sont normalisés', () => {
-  const transformed = officialIfc
+  const transformed = officialIfc.replace(/\r\n/g, '\n')
     .replace('#47 = IFCAXIS2PLACEMENT3D(#24, $, $);', '#47 = IFCAXIS2PLACEMENT3D(#134, #27, #135);')
     .replace('ENDSEC;\nEND-ISO-10303-21;', '#134 = IFCCARTESIANPOINT((100., 200., 0.));\n#135 = IFCDIRECTION((0., 1., 0.));\nENDSEC;\nEND-ISO-10303-21;');
   const wall = core.ifcImporter.parseIfc(transformed).walls[0];
@@ -504,7 +504,7 @@ test('l’interface présente une étape dédiée et sa limite d’export', () =
   assert.match(html, /plusieurs portes\/fenêtres traite les ouvertures de gauche à droite/);
   assert.ok(html.indexOf('data-page="design-page"') < html.indexOf('data-page="prototype-page"'));
   assert.ok(html.indexOf('data-page="prototype-page"') < html.indexOf('data-page="manufacturing-page"'));
-  assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM acier, ni la liste de débit acier, ni le paquet ZIP/);
+  assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM de l’ossature, ni la liste de débit, ni le paquet ZIP/);
 });
 
 test('le paquet complet contient les interfaces et bloque explicitement la machine', () => {

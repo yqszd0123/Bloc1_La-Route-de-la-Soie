@@ -15,6 +15,23 @@
 
   function validateInput(input, rules) {
     const issues = [];
+    if (!['STEEL', 'TIMBER'].includes(input.frameMaterial)) issues.push(issue('MATERIAL_UNKNOWN', 'error', 'Choisissez une ossature acier ou bois.', 'frameMaterial'));
+    if (new Set(input.openings.map((o) => o.id)).size !== input.openings.length) issues.push(issue('OPENING_IDS_DUPLICATED', 'error', 'Chaque ouverture doit avoir un identifiant unique.', 'openings'));
+    if (input.frameMaterial === 'TIMBER') {
+      if (!rules.profileSets.length) issues.push(issue('TIMBER_SECTION_UNKNOWN', 'error', 'Section de bois inconnue.', 'timberSection'));
+      if (!core.ENGINEERING_DATA.referenceRules.timber.allowedStudSpacingsMm.includes(input.timberStudSpacingMm)) issues.push(issue('TIMBER_SPACING_UNKNOWN', 'error', 'Entraxe bois attendu : 400, 450, 500 ou 600 mm.', 'timberStudSpacingMm'));
+      const width = Math.max(...rules.profileSets.map((set) => core.engineering.getProfile(set.studProfileId).sectionWidthMm));
+      const { topPlateLayers, headerLayers } = rules.timberGeometry;
+      if (input.wallLengthMm <= 2 * width || input.wallHeightMm <= (topPlateLayers + 1) * width) issues.push(issue('TIMBER_ENVELOPE_TOO_SMALL', 'error', 'Le mur doit contenir les lisses et montants de rive.'));
+      input.openings.forEach((o) => {
+        if (o.xMm < 3 * width || o.xMm + o.widthMm > input.wallLengthMm - 3 * width) issues.push(issue('TIMBER_FRAME_EDGE', 'error', 'Réservez 135 mm à chaque rive pour les montants de ce modèle bois.', 'openings'));
+        if (o.sillMm + o.heightMm > input.wallHeightMm - (topPlateLayers + headerLayers) * width) issues.push(issue('TIMBER_HEADER_CLEARANCE', 'error', 'Ce modèle exige 180 mm au-dessus de l’ouverture pour deux traverses et deux lisses hautes.', 'openings'));
+        if (o.type !== 'DOOR' && o.sillMm < 2 * width) issues.push(issue('TIMBER_SILL_CLEARANCE', 'error', 'Réservez au moins 90 mm sous l’ouverture pour la lisse et la traverse d’allège.', 'openings'));
+      });
+      for (let i = 1; i < input.openings.length; i += 1) {
+        if (input.openings[i].xMm - (input.openings[i - 1].xMm + input.openings[i - 1].widthMm) < 4 * width) issues.push(issue('TIMBER_FRAMES_OVERLAP', 'error', 'Réservez 180 mm entre les ouvertures pour leurs cadres bois complets.', 'openings'));
+      }
+    }
     ['wallLengthMm', 'wallHeightMm', 'wallThicknessMm', 'prototypeScale'].forEach((field) => {
       if (!Number.isFinite(input[field]) || input[field] <= 0) {
         issues.push(issue('POSITIVE_NUMBER_REQUIRED', 'error', `${field} must be a positive number.`, field));
@@ -66,8 +83,8 @@
     if (input.sourceMode === 'STEP') {
       issues.push(issue('STEP_ENVELOPE_ONLY', 'review', 'STEP is converted from its checked bounding envelope; semantic openings and manufacturing features are not inferred.', 'sourceMode', 'OCCT_IMPORT_JS_0_0_23'));
     }
-    issues.push(issue('REFERENCE_PRODUCT', 'review', rules.avelisDisclaimer, null, 'METSEC_COMPONENTS_2026'));
-    issues.push(issue('ENGINEERING_REVIEW_REQUIRED', 'review', rules.engineeringDisclaimer, null, 'AFNOR_NF_EN_1993_1_3_NA'));
+    issues.push(issue('REFERENCE_PRODUCT', 'review', rules.avelisDisclaimer, null, input.frameMaterial === 'TIMBER' ? 'SCHILLIGER_TIMBER_C24' : 'METSEC_COMPONENTS_2026'));
+    issues.push(issue('ENGINEERING_REVIEW_REQUIRED', 'review', rules.engineeringDisclaimer, null, input.frameMaterial === 'TIMBER' ? 'TIMBER_POC_ASSEMBLY' : 'AFNOR_NF_EN_1993_1_3_NA'));
     return { valid: issues.every((entry) => entry.severity !== 'error'), issues };
   }
 

@@ -5,32 +5,34 @@
 
   function resolveBudgetPrice(input, rules) {
     const budget = input.budgetInput;
-    if (!(budget && Number.isFinite(budget.valueEurPerKgExVat) && budget.valueEurPerKgExVat > 0)) {
-      rules.budgetPrice.origin = 'HAUTS_DE_FRANCE_REFERENCE_DEFAULT';
-      return;
+    const timber = input.frameMaterial === 'TIMBER';
+    const suffix = timber ? 'M3' : 'Kg';
+    const value = budget['valueEurPer' + suffix + 'ExVat'];
+    rules.budgetPrice.origin = timber ? 'TIMBER_DEMONSTRATION_DEFAULT' : 'HAUTS_DE_FRANCE_REFERENCE_DEFAULT';
+    if (Number.isFinite(value) && value > 0) {
+      const low = budget['lowerEurPer' + suffix + 'ExVat'];
+      const high = budget['upperEurPer' + suffix + 'ExVat'];
+      rules.budgetPrice = {
+        ['valueEurPer' + suffix + 'ExVat']: value,
+        ['lowerReferenceEurPer' + suffix + 'ExVat']: Number.isFinite(low) && low > 0 ? low : value,
+        ['upperReferenceEurPer' + suffix + 'ExVat']: Number.isFinite(high) && high > 0 ? high : value,
+        priceDate: budget.date || null, status: 'USER_COST_SCENARIO', sourceIds: [],
+        method: budget.label || 'User-entered cost scenario',
+        boundary: 'Material price only; scope to be confirmed by the supplied quotation.',
+        limitation: budget.source || 'No source supplied.', origin: 'USER_OVERRIDE'
+      };
     }
-    const low = Number.isFinite(budget.lowerEurPerKgExVat) && budget.lowerEurPerKgExVat > 0
-      ? budget.lowerEurPerKgExVat : budget.valueEurPerKgExVat;
-    const high = Number.isFinite(budget.upperEurPerKgExVat) && budget.upperEurPerKgExVat > 0
-      ? budget.upperEurPerKgExVat : budget.valueEurPerKgExVat;
-    rules.budgetPrice = {
-      valueEurPerKgExVat: budget.valueEurPerKgExVat,
-      lowerReferenceEurPerKgExVat: Math.min(low, high),
-      upperReferenceEurPerKgExVat: Math.max(low, high),
-      priceDate: budget.date || null,
-      status: 'USER_COST_SCENARIO',
-      sourceIds: [],
-      method: budget.label || 'User-entered cost scenario',
-      boundary: 'User-entered material unit price; scope must be confirmed by the user-provided source.',
-      limitation: budget.source || 'No source description supplied.',
-      origin: 'USER_OVERRIDE'
-    };
+    const price = rules.budgetPrice;
+    price.unit = timber ? 'm3' : 'kg';
+    price.valueEurPerUnitExVat = price['valueEurPer' + suffix + 'ExVat'];
+    price.lowerReferenceEurPerUnitExVat = price['lowerReferenceEurPer' + suffix + 'ExVat'];
+    price.upperReferenceEurPerUnitExVat = price['upperReferenceEurPer' + suffix + 'ExVat'];
   }
 
   function runWorkflow(rawInput, ruleOverrides) {
     const started = Date.now();
     const input = core.project.normaliseInput(rawInput);
-    const rules = core.engineering.createRules(ruleOverrides);
+    const rules = core.engineering.createRules(ruleOverrides, input.frameMaterial, input);
     resolveBudgetPrice(input, rules);
     input.resolvedBudgetPrice = core.math.deepClone(rules.budgetPrice);
     const inputValidation = core.inputRules.validateInput(input, rules);

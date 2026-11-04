@@ -1,7 +1,7 @@
 # Bloc 1 → Bloc 2 — contrat d’échange proposé v2.0
 
 **Projet :** Imagine & Make 2026 — Avelis  
-**Périmètre :** panneaux muraux à profils acier formés à froid  
+**Périmètre :** panneaux muraux à ossature acier ou bois (extension §9)
 **Statut :** proposition générée par le logiciel, à valider avec Avelis et Bloc 2.
 
 ## 1. Objectif
@@ -132,3 +132,18 @@ Cette adaptation provient de « FRAMECAD Detailer — Stick Order Assembly Prior
 6. Quel format natif et quel mécanisme d’accusé réception doivent être ajoutés ?
 
 Ce document reprend la structure du modèle fourni par l’équipe, mais remplace entièrement les données fictives historiques par le contrat acier réellement généré par Avelis Wall Flow 2.2. Le schéma d’échange reste versionné `v2.0` tant que ses champs n’ont pas subi de rupture de compatibilité.
+
+## 9. Extension bois — logiciel 2.3
+
+Le contrat v2 accepte également une ossature bois, distinguée par le champ additif
+`frameMaterial: TIMBER`. Les anciens champs acier restent présents pour STEEL.
+
+- Bois : dimensionsMm contient length, sectionWidth et sectionDepth en mm ; timberVolumeM3 et referenceDensityKgM3 accompagnent la masse estimée.
+- La masse bois est le volume rectangulaire multiplié par la densité moyenne de référence 420 kg/m³ (Södra C24).
+- Les dimensions 45 × 95 / 120 / 145 mm proviennent de la fiche Schilliger C24. Ce choix ne dimensionne pas une structure.
+- Pas de tôle, revêtement, épaisseur nominale ni surface développée pour le bois.
+- La source de séquence est TIMBER_POC_ASSEMBLY ; l’opération proposée est CUT_AND_PREPARE_TIMBER_ASSEMBLY. FRAMECAD reste réservé à STEEL.
+- Le budget bois utilise des €/m³. Les 620 €/m³ par défaut sont une hypothèse POC, remplaçable par un devis.
+- Les deux lisses hautes et deux couches de linteau de 45 mm décrivent uniquement une géométrie conceptuelle : charges, portée, contreventement et assemblages restent à dimensionner.
+- Les jeux réservés (135 mm aux rives, 180 mm entre cadres et au-dessus des ouvertures) sont dérivés des pièces de ce modèle, pas des prescriptions réglementaires.
+- La libération machine reste bloquée pour les deux matériaux.

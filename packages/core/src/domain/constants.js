@@ -3,7 +3,7 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  core.VERSION = '2.2.0';
+  core.VERSION = '2.3.0';
 
   core.GRID_STRATEGIES = Object.freeze({
     SYMMETRIC_MODULE: Object.freeze({
@@ -22,10 +22,16 @@
 
   core.DEFAULT_INPUT = Object.freeze({
     sourceMode: 'MANUAL',
+    frameMaterial: 'STEEL',
+    timberSection: 'TIMBER-45-145',
+    timberStudSpacingMm: 600,
+    timberBudgetPriceEurPerM3ExVat: null,
+    timberBudgetLowEurPerM3ExVat: null,
+    timberBudgetHighEurPerM3ExVat: null,
     projectId: 'AVELIS-BLOC1-REF',
     typology: 'REFERENCE',
     wallId: 'WALL-001',
-    version: '2.2',
+    version: '2.3',
     wallLengthMm: 3000,
     wallHeightMm: 2000,
     wallThicknessMm: 300,
@@ -49,8 +55,8 @@
   });
 
   core.PRIORITIES = Object.freeze({
-    balanced: { label: 'Équilibre masse / nombre de pièces / longueurs distinctes', metrics: ['steelMassKg', 'componentCount', 'uniqueLengthCount'] },
-    material: { label: 'Masse minimale', metrics: ['steelMassKg'] },
+    balanced: { label: 'Équilibre masse / nombre de pièces / longueurs distinctes', metrics: ['materialQuantity', 'componentCount', 'uniqueLengthCount'] },
+    material: { label: 'Masse minimale', metrics: ['materialQuantity'] },
     manufacturing: { label: 'Fabrication la plus simple', metrics: ['componentCount', 'uniqueLengthCount', 'cutCount'] }
   });
 
@@ -64,6 +70,13 @@
     window_sill: '#c8873f',
     cripple_stud: '#88a1aa'
   });
+
+  core.TIMBER_ROLE_COLORS = Object.freeze({
+    bottom_plate: '#875431', top_plate: '#875431', boundary_stud: '#ab7545',
+    common_stud: '#c48b50', king_stud: '#986035', jack_stud: '#d39c60',
+    header: '#80502e', sill: '#d7a267', cripple_stud: '#bc8c58'
+  });
+  core.memberColor = (member, material) => ((material === 'TIMBER' ? core.TIMBER_ROLE_COLORS : core.ROLE_COLORS)[member.role] || '#98704a');
 
   core.EXPERIMENT_PRESETS = Object.freeze([
     {

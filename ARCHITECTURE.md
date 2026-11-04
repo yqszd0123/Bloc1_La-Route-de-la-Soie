@@ -2,7 +2,7 @@
 
 ## Source de vérité unique
 
-Les trois modes d’entrée convergent vers le même objet `ProjectInput`, puis vers le même générateur acier. Visualisation, BOM, métriques, comparaison et exports consomment exactement les mêmes composants ; aucune maquette de démonstration parallèle n’est maintenue.
+Les trois modes d’entrée convergent vers le même objet `ProjectInput`, puis vers le générateur du système choisi (acier ou bois). Visualisation, BOM, métriques, comparaison et exports consomment exactement les mêmes composants ; aucune maquette de démonstration parallèle n’est maintenue.
 
 ```text
 IFC ── parseur sémantique ─┐
@@ -17,7 +17,7 @@ Manuel ─ formulaire ───────┘
 | `domain` | normalisation, identité, configuration et provenance |
 | `ifc` | entités STEP physiques IFC, unités, placements et relations |
 | `step` | enveloppe du maillage Open CASCADE et mapping d’axes |
-| `generation` | création des composants acier sémantiques |
+| `generation` | création des composants acier ou bois sémantiques |
 | `rules` | validation des entrées et des candidats |
 | `optimization` | espace exhaustif, métriques, Pareto, classement |
 | `export` | CSV/JSON/SVG/DXF/STL/STEP/ZIP et contrats inter-blocs |

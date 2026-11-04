@@ -392,6 +392,53 @@
         "netMassKg": 2.419
       },
       "applicability": "Retail M100 cross-check; profile is not technically equivalent to Metframe."
+    },
+    "SODRA_C24_DENSITY_2025": {
+      "title": "Södra — Jakie normy musi spełniać drewno klasy C24?",
+      "url": "https://www.sodra.pl/pl/jakie-normy-musi-spelniac-drewno-klasy-c24",
+      "date": "2025-05-08",
+      "rawData": {
+        "meanDensityKgM3": 420,
+        "characteristicDensityKgM3": 350
+      },
+      "limitation": "Mean density for estimated mass, not structural verification."
+    },
+    "SCHILLIGER_TIMBER_C24": {
+      "title": "Schilliger — Bois d’ossature C24, 12/2016",
+      "url": "https://www.schilliger.fr/wp-content/uploads/sites/6/2018/11/4-Bois-dossature.pdf",
+      "date": "2016-12",
+      "rawData": {
+        "sectionsMm": [
+          [
+            45,
+            95
+          ],
+          [
+            45,
+            120
+          ],
+          [
+            45,
+            145
+          ],
+          [
+            45,
+            220
+          ]
+        ]
+      },
+      "limitation": "Published dimensions; actual Avelis products to confirm."
+    },
+    "TIMBER_POC_ASSEMBLY": {
+      "title": "Avelis Wall Flow — timber concept assumptions",
+      "url": null,
+      "status": "DEMONSTRATION_ASSUMPTION",
+      "rawData": {
+        "topPlateLayers": 2,
+        "headerLayers": 2,
+        "budgetEurPerM3": 620
+      },
+      "limitation": "Conceptual ordering and 620 EUR/m³ scenario; no market quote, structural design or machine sequence."
     }
   },
   "catalog": {
@@ -409,7 +456,8 @@
       "sourceIds": [
         "METSEC_COMPONENTS_2026",
         "ARCELORMITTAL_ORANGE_BOOK_CFS"
-      ]
+      ],
+      "frameMaterial": "STEEL"
     },
     "prototypeLayers": {
       "status": "PUBLIC_REFERENCE_COMPOSITION_NOT_CONFIRMED_BY_AVELIS",
@@ -550,7 +598,73 @@
         "studProfileId": "100MF14-70",
         "trackProfileId": "104MF14"
       }
-    ]
+    ],
+    "timber": {
+      "material": {
+        "id": "REF-TIMBER-C24",
+        "frameMaterial": "TIMBER",
+        "label": "Bois de structure C24 — référence",
+        "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+        "densityKgM3": 420,
+        "densitySourceId": "SODRA_C24_DENSITY_2025",
+        "strengthClass": "C24"
+      },
+      "profiles": [
+        {
+          "id": "TIMBER-45-95",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "C24 45 × 95 mm (référence)",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 95,
+          "massKgPerM": 1.7955,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "SCHILLIGER_TIMBER_C24",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
+        },
+        {
+          "id": "TIMBER-45-120",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "C24 45 × 120 mm (référence)",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 120,
+          "massKgPerM": 2.268,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "SCHILLIGER_TIMBER_C24",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
+        },
+        {
+          "id": "TIMBER-45-145",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "C24 45 × 145 mm (référence)",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 145,
+          "massKgPerM": 2.7405,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "SCHILLIGER_TIMBER_C24",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
+        }
+      ],
+      "compatibleProfileSets": [
+        {
+          "id": "TIMBER-45-95",
+          "studProfileId": "TIMBER-45-95",
+          "trackProfileId": "TIMBER-45-95"
+        },
+        {
+          "id": "TIMBER-45-120",
+          "studProfileId": "TIMBER-45-120",
+          "trackProfileId": "TIMBER-45-120"
+        },
+        {
+          "id": "TIMBER-45-145",
+          "studProfileId": "TIMBER-45-145",
+          "trackProfileId": "TIMBER-45-145"
+        }
+      ]
+    }
   },
   "referenceRules": {
     "studSpacingMm": {
@@ -585,6 +699,31 @@
       "method": "Arithmetic mean of 3.32 €/kg (French cold-formed Z275 construction database), 1.00 €/m ÷ 0.55 kg/m = 1.82 €/kg (regional Lille M48 retail cross-check), and 9.96 € ÷ 2.419 kg = 4.12 €/kg (M100 retail cross-check), rounded to 3.09 €/kg ex VAT.",
       "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation.",
       "limitation": "No public statistical average was found for the exact Metframe profiles in Hauts-de-France. This is a transparent regional budget proxy using one local listing and two comparable French references."
+    },
+    "timber": {
+      "allowedStudSpacingsMm": [
+        400,
+        450,
+        500,
+        600
+      ],
+      "defaultStudSpacingMm": 600,
+      "topPlateLayers": 2,
+      "headerLayers": 2,
+      "status": "CONCEPT_ASSUMPTIONS_NOT_STRUCTURALLY_SIZED",
+      "budgetPrice": {
+        "valueEurPerM3ExVat": 620,
+        "lowerReferenceEurPerM3ExVat": 620,
+        "upperReferenceEurPerM3ExVat": 620,
+        "priceDate": null,
+        "status": "DEMONSTRATION_BUDGET_ASSUMPTION",
+        "sourceIds": [
+          "TIMBER_POC_ASSEMBLY"
+        ],
+        "method": "Explicit demonstration scenario; replace with supplier quotation.",
+        "boundary": "Timber only; excludes cuts, connections, labour, taxes and delivery.",
+        "limitation": "620 EUR/m³ is a POC assumption, not a verified current price."
+      }
     }
   },
   "calculations": {

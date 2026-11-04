@@ -26,7 +26,7 @@
         orderBias: -10000
       })),
       ...candidate.members.map((member) => ({
-        type: 'box', bounds: member.bounds, color: colors[member.role] || '#6f8791'
+        type: 'box', bounds: member.bounds, color: global.AvelisCore.memberColor(member, candidate.frameMaterial)
       })),
       ...openings.map((opening) => ({
         type: 'polygon', points: openingPoints(opening, 0), fill: null,

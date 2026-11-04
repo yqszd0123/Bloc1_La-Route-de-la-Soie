@@ -2,11 +2,11 @@
 
 ## Objective
 
-Avelis Wall Flow 2.2 is a dependency-light, browser-first reference implementation of the Bloc 1 chain:
+Avelis Wall Flow 2.3 is a dependency-light, browser-first reference implementation of the Bloc 1 chain:
 
-`IFC or manual geometry → semantic wall → steel panel candidates → checks → quantities and budget → neutral manufacturing package`.
+`IFC, STEP or manual geometry → semantic wall → steel or timber candidates → checks → quantities and budget → neutral manufacturing package`.
 
-The application does not duplicate the workflow for IFC and manual input. Both adapters create the same `WallInput`; every downstream calculation is shared.
+All input adapters create the same `WallInput`. The material selects the catalog, assembly geometry and rules. Grid helpers, candidate search, ranking, quantities and export orchestration are shared. Steel keeps manufacturer kg/m and €/kg; timber uses solid section volumes, estimated density and €/m³. The selected material is explicit in the handover contract.
 
 ## Repository structure
 
@@ -17,7 +17,7 @@ packages/core/src/
   data/                         generated browser copy of the source JSON
   domain/                       project, source catalog and rule-profile model
   ifc/                          ISO 10303-21 parser and IFC semantic adapter
-  generation/                   steel panel and component generation
+  generation/                   shared layout helpers, steel/timber generators and components
   manufacturing/                source-backed component loading/assembly priority
   rules/                        geometry and release gates
   optimization/                 search, metrics, Pareto and ranking
@@ -39,12 +39,12 @@ engineering-catalog.js → domain → IFC/manual adapters
                                     ↓
                               shared WallInput
                                     ↓
-                     steel candidate generation
+                  steel / timber candidate generation
                                     ↓
               assembly priority → checks → metrics → ranking
                                     ↓
              UI + BOM + cutting list + neutral package
-              ↓ read-only steel candidate
+              ↓ read-only frame candidate
        cavity/panel part calculator → dedicated prototype CSV
 ```
 

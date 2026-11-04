@@ -43,7 +43,7 @@
 
   function rectangleFromMember(member, wall) {
     return {
-      kind: 'STEEL_MEMBER', id: member.id,
+      kind: member.material.frameMaterial === 'TIMBER' ? 'TIMBER_MEMBER' : 'STEEL_MEMBER', id: member.id,
       xMin: clip(member.bounds.min.x, 0, wall.lengthMm),
       xMax: clip(member.bounds.max.x, 0, wall.lengthMm),
       zMin: clip(member.bounds.min.z, 0, wall.heightMm),
@@ -132,9 +132,9 @@
   }
 
   function studDepthMm(candidate) {
-    const stud = candidate.members.find((member) => member.profile && member.profile.family === 'STUD_C');
-    if (!stud) throw new Error('Aucun montant C ne permet de déterminer l’épaisseur de l’isolant.');
-    return stud.profile.webDepthMm;
+    const stud = candidate.members.find((member) => member.profile && ['STUD_C', 'TIMBER_RECTANGLE'].includes(member.profile.family));
+    if (!stud) throw new Error('Aucun montant ne permet de déterminer l’épaisseur de l’isolant.');
+    return stud.sectionEnvelope.depthMm;
   }
 
   function cutoutsForWall(wall) {
@@ -230,18 +230,19 @@
 
   function build(candidate, stageId) {
     if (!(candidate && candidate.wall && Array.isArray(candidate.members))) {
-      throw new Error('Un candidat acier valide est requis pour la maquette en couches.');
+      throw new Error('Un candidat valide est requis pour la maquette en couches.');
     }
     const stage = STAGES.find((entry) => entry.id === (stageId || 'COMPLETE'));
     if (!stage) throw new Error(`Étape de maquette inconnue : ${stageId}`);
     const partsSchedule = buildPartsSchedule(candidate);
 
     const layers = stage.includedLayers.map((layerId) => {
-      const visual = LAYERS[layerId];
+      const visual = { ...LAYERS[layerId] };
+      if (layerId === 'FRAME' && candidate.frameMaterial === 'TIMBER') { visual.label = 'Ossature bois générée'; visual.color = '#b47b4e'; }
       if (layerId === 'FRAME') {
         return {
           ...visual,
-          scope: 'STEEL_MANUFACTURING_MODEL',
+          scope: candidate.frameMaterial === 'TIMBER' ? 'TIMBER_MANUFACTURING_MODEL' : 'STEEL_MANUFACTURING_MODEL',
           members: candidate.members.map((member) => ({ id: member.id, role: member.role, bounds: cloneBounds(member.bounds) })),
           surfaces: [], parts: []
         };
@@ -262,6 +263,7 @@
 
     return {
       purpose: 'LAYERED_WALL_PROTOTYPE_PART_SCHEDULE',
+      frameMaterial: candidate.frameMaterial,
       stage: { ...stage, includedLayers: [...stage.includedLayers] },
       wall: {
         id: candidate.wall.id,
@@ -274,10 +276,10 @@
       layers,
       partsSchedule,
       exportPolicy: {
-        status: 'PROTOTYPE_PARTS_CSV_SEPARATE_FROM_STEEL_MANUFACTURING',
+        status: candidate.frameMaterial === 'TIMBER' ? 'PROTOTYPE_PARTS_CSV_SEPARATE_FROM_TIMBER_MANUFACTURING' : 'PROTOTYPE_PARTS_CSV_SEPARATE_FROM_STEEL_MANUFACTURING',
         manufacturingModelUnchanged: true,
         prototypeCsvAvailable: true,
-        message: 'Les pièces de couches sont exportées dans un CSV dédié, sans modifier IFC/STEP, la BOM acier, la liste de débit acier ou le ZIP de fabrication.'
+        message: 'Les pièces de couches sont exportées dans un CSV dédié, sans modifier IFC/STEP, la BOM de l’ossature, la liste de débit ou le ZIP de fabrication.'
       }
     };
   }

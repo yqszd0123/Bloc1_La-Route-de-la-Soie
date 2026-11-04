@@ -3,7 +3,7 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  const METRICS = ['steelMassKg', 'componentCount', 'uniqueLengthCount'];
+  const METRICS = ['materialQuantity', 'componentCount', 'uniqueLengthCount'];
 
   function dominates(first, second) {
     const noWorse = METRICS.every((metric) => first.metrics[metric] <= second.metrics[metric]);
@@ -44,7 +44,7 @@
       };
     });
     markParetoFront(valid);
-    valid.sort((a, b) => a.score - b.score || a.metrics.steelMassKg - b.metrics.steelMassKg || a.id.localeCompare(b.id));
+    valid.sort((a, b) => a.score - b.score || a.metrics.materialQuantity - b.metrics.materialQuantity || a.id.localeCompare(b.id));
     valid.forEach((candidate, index) => { candidate.rank = index + 1; });
     return valid;
   }

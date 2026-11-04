@@ -21,7 +21,7 @@ fs.mkdirSync(path.dirname(engineeringOutputPath), { recursive: true });
 fs.writeFileSync(engineeringOutputPath, body, 'utf8');
 process.stdout.write(`Synchronized ${path.relative(root, engineeringOutputPath)} from ${path.relative(root, sourcePath)}\n`);
 
-const interfaceMarkdown = fs.readFileSync(interfaceSourcePath, 'utf8');
+const interfaceMarkdown = fs.readFileSync(interfaceSourcePath, 'utf8').replace(/\r\n/g, '\n');
 const interfaceBody = `/* GENERATED FILE — do not edit directly.\n * Authoritative source: docs/Bloc1_Bloc2_Interface_Schema.md\n * Regenerate with: npm run sync-data\n */\n(function initBloc1Bloc2Interface(global) {\n  'use strict';\n  const core = global.AvelisCore = global.AvelisCore || {};\n  core.BLOC1_BLOC2_INTERFACE_MD = ${JSON.stringify(interfaceMarkdown)};\n})(typeof globalThis !== 'undefined' ? globalThis : window);\n`;
 fs.writeFileSync(interfaceOutputPath, interfaceBody, 'utf8');
 process.stdout.write(`Synchronized ${path.relative(root, interfaceOutputPath)} from ${path.relative(root, interfaceSourcePath)}\n`);

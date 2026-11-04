@@ -6,9 +6,9 @@
   const requiredNumbers = [
     'wallLengthMm', 'wallHeightMm', 'wallThicknessMm',
     'windowWidthMm', 'windowHeightMm', 'windowXMm', 'sillHeightMm',
-    'doorWidthMm', 'doorHeightMm', 'doorXMm', 'prototypeScale'
+    'doorWidthMm', 'doorHeightMm', 'doorXMm', 'prototypeScale', 'timberStudSpacingMm'
   ];
-  const optionalNumbers = ['budgetPriceEurPerKgExVat', 'budgetLowEurPerKgExVat', 'budgetHighEurPerKgExVat'];
+  const optionalNumbers = ['budgetPriceEurPerKgExVat', 'budgetLowEurPerKgExVat', 'budgetHighEurPerKgExVat', 'timberBudgetPriceEurPerM3ExVat', 'timberBudgetLowEurPerM3ExVat', 'timberBudgetHighEurPerM3ExVat'];
 
   function setFormValues(form, values) {
     Object.keys(values).forEach((key) => {
@@ -19,6 +19,7 @@
     });
     syncOpeningFields(form, 'window');
     syncOpeningFields(form, 'door');
+    app.materialController.sync(form);
   }
 
   function syncOpeningFields(form, kind) {
@@ -59,7 +60,7 @@
       button.textContent = preset.label;
       button.title = `Provenance : ${preset.provenance}`;
       button.addEventListener('click', () => {
-        setFormValues(form, Object.assign({}, core.DEFAULT_INPUT, preset.input));
+        setFormValues(form, Object.assign({}, core.DEFAULT_INPUT, preset.input, app.materialController.settings(form)));
         onApply();
       });
       container.appendChild(button);
@@ -78,7 +79,7 @@
     if (validation.valid) {
       const message = document.createElement('div');
       message.className = 'message message--success';
-      message.textContent = 'Géométrie cohérente : génération acier, métrés, comparaison et exports recalculés.';
+      message.textContent = 'Géométrie cohérente : génération de l’ossature, métrés, comparaison et exports recalculés.';
       container.appendChild(message);
     }
   }

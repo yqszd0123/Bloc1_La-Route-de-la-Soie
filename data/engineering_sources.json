@@ -12,7 +12,11 @@
       "title": "Présentation générique Challenge Imagine & Make 2026 — Avelis",
       "location": "0-Presentation-generique_Challenge-Imagine-Make-2026_Avelis.pdf",
       "access": "internal_user_supplied",
-      "usedFor": ["Avelis context", "1D/2D/3D product scope", "Torcy industrial ambition"],
+      "usedFor": [
+        "Avelis context",
+        "1D/2D/3D product scope",
+        "Torcy industrial ambition"
+      ],
       "publicUseRestriction": "Do not republish confidential content without Avelis approval."
     },
     "AVELIS_BLOC1_2026": {
@@ -20,7 +24,12 @@
       "title": "Fiche Bloc 1 — Conception, Challenge Imagine & Make 2026 — Avelis",
       "location": "Fiche_Bloc-1-Conception_Challenge-Imagine-Make-2026_Avelis.pdf",
       "access": "internal_user_supplied",
-      "usedFor": ["digital continuity", "DfMA", "BOM and machine-data handover", "interfaces with production and logistics"],
+      "usedFor": [
+        "digital continuity",
+        "DfMA",
+        "BOM and machine-data handover",
+        "interfaces with production and logistics"
+      ],
       "publicUseRestriction": "Do not republish confidential content without Avelis approval."
     },
     "ISO_16739_1_2024": {
@@ -67,13 +76,35 @@
       "unit": "METRE",
       "versionDate": "2026-11-03",
       "locationInProject": "test-data/ifc/partie1-four-walls.ifc",
-      "usedFor": ["centred profile-origin normalization", "local X/Y wall-axis normalization", "multi-wall variant-generation regression"],
+      "usedFor": [
+        "centred profile-origin normalization",
+        "local X/Y wall-axis normalization",
+        "multi-wall variant-generation regression"
+      ],
       "verifiedResults": {
         "wallCount": 4,
-        "southNorthMm": [10000, 2500, 300],
-        "westEastMm": [1900, 2500, 300],
-        "southWindowMm": { "x": 1750, "sill": 500, "width": 1500, "height": 1500 },
-        "southDoorMm": { "x": 7100, "sill": 0, "width": 800, "height": 1750 },
+        "southNorthMm": [
+          10000,
+          2500,
+          300
+        ],
+        "westEastMm": [
+          1900,
+          2500,
+          300
+        ],
+        "southWindowMm": {
+          "x": 1750,
+          "sill": 500,
+          "width": 1500,
+          "height": 1500
+        },
+        "southDoorMm": {
+          "x": 7100,
+          "sill": 0,
+          "width": 800,
+          "height": 1750
+        },
         "validCandidatesPerWall": 6
       },
       "applicability": "Internal interoperability regression fixture only; not a standards source or engineering-parameter source."
@@ -86,7 +117,12 @@
       "license": "LGPL-2.1 with Open CASCADE exception; wrapper license retained in third_party",
       "retrieved": "2026-11-03",
       "locationInProject": "third_party/occt-import-js",
-      "usedFor": ["Browser and Node STEP parsing", "tessellated geometry extraction", "real STEP integration test", "round-trip validation of generated STEP output"],
+      "usedFor": [
+        "Browser and Node STEP parsing",
+        "tessellated geometry extraction",
+        "real STEP integration test",
+        "round-trip validation of generated STEP output"
+      ],
       "applicability": "Geometry interoperability only; does not infer IFC semantics or Avelis manufacturing operations."
     },
     "NIST_STEP_PART21": {
@@ -96,7 +132,11 @@
       "identifier": "ISO 10303-21",
       "region": "International",
       "locationInSource": "Part 21 clear-text exchange structure; HEADER and DATA sections; entity instances and schema declaration",
-      "usedFor": ["STEP output structure", "AP203 CONFIG_CONTROL_DESIGN header", "traceable neutral CAD exchange"],
+      "usedFor": [
+        "STEP output structure",
+        "AP203 CONFIG_CONTROL_DESIGN header",
+        "traceable neutral CAD exchange"
+      ],
       "applicability": "The exporter emits millimetre MANIFOLD_SOLID_BREP profile envelopes with explicit planar faces and edges. It does not claim detailed C/U profile geometry, PMI or machine readiness."
     },
     "OCCT_IMPORT_JS_CUBE_STEP": {
@@ -105,15 +145,26 @@
       "url": "https://github.com/kovacsv/occt-import-js/blob/0.0.23/test/testfiles/simple-basic-cube/cube.stp",
       "version": "0.0.23",
       "locationInProject": "test-data/step/cube.stp",
-      "usedFor": ["End-to-end STEP parser verification", "bounding-box calculation cross-check"],
-      "knownGeometry": { "xMm": 300, "yMm": 300, "zMm": 300 }
+      "usedFor": [
+        "End-to-end STEP parser verification",
+        "bounding-box calculation cross-check"
+      ],
+      "knownGeometry": {
+        "xMm": 300,
+        "yMm": 300,
+        "zMm": 300
+      }
     },
     "BLOC1_BLOC2_INTERFACE_TEMPLATE_2026": {
       "kind": "user_supplied_interface_template",
       "title": "Bloc 1 → Bloc 2 — Exemple de schéma d’échange CSV / JSON",
       "location": "Bloc1_Bloc2_Interface_Schema.md",
       "access": "internal_user_supplied",
-      "usedFor": ["Interface document structure", "field dictionary", "validation and responsibility split"],
+      "usedFor": [
+        "Interface document structure",
+        "field dictionary",
+        "validation and responsibility split"
+      ],
       "applicability": "Template structure only. Its fictional legacy material values are not imported; this project defines a steel-specific v2 contract from actual program outputs."
     },
     "FRAMECAD_ASSEMBLY_PRIORITY_2025": {
@@ -124,7 +175,11 @@
       "location": "FRAMECAD-Detailer-Stick-Order-Assembly-Priority.pdf",
       "access": "internal_user_supplied",
       "locationInSource": "Sections 1.3 (solid wall frames), page 2; 1.4 (wall frames with openings), page 3",
-      "usedFor": ["continuous component loading order", "solid-wall role priority", "wall-with-openings role priority"],
+      "usedFor": [
+        "continuous component loading order",
+        "solid-wall role priority",
+        "wall-with-openings role priority"
+      ],
       "applicability": "Reference sequence for FRAMECAD Detailer/RFY workflows. The project applies the published role priority to its generated members and extends multiple openings from left to right. It does not claim RFY export or compatibility with Avelis/Torcy equipment.",
       "publicUseRestriction": "User-supplied document marked confidential by FRAMECAD; do not redistribute the PDF. Only the implemented ordering rule and citation metadata are retained."
     },
@@ -146,7 +201,25 @@
       "version": "Container_en_V1_20250523",
       "retrieved": "2026-11-04",
       "locationInSource": "Technical data and forms of delivery tables",
-      "rawData": { "supportedThicknessMm": [30, 40, 50, 60, 80, 90, 100, 120, 140, 160, 180, 200, 220, 240], "referenceThicknessMm": 100 },
+      "rawData": {
+        "supportedThicknessMm": [
+          30,
+          40,
+          50,
+          60,
+          80,
+          90,
+          100,
+          120,
+          140,
+          160,
+          180,
+          200,
+          220,
+          240
+        ],
+        "referenceThicknessMm": 100
+      },
       "applicability": "Public reference product for cavity-part calculation only; not confirmed for Avelis. The current 100 mm reference matches the selected Metsec stud web depth."
     },
     "KNAUF_AQUAPANEL_OUTDOOR_12_5": {
@@ -156,7 +229,9 @@
       "url": "https://knauf.com/de-DE/p/produkt/aquapanel-r-cement-board-outdoor-12-5-11077_0010",
       "retrieved": "2026-11-04",
       "locationInSource": "Product name and nominal thickness",
-      "rawData": { "referenceThicknessMm": 12.5 },
+      "rawData": {
+        "referenceThicknessMm": 12.5
+      },
       "applicability": "Public reference exterior sheathing for the prototype schedule only; not confirmed for Avelis."
     },
     "EQUITONE_TECTIVA_8": {
@@ -166,7 +241,19 @@
       "url": "https://www.equitone.com/fr-fr/materiaux-facade/tectiva/",
       "retrieved": "2026-11-04",
       "locationInSource": "Spécifications techniques — épaisseur 8 mm",
-      "rawData": { "referenceThicknessMm": 8, "stockSizesMm": [[2500, 1220], [3050, 1220]] },
+      "rawData": {
+        "referenceThicknessMm": 8,
+        "stockSizesMm": [
+          [
+            2500,
+            1220
+          ],
+          [
+            3050,
+            1220
+          ]
+        ]
+      },
       "applicability": "Public reference exterior finish for logical prototype contours only; actual stock-sheet subdivision and fixings are not calculated and the product is not confirmed for Avelis."
     },
     "PLACOPLATRE_BA13_2025": {
@@ -177,7 +264,9 @@
       "versionDate": "2025-07-22",
       "retrieved": "2026-11-04",
       "locationInSource": "Description — épaisseur réelle 12,5 mm",
-      "rawData": { "referenceThicknessMm": 12.5 },
+      "rawData": {
+        "referenceThicknessMm": 12.5
+      },
       "applicability": "Public reference interior lining for the prototype schedule only; not confirmed for Avelis."
     },
     "PLACOMIX_PRO_FINITION_2026": {
@@ -188,7 +277,9 @@
       "versionDate": "2026-03-31",
       "retrieved": "2026-11-04",
       "locationInSource": "Product application; manufacturer guidance limits each finish coat to 1 mm",
-      "rawData": { "referenceThicknessMm": 1 },
+      "rawData": {
+        "referenceThicknessMm": 1
+      },
       "applicability": "Public reference interior finish layer for area and volume demonstration only; not a rigid cut part and not confirmed for Avelis."
     },
     "METSEC_SFS_BROCHURE_2024": {
@@ -250,7 +341,10 @@
       "retrieved": "2026-11-03",
       "region": "France",
       "locationInSource": "Item mt07ali050c",
-      "rawData": { "priceEurPerKgExVat": 3.32, "product": "DX52D+Z275MA cold-formed galvanized steel, C/U/Z/omega profiles" },
+      "rawData": {
+        "priceEurPerKgExVat": 3.32,
+        "product": "DX52D+Z275MA cold-formed galvanized steel, C/U/Z/omega profiles"
+      },
       "applicability": "Closest public structural light-gauge product reference; not an Avelis quotation."
     },
     "RNOV_WAVRIN_M48_PRICE_2026": {
@@ -260,7 +354,10 @@
       "retrieved": "2026-11-03",
       "region": "Hauts-de-France",
       "locationInSource": "Montant M48 34-36 LG 3000 mm",
-      "rawData": { "priceEurPerMExVat": 1.0, "lengthM": 3.0 },
+      "rawData": {
+        "priceEurPerMExVat": 1.0,
+        "lengthM": 3.0
+      },
       "applicability": "Regional market cross-check for a lighter non-structural M48 profile; not technically equivalent to Metframe."
     },
     "ISOLAVA_M_PROFILE_2026": {
@@ -269,7 +366,10 @@
       "url": "https://isolava.fr/wp-content/uploads/2024/10/04_Fiche-technique-PROFILE-M_MONTANT.pdf",
       "retrieved": "2026-11-03",
       "locationInSource": "Weight per metre table",
-      "rawData": { "m48MassKgPerM": 0.55, "m100MassKgPerM": 0.79 },
+      "rawData": {
+        "m48MassKgPerM": 0.55,
+        "m100MassKgPerM": 0.79
+      },
       "applicability": "Used only to normalize public metre prices to €/kg for market cross-checking."
     },
     "LITT_M100_PRICE_2026": {
@@ -279,8 +379,59 @@
       "retrieved": "2026-11-03",
       "region": "France",
       "locationInSource": "Public product price and technical data",
-      "rawData": { "priceEurExVat": 9.96, "lengthM": 2.99, "netMassKg": 2.419 },
+      "rawData": {
+        "priceEurExVat": 9.96,
+        "lengthM": 2.99,
+        "netMassKg": 2.419
+      },
       "applicability": "Retail M100 cross-check; profile is not technically equivalent to Metframe."
+    },
+    "SODRA_C24_DENSITY_2025": {
+      "title": "Södra — Jakie normy musi spełniać drewno klasy C24?",
+      "url": "https://www.sodra.pl/pl/jakie-normy-musi-spelniac-drewno-klasy-c24",
+      "date": "2025-05-08",
+      "rawData": {
+        "meanDensityKgM3": 420,
+        "characteristicDensityKgM3": 350
+      },
+      "limitation": "Mean density for estimated mass, not structural verification."
+    },
+    "SCHILLIGER_TIMBER_C24": {
+      "title": "Schilliger — Bois d’ossature C24, 12/2016",
+      "url": "https://www.schilliger.fr/wp-content/uploads/sites/6/2018/11/4-Bois-dossature.pdf",
+      "date": "2016-12",
+      "rawData": {
+        "sectionsMm": [
+          [
+            45,
+            95
+          ],
+          [
+            45,
+            120
+          ],
+          [
+            45,
+            145
+          ],
+          [
+            45,
+            220
+          ]
+        ]
+      },
+      "limitation": "Published dimensions; actual Avelis products to confirm."
+    },
+    "TIMBER_POC_ASSEMBLY": {
+      "title": "Avelis Wall Flow — timber concept assumptions",
+      "url": null,
+      "status": "DEMONSTRATION_ASSUMPTION",
+      "rawData": {
+        "topPlateLayers": 2,
+        "headerLayers": 2,
+        "budgetEurPerM3": 620
+      },
+      "limitation": "Conceptual ordering and 620 EUR/m³ scenario; no market quote, structural design or machine sequence."
     }
   },
   "catalog": {
@@ -295,17 +446,56 @@
         "nominalCoatingAllowanceMm": 0.04,
         "note": "ArcelorMittal Orange Book states 0.02 mm coating per face for standard Z275 and references EN 1993-1-3 for core thickness."
       },
-      "sourceIds": ["METSEC_COMPONENTS_2026", "ARCELORMITTAL_ORANGE_BOOK_CFS"]
+      "sourceIds": [
+        "METSEC_COMPONENTS_2026",
+        "ARCELORMITTAL_ORANGE_BOOK_CFS"
+      ],
+      "frameMaterial": "STEEL"
     },
     "prototypeLayers": {
       "status": "PUBLIC_REFERENCE_COMPOSITION_NOT_CONFIRMED_BY_AVELIS",
       "scope": "Logical parts schedule for the layered physical prototype; no price, fixings, stock optimization or machine release.",
       "layers": [
-        { "id": "INSULATION", "label": "Isolant biosourcé", "referenceProduct": "STEICOflex 036", "geometryMode": "STEEL_CAVITY_RECTANGLES", "thicknessRule": "MATCH_SELECTED_STUD_WEB", "sourceId": "STEICO_FLEX_036_2025" },
-        { "id": "EXTERIOR_BOARD", "label": "Panneau extérieur", "referenceProduct": "AQUAPANEL Cement Board Outdoor", "geometryMode": "WALL_CONTOUR_WITH_OPENINGS", "referenceThicknessMm": 12.5, "sourceId": "KNAUF_AQUAPANEL_OUTDOOR_12_5" },
-        { "id": "INTERIOR_BOARD", "label": "Parement intérieur", "referenceProduct": "Placoplatre BA 13", "geometryMode": "WALL_CONTOUR_WITH_OPENINGS", "referenceThicknessMm": 12.5, "sourceId": "PLACOPLATRE_BA13_2025" },
-        { "id": "EXTERIOR_FINISH", "label": "Finition extérieure", "referenceProduct": "EQUITONE tectiva", "geometryMode": "WALL_CONTOUR_WITH_OPENINGS", "referenceThicknessMm": 8, "sourceId": "EQUITONE_TECTIVA_8" },
-        { "id": "INTERIOR_FINISH", "label": "Finition intérieure", "referenceProduct": "Placomix PRO Finition", "geometryMode": "WALL_CONTOUR_WITH_OPENINGS", "referenceThicknessMm": 1, "sourceId": "PLACOMIX_PRO_FINITION_2026" }
+        {
+          "id": "INSULATION",
+          "label": "Isolant biosourcé",
+          "referenceProduct": "STEICOflex 036",
+          "geometryMode": "STEEL_CAVITY_RECTANGLES",
+          "thicknessRule": "MATCH_SELECTED_STUD_WEB",
+          "sourceId": "STEICO_FLEX_036_2025"
+        },
+        {
+          "id": "EXTERIOR_BOARD",
+          "label": "Panneau extérieur",
+          "referenceProduct": "AQUAPANEL Cement Board Outdoor",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 12.5,
+          "sourceId": "KNAUF_AQUAPANEL_OUTDOOR_12_5"
+        },
+        {
+          "id": "INTERIOR_BOARD",
+          "label": "Parement intérieur",
+          "referenceProduct": "Placoplatre BA 13",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 12.5,
+          "sourceId": "PLACOPLATRE_BA13_2025"
+        },
+        {
+          "id": "EXTERIOR_FINISH",
+          "label": "Finition extérieure",
+          "referenceProduct": "EQUITONE tectiva",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 8,
+          "sourceId": "EQUITONE_TECTIVA_8"
+        },
+        {
+          "id": "INTERIOR_FINISH",
+          "label": "Finition intérieure",
+          "referenceProduct": "Placomix PRO Finition",
+          "geometryMode": "WALL_CONTOUR_WITH_OPENINGS",
+          "referenceThicknessMm": 1,
+          "sourceId": "PLACOMIX_PRO_FINITION_2026"
+        }
       ]
     },
     "profiles": [
@@ -386,10 +576,88 @@
       }
     ],
     "compatibleProfileSets": [
-      { "id": "MF-12-50", "studProfileId": "100MF12-50", "trackProfileId": "104MF12" },
-      { "id": "MF-12-70", "studProfileId": "100MF12-70", "trackProfileId": "104MF12" },
-      { "id": "MF-14-70", "studProfileId": "100MF14-70", "trackProfileId": "104MF14" }
-    ]
+      {
+        "id": "MF-12-50",
+        "studProfileId": "100MF12-50",
+        "trackProfileId": "104MF12"
+      },
+      {
+        "id": "MF-12-70",
+        "studProfileId": "100MF12-70",
+        "trackProfileId": "104MF12"
+      },
+      {
+        "id": "MF-14-70",
+        "studProfileId": "100MF14-70",
+        "trackProfileId": "104MF14"
+      }
+    ],
+    "timber": {
+      "material": {
+        "id": "REF-TIMBER-C24",
+        "frameMaterial": "TIMBER",
+        "label": "Bois de structure C24 — référence",
+        "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
+        "densityKgM3": 420,
+        "densitySourceId": "SODRA_C24_DENSITY_2025",
+        "strengthClass": "C24"
+      },
+      "profiles": [
+        {
+          "id": "TIMBER-45-95",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "C24 45 × 95 mm (référence)",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 95,
+          "massKgPerM": 1.7955,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "SCHILLIGER_TIMBER_C24",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
+        },
+        {
+          "id": "TIMBER-45-120",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "C24 45 × 120 mm (référence)",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 120,
+          "massKgPerM": 2.268,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "SCHILLIGER_TIMBER_C24",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
+        },
+        {
+          "id": "TIMBER-45-145",
+          "family": "TIMBER_RECTANGLE",
+          "frameMaterial": "TIMBER",
+          "manufacturerReference": "C24 45 × 145 mm (référence)",
+          "sectionWidthMm": 45,
+          "sectionDepthMm": 145,
+          "massKgPerM": 2.7405,
+          "massBasis": "RECTANGULAR_VOLUME_TIMES_REFERENCE_DENSITY",
+          "sourceId": "SCHILLIGER_TIMBER_C24",
+          "densitySourceId": "SODRA_C24_DENSITY_2025"
+        }
+      ],
+      "compatibleProfileSets": [
+        {
+          "id": "TIMBER-45-95",
+          "studProfileId": "TIMBER-45-95",
+          "trackProfileId": "TIMBER-45-95"
+        },
+        {
+          "id": "TIMBER-45-120",
+          "studProfileId": "TIMBER-45-120",
+          "trackProfileId": "TIMBER-45-120"
+        },
+        {
+          "id": "TIMBER-45-145",
+          "studProfileId": "TIMBER-45-145",
+          "trackProfileId": "TIMBER-45-145"
+        }
+      ]
+    }
   },
   "referenceRules": {
     "studSpacingMm": {
@@ -424,79 +692,180 @@
       "method": "Arithmetic mean of 3.32 €/kg (French cold-formed Z275 construction database), 1.00 €/m ÷ 0.55 kg/m = 1.82 €/kg (regional Lille M48 retail cross-check), and 9.96 € ÷ 2.419 kg = 4.12 €/kg (M100 retail cross-check), rounded to 3.09 €/kg ex VAT.",
       "boundary": "Material supply only, ex VAT. Excludes delivery, minimum-order effects, fasteners, fabrication, waste, labour and installation.",
       "limitation": "No public statistical average was found for the exact Metframe profiles in Hauts-de-France. This is a transparent regional budget proxy using one local listing and two comparable French references."
+    },
+    "timber": {
+      "allowedStudSpacingsMm": [
+        400,
+        450,
+        500,
+        600
+      ],
+      "defaultStudSpacingMm": 600,
+      "topPlateLayers": 2,
+      "headerLayers": 2,
+      "status": "CONCEPT_ASSUMPTIONS_NOT_STRUCTURALLY_SIZED",
+      "budgetPrice": {
+        "valueEurPerM3ExVat": 620,
+        "lowerReferenceEurPerM3ExVat": 620,
+        "upperReferenceEurPerM3ExVat": 620,
+        "priceDate": null,
+        "status": "DEMONSTRATION_BUDGET_ASSUMPTION",
+        "sourceIds": [
+          "TIMBER_POC_ASSEMBLY"
+        ],
+        "method": "Explicit demonstration scenario; replace with supplier quotation.",
+        "boundary": "Timber only; excludes cuts, connections, labour, taxes and delivery.",
+        "limitation": "620 EUR/m³ is a POC assumption, not a verified current price."
+      }
     }
   },
   "calculations": {
     "memberMassKg": {
       "formula": "length_mm / 1000 × manufacturer_mass_kg_per_m",
-      "inputs": ["member.lengthMm", "profile.massKgPerM"],
+      "inputs": [
+        "member.lengthMm",
+        "profile.massKgPerM"
+      ],
       "verification": "Sum by member is cross-checked against BOM grouped length × mass per metre."
     },
     "densityCrossCheckKgPerM": {
       "formula": "developed_width_mm × nominal_thickness_mm × 1e-6 × 7850",
-      "inputs": ["webDepthMm", "flange1Mm", "flange2Mm", "lipMm", "nominalThicknessMm", "densityKgM3"],
+      "inputs": [
+        "webDepthMm",
+        "flange1Mm",
+        "flange2Mm",
+        "lipMm",
+        "nominalThicknessMm",
+        "densityKgM3"
+      ],
       "limitation": "Flat-width approximation excludes bend radii and detailed coating geometry; used only as an independent plausibility check."
     },
     "steelMemberDevelopedAreaApproxM2": {
       "formula": "(web_mm + flange_1_mm + flange_2_mm + 2 × lip_mm) × member_length_mm ÷ 1000000",
-      "inputs": ["member.profile.webDepthMm", "member.profile.flange1Mm", "member.profile.flange2Mm", "member.profile.lipMm", "member.lengthMm"],
+      "inputs": [
+        "member.profile.webDepthMm",
+        "member.profile.flange1Mm",
+        "member.profile.flange2Mm",
+        "member.profile.lipMm",
+        "member.lengthMm"
+      ],
       "unit": "m2",
       "verification": "Calculated independently for every steel member and exported in the cutting list.",
       "limitation": "Flat developed-area approximation; bend radii and detailed coating geometry are excluded."
     },
     "prototypeInsulationCavityParts": {
       "formula": "wall X/Z domain minus the projected union of every generated steel-member envelope and every door/window opening; adjacent free atomic cells with equal X span are merged vertically",
-      "inputs": ["candidate.wall", "candidate.members[].bounds", "candidate.wall.openings"],
+      "inputs": [
+        "candidate.wall",
+        "candidate.members[].bounds",
+        "candidate.wall.openings"
+      ],
       "unit": "mm",
       "verification": "Every output rectangle is checked for zero positive-area overlap with steel envelopes and openings; merged area is reconciled with the part sum.",
       "limitation": "Logical rectangular prototype pieces only; compression allowance, joints, installation clearance and cutting waste are not added."
     },
     "prototypePanelNetAreaM2": {
       "formula": "wall_length_mm × wall_height_mm ÷ 1000000 − sum(opening_width_mm × opening_height_mm ÷ 1000000)",
-      "inputs": ["candidate.wall.lengthMm", "candidate.wall.heightMm", "candidate.wall.openings"],
+      "inputs": [
+        "candidate.wall.lengthMm",
+        "candidate.wall.heightMm",
+        "candidate.wall.openings"
+      ],
       "unit": "m2",
       "verification": "Each non-insulation layer carries one logical wall contour and the same number of cutouts as the source wall openings.",
       "limitation": "One logical prototype contour; commercial stock-sheet subdivision, joints, fasteners and waste are not optimized."
     },
     "prototypePartVolumeM3": {
       "formula": "net_area_m2 × thickness_mm ÷ 1000",
-      "inputs": ["part.netAreaM2", "layer.thicknessMm"],
+      "inputs": [
+        "part.netAreaM2",
+        "layer.thicknessMm"
+      ],
       "unit": "m3",
       "verification": "Layer totals equal the sum of their individual part volumes.",
       "limitation": "Reference-product quantity only; no price or procurement claim."
     },
     "assemblyPriorityOrder": {
       "formula": "sort actual generated members by FRAMECAD wall-type role priority; for multiple openings, process openings by increasing x coordinate; skip member types absent from the generated model; renumber every remaining member continuously from 1",
-      "inputs": ["candidate.wall.openings", "candidate.members[].role", "candidate.members[].openingId", "candidate.members[].position"],
+      "inputs": [
+        "candidate.wall.openings",
+        "candidate.members[].role",
+        "candidate.members[].openingId",
+        "candidate.members[].position"
+      ],
       "unit": "integer sequence",
-      "sourceIds": ["FRAMECAD_ASSEMBLY_PRIORITY_2025"],
+      "sourceIds": [
+        "FRAMECAD_ASSEMBLY_PRIORITY_2025"
+      ],
       "verification": "Orders must be continuous from 1 to component count, unique, complete, and identical in the Fabrication table, cutting list, machine-neutral CSV, labels CSV and manufacturing handover JSON.",
       "limitation": "Deterministic reference loading/assembly order only. The project does not generate RFY, machine paths, cycle times or an Avelis-approved production sequence."
     },
     "materialCostEur": {
       "formula": "steel_mass_kg × 3.09 EUR/kg ex VAT",
       "status": "COMPUTED_AS_HAUTS_DE_FRANCE_BUDGET_PROXY",
-      "inputs": ["steelMassKg", "referenceRules.hautsDeFranceSteelBudgetPrice.valueEurPerKgExVat"],
+      "inputs": [
+        "steelMassKg",
+        "referenceRules.hautsDeFranceSteelBudgetPrice.valueEurPerKgExVat"
+      ],
       "rangeFormula": "steel_mass_kg × [1.82, 4.12] EUR/kg ex VAT",
       "verification": "Program reproduces all three normalized source prices and their arithmetic mean."
     },
     "stepProfileEnvelopeGeometry": {
       "formula": "one closed six-face MANIFOLD_SOLID_BREP box per generated member bounds[min,max]",
-      "inputs": ["member.id", "member.bounds.min", "member.bounds.max"],
+      "inputs": [
+        "member.id",
+        "member.bounds.min",
+        "member.bounds.max"
+      ],
       "units": "millimetre",
-      "sourceIds": ["NIST_STEP_PART21", "OCCT_IMPORT_JS_0_0_23"],
+      "sourceIds": [
+        "NIST_STEP_PART21",
+        "OCCT_IMPORT_JS_0_0_23"
+      ],
       "verification": "Generated ISO 10303-21 output is re-imported with Open CASCADE; mesh count, positive geometry and overall bounding box are compared with the candidate model.",
       "limitation": "Coordination envelope only; not the detailed C/U sheet-metal section, holes, fasteners, tolerances or machine path."
     }
   },
   "unresolvedAvelisInputs": [
-    { "id": "AVELIS_PROFILE_CATALOG", "status": "REQUIRED", "description": "Actual steel grades, profiles, suppliers and approved substitutions." },
-    { "id": "AVELIS_LOAD_CASES", "status": "REQUIRED_FOR_STRUCTURAL_DESIGN", "description": "Permanent, imposed, wind, snow, accidental and construction-stage actions plus combinations and boundary conditions." },
-    { "id": "AVELIS_CONNECTION_LIBRARY", "status": "REQUIRED_FOR_STRUCTURAL_DESIGN", "description": "Fasteners, bolts, screws, welds, hole patterns, edge distances and verified capacities." },
-    { "id": "TORCY_MACHINE_CAPABILITIES", "status": "REQUIRED_FOR_MACHINE_RELEASE", "description": "Equipment, supported operations, stock lengths, positioning accuracy, file formats and control codes." },
-    { "id": "AVELIS_MANUFACTURING_TOLERANCES", "status": "REQUIRED_FOR_MACHINE_RELEASE", "description": "Approved product- and process-specific manufacturing tolerances and inspection methods." },
-    { "id": "AVELIS_PROCUREMENT_PRICES", "status": "REQUIRED_FOR_COST", "description": "Dated supplier quotations, units, delivery terms, minimum order quantities and scrap valuation." },
-    { "id": "AVELIS_PRODUCT_EPD", "status": "REQUIRED_FOR_CARBON", "description": "Applicable product-specific EPD and declared system boundary." },
-    { "id": "NOOV_API_CONTRACT", "status": "REQUIRED_FOR_INTEGRATION", "description": "Official Noov payload schema, authentication, versioning and error protocol." }
+    {
+      "id": "AVELIS_PROFILE_CATALOG",
+      "status": "REQUIRED",
+      "description": "Actual steel grades, profiles, suppliers and approved substitutions."
+    },
+    {
+      "id": "AVELIS_LOAD_CASES",
+      "status": "REQUIRED_FOR_STRUCTURAL_DESIGN",
+      "description": "Permanent, imposed, wind, snow, accidental and construction-stage actions plus combinations and boundary conditions."
+    },
+    {
+      "id": "AVELIS_CONNECTION_LIBRARY",
+      "status": "REQUIRED_FOR_STRUCTURAL_DESIGN",
+      "description": "Fasteners, bolts, screws, welds, hole patterns, edge distances and verified capacities."
+    },
+    {
+      "id": "TORCY_MACHINE_CAPABILITIES",
+      "status": "REQUIRED_FOR_MACHINE_RELEASE",
+      "description": "Equipment, supported operations, stock lengths, positioning accuracy, file formats and control codes."
+    },
+    {
+      "id": "AVELIS_MANUFACTURING_TOLERANCES",
+      "status": "REQUIRED_FOR_MACHINE_RELEASE",
+      "description": "Approved product- and process-specific manufacturing tolerances and inspection methods."
+    },
+    {
+      "id": "AVELIS_PROCUREMENT_PRICES",
+      "status": "REQUIRED_FOR_COST",
+      "description": "Dated supplier quotations, units, delivery terms, minimum order quantities and scrap valuation."
+    },
+    {
+      "id": "AVELIS_PRODUCT_EPD",
+      "status": "REQUIRED_FOR_CARBON",
+      "description": "Applicable product-specific EPD and declared system boundary."
+    },
+    {
+      "id": "NOOV_API_CONTRACT",
+      "status": "REQUIRED_FOR_INTEGRATION",
+      "description": "Official Noov payload schema, authentication, versioning and error protocol."
+    }
   ]
 }

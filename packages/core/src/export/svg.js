@@ -18,7 +18,7 @@
     ];
     candidate.members.forEach((member) => {
       const b = member.bounds;
-      const color = core.ROLE_COLORS[member.role] || '#b47b4e';
+      const color = core.memberColor(member, candidate.frameMaterial);
       parts.push(`<rect x="${b.min.x}" y="${b.min.z}" width="${b.max.x - b.min.x}" height="${b.max.z - b.min.z}" fill="${color}" stroke="#3b291f" stroke-width="5"><title>${escapeXml(member.id)} — ${escapeXml(member.label)}</title></rect>`);
     });
     candidate.wall.openings.forEach((opening) => {

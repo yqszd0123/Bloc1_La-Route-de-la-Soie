@@ -21,6 +21,7 @@ $mime = @{
   '.stp' = 'model/step'
   '.dxf' = 'application/dxf'
   '.zip' = 'application/zip'
+  '.wasm' = 'application/wasm'
 }
 
 try {
@@ -47,6 +48,13 @@ try {
       else {
         $context.Response.StatusCode = 404
       }
+    }
+    catch [System.Net.HttpListenerException] {
+      # A browser may cancel a fetch; keep serving subsequent requests.
+      Write-Warning $_.Exception.Message
+    }
+    catch [System.IO.IOException] {
+      Write-Warning $_.Exception.Message
     }
     finally {
       $context.Response.OutputStream.Close()

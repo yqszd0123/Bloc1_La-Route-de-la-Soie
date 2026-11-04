@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Chaîne IFC vers fabrication pour panneaux muraux en acier formé à froid — Avelis, Imagine & Make 2026, Bloc 1.">
+  <meta name="description" content="Chaîne IFC vers fabrication pour panneaux muraux à ossature acier ou bois — Avelis, Imagine & Make 2026, Bloc 1.">
   <link rel="canonical" href="https://avelis-wall-flow-2026.bushy-bloom-8799.chatgpt.site/">
   <meta property="og:url" content="https://avelis-wall-flow-2026.bushy-bloom-8799.chatgpt.site/">
-  <title>Avelis Wall Flow 2.2 — IFC to Manufacturing</title>
+  <title>Avelis Wall Flow 2.3 — IFC to Manufacturing</title>
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/components.css">
@@ -16,13 +16,20 @@
     <div class="hero__brand">
       <span class="eyebrow">IMAGINE &amp; MAKE 2026 · BLOC 1</span>
       <h1>Avelis Wall Flow</h1>
-      <p>IFC → panneau acier → données de fabrication traçables</p>
+      <p>IFC → ossature acier ou bois → fabrication traçable</p>
     </div>
     <div class="hero__status" aria-label="État du prototype">
       <span class="status-dot"></span>
-      Version 2.2 · acier uniquement
+      Version 2.3 · acier &amp; bois
     </div>
   </header>
+
+  <section class="material-toolbar" aria-label="Matériau de l’ossature">
+    <div><span class="eyebrow">SYSTÈME CONSTRUCTIF</span><p id="material-mode-note">Acier formé à froid · profils C / rails U de référence</p></div>
+    <label>Ossature<select id="frame-material" name="frameMaterial" form="configuration-form"><option value="STEEL">Acier</option><option value="TIMBER">Bois C24</option></select></label>
+    <label data-material-only="TIMBER" hidden>Section de bois<select name="timberSection" form="configuration-form"><option value="TIMBER-45-145">45 × 145 mm</option><option value="TIMBER-45-120">45 × 120 mm</option><option value="TIMBER-45-95">45 × 95 mm</option><option value="ALL">Comparer les 3 sections</option></select></label>
+    <label data-material-only="TIMBER" hidden>Entraxe cible<select name="timberStudSpacingMm" form="configuration-form"><option value="600">600 mm</option><option value="500">500 mm</option><option value="450">450 mm</option><option value="400">400 mm</option></select></label>
+  </section>
 
   <nav class="app-tabs" aria-label="Étapes du produit">
     <button class="tab-button" data-page="ifc-page"><b>1</b> Import IFC / STEP</button>
@@ -71,7 +78,7 @@
       <div class="two-column-cards">
         <article class="results-card import-card">
           <h3>Votre modèle CAO</h3>
-          <p>Le moteur Open CASCADE lit un vrai STEP, calcule son enveloppe 3D puis transmet ses dimensions au même générateur acier.</p>
+          <p>Le moteur Open CASCADE lit un vrai STEP, calcule son enveloppe 3D puis transmet ses dimensions au moteur du matériau choisi.</p>
           <label class="file-drop" for="step-file">
             <strong>Choisir un fichier .step ou .stp</strong>
             <span>Lecture locale dans le navigateur · aucune téléversement</span>
@@ -101,18 +108,11 @@
 
     <section id="config-page" class="app-page">
       <div class="page-heading">
-        <div><span class="eyebrow">Mode manuel · même moteur que l’IFC</span><h2>Configurer un panneau acier</h2></div>
+        <div><span class="eyebrow">Mode manuel · acier et bois · même chaîne que l’IFC</span><h2 id="config-heading">Configurer un panneau acier</h2></div>
         <button id="reset-button" class="button button--ghost" type="button">Réinitialiser</button>
       </div>
       <div class="config-layout">
-        <aside class="reference-rail">
-          <h3>Références chargées</h3>
-          <div class="reference-chip"><strong>Acier Z275</strong><span>fy ≥ 450 N/mm² · produit Metsec de référence</span></div>
-          <div class="reference-chip"><strong>Profils C / rails U</strong><span>kg/m et géométrie issus du fabricant</span></div>
-          <div class="reference-chip"><strong>Module cible 600 mm</strong><span>trois implantations calculées · entraxes réels affichés</span></div>
-          <div class="reference-chip"><strong>Budget régional</strong><span>3,09 €/kg HT par défaut · fourchette 1,82–4,12</span></div>
-          <p class="field-hint">Ces données décrivent une solution publique de référence. Elles ne prouvent pas que Torcy ou Avelis utilisent ces produits.</p>
-        </aside>
+        <aside id="material-reference" class="reference-rail"></aside>
 
         <article class="results-card form-card">
           <div id="preset-buttons" class="preset-grid" aria-label="Scénarios d’essai"></div>
@@ -155,13 +155,29 @@
               </div>
             </fieldset>
 
-            <fieldset>
-              <legend>Scénario budgétaire facultatif</legend>
+            <fieldset data-material-only="STEEL">
+              <legend>Budget acier facultatif</legend>
               <p class="field-hint">Laissez tout vide pour utiliser automatiquement 3,09 €/kg HT, avec la fourchette régionale documentée.</p>
               <div class="form-grid form-grid--three">
                 <label>Prix central <span>€/kg HT</span><input name="budgetPriceEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="3,09 par défaut"></label>
                 <label>Prix bas <span>€/kg HT</span><input name="budgetLowEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="1,82 par défaut"></label>
                 <label>Prix haut <span>€/kg HT</span><input name="budgetHighEurPerKgExVat" type="number" min="0.01" step="0.01" placeholder="4,12 par défaut"></label>
+              </div>
+            </fieldset>
+
+            <fieldset data-material-only="TIMBER" hidden>
+              <legend>Budget bois facultatif</legend>
+              <p class="field-hint">Par défaut : 620 €/m³ HT, hypothèse de démonstration. Saisissez votre devis pour calculer le budget matière ; coupes, assemblages et pose exclus.</p>
+              <div class="form-grid form-grid--three">
+                <label>Prix central <span>€/m³ HT</span><input name="timberBudgetPriceEurPerM3ExVat" type="number" min="0.01" step="0.01" placeholder="620 par défaut"></label>
+                <label>Prix bas <span>€/m³ HT</span><input name="timberBudgetLowEurPerM3ExVat" type="number" min="0.01" step="0.01" placeholder="prix central"></label>
+                <label>Prix haut <span>€/m³ HT</span><input name="timberBudgetHighEurPerM3ExVat" type="number" min="0.01" step="0.01" placeholder="prix central"></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Référence du budget (facultatif)</legend>
+              <div class="form-grid form-grid--three">
                 <label>Nom du scénario<input name="budgetPriceLabel" placeholder="ex. devis fournisseur"></label>
                 <label>Date<input name="budgetPriceDate" type="date"></label>
                 <label>Source / référence<input name="budgetPriceSource" placeholder="facultatif"></label>
@@ -171,7 +187,7 @@
             <fieldset>
               <legend>Décision et prototype</legend>
               <div class="form-grid form-grid--two">
-                <label>Priorité<select name="priority"><option value="balanced">Équilibre masse / pièces / longueurs</option><option value="material">Masse minimale</option><option value="manufacturing">Fabrication la plus simple</option></select></label>
+                <label>Priorité<select name="priority"><option id="balanced-priority-label" value="balanced">Équilibre masse / pièces / longueurs</option><option id="material-priority-label" value="material">Masse minimale</option><option value="manufacturing">Fabrication la plus simple</option></select></label>
                 <label>Échelle STL<select name="prototypeScale"><option value="10">1:10</option><option value="15">1:15</option><option value="20">1:20</option><option value="25">1:25</option></select></label>
               </div>
             </fieldset>
@@ -189,20 +205,20 @@
       </div>
       <div class="scope-warning"><strong id="result-source-label">Portée :</strong> <span id="scope-warning-text">Validation structurelle et industrielle requise.</span></div>
       <div class="viewer-card">
-        <canvas id="wall-viewer" width="1200" height="650" aria-label="Vue tridimensionnelle du panneau acier"></canvas>
+        <canvas id="wall-viewer" width="1200" height="650" aria-label="Vue tridimensionnelle de l’ossature sélectionnée"></canvas>
         <div class="viewer-controls"><label>Rotation 360°<input id="rotation-slider" type="range" min="0" max="360" value="28"></label><label class="check-label"><input id="labels-toggle" type="checkbox"> Identifiants</label><span id="viewer-caption">Aucun résultat.</span></div>
       </div>
       <section class="metrics">
         <article><span>Temps de calcul</span><strong id="metric-time">—</strong><small>entrée → paquet</small></article>
-        <article><span>Masse acier</span><strong id="metric-mass">—</strong><small>kg calculés par kg/m</small></article>
+        <article><span id="metric-material-label">Masse acier</span><strong id="metric-mass">—</strong><small id="metric-material-note">kg calculés par kg/m</small></article>
         <article><span>Budget matière</span><strong id="metric-cost">—</strong><small id="metric-cost-basis">HT · scénario actif</small></article>
         <article><span>Composants</span><strong id="metric-components">—</strong><small>IDs stables</small></article>
         <article><span>Longueur profilés</span><strong id="metric-length">—</strong><small>m cumulés</small></article>
         <article><span>Contrôles</span><strong id="metric-rules">—</strong><small>géométrie + traçabilité</small></article>
       </section>
       <section class="results-card">
-        <div class="panel-heading"><div><span class="eyebrow">3 implantations × 3 profils</span><h2>Jusqu’à neuf solutions distinctes</h2></div><span id="candidate-count" class="pill">0 solution</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Rang</th><th>Solution</th><th>Profils</th><th>Implantation</th><th>Masse</th><th>Pièces</th><th>Longueurs</th><th>Budget HT</th><th>Score</th></tr></thead><tbody id="candidate-table-body"></tbody></table></div>
+        <div class="panel-heading"><div><span class="eyebrow">Implantations et sections du matériau choisi</span><h2>Comparaison des solutions</h2></div><span id="candidate-count" class="pill">0 solution</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Rang</th><th>Solution</th><th>Profils</th><th>Implantation</th><th id="comparison-material-label">Masse</th><th>Pièces</th><th>Longueurs</th><th>Budget HT</th><th>Score</th></tr></thead><tbody id="candidate-table-body"></tbody></table></div>
       </section>
       <section class="results-grid">
         <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Traçabilité</span><h2>Nomenclature</h2></div><button id="download-bom" class="button button--ghost" disabled>BOM CSV</button></div><div id="bom-summary" class="bom-summary"></div></article>
@@ -212,13 +228,13 @@
 
     <section id="prototype-page" class="app-page" hidden>
       <div class="page-heading">
-        <div><span class="eyebrow">Maquette pédagogique · même mur sélectionné</span><h2>Du squelette acier au mur assemblé</h2></div>
+        <div><span class="eyebrow">Maquette pédagogique · même mur sélectionné</span><h2>De l’ossature au mur assemblé</h2></div>
         <span class="pill pill--demo">Pièces de maquette calculées</span>
       </div>
-      <div class="scope-warning"><strong>Portée de la maquette :</strong> les dimensions, épaisseurs de référence, surfaces et volumes sont calculés dans un CSV séparé. Ces pièces ne modifient ni l’IFC/STEP, ni la BOM acier, ni la liste de débit acier, ni le paquet ZIP de fabrication.</div>
+      <div class="scope-warning"><strong>Portée de la maquette :</strong> les dimensions, épaisseurs de référence, surfaces et volumes sont calculés dans un CSV séparé. Ces pièces ne modifient ni l’IFC/STEP, ni la BOM de l’ossature, ni la liste de débit, ni le paquet ZIP de fabrication.</div>
 
       <div class="prototype-stage-grid" role="group" aria-label="Degré d’achèvement de la maquette">
-        <button class="prototype-stage-button" data-stage="FRAME" type="button" aria-pressed="false"><b>1</b><span><strong>Ossature nue</strong><small>Profilés acier et cadres d’ouverture</small></span></button>
+        <button class="prototype-stage-button" data-stage="FRAME" type="button" aria-pressed="false"><b>1</b><span><strong>Ossature nue</strong><small>Ossature et cadres d’ouverture</small></span></button>
         <button class="prototype-stage-button" data-stage="INSULATED" type="button" aria-pressed="false"><b>2</b><span><strong>Isolation</strong><small>Échantillon placé entre les montants</small></span></button>
         <button class="prototype-stage-button" data-stage="LINED" type="button" aria-pressed="false"><b>3</b><span><strong>Parois</strong><small>Panneaux témoins intérieur et extérieur</small></span></button>
         <button class="prototype-stage-button is-active" data-stage="COMPLETE" type="button" aria-pressed="true"><b>4</b><span><strong>Mur assemblé</strong><small>Finitions de démonstration ajoutées</small></span></button>
@@ -238,7 +254,7 @@
           <h3>Lecture de la maquette</h3>
           <p>Les portes et fenêtres restent vides dans chaque couche. Comme sur une vue éclatée constructive, les repères relient chaque face à son nom et le curseur montre l’ordre d’assemblage.</p>
           <div id="prototype-layer-list" class="prototype-layer-list"></div>
-          <div class="prototype-note"><strong>Produits publics de référence</strong><span>L’isolant suit automatiquement la profondeur du montant acier. Les références et épaisseurs servent au calcul de maquette mais restent à confirmer avec Avelis, le FabLab et le Bloc 2.</span></div>
+          <div class="prototype-note"><strong>Produits publics de référence</strong><span>L’isolant suit automatiquement la profondeur du montant choisi. Les références et épaisseurs servent au calcul de maquette mais restent à confirmer avec Avelis, le FabLab et le Bloc 2.</span></div>
         </aside>
       </div>
       <section class="results-card">
@@ -253,13 +269,13 @@
       <div class="page-heading"><div><span class="eyebrow">Bloc 1 → Bloc 2 / logistique</span><h2>Paquet de fabrication neutre</h2></div><span class="pill pill--blocked">Machine non libérée</span></div>
       <div class="release-banner"><strong>BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION</strong><span>La géométrie, la BOM et la liste de débit sont calculées. Les tolérances, longueurs de stock, perçages, fixations et format machine restent volontairement vides.</span></div>
       <div class="toolbar-actions toolbar-actions--left"><button id="download-cutting" class="button button--secondary" disabled>Liste de débit CSV</button><button id="download-labels" class="button button--secondary" disabled>Étiquettes / QR CSV</button><button id="download-package-2" class="button button--accent" disabled>Paquet ZIP complet</button></div>
-      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués · ordre de chargement continu</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>Ordre</th><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Section</th><th>Longueur</th><th>Épaisseur acier</th><th>Surface développée</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div><p class="source-note">Ordre proposé d’après FRAMECAD Detailer — Stick Order Assembly Priority (octobre 2025), sections 1.3–1.4. L’extension à plusieurs portes/fenêtres traite les ouvertures de gauche à droite et ignore les types de pièces absents du modèle. Aucun export RFY ni compatibilité machine Avelis n’est revendiqué.</p></article>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués · ordre de chargement continu</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>Ordre</th><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Section</th><th>Longueur</th><th id="manufacturing-section-label">Épaisseur acier</th><th id="manufacturing-quantity-label">Surface développée</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div><p id="manufacturing-sequence-note" class="source-note">Ordre proposé d’après FRAMECAD Detailer — Stick Order Assembly Priority (octobre 2025), sections 1.3–1.4. L’extension à plusieurs portes/fenêtres traite les ouvertures de gauche à droite et ignore les types de pièces absents du modèle. Aucun export RFY ni compatibilité machine Avelis n’est revendiqué.</p></article>
     </section>
 
     <section id="engineering-page" class="app-page" hidden>
       <div class="page-heading"><div><span class="eyebrow">Traçabilité complète</span><h2>Données, calculs et limites</h2></div><span class="pill pill--review">Engineering review required</span></div>
       <div class="evidence-grid">
-        <article class="results-card"><h3>Produit acier de référence</h3><div id="material-evidence"></div></article>
+        <article class="results-card"><h3 id="material-evidence-heading">Produit acier de référence</h3><div id="material-evidence"></div></article>
         <article class="results-card"><h3>Budget actif</h3><div id="budget-evidence"></div></article>
         <article class="results-card"><h3>Vérifications croisées</h3><div id="cross-validation-evidence"></div></article>
       </div>
@@ -278,7 +294,9 @@
   <script src="../../packages/core/src/domain/project.js"></script>
   <script src="../../packages/core/src/rules/input-rules.js"></script>
   <script src="../../packages/core/src/generation/member-factory.js"></script>
+  <script src="../../packages/core/src/generation/frame-layout.js"></script>
   <script src="../../packages/core/src/generation/steel-panel-generator.js"></script>
+  <script src="../../packages/core/src/generation/timber-panel-generator.js"></script>
   <script src="../../packages/core/src/manufacturing/assembly-priority.js"></script>
   <script src="../../packages/core/src/rules/candidate-rules.js"></script>
   <script src="../../packages/core/src/optimization/metrics.js"></script>
@@ -298,6 +316,7 @@
   <script src="../../packages/core/src/core.js"></script>
   <script src="../../third_party/occt-import-js/dist/occt-import-js.js"></script>
   <script src="src/state.js"></script>
+  <script src="src/material-controller.js"></script>
   <script src="src/form-controller.js"></script>
   <script src="src/ifc-controller.js"></script>
   <script src="src/step-controller.js"></script>

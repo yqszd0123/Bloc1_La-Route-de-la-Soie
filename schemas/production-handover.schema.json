@@ -1,48 +1,164 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://avelis.example/schemas/production-wall-handover.v2.json",
-  "title": "Contrat proposé Bloc 1 vers Bloc 2 — panneau acier",
+  "title": "Contrat Bloc 1 vers Bloc 2 — ossature acier ou bois",
   "type": "object",
   "additionalProperties": true,
-  "required": ["schema", "schemaVersion", "releaseStatus", "project", "configurationId", "revision", "units", "candidateId", "components", "assemblySequence", "interfaceChecks"],
+  "required": [
+    "schema",
+    "schemaVersion",
+    "releaseStatus",
+    "project",
+    "configurationId",
+    "revision",
+    "units",
+    "candidateId",
+    "components",
+    "assemblySequence",
+    "interfaceChecks"
+  ],
   "properties": {
-    "schema": { "const": "avelis.production.wall-handover.v2" },
-    "schemaVersion": { "const": "2.0" },
-    "releaseStatus": { "const": "BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION" },
-    "configurationId": { "type": "string", "minLength": 1 },
-    "revision": { "type": "string", "minLength": 1 },
+    "schema": {
+      "const": "avelis.production.wall-handover.v2"
+    },
+    "schemaVersion": {
+      "const": "2.0"
+    },
+    "releaseStatus": {
+      "const": "BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION"
+    },
+    "configurationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
     "units": {
       "type": "object",
-      "required": ["length", "area", "mass"],
-      "properties": { "length": { "const": "mm" }, "area": { "const": "m2" }, "mass": { "const": "kg" } }
+      "required": [
+        "length",
+        "area",
+        "mass"
+      ],
+      "properties": {
+        "length": {
+          "const": "mm"
+        },
+        "area": {
+          "const": "m2"
+        },
+        "mass": {
+          "const": "kg"
+        }
+      }
     },
-    "candidateId": { "type": "string", "minLength": 1 },
+    "candidateId": {
+      "type": "string",
+      "minLength": 1
+    },
     "components": {
       "type": "array",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["partId", "partType", "assemblyOrder", "assemblyPriorityGroup", "assemblyPrioritySourceId", "materialId", "profileId", "manufacturerReference", "dimensionsMm", "calculatedMassKg", "positionMm", "axis", "operations", "toleranceMm", "qrPayload"],
+        "required": [
+          "partId",
+          "partType",
+          "assemblyOrder",
+          "assemblyPriorityGroup",
+          "assemblyPrioritySourceId",
+          "materialId",
+          "profileId",
+          "manufacturerReference",
+          "dimensionsMm",
+          "calculatedMassKg",
+          "positionMm",
+          "axis",
+          "operations",
+          "toleranceMm",
+          "qrPayload"
+        ],
         "properties": {
-          "partId": { "type": "string", "minLength": 1 },
-          "partType": { "type": "string", "minLength": 1 },
-          "assemblyOrder": { "type": "integer", "minimum": 1 },
-          "assemblyPriorityGroup": { "type": "string", "minLength": 1 },
-          "assemblyPrioritySourceId": { "const": "FRAMECAD_ASSEMBLY_PRIORITY_2025" },
-          "materialId": { "type": "string", "minLength": 1 },
-          "profileId": { "type": "string", "minLength": 1 },
-          "manufacturerReference": { "type": "string", "minLength": 1 },
+          "partId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "partType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assemblyOrder": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "assemblyPriorityGroup": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assemblyPrioritySourceId": {
+            "enum": [
+              "FRAMECAD_ASSEMBLY_PRIORITY_2025",
+              "TIMBER_POC_ASSEMBLY"
+            ]
+          },
+          "materialId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profileId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "manufacturerReference": {
+            "type": "string",
+            "minLength": 1
+          },
           "dimensionsMm": {
             "type": "object",
-            "required": ["length", "sectionDepth", "nominalThickness"],
+            "required": [
+              "length",
+              "sectionDepth"
+            ],
             "properties": {
-              "length": { "type": "number", "exclusiveMinimum": 0 },
-              "sectionDepth": { "type": "number", "exclusiveMinimum": 0 },
-              "nominalThickness": { "type": "number", "exclusiveMinimum": 0 }
-            }
+              "length": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "sectionDepth": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "nominalThickness": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "sectionWidth": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "anyOf": [
+              {
+                "required": [
+                  "nominalThickness"
+                ]
+              },
+              {
+                "required": [
+                  "sectionWidth"
+                ]
+              }
+            ]
           },
-          "calculatedMassKg": { "type": "number", "exclusiveMinimum": 0 },
-          "toleranceMm": { "type": "null" }
+          "calculatedMassKg": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "toleranceMm": {
+            "type": "null"
+          }
         }
       }
     },
@@ -51,16 +167,48 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["stepId", "order", "operation", "partIds", "dependsOn", "status"],
+        "required": [
+          "stepId",
+          "order",
+          "operation",
+          "partIds",
+          "dependsOn",
+          "status"
+        ],
         "properties": {
-          "stepId": { "type": "string" },
-          "order": { "type": "integer", "minimum": 1 },
-          "operation": { "type": "string" },
-          "partIds": { "type": "array", "items": { "type": "string" } },
-          "dependsOn": { "type": "array", "items": { "type": "string" } },
-          "status": { "const": "PROPOSED_PENDING_BLOC2_VALIDATION" }
+          "stepId": {
+            "type": "string"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "operation": {
+            "type": "string"
+          },
+          "partIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependsOn": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "const": "PROPOSED_PENDING_BLOC2_VALIDATION"
+          }
         }
       }
+    },
+    "frameMaterial": {
+      "enum": [
+        "STEEL",
+        "TIMBER"
+      ]
     }
   }
 }

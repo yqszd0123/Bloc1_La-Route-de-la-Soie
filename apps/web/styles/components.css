@@ -129,3 +129,14 @@ tbody tr.is-selected { color: var(--primary-dark); background: #dcebe7; font-wei
 .step-axis-grid label { display: grid; gap: .4rem; font-weight: 700; }
 .step-axis-grid select { min-height: 44px; border: 1px solid var(--border, #cbd5e1); border-radius: 10px; padding: .55rem .75rem; background: #fff; }
 @media (max-width: 760px) { .step-axis-grid { grid-template-columns: 1fr; } }
+
+/* Construction material remains available on every workflow page. */
+.material-toolbar { max-width: 1600px; margin: 18px auto 0; padding: 18px 28px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; background: #edf4f4; border: 1px solid #c8d8d9; border-radius: 14px; }
+.material-toolbar > div { flex: 1 1 270px; }
+.material-toolbar p { margin: 5px 0 0; color: #34545c; }
+.material-toolbar label { min-width: 150px; display: grid; gap: 6px; font-weight: 650; font-size: 13px; }
+.material-toolbar select { padding: 10px 12px; background: white; border: 1px solid #9db6bb; border-radius: 8px; font: inherit; }
+body[data-material="TIMBER"] .material-toolbar { background: #fbf0e2; border-color: #d9b78f; }
+body[data-material="TIMBER"] .material-toolbar p { color: #76502c; }
+[hidden] { display: none !important; }
+@media (max-width: 720px) { .material-toolbar { margin: 12px; padding: 16px; gap: 14px; } .material-toolbar label { flex: 1 1 130px; min-width: 0; } }
