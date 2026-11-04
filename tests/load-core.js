@@ -27,6 +27,7 @@ const sourceFiles = [
   'packages/core/src/export/svg.js',
   'packages/core/src/export/zip.js',
   'packages/core/src/export/package-builder.js',
+  'packages/core/src/prototype/layered-wall-model.js',
   'packages/core/src/core.js'
 ];
 

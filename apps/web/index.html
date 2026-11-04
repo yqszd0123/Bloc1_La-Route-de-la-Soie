@@ -29,7 +29,8 @@
     <button class="tab-button is-active" data-page="config-page"><b>2</b> Configuration</button>
     <button class="tab-button" data-page="design-page"><b>3</b> Conception</button>
     <button class="tab-button" data-page="manufacturing-page"><b>4</b> Fabrication</button>
-    <button class="tab-button" data-page="engineering-page"><b>5</b> Données &amp; preuves</button>
+    <button class="tab-button" data-page="prototype-page"><b>5</b> Maquette en couches</button>
+    <button class="tab-button" data-page="engineering-page"><b>6</b> Données &amp; preuves</button>
   </nav>
 
   <main class="page-shell">
@@ -216,6 +217,39 @@
       <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Longueur</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
     </section>
 
+    <section id="prototype-page" class="app-page" hidden>
+      <div class="page-heading">
+        <div><span class="eyebrow">Maquette pédagogique · même mur sélectionné</span><h2>Du squelette acier au mur assemblé</h2></div>
+        <span class="pill pill--demo">Démonstration visuelle</span>
+      </div>
+      <div class="scope-warning"><strong>Portée strictement visuelle :</strong> les couches d’isolation, panneaux et finitions illustrent la maquette physique. Elles ne modifient ni l’IFC/STEP, ni la BOM, ni la liste de débit, ni le paquet ZIP.</div>
+
+      <div class="prototype-stage-grid" role="group" aria-label="Degré d’achèvement de la maquette">
+        <button class="prototype-stage-button" data-stage="FRAME" type="button" aria-pressed="false"><b>1</b><span><strong>Ossature nue</strong><small>Profilés acier et cadres d’ouverture</small></span></button>
+        <button class="prototype-stage-button" data-stage="INSULATED" type="button" aria-pressed="false"><b>2</b><span><strong>Isolation</strong><small>Échantillon placé entre les montants</small></span></button>
+        <button class="prototype-stage-button" data-stage="LINED" type="button" aria-pressed="false"><b>3</b><span><strong>Parois</strong><small>Panneaux témoins intérieur et extérieur</small></span></button>
+        <button class="prototype-stage-button is-active" data-stage="COMPLETE" type="button" aria-pressed="true"><b>4</b><span><strong>Mur assemblé</strong><small>Finitions de démonstration ajoutées</small></span></button>
+      </div>
+
+      <div class="prototype-layout">
+        <div class="viewer-card prototype-viewer-card">
+          <canvas id="prototype-viewer" width="1200" height="650" aria-label="Vue éclatée de la maquette pédagogique en couches"></canvas>
+          <div class="viewer-controls prototype-controls">
+            <label>Rotation<input id="prototype-rotation-slider" type="range" min="-65" max="65" value="28"></label>
+            <label>Assemblé ↔ éclaté<input id="prototype-explode-slider" type="range" min="0" max="100" value="58"></label>
+            <span id="prototype-caption">Étape 4/4 · Mur assemblé · vue éclatée à 58 %</span>
+          </div>
+        </div>
+        <aside class="results-card prototype-guide">
+          <span class="eyebrow">Couches visibles à cette étape</span>
+          <h3>Lecture de la maquette</h3>
+          <p>Les portes et fenêtres restent vides dans chaque couche. Le curseur sépare visuellement les faces pour expliquer l’ordre d’assemblage.</p>
+          <div id="prototype-layer-list" class="prototype-layer-list"></div>
+          <div class="prototype-note"><strong>Choix matière à confirmer</strong><span>Les échantillons physiques seront choisis avec le FabLab et le Bloc 2. Aucun produit d’isolation ou de parement n’est attribué à Avelis sans confirmation.</span></div>
+        </aside>
+      </div>
+    </section>
+
     <section id="engineering-page" class="app-page" hidden>
       <div class="page-heading"><div><span class="eyebrow">Traçabilité complète</span><h2>Données, calculs et limites</h2></div><span class="pill pill--review">Engineering review required</span></div>
       <div class="evidence-grid">
@@ -253,13 +287,16 @@
   <script src="../../packages/core/src/export/svg.js"></script>
   <script src="../../packages/core/src/export/zip.js"></script>
   <script src="../../packages/core/src/export/package-builder.js"></script>
+  <script src="../../packages/core/src/prototype/layered-wall-model.js"></script>
   <script src="../../packages/core/src/core.js"></script>
   <script src="../../third_party/occt-import-js/dist/occt-import-js.js"></script>
   <script src="src/state.js"></script>
   <script src="src/form-controller.js"></script>
   <script src="src/ifc-controller.js"></script>
   <script src="src/step-controller.js"></script>
+  <script src="src/canvas-geometry.js"></script>
   <script src="src/viewer.js"></script>
+  <script src="src/prototype-view.js"></script>
   <script src="src/results-view.js"></script>
   <script src="src/download-controller.js"></script>
   <script src="src/app.js"></script>

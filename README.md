@@ -11,6 +11,9 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 3. Pour STEP, confirmer les axes longueur/hauteur/épaisseur ; pour IFC, choisir le mur extrait.
 4. Activer ou désactiver fenêtre et porte en mode manuel.
 5. Comparer jusqu’à neuf solutions distinctes et télécharger le paquet ZIP.
+6. Ouvrir « Maquette en couches » pour montrer le même mur en quatre états : ossature, isolation, parois puis mur assemblé.
+
+La maquette en couches est une visualisation pédagogique séparée du modèle de fabrication. Les échantillons d’isolation, panneaux et finitions ne sont ajoutés ni aux IFC/STEP, ni à la BOM, ni à la liste de débit, ni au ZIP.
 
 Le prix matière est facultatif. Si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
 
@@ -24,6 +27,7 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 - contrôles de collision, enveloppe, cohérence BOM/géométrie et traçabilité ;
 - exports CSV, JSON, SVG, DXF, STL, STEP AP203 et ZIP ;
 - contrat proposé Bloc 1 → Bloc 2 avec composants, positions, dépendances et statut de libération bloqué.
+- démonstration interactive du montage par couches, avec vues assemblée et éclatée, sans altérer les données de fabrication.
 
 ## Entrées
 
@@ -40,7 +44,7 @@ Pour le mur IFC buildingSMART 3000 × 2000 × 300 mm avec fenêtre 1000 × 1000 
 
 ```text
 apps/web/               interface, import IFC/STEP, visualisation, téléchargements
-packages/core/src/      domaine, parseur IFC, adaptateur STEP, génération, règles, optimisation, exports
+packages/core/src/      domaine, parseur IFC, adaptateur STEP, génération, règles, optimisation, exports, modèle pédagogique isolé
 data/                   source de vérité des données et références d’ingénierie
 schemas/                contrats JSON proposés entre blocs
 test-data/              vrais fichiers IFC et STEP de vérification

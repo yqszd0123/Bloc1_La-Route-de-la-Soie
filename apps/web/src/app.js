@@ -6,12 +6,14 @@
   const form = document.getElementById('configuration-form');
   const messages = document.getElementById('input-messages');
   const canvas = document.getElementById('wall-viewer');
+  const prototypePageId = 'prototype-page';
 
   function showPage(pageId) {
     document.querySelectorAll('.app-page').forEach((page) => { page.hidden = page.id !== pageId; });
     document.querySelectorAll('.tab-button').forEach((button) => button.classList.toggle('is-active', button.dataset.page === pageId));
     app.state.activePage = pageId;
     if (pageId === 'design-page') requestAnimationFrame(redraw);
+    if (pageId === prototypePageId) requestAnimationFrame(redrawPrototype);
   }
 
   function selectedCandidate() {
@@ -22,12 +24,17 @@
     app.viewer.render(canvas, selectedCandidate(), app.state.rotationDeg, app.state.showLabels);
   }
 
+  function redrawPrototype() {
+    app.prototypeView.render(selectedCandidate());
+  }
+
   function selectCandidate(candidateId) {
     app.state.selectedCandidateId = candidateId;
     const candidate = selectedCandidate();
     app.resultsView.renderSelected(app.state.result, candidate);
     app.resultsView.renderTable(app.state.result, candidateId, selectCandidate);
     redraw();
+    redrawPrototype();
   }
 
   function acceptResult(result, showDesign) {
@@ -37,6 +44,7 @@
       app.state.selectedCandidateId = null;
       app.resultsView.renderInvalid(result);
       redraw();
+      redrawPrototype();
       if (showDesign) showPage('design-page');
       return;
     }
@@ -80,13 +88,17 @@
   });
   document.getElementById('rotation-slider').addEventListener('input', (event) => { app.state.rotationDeg = Number(event.target.value); redraw(); });
   document.getElementById('labels-toggle').addEventListener('change', (event) => { app.state.showLabels = event.target.checked; redraw(); });
-  global.addEventListener('resize', redraw);
+  global.addEventListener('resize', () => {
+    if (app.state.activePage === 'design-page') redraw();
+    if (app.state.activePage === prototypePageId) redrawPrototype();
+  });
 
   app.formController.renderPresets(document.getElementById('preset-buttons'), form, () => runManual(false));
   app.formController.bindOpeningToggles(form, () => runManual(false));
   app.ifcController.bind(runIfcWall);
   app.stepController.bind(runStepModel);
   app.downloadController.bind();
+  app.prototypeView.bind(selectedCandidate);
   app.formController.setFormValues(form, core.DEFAULT_INPUT);
   runManual(false);
   showPage('config-page');

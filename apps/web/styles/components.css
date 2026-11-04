@@ -15,6 +15,27 @@
 .pill { padding: .35rem .6rem; border-radius: 999px; color: var(--primary-dark); background: #e0eeea; font-size: .76rem; font-weight: 800; }
 .pill--review { color: #6a4a0c; background: #fff0c4; }
 .pill--blocked { color: white; background: #9c4538; }
+.pill--demo { color: #164a43; background: #d7eee6; }
+
+.prototype-stage-button { display: flex; align-items: center; gap: .75rem; min-width: 0; padding: .85rem; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: var(--surface); text-align: left; box-shadow: var(--shadow); }
+.prototype-stage-button:hover { border-color: #6a9991; background: #f4faf8; }
+.prototype-stage-button.is-active { color: white; border-color: var(--primary); background: var(--primary); }
+.prototype-stage-button b { flex: 0 0 auto; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; color: white; background: #819099; }
+.prototype-stage-button.is-active b { color: var(--primary); background: white; }
+.prototype-stage-button span { display: grid; gap: .15rem; min-width: 0; }
+.prototype-stage-button strong, .prototype-stage-button small { overflow-wrap: anywhere; }
+.prototype-stage-button small { color: var(--muted); font-size: .68rem; line-height: 1.35; }
+.prototype-stage-button.is-active small { color: #d9ebe7; }
+.prototype-layer-list { display: grid; gap: .55rem; }
+.prototype-layer-item { display: grid; grid-template-columns: 1rem 1fr; gap: .65rem; align-items: start; padding: .65rem; border: 1px solid var(--line); border-radius: 8px; background: #fafcfc; }
+.prototype-layer-item.is-generated { border-color: #78a69a; background: #edf7f4; }
+.prototype-layer-swatch { width: 1rem; height: 1rem; margin-top: .1rem; border: 1px solid rgba(16,45,52,.25); border-radius: 3px; background: var(--layer-color); }
+.prototype-layer-item strong, .prototype-layer-item small { display: block; }
+.prototype-layer-item strong { font-size: .77rem; }
+.prototype-layer-item small { margin-top: .15rem; color: var(--muted); font-size: .67rem; line-height: 1.35; }
+.prototype-note { display: grid; gap: .25rem; padding: .75rem; border-left: 4px solid var(--warning-line); border-radius: 7px; color: #61490e; background: var(--warning); }
+.prototype-note strong { font-size: .77rem; }
+.prototype-note span { font-size: .7rem; line-height: 1.45; }
 
 .preset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .55rem; margin-bottom: 1rem; }
 .preset-grid button { min-height: 52px; padding: .55rem; border: 1px solid var(--line); border-radius: 8px; color: var(--primary-dark); background: var(--surface-2); font-size: .75rem; font-weight: 750; }

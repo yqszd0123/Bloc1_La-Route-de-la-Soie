@@ -21,6 +21,7 @@ packages/core/src/
   rules/                        geometry and release gates
   optimization/                 search, metrics, Pareto and ranking
   export/                       CSV, JSON, SVG, DXF, STL, STEP and ZIP
+  prototype/                    display-only layered wall model
 schemas/                        proposed inter-block JSON contracts
 test-data/ifc/                  real buildingSMART IFC fixture
 tests/                          deterministic automated verification
@@ -42,6 +43,8 @@ engineering-catalog.js → domain → IFC/manual adapters
                       checks → metrics → ranking
                                     ↓
              UI + BOM + cutting list + neutral package
+              ↓ read-only
+      pedagogical layers (never included in exports)
 ```
 
 No UI module performs an engineering calculation. The UI reads objects returned by `packages/core`; exports are also generated from those same objects.
@@ -54,6 +57,11 @@ No UI module performs an engineering calculation. The UI reads objects returned 
 4. IFC and manual inputs call the same candidate generator.
 5. Missing Avelis machine data produces a release block, not a guessed value.
 6. Every exported package includes the engineering data snapshot used for the calculation.
+7. Insulation, boards and finishes in the layered prototype are display-only objects. They cannot mutate a steel candidate or enter any manufacturing export.
+
+## Browser visualisation boundary
+
+`canvas-geometry.js` owns the shared projection and polygon renderer. The steel viewer and layered-prototype viewer both consume it, so the project has one rendering foundation instead of duplicated 3D maths. `prototype-view.js` reads the selected steel candidate through `prototype/layered-wall-model.js`; it has no dependency on the download controller or package builder.
 
 ## Runtime
 

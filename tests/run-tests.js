@@ -305,6 +305,56 @@ test('les exports neutres et FabLab proviennent du même modèle', () => {
   assert.match(core.serialize.cuttingListCsv(candidate), /manufacturing_release/);
 });
 
+test('la maquette pédagogique expose quatre étapes sans modifier le candidat acier', () => {
+  const candidate = core.runWorkflow(core.DEFAULT_INPUT).recommended;
+  const before = JSON.stringify(candidate);
+  assert.deepEqual(core.prototypeLayers.STAGES.map((stage) => stage.id), ['FRAME', 'INSULATED', 'LINED', 'COMPLETE']);
+  assert.deepEqual(
+    core.prototypeLayers.STAGES.map((stage) => core.prototypeLayers.build(candidate, stage.id).layers.length),
+    [1, 2, 4, 6]
+  );
+  const complete = core.prototypeLayers.build(candidate, 'COMPLETE');
+  assert.ok(Number.isFinite(complete.wall.displayDepthMm));
+  assert.equal(JSON.stringify(candidate), before);
+});
+
+test('les surfaces pédagogiques conservent les vides de porte et fenêtre', () => {
+  const result = core.runWorkflow({ ...core.DEFAULT_INPUT, doorEnabled: true, doorXMm: 100, doorWidthMm: 800, doorHeightMm: 1800 });
+  const candidate = result.recommended;
+  const cells = core.prototypeLayers.surfaceCells(candidate.wall);
+  const surfaceArea = cells.reduce((sum, cell) => sum + cell.areaMm2, 0);
+  const openingArea = candidate.wall.openings.reduce((sum, opening) => sum + opening.widthMm * opening.heightMm, 0);
+  assert.equal(surfaceArea, candidate.wall.lengthMm * candidate.wall.heightMm - openingArea);
+  cells.forEach((cell) => candidate.wall.openings.forEach((opening) => {
+    const centerX = (cell.xMin + cell.xMax) / 2;
+    const centerZ = (cell.zMin + cell.zMax) / 2;
+    assert.equal(
+      centerX > opening.xMm && centerX < opening.xMm + opening.widthMm
+        && centerZ > opening.sillMm && centerZ < opening.sillMm + opening.heightMm,
+      false
+    );
+  }));
+});
+
+test('les couches de démonstration restent absentes des fichiers de fabrication', () => {
+  const result = core.runWorkflow(core.DEFAULT_INPUT);
+  const model = core.prototypeLayers.build(result.recommended, 'COMPLETE');
+  assert.equal(model.exportPolicy.status, 'DEMONSTRATION_ONLY_NOT_EXPORTED');
+  assert.ok(model.layers.filter((layer) => layer.id !== 'FRAME').every((layer) => layer.displayOnly && !layer.exportedByManufacturingWorkflow));
+  const files = core.packageBuilder.buildExportFiles(result, result.recommended, 20);
+  const fileNames = Object.keys(files).join('\n').toLowerCase();
+  assert.doesNotMatch(fileNames, /insulation|isolation|board|parement|finish|finition|prototype-layer/);
+  assert.equal(result.recommended.bom.reduce((sum, row) => sum + row.quantity, 0), result.recommended.members.length);
+});
+
+test('l’interface présente une étape dédiée et sa limite d’export', () => {
+  const html = fs.readFileSync(path.join(root, 'apps', 'web', 'index.html'), 'utf8');
+  assert.match(html, /data-page="prototype-page"/);
+  assert.match(html, /id="prototype-page"/);
+  assert.match(html, /Maquette en couches/);
+  assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM, ni la liste de débit, ni le paquet ZIP/);
+});
+
 test('le paquet complet contient les interfaces et bloque explicitement la machine', () => {
   const result = core.runWorkflow(core.DEFAULT_INPUT);
   const files = core.packageBuilder.buildExportFiles(result, result.recommended, 20);
