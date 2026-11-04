@@ -3,7 +3,7 @@
     "schemaVersion": "2.0",
     "software": {
       "name": "Avelis Wall Flow",
-      "version": "2.1.0"
+      "version": "2.2.0"
     },
     "identity": {
       "projectId": "AVELIS-IAM-2026",
@@ -84,13 +84,46 @@
     }
   },
   "candidate": {
-    "id": "CAND-01",
+    "id": "CAND-03",
     "option": {
       "profileSetId": "MF-12-50",
-      "gridStrategy": "WALL_ORIGIN",
+      "gridStrategy": "OPENING_ZONED",
+      "gridStrategyLabel": "Zones d’ouvertures",
       "studSpacingMm": 600,
       "studProfileId": "100MF12-50",
       "trackProfileId": "104MF12"
+    },
+    "layout": {
+      "strategy": "OPENING_ZONED",
+      "label": "Zones d’ouvertures",
+      "description": "Fixe les rives et jambages puis répartit chaque zone entre appuis fixes.",
+      "targetModuleMm": 600,
+      "zoneCount": 3,
+      "gridCentersMm": [
+        500,
+        1500,
+        2500
+      ],
+      "actualStudCentersMm": [
+        25,
+        500,
+        975,
+        1500,
+        2025,
+        2500,
+        2975
+      ],
+      "actualBaySpacingsMm": [
+        475,
+        475,
+        525,
+        525,
+        475,
+        475
+      ],
+      "minimumBayMm": 475,
+      "maximumBayMm": 525,
+      "spacingSpreadMm": 50
     },
     "wall": {
       "lengthMm": 3000,
@@ -631,7 +664,7 @@
         "massKg": 2.11
       },
       {
-        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -669,7 +702,7 @@
         "axis": "z",
         "lengthMm": 2276,
         "position": {
-          "xMm": 575,
+          "xMm": 475,
           "yMm": 0,
           "zMm": 62
         },
@@ -679,15 +712,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1QQR8CC",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1YV1ZON",
         "bounds": {
           "min": {
-            "x": 575,
+            "x": 475,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 625,
+            "x": 525,
             "y": 100,
             "z": 2338
           }
@@ -695,7 +728,7 @@
         "massKg": 4.8024
       },
       {
-        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII",
         "role": "cripple_stud",
         "label": "Upper cripple stud — DOOR",
         "source": "OPENING_GRID",
@@ -733,7 +766,7 @@
         "axis": "z",
         "lengthMm": 276,
         "position": {
-          "xMm": 1175,
+          "xMm": 1475,
           "yMm": 0,
           "zMm": 2062
         },
@@ -743,15 +776,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0T6HXOZ",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0RCYHII",
         "bounds": {
           "min": {
-            "x": 1175,
+            "x": 1475,
             "y": 0,
             "z": 2062
           },
           "max": {
-            "x": 1225,
+            "x": 1525,
             "y": 100,
             "z": 2338
           }
@@ -759,71 +792,7 @@
         "massKg": 0.5824
       },
       {
-        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
-        "role": "cripple_stud",
-        "label": "Upper cripple stud — DOOR",
-        "source": "OPENING_GRID",
-        "openingId": "DOOR-01",
-        "material": {
-          "id": "REF-METSEC-Z275-FY450",
-          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
-          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
-          "coating": "Z275",
-          "minimumYieldStrengthNmm2": 450
-        },
-        "profile": {
-          "id": "100MF12-50",
-          "manufacturerReference": "100MF12/50",
-          "family": "STUD_C",
-          "massKgPerM": 2.11,
-          "webDepthMm": 100,
-          "flange1Mm": 50,
-          "flange2Mm": 50,
-          "lipMm": 14,
-          "nominalThicknessMm": 1.2,
-          "minimumYieldStrengthNmm2": 450,
-          "coating": "Z275",
-          "sourceId": "METSEC_COMPONENTS_2026",
-          "sourceLocation": "Studs / Joists table, row 100MF12/50"
-        },
-        "representation": {
-          "kind": "PROFILE_ENVELOPE",
-          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
-        },
-        "sectionEnvelope": {
-          "inPlaneWidthMm": 50,
-          "depthMm": 100
-        },
-        "axis": "z",
-        "lengthMm": 276,
-        "position": {
-          "xMm": 1775,
-          "yMm": 0,
-          "zMm": 2062
-        },
-        "operations": [
-          "CUT_SQUARE",
-          "MARK_ID"
-        ],
-        "toleranceMm": null,
-        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1EN9761",
-        "bounds": {
-          "min": {
-            "x": 1775,
-            "y": 0,
-            "z": 2062
-          },
-          "max": {
-            "x": 1825,
-            "y": 100,
-            "z": 2338
-          }
-        },
-        "massKg": 0.5824
-      },
-      {
-        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO",
+        "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -861,7 +830,7 @@
         "axis": "z",
         "lengthMm": 2276,
         "position": {
-          "xMm": 2375,
+          "xMm": 2475,
           "yMm": 0,
           "zMm": 62
         },
@@ -871,15 +840,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0TH2CCO",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0U84ZBX",
         "bounds": {
           "min": {
-            "x": 2375,
+            "x": 2475,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 2425,
+            "x": 2525,
             "y": 100,
             "z": 2338
           }
@@ -924,16 +893,19 @@
       ]
     },
     "metrics": {
-      "steelMassKg": 42.639,
-      "totalProfileLengthM": 20.208,
-      "componentCount": 12,
-      "cutCount": 24,
+      "steelMassKg": 42.057,
+      "totalProfileLengthM": 19.932,
+      "componentCount": 11,
+      "cutCount": 22,
       "uniqueLengthCount": 4,
       "uniqueProfileCount": 2,
-      "materialCostEstimateEurExVat": 131.76,
+      "minimumStudBayMm": 475,
+      "maximumStudBayMm": 525,
+      "studBaySpreadMm": 50,
+      "materialCostEstimateEurExVat": 129.96,
       "materialCostRangeEurExVat": {
-        "low": 77.6,
-        "high": 175.67
+        "low": 76.54,
+        "high": 173.27
       },
       "priceBasis": {
         "valueEurPerKgExVat": 3.09,
@@ -990,8 +962,8 @@
         "totalLengthM": 4.552,
         "totalMassKg": 9.605,
         "componentIds": [
-          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
-          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO"
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON",
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX"
         ]
       },
       {
@@ -1001,12 +973,11 @@
         "materialId": "REF-METSEC-Z275-FY450",
         "cutLengthMm": 276,
         "massKgPerM": 2.11,
-        "quantity": 2,
-        "totalLengthM": 0.552,
-        "totalMassKg": 1.165,
+        "quantity": 1,
+        "totalLengthM": 0.276,
+        "totalMassKg": 0.582,
         "componentIds": [
-          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
-          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761"
+          "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII"
         ]
       },
       {
@@ -1055,9 +1026,9 @@
     ],
     "crossValidation": {
       "massReconciliation": {
-        "memberSumKg": 42.639,
-        "bomSumKg": 42.64,
-        "absoluteDifferenceKg": 0.0008,
+        "memberSumKg": 42.057,
+        "bomSumKg": 42.057,
+        "absoluteDifferenceKg": 0.0002,
         "status": "MATCH"
       }
     },

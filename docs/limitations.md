@@ -6,7 +6,7 @@
 - composants acier, longueurs, positions, profils publics, masse et coût scénario ;
 - BOM, débit, identifiants, QR, séquence proposée ;
 - relations du fixture IFC et enveloppe du fixture STEP ;
-- comparaison exhaustive de six variantes ;
+- comparaison exhaustive de neuf combinaisons, puis retrait des géométries strictement identiques ;
 - cohérence masse géométrie/BOM.
 
 ## Non démontré

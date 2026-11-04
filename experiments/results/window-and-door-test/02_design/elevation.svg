@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5160 2960" role="img" aria-label="Élévation du mur CAND-01">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5160 2960" role="img" aria-label="Élévation du mur CAND-03">
 <rect width="100%" height="100%" fill="#f8f6f1"/>
 <g transform="translate(180 2780) scale(1 -1)">
 <rect x="0" y="0" width="2900" height="62" fill="#315f73" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1JCVEVM — Bottom track 1</title></rect>
@@ -13,18 +13,17 @@
 <rect x="2850" y="62" width="50" height="2476" fill="#d06b35" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1MSWFXH — Left jamb — DOOR</title></rect>
 <rect x="3800" y="62" width="50" height="2476" fill="#d06b35" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1BFCSEP — Right jamb — DOOR</title></rect>
 <rect x="2900" y="2000" width="900" height="62" fill="#9e4e2a" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-09F067C — Header track — DOOR</title></rect>
-<rect x="1175" y="62" width="50" height="676" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5 — Window lower cripple stud</title></rect>
-<rect x="1175" y="1862" width="50" height="676" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK — Upper cripple stud — WINDOW</title></rect>
-<rect x="1775" y="62" width="50" height="2476" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P — Common stud</title></rect>
-<rect x="2375" y="62" width="50" height="2476" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2 — Common stud</title></rect>
-<rect x="2975" y="2062" width="50" height="476" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0 — Upper cripple stud — DOOR</title></rect>
-<rect x="3575" y="2062" width="50" height="476" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB — Upper cripple stud — DOOR</title></rect>
-<rect x="4175" y="62" width="50" height="2476" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE — Common stud</title></rect>
+<rect x="1075" y="62" width="50" height="676" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC — Window lower cripple stud</title></rect>
+<rect x="1075" y="1862" width="50" height="676" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP — Upper cripple stud — WINDOW</title></rect>
+<rect x="2016.667" y="62" width="50" height="2476" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV — Common stud</title></rect>
+<rect x="2433.333" y="62" width="50" height="2476" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS — Common stud</title></rect>
+<rect x="3325" y="2062" width="50" height="476" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU — Upper cripple stud — DOOR</title></rect>
+<rect x="4275" y="62" width="50" height="2476" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR — Common stud</title></rect>
 <rect x="600" y="800" width="1000" height="1000" fill="#dff4ff" fill-opacity="0.8" stroke="#1976a3" stroke-width="8"><title>Fenêtre WINDOW-01</title></rect>
 <rect x="2900" y="0" width="900" height="2000" fill="#fff0d8" fill-opacity="0.8" stroke="#b45f18" stroke-width="8"><title>Porte DOOR-01</title></rect>
 </g>
-<text x="180" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">CAND-01 — mur 4800 × 2600 mm</text>
-<text x="180" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">100MF12-50 · entraxe de référence 600 mm · stratégie WALL_ORIGIN</text>
+<text x="180" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">CAND-03 — mur 4800 × 2600 mm</text>
+<text x="180" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">100MF12-50 · Zones d’ouvertures · 416.666–550 mm réels</text>
 <line x1="180" y1="2890" x2="4980" y2="2890" stroke="#182b36" stroke-width="5"/>
 <text x="2580" y="2875" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" fill="#182b36">4800 mm</text>
 </svg>

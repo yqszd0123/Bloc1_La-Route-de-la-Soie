@@ -15,7 +15,7 @@
     "length": "mm",
     "mass": "kg"
   },
-  "candidateId": "CAND-01",
+  "candidateId": "CAND-03",
   "material": {
     "id": "REF-METSEC-Z275-FY450",
     "label": "Reference cold-formed galvanized steel — Metsec Metframe",
@@ -366,7 +366,7 @@
       "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|09F067C"
     },
     {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
+      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC",
       "partType": "cripple_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -378,7 +378,7 @@
       },
       "calculatedMassKg": 1.4264,
       "positionMm": {
-        "x": 1175,
+        "x": 1075,
         "y": 0,
         "z": 62
       },
@@ -388,10 +388,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GGPSB5"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1D293EC"
     },
     {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK",
+      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP",
       "partType": "cripple_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -403,7 +403,7 @@
       },
       "calculatedMassKg": 1.4264,
       "positionMm": {
-        "x": 1175,
+        "x": 1075,
         "y": 0,
         "z": 1862
       },
@@ -413,10 +413,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|18WA7MK"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1N8ZOIP"
     },
     {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
+      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -428,7 +428,7 @@
       },
       "calculatedMassKg": 5.2244,
       "positionMm": {
-        "x": 1775,
+        "x": 2016.667,
         "y": 0,
         "z": 62
       },
@@ -438,10 +438,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0FJ0L5P"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0KUE9SV"
     },
     {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
+      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -453,7 +453,7 @@
       },
       "calculatedMassKg": 5.2244,
       "positionMm": {
-        "x": 2375,
+        "x": 2433.333,
         "y": 0,
         "z": 62
       },
@@ -463,10 +463,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1KR6CD2"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|04SXTDS"
     },
     {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
+      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU",
       "partType": "cripple_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -478,7 +478,7 @@
       },
       "calculatedMassKg": 1.0044,
       "positionMm": {
-        "x": 2975,
+        "x": 3325,
         "y": 0,
         "z": 2062
       },
@@ -488,35 +488,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1QICXN0"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GSMZMU"
     },
     {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB",
-      "partType": "cripple_stud",
-      "materialId": "REF-METSEC-Z275-FY450",
-      "profileId": "100MF12-50",
-      "manufacturerReference": "100MF12/50",
-      "dimensionsMm": {
-        "length": 476,
-        "sectionDepth": 100,
-        "nominalThickness": 1.2
-      },
-      "calculatedMassKg": 1.0044,
-      "positionMm": {
-        "x": 3575,
-        "y": 0,
-        "z": 2062
-      },
-      "axis": "z",
-      "operations": [
-        "CUT_SQUARE",
-        "MARK_ID"
-      ],
-      "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1FVPIUB"
-    },
-    {
-      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE",
+      "partId": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -528,7 +503,7 @@
       },
       "calculatedMassKg": 5.2244,
       "positionMm": {
-        "x": 4175,
+        "x": 4275,
         "y": 0,
         "z": 62
       },
@@ -538,7 +513,7 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1EX04SE"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0YAPAKR"
     }
   ],
   "toleranceMm": null,
@@ -583,13 +558,12 @@
       "order": 3,
       "operation": "SET_COMMON_AND_CRIPPLE_STUDS",
       "partIds": [
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE"
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR"
       ],
       "dependsOn": [
         "STEP-01"
@@ -642,13 +616,12 @@
         "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1MSWFXH",
         "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1BFCSEP",
         "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-09F067C",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB",
-        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE"
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU",
+        "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR"
       ],
       "dependsOn": [
         "STEP-05"

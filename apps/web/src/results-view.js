@@ -30,7 +30,7 @@
         `<td><span class="rank-badge">${candidate.rank}</span></td>`,
         `<td>${candidate.id}${candidate.paretoOptimal ? '<span class="pareto">PARETO</span>' : ''}</td>`,
         `<td>${candidate.option.studProfileId} + ${candidate.option.trackProfileId}</td>`,
-        `<td>${candidate.option.gridStrategy.replace(/_/g, ' ')}</td>`,
+        `<td><strong>${candidate.option.gridStrategyLabel}</strong><br><small>${candidate.layout.minimumBayMm.toFixed(0)}–${candidate.layout.maximumBayMm.toFixed(0)} mm réels</small></td>`,
         `<td>${candidate.metrics.steelMassKg.toFixed(2)} kg</td>`,
         `<td>${candidate.metrics.componentCount}</td>`,
         `<td>${candidate.metrics.uniqueLengthCount}</td>`,
@@ -40,7 +40,8 @@
       row.addEventListener('click', () => onSelect(candidate.id));
       body.appendChild(row);
     });
-    text('candidate-count', `${result.rankedCandidates.length} valides / ${result.search.searchSpaceSize} explorées`);
+    const duplicates = result.search.duplicateCandidates.length;
+    text('candidate-count', `${result.rankedCandidates.length} distinctes / ${result.search.searchSpaceSize} combinaisons${duplicates ? ` · ${duplicates} doublon(s) retiré(s)` : ''}`);
   }
 
   function renderBom(candidate) {
@@ -138,7 +139,7 @@
   function renderSelected(result, candidate) {
     text('candidate-title', `${candidate.id} · rang ${candidate.rank} · score ${candidate.score}`);
     const openingLabel = candidate.wall.openings.length ? candidate.wall.openings.map((opening) => opening.type.toLowerCase()).join(' + ') : 'sans ouverture';
-    text('viewer-caption', `${openingLabel} · ${candidate.option.studProfileId} · entraxe de référence ${candidate.option.studSpacingMm} mm`);
+    text('viewer-caption', `${openingLabel} · ${candidate.option.gridStrategyLabel} · ${candidate.layout.minimumBayMm.toFixed(0)}–${candidate.layout.maximumBayMm.toFixed(0)} mm réels · module cible ${candidate.option.studSpacingMm} mm`);
     const sourceLabels = { IFC: 'Source IFC :', STEP: 'Source STEP :', MANUAL: 'Source manuelle :' };
     const sourceScopes = {
       IFC: 'dimensions, placements et ouvertures extraits du fichier. ',

@@ -43,7 +43,16 @@
         input,
         rules,
         inputValidation,
-        search: { searchSpaceSize: 0, searchSpace: [], candidates: [], validCandidates: [], rejectedCandidates: [] },
+        search: {
+          searchSpaceSize: 0,
+          searchSpace: [],
+          evaluatedCandidateCount: 0,
+          uniqueCandidateCount: 0,
+          duplicateCandidates: [],
+          candidates: [],
+          validCandidates: [],
+          rejectedCandidates: []
+        },
         rankedCandidates: [],
         recommended: null,
         processingTimeMs: Date.now() - started

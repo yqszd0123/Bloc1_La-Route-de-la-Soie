@@ -15,7 +15,7 @@
     "length": "mm",
     "mass": "kg"
   },
-  "candidateId": "CAND-01",
+  "candidateId": "CAND-03",
   "material": {
     "id": "REF-METSEC-Z275-FY450",
     "label": "Reference cold-formed galvanized steel — Metsec Metframe",
@@ -266,7 +266,7 @@
       "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|09LF8CG"
     },
     {
-      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
+      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -278,7 +278,7 @@
       },
       "calculatedMassKg": 4.8024,
       "positionMm": {
-        "x": 575,
+        "x": 475,
         "y": 0,
         "z": 62
       },
@@ -288,10 +288,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1QQR8CC"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1YV1ZON"
     },
     {
-      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
+      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII",
       "partType": "cripple_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -303,7 +303,7 @@
       },
       "calculatedMassKg": 0.5824,
       "positionMm": {
-        "x": 1175,
+        "x": 1475,
         "y": 0,
         "z": 2062
       },
@@ -313,35 +313,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0T6HXOZ"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0RCYHII"
     },
     {
-      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
-      "partType": "cripple_stud",
-      "materialId": "REF-METSEC-Z275-FY450",
-      "profileId": "100MF12-50",
-      "manufacturerReference": "100MF12/50",
-      "dimensionsMm": {
-        "length": 276,
-        "sectionDepth": 100,
-        "nominalThickness": 1.2
-      },
-      "calculatedMassKg": 0.5824,
-      "positionMm": {
-        "x": 1775,
-        "y": 0,
-        "z": 2062
-      },
-      "axis": "z",
-      "operations": [
-        "CUT_SQUARE",
-        "MARK_ID"
-      ],
-      "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1EN9761"
-    },
-    {
-      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO",
+      "partId": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -353,7 +328,7 @@
       },
       "calculatedMassKg": 4.8024,
       "positionMm": {
-        "x": 2375,
+        "x": 2475,
         "y": 0,
         "z": 62
       },
@@ -363,7 +338,7 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0TH2CCO"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0U84ZBX"
     }
   ],
   "toleranceMm": null,
@@ -406,10 +381,9 @@
       "order": 3,
       "operation": "SET_COMMON_AND_CRIPPLE_STUDS",
       "partIds": [
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO"
+        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON",
+        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII",
+        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX"
       ],
       "dependsOn": [
         "STEP-01"
@@ -456,10 +430,9 @@
         "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0Y3V1HK",
         "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-11AE2EM",
         "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-09LF8CG",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
-        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO"
+        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON",
+        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII",
+        "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX"
       ],
       "dependsOn": [
         "STEP-05"

@@ -28,25 +28,28 @@
     "priority": "balanced",
     "prototypeScale": 20
   },
-  "searchSpaceSize": 6,
-  "validCandidateCount": 6,
+  "searchSpaceSize": 9,
+  "validCandidateCount": 9,
   "rejectedCandidateCount": 0,
   "processingTimeMs": 2,
-  "recommendedCandidateId": "CAND-01",
+  "recommendedCandidateId": "CAND-03",
   "recommendedRank": 1,
   "score": 0,
   "paretoOptimal": true,
   "metrics": {
-    "steelMassKg": 42.639,
-    "totalProfileLengthM": 20.208,
-    "componentCount": 12,
-    "cutCount": 24,
+    "steelMassKg": 42.057,
+    "totalProfileLengthM": 19.932,
+    "componentCount": 11,
+    "cutCount": 22,
     "uniqueLengthCount": 4,
     "uniqueProfileCount": 2,
-    "materialCostEstimateEurExVat": 131.76,
+    "minimumStudBayMm": 475,
+    "maximumStudBayMm": 525,
+    "studBaySpreadMm": 50,
+    "materialCostEstimateEurExVat": 129.96,
     "materialCostRangeEurExVat": {
-      "low": 77.6,
-      "high": 175.67
+      "low": 76.54,
+      "high": 173.27
     },
     "priceBasis": {
       "valueEurPerKgExVat": 3.09,

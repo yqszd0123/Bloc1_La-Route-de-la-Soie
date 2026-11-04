@@ -15,7 +15,7 @@ from reportlab.platypus import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "outputs" / "Engineering_Data_Report_Avelis_Wall_Flow_2.1.pdf"
+OUTPUT = ROOT / "output" / "pdf" / "Engineering_Data_Report_Avelis_Wall_Flow_2.2.pdf"
 DATA = json.loads((ROOT / "data" / "engineering_sources.json").read_text(encoding="utf-8"))
 EXPERIMENT = json.loads((ROOT / "experiments" / "results" / "official-ifc-window" / "experiment-result.json").read_text(encoding="utf-8"))
 
@@ -44,7 +44,7 @@ class FlowDiagram(Flowable):
         c = self.canv
         boxes = [
             (0, "IFC / STEP /\nmanuel"), (37, "Entrée\nnormalisée"),
-            (74, "Générateur\nacier"), (111, "6 candidats +\ncontrôles"),
+            (74, "Générateur\nacier"), (111, "9 combinaisons +\ncontrôles"),
             (148, "Paquet\nBloc 2")
         ]
         for x_mm, label in boxes:
@@ -111,7 +111,7 @@ def header_footer(canvas, doc):
     canvas.rect(0, A4[1]-15*mm, A4[0], 15*mm, fill=1, stroke=0)
     canvas.setFillColor(WHITE)
     canvas.setFont("Avelis-Bold", 8)
-    canvas.drawString(18*mm, A4[1]-9.5*mm, "AVELIS WALL FLOW 2.1 — ENGINEERING DATA REPORT")
+    canvas.drawString(18*mm, A4[1]-9.5*mm, "AVELIS WALL FLOW 2.2 — ENGINEERING DATA REPORT")
     canvas.setStrokeColor(LINE)
     canvas.line(18*mm, 14*mm, A4[0]-18*mm, 14*mm)
     canvas.setFillColor(MUTED)
@@ -133,7 +133,7 @@ def cover(canvas, doc):
     canvas.setFont("Avelis-Bold", 9)
     canvas.drawString(20*mm, A4[1]-23*mm, "IMAGINE & MAKE 2026 · AVELIS · BLOC 1")
     canvas.setFont("Avelis", 8)
-    canvas.drawString(20*mm, 20*mm, "Version 2.1 · 3 novembre 2026 · ENGINEERING_REVIEW_REQUIRED")
+    canvas.drawString(20*mm, 20*mm, "Version 2.2 · 3 novembre 2026 · ENGINEERING_REVIEW_REQUIRED")
     canvas.restoreState()
 
 
@@ -151,17 +151,17 @@ unresolved = DATA["unresolvedAvelisInputs"]
 story = []
 story += [Spacer(1, 68*mm), P("Engineering Data<br/>Report", "CoverTitle"), Spacer(1, 8*mm), P("IFC / STEP → conception paramétrique acier → préparation de fabrication", "CoverSub"), Spacer(1, 15*mm), P("Une chaîne logicielle exécutable, traçable et vérifiée pour le Bloc 1. Les résultats géométriques et quantitatifs sont calculés ; la validation structurelle et la libération machine restent explicitement bloquées.", "CoverSub"), PageBreak()]
 
-story += section("1. Résumé exécutif", "Avelis Wall Flow transforme trois types d’entrée en un modèle commun de panneau acier, génère six variantes, vérifie leur cohérence et remet un paquet neutre au Bloc 2.")
+story += section("1. Résumé exécutif", "Avelis Wall Flow transforme trois types d’entrée en un modèle commun de panneau acier, évalue neuf combinaisons de profils et d’implantations, retire les doublons géométriques, vérifie leur cohérence et remet un paquet neutre au Bloc 2.")
 story.append(FlowDiagram())
 story += bullets([
     "Entrées : configuration manuelle, vrai IFC avec sémantique mur/ouverture, vrai STEP/STP lu par Open CASCADE.",
     "Produit de référence : profils acier formés à froid galvanisés Z275, valeurs géométriques et kg/m issues d’un fabricant public.",
-    "Résultat IFC de référence : CAND-02, 13 pièces, 46,176 kg, 142,68 € HT au scénario central.",
-    "Vérification croisée : masse des pièces et masse groupée de BOM concordent ; écart d’arrondi 0,0004 kg.",
+    f"Résultat IFC de référence recalculé : {EXPERIMENT['recommendedCandidateId']}, {metrics['componentCount']} pièces, {metrics['steelMassKg']:.3f} kg, {metrics['materialCostEstimateEurExVat']:.2f} € HT au scénario central.",
+    "Vérification croisée : masse des pièces et masse groupée de BOM concordent dans la tolérance d’arrondi automatique de 0,01 kg.",
     "Statut : démonstrateur conceptuel. Aucun certificat structurel, aucune tolérance inventée, aucune libération machine."
 ])
 story.append(P("Décision recommandée", "H2A"))
-story.append(P("Utiliser la version 2.1 comme contrat numérique de discussion entre Bloc 1, Bloc 2 et Avelis ; remplacer progressivement les produits, prix et capacités de référence par les données industrielles confirmées.", "Callout"))
+story.append(P("Utiliser la version 2.2 comme contrat numérique de discussion entre Bloc 1, Bloc 2 et Avelis ; remplacer progressivement les produits, prix et capacités de référence par les données industrielles confirmées.", "Callout"))
 story.append(PageBreak())
 
 story += section("2. Architecture et principe de conception")
@@ -171,7 +171,7 @@ story.append(table(["Couche", "Responsabilité", "Garantie"], [
     ["Domaine", "Projet, version, matériau, profils", "Identifiants et données traçables"],
     ["Génération", "Créer rails, montants et cadres", "Même composant dans visuel, BOM et JSON"],
     ["Règles", "Contrôler enveloppe, collisions, valeurs", "Erreurs bloquantes avant export"],
-    ["Optimisation", "Évaluer 6 variantes", "Recherche exhaustive et classement stable"],
+    ["Optimisation", "Évaluer 9 combinaisons et retirer les doublons", "Recherche exhaustive et classement stable"],
     ["Exports", "CSV, JSON, SVG, DXF, STL, STEP, ZIP", "Paquet cohérent et statut explicite"]
 ], [27*mm, 65*mm, 78*mm]))
 story.append(P("Règle d’évolution", "H2A"))
@@ -221,16 +221,16 @@ story.append(P("L’interface traite la porte comme une option réelle. Lorsqu�
 story.append(PageBreak())
 
 story += section("6. Recherche et décision multicritère")
-story.append(P("L’espace est petit et entièrement exploré : trois couples de profils × deux stratégies d’implantation. Aucune solution n’est injectée comme résultat prédéfini."))
+story.append(P("L’espace est petit et entièrement exploré : trois couples de profils × trois stratégies d’implantation, soit neuf combinaisons avant dédoublonnage. Aucune solution n’est injectée comme résultat prédéfini."))
 story.append(table(["Dimension", "Options"], [
     ["Couples profils", "MF-12-50, MF-12-70, MF-14-70"],
-    ["Implantation", "origine du mur ; alignée sur les ouvertures"],
+    ["Implantation", "module symétrique ; travées uniformes ; zones d’ouvertures"],
     ["Métriques", "masse, nombre de pièces, longueurs distinctes, coupes"],
     ["Décision", "normalisation min–max, score inférieur préférable, Pareto indépendant"]
 ], [44*mm, 116*mm]))
 story.append(P("Résultat du cas IFC", "H2A"))
 story.append(table(["Candidat", "Profils", "Implantation", "Masse", "Pièces", "Longueurs", "Budget HT"], [[
-    EXPERIMENT["recommendedCandidateId"], "100MF12/50 + 104MF12", "alignée ouvertures",
+    EXPERIMENT["recommendedCandidateId"], "100MF12/50 + 104MF12", "zones d’ouvertures",
     f'{metrics["steelMassKg"]:.3f} kg', metrics["componentCount"], metrics["uniqueLengthCount"], f'{metrics["materialCostEstimateEurExVat"]:.2f} €'
 ]], [24*mm, 37*mm, 37*mm, 24*mm, 16*mm, 19*mm, 23*mm]))
 story.append(P("Le score n’est valable qu’à l’intérieur de l’espace décrit. Il ne remplace ni un calcul de résistance ni une optimisation de chutes de stock."))
@@ -272,17 +272,17 @@ story += section("9. Vérification logicielle et croisements")
 story.append(table(["Contrôle", "Méthode", "Résultat"], [
     ["Catalogue", "JSON autoritatif = module navigateur", "PASS"],
     ["Masse profil", "fabricant vs approximation densité", "PASS < 5 %"],
-    ["Masse panneau", "somme pièces vs BOM", "MATCH, 0,0004 kg"],
+    ["Masse panneau", "somme pièces vs BOM", "MATCH, écart ≤ 0,01 kg"],
     ["IFC", "fixture réel et géométrie connue", "PASS"],
     ["STEP entrée", "fixture réel Open CASCADE", "PASS, 24 sommets"],
     ["STEP sortie", "export puis réimport Open CASCADE", "PASS, 13 solides / dimensions MATCH"],
     ["Porte", "rail bas interrompu, cadre générique", "PASS"],
     ["Ouvertures", "hors enveloppe, chevauchement, tête", "PASS"],
-    ["Optimisation", "6 générés = 6 déclarés", "PASS"],
+    ["Optimisation", "9 combinaisons évaluées, doublons retirés", "PASS"],
     ["Exports", "signatures STL/DXF/SVG/ZIP et contrat", "PASS"]
 ], [38*mm, 82*mm, 40*mm]))
 story.append(P("Bilan automatisé", "H2A"))
-story.append(P("25 vérifications réussies : 24 tests du moteur et 1 intégration STEP/Open CASCADE couvrant import et réimport de la sortie générée. Les valeurs de présentation sont produites par le même programme que les exports."))
+story.append(P("27 vérifications réussies : 26 tests du moteur et 1 intégration STEP/Open CASCADE couvrant import et réimport de la sortie générée. Les valeurs de présentation sont produites par le même programme que les exports."))
 story.append(PageBreak())
 
 story += section("10. Limites et données à obtenir")
@@ -330,7 +330,7 @@ def build():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     doc = BaseDocTemplate(
         str(OUTPUT), pagesize=A4, rightMargin=18*mm, leftMargin=18*mm,
-        topMargin=22*mm, bottomMargin=19*mm, title="Engineering Data Report — Avelis Wall Flow 2.1",
+        topMargin=22*mm, bottomMargin=19*mm, title="Engineering Data Report — Avelis Wall Flow 2.2",
         author="Équipe 3 — La Route de la Soie"
     )
     frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="normal")

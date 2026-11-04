@@ -2,6 +2,7 @@
   'use strict';
 
   const core = global.AvelisCore = global.AvelisCore || {};
+  const EPSILON = 0.001;
 
   function addVertical(context, role, label, xMm, zMm, lengthMm, source, openingId) {
     if (!(lengthMm > 0)) return null;
@@ -31,24 +32,92 @@
       });
       segments = next;
     });
-    return segments.filter((segment) => segment.end - segment.start > 0.001);
+    return segments.filter((segment) => segment.end - segment.start > EPSILON);
   }
 
-  function gridCenters(wallLengthMm, spacingMm, strategy, openings) {
-    let phase = spacingMm;
-    if (strategy === 'OPENING_ALIGNED' && openings.length) {
-      phase = ((openings[0].xMm % spacingMm) + spacingMm) % spacingMm;
-      if (phase < 0.001) phase = spacingMm;
+  function uniqueSorted(values) {
+    return values
+      .slice()
+      .sort((a, b) => a - b)
+      .filter((value, index, sorted) => index === 0 || Math.abs(value - sorted[index - 1]) > EPSILON)
+      .map((value) => core.math.round(value, 3));
+  }
+
+  function intervalCount(lengthMm, targetModuleMm) {
+    return Math.max(1, Math.ceil((lengthMm - EPSILON) / targetModuleMm));
+  }
+
+  function uniformCenters(startMm, endMm, targetModuleMm) {
+    const lengthMm = endMm - startMm;
+    if (!(lengthMm > EPSILON)) return [];
+    const count = intervalCount(lengthMm, targetModuleMm);
+    const spacing = lengthMm / count;
+    return Array.from({ length: Math.max(0, count - 1) }, (_, index) => (
+      core.math.round(startMm + spacing * (index + 1), 3)
+    ));
+  }
+
+  function symmetricModuleCenters(startMm, endMm, targetModuleMm) {
+    const lengthMm = endMm - startMm;
+    if (!(lengthMm > EPSILON)) return [];
+    const count = intervalCount(lengthMm, targetModuleMm);
+    if (count === 1) return [];
+
+    const fullModuleIntervals = Math.max(0, count - 2);
+    const edgeBayMm = (lengthMm - fullModuleIntervals * targetModuleMm) / 2;
+    const centers = [startMm + edgeBayMm];
+    for (let index = 0; index < fullModuleIntervals; index += 1) {
+      centers.push(centers[centers.length - 1] + targetModuleMm);
     }
-    const centers = [];
-    for (let center = phase; center < wallLengthMm - 0.001; center += spacingMm) {
-      centers.push(core.math.round(center, 3));
+    return centers.map((center) => core.math.round(center, 3));
+  }
+
+  function boundaryCenters(wallLengthMm, studWidthMm) {
+    return [studWidthMm / 2, wallLengthMm - studWidthMm / 2];
+  }
+
+  function openingJambCenters(openings, studWidthMm, leftBoundaryMm, rightBoundaryMm) {
+    return openings.flatMap((opening) => [
+      opening.xMm - studWidthMm / 2,
+      opening.xMm + opening.widthMm + studWidthMm / 2
+    ]).filter((center) => center > leftBoundaryMm + EPSILON && center < rightBoundaryMm - EPSILON);
+  }
+
+  function buildGridPlan(wallLengthMm, targetModuleMm, strategy, openings, studWidthMm) {
+    const [leftBoundaryMm, rightBoundaryMm] = boundaryCenters(wallLengthMm, studWidthMm);
+    let centers = [];
+    let zones = [{ startMm: leftBoundaryMm, endMm: rightBoundaryMm }];
+
+    if (strategy === 'SYMMETRIC_MODULE') {
+      centers = symmetricModuleCenters(leftBoundaryMm, rightBoundaryMm, targetModuleMm);
+    } else if (strategy === 'UNIFORM_BAYS') {
+      centers = uniformCenters(leftBoundaryMm, rightBoundaryMm, targetModuleMm);
+    } else if (strategy === 'OPENING_ZONED') {
+      const anchors = uniqueSorted([
+        leftBoundaryMm,
+        ...openingJambCenters(openings, studWidthMm, leftBoundaryMm, rightBoundaryMm),
+        rightBoundaryMm
+      ]);
+      zones = anchors.slice(0, -1).map((startMm, index) => ({ startMm, endMm: anchors[index + 1] }));
+      centers = zones.flatMap((zone) => uniformCenters(zone.startMm, zone.endMm, targetModuleMm));
+    } else {
+      throw new Error(`Unknown grid strategy: ${strategy}`);
     }
-    return centers;
+
+    return {
+      strategy,
+      targetModuleMm,
+      boundaryCentersMm: [leftBoundaryMm, rightBoundaryMm].map((value) => core.math.round(value, 3)),
+      centersMm: uniqueSorted(centers),
+      zones: zones.map((zone) => ({
+        startMm: core.math.round(zone.startMm, 3),
+        endMm: core.math.round(zone.endMm, 3)
+      }))
+    };
   }
 
   function centerInsideOpening(center, opening) {
-    return center > opening.xMm + 0.001 && center < opening.xMm + opening.widthMm - 0.001;
+    return center > opening.xMm + EPSILON && center < opening.xMm + opening.widthMm - EPSILON;
   }
 
   function centerAtJamb(center, opening, studWidth) {
@@ -81,9 +150,41 @@
     addVertical(context, 'cripple_stud', `Upper cripple stud — ${opening.type}`, x, upperStart, topTrackZ - upperStart, 'OPENING_GRID', opening.id);
   }
 
+  function verticalCenter(member) {
+    return member.position.xMm + member.sectionEnvelope.inPlaneWidthMm / 2;
+  }
+
+  function layoutSummary(context, plan, strategyDefinition) {
+    const verticalRoles = new Set(['boundary_stud', 'common_stud', 'cripple_stud', 'opening_jamb']);
+    const centersMm = uniqueSorted(context.members
+      .filter((member) => member.axis === 'z' && verticalRoles.has(member.role))
+      .map(verticalCenter));
+    const baySpacingsMm = centersMm.slice(1).map((center, index) => (
+      core.math.round(center - centersMm[index], 3)
+    ));
+    const minimumBayMm = baySpacingsMm.length ? Math.min(...baySpacingsMm) : null;
+    const maximumBayMm = baySpacingsMm.length ? Math.max(...baySpacingsMm) : null;
+    return {
+      strategy: plan.strategy,
+      label: strategyDefinition.label,
+      description: strategyDefinition.description,
+      targetModuleMm: plan.targetModuleMm,
+      zoneCount: plan.zones.length,
+      gridCentersMm: plan.centersMm,
+      actualStudCentersMm: centersMm,
+      actualBaySpacingsMm: baySpacingsMm,
+      minimumBayMm,
+      maximumBayMm,
+      spacingSpreadMm: minimumBayMm == null ? null : core.math.round(maximumBayMm - minimumBayMm, 3)
+    };
+  }
+
   function generateCandidate(input, rules, option, candidateIndex) {
     const profileSet = rules.profileSets.find((entry) => entry.id === option.profileSetId);
     if (!profileSet) throw new Error(`Unknown profile set: ${option.profileSetId}`);
+    const strategyDefinition = core.GRID_STRATEGIES[option.gridStrategy];
+    if (!strategyDefinition) throw new Error(`Unknown grid strategy: ${option.gridStrategy}`);
+
     const context = {
       input,
       rules,
@@ -109,16 +210,27 @@
     addVertical(context, 'boundary_stud', 'Right boundary stud', input.wallLengthMm - studWidth, fullStudZ, fullStudLength, 'PANEL_ENVELOPE');
 
     input.openings.forEach((opening) => addOpeningFrame(context, opening, fullStudZ, fullStudLength, trackHeight, studWidth));
-    gridCenters(input.wallLengthMm, rules.studSpacingMm, option.gridStrategy, input.openings)
-      .forEach((center) => addGridStud(context, center, fullStudZ, fullStudLength, topTrackZ, trackHeight, studWidth));
+    const gridPlan = buildGridPlan(
+      input.wallLengthMm,
+      rules.studSpacingMm,
+      option.gridStrategy,
+      input.openings,
+      studWidth
+    );
+    gridPlan.centersMm.forEach((center) => {
+      addGridStud(context, center, fullStudZ, fullStudLength, topTrackZ, trackHeight, studWidth);
+    });
 
+    const layout = layoutSummary(context, gridPlan, strategyDefinition);
     return {
       id: `CAND-${core.math.pad(candidateIndex, 2)}`,
       option: Object.assign(core.math.deepClone(option), {
+        gridStrategyLabel: strategyDefinition.label,
         studSpacingMm: rules.studSpacingMm,
         studProfileId: context.studProfile.id,
         trackProfileId: context.trackProfile.id
       }),
+      layout,
       wall: {
         lengthMm: input.wallLengthMm,
         heightMm: input.wallHeightMm,
@@ -137,5 +249,11 @@
     };
   }
 
-  core.steelPanelGenerator = { generateCandidate, gridCenters, subtractIntervals };
+  core.steelPanelGenerator = {
+    generateCandidate,
+    buildGridPlan,
+    symmetricModuleCenters,
+    uniformCenters,
+    subtractIntervals
+  };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

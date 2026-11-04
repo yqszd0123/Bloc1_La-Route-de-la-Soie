@@ -6,7 +6,7 @@ Les trois modes d’entrée convergent vers le même objet `ProjectInput`, puis 
 
 ```text
 IFC ── parseur sémantique ─┐
-STEP ─ Open CASCADE + axes ├─ ProjectInput ─ validation ─ 6 candidats ─ classement ─ paquet Bloc 2
+STEP ─ Open CASCADE + axes ├─ ProjectInput ─ validation ─ jusqu’à 9 candidats distincts ─ classement ─ paquet Bloc 2
 Manuel ─ formulaire ───────┘
 ```
 

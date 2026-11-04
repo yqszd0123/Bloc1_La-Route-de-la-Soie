@@ -1,0 +1,86 @@
+solid AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS_scale_1_20
+  facet normal 0.000000 0.000000 1.000000
+    outer loop
+      vertex 121.666650 0.000000 3.100000
+      vertex 124.166650 0.000000 3.100000
+      vertex 124.166650 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 1.000000
+    outer loop
+      vertex 121.666650 0.000000 3.100000
+      vertex 124.166650 5.000000 3.100000
+      vertex 121.666650 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 -1.000000
+    outer loop
+      vertex 121.666650 0.000000 126.900000
+      vertex 124.166650 5.000000 126.900000
+      vertex 124.166650 0.000000 126.900000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 -1.000000
+    outer loop
+      vertex 121.666650 0.000000 126.900000
+      vertex 121.666650 5.000000 126.900000
+      vertex 124.166650 5.000000 126.900000
+    endloop
+  endfacet
+  facet normal 0.000000 1.000000 0.000000
+    outer loop
+      vertex 121.666650 0.000000 3.100000
+      vertex 121.666650 0.000000 126.900000
+      vertex 124.166650 0.000000 126.900000
+    endloop
+  endfacet
+  facet normal 0.000000 1.000000 0.000000
+    outer loop
+      vertex 121.666650 0.000000 3.100000
+      vertex 124.166650 0.000000 126.900000
+      vertex 124.166650 0.000000 3.100000
+    endloop
+  endfacet
+  facet normal -1.000000 0.000000 0.000000
+    outer loop
+      vertex 124.166650 0.000000 3.100000
+      vertex 124.166650 0.000000 126.900000
+      vertex 124.166650 5.000000 126.900000
+    endloop
+  endfacet
+  facet normal -1.000000 0.000000 0.000000
+    outer loop
+      vertex 124.166650 0.000000 3.100000
+      vertex 124.166650 5.000000 126.900000
+      vertex 124.166650 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 0.000000 -1.000000 0.000000
+    outer loop
+      vertex 124.166650 5.000000 3.100000
+      vertex 124.166650 5.000000 126.900000
+      vertex 121.666650 5.000000 126.900000
+    endloop
+  endfacet
+  facet normal 0.000000 -1.000000 0.000000
+    outer loop
+      vertex 124.166650 5.000000 3.100000
+      vertex 121.666650 5.000000 126.900000
+      vertex 121.666650 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 1.000000 0.000000 0.000000
+    outer loop
+      vertex 121.666650 5.000000 3.100000
+      vertex 121.666650 5.000000 126.900000
+      vertex 121.666650 0.000000 126.900000
+    endloop
+  endfacet
+  facet normal 1.000000 0.000000 0.000000
+    outer loop
+      vertex 121.666650 5.000000 3.100000
+      vertex 121.666650 0.000000 126.900000
+      vertex 121.666650 0.000000 3.100000
+    endloop
+  endfacet
+endsolid AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS_scale_1_20

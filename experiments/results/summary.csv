@@ -1,4 +1,4 @@
 caseId;wallLengthMm;wallHeightMm;windowEnabled;doorEnabled;validCandidates;processingTimeMs;candidateId;score;steelMassKg;componentCount;uniqueLengthCount;materialCostEurExVat;engineeringStatus
-official-ifc-window;3000;2000;true;false;6;19;CAND-02;5.17;46.176;13;4;142.68;ENGINEERING_REVIEW_REQUIRED
-ifc-door-reference;3000;2400;false;true;6;2;CAND-01;0;42.639;12;4;131.76;ENGINEERING_REVIEW_REQUIRED
-window-and-door-test;4800;2600;true;true;6;2;CAND-01;0;76.357;19;7;235.94;ENGINEERING_REVIEW_REQUIRED
+official-ifc-window;3000;2000;true;false;9;17;CAND-03;0;42.217;12;4;130.45;ENGINEERING_REVIEW_REQUIRED
+ifc-door-reference;3000;2400;false;true;9;2;CAND-03;0;42.057;11;4;129.96;ENGINEERING_REVIEW_REQUIRED
+window-and-door-test;4800;2600;true;true;9;4;CAND-03;0;75.353;18;7;232.84;ENGINEERING_REVIEW_REQUIRED

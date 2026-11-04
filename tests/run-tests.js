@@ -61,7 +61,13 @@ test('la masse linéique fabricant est recoupée par une méthode indépendante'
 test('le flux par défaut génère uniquement des composants acier traçables', () => {
   const result = core.runWorkflow(core.DEFAULT_INPUT);
   assert.equal(result.ok, true);
-  assert.equal(result.search.searchSpaceSize, 6);
+  assert.equal(result.search.searchSpaceSize, 9);
+  assert.equal(result.search.evaluatedCandidateCount, 9);
+  assert.equal(result.search.uniqueCandidateCount, 9);
+  assert.equal(result.rankedCandidates.length, 9);
+  assert.deepEqual(new Set(result.rankedCandidates.map((candidate) => candidate.option.gridStrategy)), new Set([
+    'SYMMETRIC_MODULE', 'UNIFORM_BAYS', 'OPENING_ZONED'
+  ]));
   assert.equal(result.recommended.rank, 1);
   assert.equal(result.recommended.validation.engineeringStatus, 'ENGINEERING_REVIEW_REQUIRED');
   result.recommended.members.forEach((member) => {
@@ -69,6 +75,34 @@ test('le flux par défaut génère uniquement des composants acier traçables', 
     assert.ok(member.massKg > 0);
     assert.equal(member.toleranceMm, null);
   });
+});
+
+test('les trois implantations remplacent les deux anciennes stratégies', () => {
+  const rules = core.engineering.createRules();
+  assert.deepEqual(rules.gridStrategies, ['SYMMETRIC_MODULE', 'UNIFORM_BAYS', 'OPENING_ZONED']);
+  assert.equal(rules.gridStrategies.includes('WALL_ORIGIN'), false);
+  assert.equal(rules.gridStrategies.includes('OPENING_ALIGNED'), false);
+
+  const symmetric = core.steelPanelGenerator.buildGridPlan(3000, 600, 'SYMMETRIC_MODULE', [], 50);
+  assert.deepEqual(symmetric.boundaryCentersMm, [25, 2975]);
+  assert.deepEqual(symmetric.centersMm, [600, 1200, 1800, 2400]);
+
+  const uniform = core.steelPanelGenerator.buildGridPlan(3000, 600, 'UNIFORM_BAYS', [], 50);
+  assert.deepEqual(uniform.centersMm, [615, 1205, 1795, 2385]);
+
+  const zoned = core.steelPanelGenerator.buildGridPlan(3000, 600, 'OPENING_ZONED', [{ xMm: 1000, widthMm: 1000 }], 50);
+  assert.deepEqual(zoned.centersMm, [500, 1500, 2500]);
+  assert.equal(zoned.zones.length, 3);
+});
+
+test('les géométries identiques sont retirées sans gonfler la comparaison', () => {
+  const result = core.runWorkflow({ ...core.DEFAULT_INPUT, windowEnabled: false, doorEnabled: false });
+  assert.equal(result.search.searchSpaceSize, 9);
+  assert.equal(result.search.evaluatedCandidateCount, 9);
+  assert.equal(result.search.uniqueCandidateCount, 6);
+  assert.equal(result.search.duplicateCandidates.length, 3);
+  assert.equal(result.rankedCandidates.length, 6);
+  assert.equal(new Set(result.rankedCandidates.map((candidate) => core.candidateSearch.geometrySignature(candidate))).size, 6);
 });
 
 test('la porte est traitée par le même modèle générique d’ouverture', () => {
@@ -152,9 +186,10 @@ test('un scénario budgétaire utilisateur recalcule sans modifier la géométri
   assert.equal(custom.recommended.metrics.materialCostEstimateEurExVat, core.math.round(custom.recommended.metrics.steelMassKg * 4.5, 2));
 });
 
-test('le classement est l’exploration exhaustive de l’espace déclaré', () => {
+test('le classement couvre les géométries distinctes de l’espace déclaré', () => {
   const result = core.runWorkflow(core.DEFAULT_INPUT);
-  assert.equal(result.search.candidates.length, result.search.searchSpace.length);
+  assert.equal(result.search.evaluatedCandidateCount, result.search.searchSpace.length);
+  assert.equal(result.search.candidates.length, result.search.uniqueCandidateCount);
   result.rankedCandidates.forEach((candidate, index) => {
     assert.equal(candidate.rank, index + 1);
     if (index) assert.ok(candidate.score >= result.rankedCandidates[index - 1].score);
@@ -231,7 +266,9 @@ test('les placements, profils centrés et axes X/Y IFC sont normalisés', () => 
   model.walls.forEach((wall) => {
     const result = core.runIfcWorkflow(multiWallIfc, { wallEntityId: wall.entityId });
     assert.equal(result.ok, true, wall.name);
-    assert.equal(result.search.validCandidates.length, 6, wall.name);
+    assert.equal(result.search.searchSpaceSize, 9, wall.name);
+    assert.equal(result.search.evaluatedCandidateCount, 9, wall.name);
+    assert.equal(result.search.validCandidates.length, wall.openings.length ? 9 : 6, wall.name);
   });
 });
 

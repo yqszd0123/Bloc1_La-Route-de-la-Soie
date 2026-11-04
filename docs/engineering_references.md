@@ -65,7 +65,7 @@ Valeur par défaut : 3,09 €/kg HT. Elle est la moyenne arithmétique de 3,32 �
 
 Le fixture `test-data/ifc/wall-with-opening-and-window.ifc` est un vrai fichier IFC4. Le test vérifie : signature ISO 10303-21, unité mm, bâtiment, étage, mur 3000 × 2000 × 300 mm, ouverture x=1000/sill=500/1000 × 1000 mm et lien `IfcRelVoidsElement`/`IfcRelFillsElement` vers `IfcWindow`.
 
-Le fichier d’équipe `test-data/ifc/partie1-four-walls.ifc` complète ce contrôle avec quatre murs IFC4 en mètres. Le programme retrouve deux murs de 10000 × 2500 × 300 mm et deux murs de 1900 × 2500 × 300 mm, même lorsque la longueur est portée par l’axe local Y. Le mur sud restitue la fenêtre à x=1750 mm et la porte à x=7100 mm malgré un profil centré. Chaque mur doit produire six variantes valides. Ce fichier sert uniquement de régression d’interopérabilité ; ce n’est pas une source de paramètres d’ingénierie.
+Le fichier d’équipe `test-data/ifc/partie1-four-walls.ifc` complète ce contrôle avec quatre murs IFC4 en mètres. Le programme retrouve deux murs de 10000 × 2500 × 300 mm et deux murs de 1900 × 2500 × 300 mm, même lorsque la longueur est portée par l’axe local Y. Le mur sud restitue la fenêtre à x=1750 mm et la porte à x=7100 mm malgré un profil centré. Chaque mur explore neuf combinaisons ; les murs sans ouverture retirent trois doublons géométriques et conservent six solutions distinctes. Ce fichier sert uniquement de régression d’interopérabilité ; ce n’est pas une source de paramètres d’ingénierie.
 
 ## STEP
 

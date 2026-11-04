@@ -134,7 +134,7 @@
       'ISO-10303-21;',
       'HEADER;',
       "FILE_DESCRIPTION(('Avelis Wall Flow profile-envelope coordination geometry'),'2;1');",
-      `FILE_NAME(${stepString(fileName)},${stepString(isoTimestamp(metadata.timestamp))},('Avelis Wall Flow'),('Imagine & Make 2026 - Bloc 1'),'Avelis Wall Flow 2.1','Avelis Wall Flow','ENGINEERING_REVIEW_REQUIRED');`,
+      `FILE_NAME(${stepString(fileName)},${stepString(isoTimestamp(metadata.timestamp))},('Avelis Wall Flow'),('Imagine & Make 2026 - Bloc 1'),'Avelis Wall Flow 2.2','Avelis Wall Flow','ENGINEERING_REVIEW_REQUIRED');`,
       "FILE_SCHEMA(('CONFIG_CONTROL_DESIGN'));",
       'ENDSEC;',
       'DATA;'

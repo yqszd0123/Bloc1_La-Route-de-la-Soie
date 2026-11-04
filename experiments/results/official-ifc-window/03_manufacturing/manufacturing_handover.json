@@ -15,7 +15,7 @@
     "length": "mm",
     "mass": "kg"
   },
-  "candidateId": "CAND-02",
+  "candidateId": "CAND-03",
   "material": {
     "id": "REF-METSEC-Z275-FY450",
     "label": "Reference cold-formed galvanized steel — Metsec Metframe",
@@ -266,7 +266,7 @@
       "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|1FTK4F6"
     },
     {
-      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0BKEMPY",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -278,7 +278,7 @@
       },
       "calculatedMassKg": 3.9584,
       "positionMm": {
-        "x": 375,
+        "x": 475,
         "y": 0,
         "z": 62
       },
@@ -288,10 +288,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|09AGKL7"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0BKEMPY"
     },
     {
-      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0E73EUN",
       "partType": "cripple_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -303,7 +303,7 @@
       },
       "calculatedMassKg": 0.7934,
       "positionMm": {
-        "x": 1575,
+        "x": 1475,
         "y": 0,
         "z": 62
       },
@@ -313,10 +313,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0FO4WEU"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0E73EUN"
     },
     {
-      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1E1836X",
       "partType": "cripple_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -328,7 +328,7 @@
       },
       "calculatedMassKg": 0.7934,
       "positionMm": {
-        "x": 1575,
+        "x": 1475,
         "y": 0,
         "z": 1562
       },
@@ -338,10 +338,10 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EYDBUK"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|1E1836X"
     },
     {
-      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0LC6DYS",
       "partType": "common_stud",
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
@@ -353,7 +353,7 @@
       },
       "calculatedMassKg": 3.9584,
       "positionMm": {
-        "x": 2175,
+        "x": 2475,
         "y": 0,
         "z": 62
       },
@@ -363,32 +363,7 @@
         "MARK_ID"
       ],
       "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0KOABLF"
-    },
-    {
-      "partId": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9",
-      "partType": "common_stud",
-      "materialId": "REF-METSEC-Z275-FY450",
-      "profileId": "100MF12-50",
-      "manufacturerReference": "100MF12/50",
-      "dimensionsMm": {
-        "length": 1876,
-        "sectionDepth": 100,
-        "nominalThickness": 1.2
-      },
-      "calculatedMassKg": 3.9584,
-      "positionMm": {
-        "x": 2775,
-        "y": 0,
-        "z": 62
-      },
-      "axis": "z",
-      "operations": [
-        "CUT_SQUARE",
-        "MARK_ID"
-      ],
-      "toleranceMm": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EG3OG9"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0LC6DYS"
     }
   ],
   "toleranceMm": null,
@@ -430,11 +405,10 @@
       "order": 3,
       "operation": "SET_COMMON_AND_CRIPPLE_STUDS",
       "partIds": [
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9"
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0BKEMPY",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0E73EUN",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1E1836X",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0LC6DYS"
       ],
       "dependsOn": [
         "STEP-01"
@@ -482,11 +456,10 @@
         "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-00VLEPF",
         "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EVVNRO",
         "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1FTK4F6",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
-        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9"
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0BKEMPY",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0E73EUN",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1E1836X",
+        "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0LC6DYS"
       ],
       "dependsOn": [
         "STEP-05"

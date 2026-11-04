@@ -69,6 +69,46 @@
         "windowHeightMm": 1000
       }
     },
+    "TEAM_PARTIE1_IFC_REGRESSION": {
+      "kind": "team_supplied_ifc_test_model",
+      "title": "partie1.ifc — four-wall IFC4 regression model",
+      "schema": "IFC4",
+      "unit": "METRE",
+      "versionDate": "2026-11-03",
+      "locationInProject": "test-data/ifc/partie1-four-walls.ifc",
+      "usedFor": [
+        "centred profile-origin normalization",
+        "local X/Y wall-axis normalization",
+        "multi-wall variant-generation regression"
+      ],
+      "verifiedResults": {
+        "wallCount": 4,
+        "southNorthMm": [
+          10000,
+          2500,
+          300
+        ],
+        "westEastMm": [
+          1900,
+          2500,
+          300
+        ],
+        "southWindowMm": {
+          "x": 1750,
+          "sill": 500,
+          "width": 1500,
+          "height": 1500
+        },
+        "southDoorMm": {
+          "x": 7100,
+          "sill": 0,
+          "width": 800,
+          "height": 1750
+        },
+        "validCandidatesPerWall": 6
+      },
+      "applicability": "Internal interoperability regression fixture only; not a standards source or engineering-parameter source."
+    },
     "OCCT_IMPORT_JS_0_0_23": {
       "kind": "open_source_geometry_parser",
       "title": "occt-import-js — JavaScript interface for Open CASCADE STEP/IGES/BREP import",

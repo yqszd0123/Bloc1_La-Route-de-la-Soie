@@ -53,7 +53,7 @@ Automated tests also modify the fixture placement to verify a 100/200 mm transla
 | Mur Ouest | 1900 × 300 × 2500 mm | Y | none |
 | Mur Est | 1900 × 300 × 2500 mm | Y | none |
 
-All four walls are passed independently through the same variant generator; the regression test requires six valid candidates for each wall. This fixture is an internal verification model, not an engineering-data or standards source.
+All four walls are passed independently through the same variant generator. The regression test requires nine evaluated combinations; walls without openings retain six distinct candidates after three exact duplicates are removed. This fixture is an internal verification model, not an engineering-data or standards source.
 
 ## Supported and unsupported geometry
 

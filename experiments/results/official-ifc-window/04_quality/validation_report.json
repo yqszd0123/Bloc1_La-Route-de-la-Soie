@@ -7,7 +7,7 @@
     "wallGuid": null,
     "version": "2.0"
   },
-  "candidateId": "CAND-02",
+  "candidateId": "CAND-03",
   "geometryStatus": "GEOMETRY_CHECKS_PASSED",
   "engineeringStatus": "ENGINEERING_REVIEW_REQUIRED",
   "manufacturingRelease": false,
@@ -37,9 +37,9 @@
   ],
   "crossValidation": {
     "massReconciliation": {
-      "memberSumKg": 46.176,
-      "bomSumKg": 46.176,
-      "absoluteDifferenceKg": 0.0004,
+      "memberSumKg": 42.217,
+      "bomSumKg": 42.218,
+      "absoluteDifferenceKg": 0.0008,
       "status": "MATCH"
     }
   },

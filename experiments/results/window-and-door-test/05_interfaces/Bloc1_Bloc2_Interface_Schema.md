@@ -128,4 +128,4 @@ Cette séquence exprime une dépendance de conception, pas un temps de cycle ni 
 5. Quels perçages, fixations et contrôles qualité sont obligatoires ?
 6. Quel format natif et quel mécanisme d’accusé réception doivent être ajoutés ?
 
-Ce document reprend la structure du modèle fourni par l’équipe, mais remplace entièrement les données fictives historiques par le contrat acier réellement généré par Avelis Wall Flow 2.1. Le schéma d’échange reste versionné `v2.0` tant que ses champs n’ont pas subi de rupture de compatibilité.
+Ce document reprend la structure du modèle fourni par l’équipe, mais remplace entièrement les données fictives historiques par le contrat acier réellement généré par Avelis Wall Flow 2.2. Le schéma d’échange reste versionné `v2.0` tant que ses champs n’ont pas subi de rupture de compatibilité.

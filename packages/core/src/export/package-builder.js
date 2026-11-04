@@ -32,7 +32,7 @@
     const safeScale = Math.max(1, Number(scale) || result.input.prototypeScale || 20);
     const files = {
       '00_READ_ME.txt': [
-        'AVELIS WALL FLOW 2.1 — IFC-to-manufacturing reference package',
+        'AVELIS WALL FLOW 2.2 — IFC-to-manufacturing reference package',
         `Project: ${result.input.projectId} / ${result.input.wallId} / version ${result.input.version}`,
         `Candidate: ${selected.id} (rank ${selected.rank}, decision score ${selected.score})`,
         `Steel mass: ${selected.metrics.steelMassKg} kg`,

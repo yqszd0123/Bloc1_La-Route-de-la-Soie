@@ -3,14 +3,29 @@
 
   const core = global.AvelisCore = global.AvelisCore || {};
 
-  core.VERSION = '2.1.0';
+  core.VERSION = '2.2.0';
+
+  core.GRID_STRATEGIES = Object.freeze({
+    SYMMETRIC_MODULE: Object.freeze({
+      label: 'Module symétrique',
+      description: 'Conserve le module de référence au centre et répartit le reliquat également aux deux rives.'
+    }),
+    UNIFORM_BAYS: Object.freeze({
+      label: 'Travées uniformes',
+      description: 'Répartit la portée utile en travées égales sans dépasser le module de référence.'
+    }),
+    OPENING_ZONED: Object.freeze({
+      label: 'Zones d’ouvertures',
+      description: 'Fixe les rives et jambages puis répartit chaque zone entre appuis fixes.'
+    })
+  });
 
   core.DEFAULT_INPUT = Object.freeze({
     sourceMode: 'MANUAL',
     projectId: 'AVELIS-BLOC1-REF',
     typology: 'REFERENCE',
     wallId: 'WALL-001',
-    version: '2.1',
+    version: '2.2',
     wallLengthMm: 3000,
     wallHeightMm: 2000,
     wallThicknessMm: 300,

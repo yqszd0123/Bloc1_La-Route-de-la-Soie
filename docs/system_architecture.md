@@ -2,7 +2,7 @@
 
 ## Objective
 
-Avelis Wall Flow 2.1 is a dependency-light, browser-first reference implementation of the Bloc 1 chain:
+Avelis Wall Flow 2.2 is a dependency-light, browser-first reference implementation of the Bloc 1 chain:
 
 `IFC or manual geometry → semantic wall → steel panel candidates → checks → quantities and budget → neutral manufacturing package`.
 

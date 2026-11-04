@@ -1,0 +1,86 @@
+solid AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON_scale_1_20
+  facet normal 0.000000 0.000000 1.000000
+    outer loop
+      vertex 23.750000 0.000000 3.100000
+      vertex 26.250000 0.000000 3.100000
+      vertex 26.250000 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 1.000000
+    outer loop
+      vertex 23.750000 0.000000 3.100000
+      vertex 26.250000 5.000000 3.100000
+      vertex 23.750000 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 -1.000000
+    outer loop
+      vertex 23.750000 0.000000 116.900000
+      vertex 26.250000 5.000000 116.900000
+      vertex 26.250000 0.000000 116.900000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 -1.000000
+    outer loop
+      vertex 23.750000 0.000000 116.900000
+      vertex 23.750000 5.000000 116.900000
+      vertex 26.250000 5.000000 116.900000
+    endloop
+  endfacet
+  facet normal 0.000000 1.000000 0.000000
+    outer loop
+      vertex 23.750000 0.000000 3.100000
+      vertex 23.750000 0.000000 116.900000
+      vertex 26.250000 0.000000 116.900000
+    endloop
+  endfacet
+  facet normal 0.000000 1.000000 0.000000
+    outer loop
+      vertex 23.750000 0.000000 3.100000
+      vertex 26.250000 0.000000 116.900000
+      vertex 26.250000 0.000000 3.100000
+    endloop
+  endfacet
+  facet normal -1.000000 0.000000 0.000000
+    outer loop
+      vertex 26.250000 0.000000 3.100000
+      vertex 26.250000 0.000000 116.900000
+      vertex 26.250000 5.000000 116.900000
+    endloop
+  endfacet
+  facet normal -1.000000 0.000000 0.000000
+    outer loop
+      vertex 26.250000 0.000000 3.100000
+      vertex 26.250000 5.000000 116.900000
+      vertex 26.250000 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 0.000000 -1.000000 0.000000
+    outer loop
+      vertex 26.250000 5.000000 3.100000
+      vertex 26.250000 5.000000 116.900000
+      vertex 23.750000 5.000000 116.900000
+    endloop
+  endfacet
+  facet normal 0.000000 -1.000000 0.000000
+    outer loop
+      vertex 26.250000 5.000000 3.100000
+      vertex 23.750000 5.000000 116.900000
+      vertex 23.750000 5.000000 3.100000
+    endloop
+  endfacet
+  facet normal 1.000000 0.000000 0.000000
+    outer loop
+      vertex 23.750000 5.000000 3.100000
+      vertex 23.750000 5.000000 116.900000
+      vertex 23.750000 0.000000 116.900000
+    endloop
+  endfacet
+  facet normal 1.000000 0.000000 0.000000
+    outer loop
+      vertex 23.750000 5.000000 3.100000
+      vertex 23.750000 0.000000 116.900000
+      vertex 23.750000 0.000000 3.100000
+    endloop
+  endfacet
+endsolid AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON_scale_1_20

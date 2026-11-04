@@ -3,7 +3,7 @@
     "schemaVersion": "2.0",
     "software": {
       "name": "Avelis Wall Flow",
-      "version": "2.1.0"
+      "version": "2.2.0"
     },
     "identity": {
       "projectId": "AVELIS-IAM-2026",
@@ -95,13 +95,56 @@
     }
   },
   "candidate": {
-    "id": "CAND-01",
+    "id": "CAND-03",
     "option": {
       "profileSetId": "MF-12-50",
-      "gridStrategy": "WALL_ORIGIN",
+      "gridStrategy": "OPENING_ZONED",
+      "gridStrategyLabel": "Zones d’ouvertures",
       "studSpacingMm": 600,
       "studProfileId": "100MF12-50",
       "trackProfileId": "104MF12"
+    },
+    "layout": {
+      "strategy": "OPENING_ZONED",
+      "label": "Zones d’ouvertures",
+      "description": "Fixe les rives et jambages puis répartit chaque zone entre appuis fixes.",
+      "targetModuleMm": 600,
+      "zoneCount": 5,
+      "gridCentersMm": [
+        1100,
+        2041.667,
+        2458.333,
+        3350,
+        4300
+      ],
+      "actualStudCentersMm": [
+        25,
+        575,
+        1100,
+        1625,
+        2041.667,
+        2458.333,
+        2875,
+        3350,
+        3825,
+        4300,
+        4775
+      ],
+      "actualBaySpacingsMm": [
+        550,
+        525,
+        525,
+        416.667,
+        416.666,
+        416.667,
+        475,
+        475,
+        475,
+        475
+      ],
+      "minimumBayMm": 416.666,
+      "maximumBayMm": 550,
+      "spacingSpreadMm": 133.334
     },
     "wall": {
       "lengthMm": 4800,
@@ -909,7 +952,7 @@
         "massKg": 1.899
       },
       {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
+        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC",
         "role": "cripple_stud",
         "label": "Window lower cripple stud",
         "source": "OPENING_GRID",
@@ -947,7 +990,7 @@
         "axis": "z",
         "lengthMm": 676,
         "position": {
-          "xMm": 1175,
+          "xMm": 1075,
           "yMm": 0,
           "zMm": 62
         },
@@ -957,15 +1000,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GGPSB5",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1D293EC",
         "bounds": {
           "min": {
-            "x": 1175,
+            "x": 1075,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 1225,
+            "x": 1125,
             "y": 100,
             "z": 738
           }
@@ -973,7 +1016,7 @@
         "massKg": 1.4264
       },
       {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK",
+        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP",
         "role": "cripple_stud",
         "label": "Upper cripple stud — WINDOW",
         "source": "OPENING_GRID",
@@ -1011,7 +1054,7 @@
         "axis": "z",
         "lengthMm": 676,
         "position": {
-          "xMm": 1175,
+          "xMm": 1075,
           "yMm": 0,
           "zMm": 1862
         },
@@ -1021,15 +1064,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|18WA7MK",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1N8ZOIP",
         "bounds": {
           "min": {
-            "x": 1175,
+            "x": 1075,
             "y": 0,
             "z": 1862
           },
           "max": {
-            "x": 1225,
+            "x": 1125,
             "y": 100,
             "z": 2538
           }
@@ -1037,7 +1080,7 @@
         "massKg": 1.4264
       },
       {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
+        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -1075,7 +1118,7 @@
         "axis": "z",
         "lengthMm": 2476,
         "position": {
-          "xMm": 1775,
+          "xMm": 2016.667,
           "yMm": 0,
           "zMm": 62
         },
@@ -1085,15 +1128,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0FJ0L5P",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0KUE9SV",
         "bounds": {
           "min": {
-            "x": 1775,
+            "x": 2016.667,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 1825,
+            "x": 2066.667,
             "y": 100,
             "z": 2538
           }
@@ -1101,7 +1144,7 @@
         "massKg": 5.2244
       },
       {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
+        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -1139,7 +1182,7 @@
         "axis": "z",
         "lengthMm": 2476,
         "position": {
-          "xMm": 2375,
+          "xMm": 2433.333,
           "yMm": 0,
           "zMm": 62
         },
@@ -1149,15 +1192,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1KR6CD2",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|04SXTDS",
         "bounds": {
           "min": {
-            "x": 2375,
+            "x": 2433.333,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 2425,
+            "x": 2483.333,
             "y": 100,
             "z": 2538
           }
@@ -1165,7 +1208,7 @@
         "massKg": 5.2244
       },
       {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
+        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU",
         "role": "cripple_stud",
         "label": "Upper cripple stud — DOOR",
         "source": "OPENING_GRID",
@@ -1203,7 +1246,7 @@
         "axis": "z",
         "lengthMm": 476,
         "position": {
-          "xMm": 2975,
+          "xMm": 3325,
           "yMm": 0,
           "zMm": 2062
         },
@@ -1213,15 +1256,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1QICXN0",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GSMZMU",
         "bounds": {
           "min": {
-            "x": 2975,
+            "x": 3325,
             "y": 0,
             "z": 2062
           },
           "max": {
-            "x": 3025,
+            "x": 3375,
             "y": 100,
             "z": 2538
           }
@@ -1229,71 +1272,7 @@
         "massKg": 1.0044
       },
       {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB",
-        "role": "cripple_stud",
-        "label": "Upper cripple stud — DOOR",
-        "source": "OPENING_GRID",
-        "openingId": "DOOR-01",
-        "material": {
-          "id": "REF-METSEC-Z275-FY450",
-          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
-          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
-          "coating": "Z275",
-          "minimumYieldStrengthNmm2": 450
-        },
-        "profile": {
-          "id": "100MF12-50",
-          "manufacturerReference": "100MF12/50",
-          "family": "STUD_C",
-          "massKgPerM": 2.11,
-          "webDepthMm": 100,
-          "flange1Mm": 50,
-          "flange2Mm": 50,
-          "lipMm": 14,
-          "nominalThicknessMm": 1.2,
-          "minimumYieldStrengthNmm2": 450,
-          "coating": "Z275",
-          "sourceId": "METSEC_COMPONENTS_2026",
-          "sourceLocation": "Studs / Joists table, row 100MF12/50"
-        },
-        "representation": {
-          "kind": "PROFILE_ENVELOPE",
-          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
-        },
-        "sectionEnvelope": {
-          "inPlaneWidthMm": 50,
-          "depthMm": 100
-        },
-        "axis": "z",
-        "lengthMm": 476,
-        "position": {
-          "xMm": 3575,
-          "yMm": 0,
-          "zMm": 2062
-        },
-        "operations": [
-          "CUT_SQUARE",
-          "MARK_ID"
-        ],
-        "toleranceMm": null,
-        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1FVPIUB",
-        "bounds": {
-          "min": {
-            "x": 3575,
-            "y": 0,
-            "z": 2062
-          },
-          "max": {
-            "x": 3625,
-            "y": 100,
-            "z": 2538
-          }
-        },
-        "massKg": 1.0044
-      },
-      {
-        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE",
+        "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -1331,7 +1310,7 @@
         "axis": "z",
         "lengthMm": 2476,
         "position": {
-          "xMm": 4175,
+          "xMm": 4275,
           "yMm": 0,
           "zMm": 62
         },
@@ -1341,15 +1320,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1EX04SE",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0YAPAKR",
         "bounds": {
           "min": {
-            "x": 4175,
+            "x": 4275,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 4225,
+            "x": 4325,
             "y": 100,
             "z": 2538
           }
@@ -1394,16 +1373,19 @@
       ]
     },
     "metrics": {
-      "steelMassKg": 76.357,
-      "totalProfileLengthM": 36.188,
-      "componentCount": 19,
-      "cutCount": 38,
+      "steelMassKg": 75.353,
+      "totalProfileLengthM": 35.712,
+      "componentCount": 18,
+      "cutCount": 36,
       "uniqueLengthCount": 7,
       "uniqueProfileCount": 2,
-      "materialCostEstimateEurExVat": 235.94,
+      "minimumStudBayMm": 416.666,
+      "maximumStudBayMm": 550,
+      "studBaySpreadMm": 133.334,
+      "materialCostEstimateEurExVat": 232.84,
       "materialCostRangeEurExVat": {
-        "low": 138.97,
-        "high": 314.59
+        "low": 137.14,
+        "high": 310.45
       },
       "priceBasis": {
         "valueEurPerKgExVat": 3.09,
@@ -1473,9 +1455,9 @@
         "totalLengthM": 7.428,
         "totalMassKg": 15.673,
         "componentIds": [
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE"
+          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV",
+          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS",
+          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR"
         ]
       },
       {
@@ -1485,12 +1467,11 @@
         "materialId": "REF-METSEC-Z275-FY450",
         "cutLengthMm": 476,
         "massKgPerM": 2.11,
-        "quantity": 2,
-        "totalLengthM": 0.952,
-        "totalMassKg": 2.009,
+        "quantity": 1,
+        "totalLengthM": 0.476,
+        "totalMassKg": 1.004,
         "componentIds": [
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB"
+          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU"
         ]
       },
       {
@@ -1504,8 +1485,8 @@
         "totalLengthM": 1.352,
         "totalMassKg": 2.853,
         "componentIds": [
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
-          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK"
+          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC",
+          "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP"
         ]
       },
       {
@@ -1584,9 +1565,9 @@
     ],
     "crossValidation": {
       "massReconciliation": {
-        "memberSumKg": 76.357,
-        "bomSumKg": 76.358,
-        "absoluteDifferenceKg": 0.0008,
+        "memberSumKg": 75.353,
+        "bomSumKg": 75.353,
+        "absoluteDifferenceKg": 0.0002,
         "status": "MATCH"
       }
     },

@@ -1,8 +1,8 @@
-AVELIS WALL FLOW 2.1 — IFC-to-manufacturing reference package
+AVELIS WALL FLOW 2.2 — IFC-to-manufacturing reference package
 Project: AVELIS-IAM-2026 / OFFICIAL-IFC-WINDOW / version 2.0
-Candidate: CAND-02 (rank 1, decision score 5.17)
-Steel mass: 46.176 kg
-Budget material cost: 142.68 EUR ex VAT
+Candidate: CAND-03 (rank 1, decision score 0)
+Steel mass: 42.217 kg
+Budget material cost: 130.45 EUR ex VAT
 Engineering status: ENGINEERING_REVIEW_REQUIRED
 
 IMPORTANT: geometry checks and traceable quantity calculations are automated.

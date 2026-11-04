@@ -8,8 +8,8 @@
     "wallGuid": null,
     "version": "2.0"
   },
-  "selectedCandidate": "CAND-02",
-  "decisionScore": 5.17,
+  "selectedCandidate": "CAND-03",
+  "decisionScore": 0,
   "openings": [
     {
       "id": "WINDOW-01",
@@ -24,16 +24,19 @@
     }
   ],
   "metrics": {
-    "steelMassKg": 46.176,
-    "totalProfileLengthM": 21.884,
-    "componentCount": 13,
-    "cutCount": 26,
+    "steelMassKg": 42.217,
+    "totalProfileLengthM": 20.008,
+    "componentCount": 12,
+    "cutCount": 24,
     "uniqueLengthCount": 4,
     "uniqueProfileCount": 2,
-    "materialCostEstimateEurExVat": 142.68,
+    "minimumStudBayMm": 475,
+    "maximumStudBayMm": 525,
+    "studBaySpreadMm": 50,
+    "materialCostEstimateEurExVat": 130.45,
     "materialCostRangeEurExVat": {
-      "low": 84.04,
-      "high": 190.24
+      "low": 76.84,
+      "high": 173.93
     },
     "priceBasis": {
       "valueEurPerKgExVat": 3.09,
@@ -170,79 +173,64 @@
       "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|1FTK4F6"
     },
     {
-      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0BKEMPY",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 1876,
       "massKg": 3.9584,
       "position": {
-        "xMm": 375,
+        "xMm": 475,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|09AGKL7"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0BKEMPY"
     },
     {
-      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0E73EUN",
       "role": "cripple_stud",
       "profile": "100MF12/50",
       "lengthMm": 376,
       "massKg": 0.7934,
       "position": {
-        "xMm": 1575,
+        "xMm": 1475,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": "WINDOW-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0FO4WEU"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0E73EUN"
     },
     {
-      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1E1836X",
       "role": "cripple_stud",
       "profile": "100MF12/50",
       "lengthMm": 376,
       "massKg": 0.7934,
       "position": {
-        "xMm": 1575,
+        "xMm": 1475,
         "yMm": 0,
         "zMm": 1562
       },
       "axis": "z",
       "openingId": "WINDOW-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EYDBUK"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|1E1836X"
     },
     {
-      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0LC6DYS",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 1876,
       "massKg": 3.9584,
       "position": {
-        "xMm": 2175,
+        "xMm": 2475,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0KOABLF"
-    },
-    {
-      "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9",
-      "role": "common_stud",
-      "profile": "100MF12/50",
-      "lengthMm": 1876,
-      "massKg": 3.9584,
-      "position": {
-        "xMm": 2775,
-        "yMm": 0,
-        "zMm": 62
-      },
-      "axis": "z",
-      "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EG3OG9"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0LC6DYS"
     }
   ],
   "validation": {

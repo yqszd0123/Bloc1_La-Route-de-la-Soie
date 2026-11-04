@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3360 2760" role="img" aria-label="Élévation du mur CAND-01">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3360 2760" role="img" aria-label="Élévation du mur CAND-03">
 <rect width="100%" height="100%" fill="#f8f6f1"/>
 <g transform="translate(180 2580) scale(1 -1)">
 <rect x="0" y="0" width="1000" height="62" fill="#315f73" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-01ZII06 — Bottom track 1</title></rect>
@@ -9,14 +9,13 @@
 <rect x="950" y="62" width="50" height="2276" fill="#d06b35" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0Y3V1HK — Left jamb — DOOR</title></rect>
 <rect x="2000" y="62" width="50" height="2276" fill="#d06b35" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-11AE2EM — Right jamb — DOOR</title></rect>
 <rect x="1000" y="2000" width="1000" height="62" fill="#9e4e2a" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-09LF8CG — Header track — DOOR</title></rect>
-<rect x="575" y="62" width="50" height="2276" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC — Common stud</title></rect>
-<rect x="1175" y="2062" width="50" height="276" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ — Upper cripple stud — DOOR</title></rect>
-<rect x="1775" y="2062" width="50" height="276" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761 — Upper cripple stud — DOOR</title></rect>
-<rect x="2375" y="62" width="50" height="2276" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO — Common stud</title></rect>
+<rect x="475" y="62" width="50" height="2276" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON — Common stud</title></rect>
+<rect x="1475" y="2062" width="50" height="276" fill="#88a1aa" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII — Upper cripple stud — DOOR</title></rect>
+<rect x="2475" y="62" width="50" height="2276" fill="#6f8d99" stroke="#3b291f" stroke-width="5"><title>AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX — Common stud</title></rect>
 <rect x="1000" y="0" width="1000" height="2000" fill="#fff0d8" fill-opacity="0.8" stroke="#b45f18" stroke-width="8"><title>Porte DOOR-01</title></rect>
 </g>
-<text x="180" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">CAND-01 — mur 3000 × 2400 mm</text>
-<text x="180" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">100MF12-50 · entraxe de référence 600 mm · stratégie WALL_ORIGIN</text>
+<text x="180" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">CAND-03 — mur 3000 × 2400 mm</text>
+<text x="180" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">100MF12-50 · Zones d’ouvertures · 475–525 mm réels</text>
 <line x1="180" y1="2690" x2="3180" y2="2690" stroke="#182b36" stroke-width="5"/>
 <text x="1680" y="2675" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" fill="#182b36">3000 mm</text>
 </svg>

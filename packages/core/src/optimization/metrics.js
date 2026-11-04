@@ -20,6 +20,9 @@
       cutCount,
       uniqueLengthCount,
       uniqueProfileCount,
+      minimumStudBayMm: candidate.layout.minimumBayMm,
+      maximumStudBayMm: candidate.layout.maximumBayMm,
+      studBaySpreadMm: candidate.layout.spacingSpreadMm,
       materialCostEstimateEurExVat: core.math.round(steelMassKg * unitPrice, 2),
       materialCostRangeEurExVat: {
         low: core.math.round(steelMassKg * lowPrice, 2),

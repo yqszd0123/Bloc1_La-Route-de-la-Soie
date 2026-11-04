@@ -8,7 +8,7 @@
     "wallGuid": null,
     "version": "2.0"
   },
-  "selectedCandidate": "CAND-01",
+  "selectedCandidate": "CAND-03",
   "decisionScore": 0,
   "openings": [
     {
@@ -24,16 +24,19 @@
     }
   ],
   "metrics": {
-    "steelMassKg": 42.639,
-    "totalProfileLengthM": 20.208,
-    "componentCount": 12,
-    "cutCount": 24,
+    "steelMassKg": 42.057,
+    "totalProfileLengthM": 19.932,
+    "componentCount": 11,
+    "cutCount": 22,
     "uniqueLengthCount": 4,
     "uniqueProfileCount": 2,
-    "materialCostEstimateEurExVat": 131.76,
+    "minimumStudBayMm": 475,
+    "maximumStudBayMm": 525,
+    "studBaySpreadMm": 50,
+    "materialCostEstimateEurExVat": 129.96,
     "materialCostRangeEurExVat": {
-      "low": 77.6,
-      "high": 175.67
+      "low": 76.54,
+      "high": 173.27
     },
     "priceBasis": {
       "valueEurPerKgExVat": 3.09,
@@ -170,64 +173,49 @@
       "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|09LF8CG"
     },
     {
-      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1QQR8CC",
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1YV1ZON",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 2276,
       "massKg": 4.8024,
       "position": {
-        "xMm": 575,
+        "xMm": 475,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1QQR8CC"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1YV1ZON"
     },
     {
-      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0T6HXOZ",
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0RCYHII",
       "role": "cripple_stud",
       "profile": "100MF12/50",
       "lengthMm": 276,
       "massKg": 0.5824,
       "position": {
-        "xMm": 1175,
+        "xMm": 1475,
         "yMm": 0,
         "zMm": 2062
       },
       "axis": "z",
       "openingId": "DOOR-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0T6HXOZ"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0RCYHII"
     },
     {
-      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-1EN9761",
-      "role": "cripple_stud",
-      "profile": "100MF12/50",
-      "lengthMm": 276,
-      "massKg": 0.5824,
-      "position": {
-        "xMm": 1775,
-        "yMm": 0,
-        "zMm": 2062
-      },
-      "axis": "z",
-      "openingId": "DOOR-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|1EN9761"
-    },
-    {
-      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0TH2CCO",
+      "id": "AVELIS-IAM-2026-IFC-DOOR-REFERENCE-V2-0-C-0U84ZBX",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 2276,
       "massKg": 4.8024,
       "position": {
-        "xMm": 2375,
+        "xMm": 2475,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0TH2CCO"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|IFC-DOOR-REFERENCE|2.0|0U84ZBX"
     }
   ],
   "validation": {

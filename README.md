@@ -1,4 +1,4 @@
-# Avelis Wall Flow 2.1
+# Avelis Wall Flow 2.2
 
 Application Bloc 1 de continuité numérique pour panneaux muraux en acier formé à froid. Elle accepte une configuration manuelle, un vrai fichier IFC ou une géométrie STEP/STP, génère plusieurs variantes traçables, compare leurs métrés et prépare un paquet neutre pour le Bloc 2.
 
@@ -10,7 +10,7 @@ Application Bloc 1 de continuité numérique pour panneaux muraux en acier form�
 2. Choisir l’entrée : IFC, STEP/STP ou configuration manuelle.
 3. Pour STEP, confirmer les axes longueur/hauteur/épaisseur ; pour IFC, choisir le mur extrait.
 4. Activer ou désactiver fenêtre et porte en mode manuel.
-5. Comparer les six solutions et télécharger le paquet ZIP.
+5. Comparer jusqu’à neuf solutions distinctes et télécharger le paquet ZIP.
 
 Le prix matière est facultatif. Si les champs restent vides, le calcul emploie le proxy Hauts-de-France documenté de 3,09 €/kg HT, avec une fourchette de 1,82 à 4,12 €/kg. Une valeur saisie remplace uniquement le scénario budgétaire, jamais la géométrie.
 
@@ -18,7 +18,7 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 
 - géométrie de l’enveloppe et des ouvertures ;
 - lisses, montants et cadres d’ouverture avec identifiants stables ;
-- six candidats : trois couples de profils Metsec publics × deux stratégies d’implantation ;
+- jusqu’à neuf candidats distincts : trois couples de profils Metsec publics × module symétrique, travées uniformes et zones d’ouvertures ;
 - longueur, masse par `longueur × kg/m fabricant`, BOM, débit et coût matière ;
 - comparaison normalisée et Pareto sur les métriques disponibles ;
 - contrôles de collision, enveloppe, cohérence BOM/géométrie et traçabilité ;
@@ -34,7 +34,7 @@ Le prix matière est facultatif. Si les champs restent vides, le calcul emploie 
 
 ## Résultat de référence reproductible
 
-Pour le mur IFC buildingSMART 3000 × 2000 × 300 mm avec fenêtre 1000 × 1000 mm : solution `CAND-02`, profils `104MF12` et `100MF12/50`, 13 pièces, masse 46,176 kg, budget central 142,68 € HT, fourchette 84,04–190,24 € HT. La BOM et la somme des masses géométriques correspondent à 0,0004 kg près.
+Pour le mur IFC buildingSMART 3000 × 2000 × 300 mm avec fenêtre 1000 × 1000 mm, le moteur explore neuf combinaisons distinctes. Le recommandé est recalculé par les tests et les expériences à partir des mêmes composants, métriques et prix sourcés ; aucun résultat d’affichage n’est codé en dur.
 
 ## Structure
 

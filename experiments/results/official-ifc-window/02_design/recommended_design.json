@@ -3,7 +3,7 @@
     "schemaVersion": "2.0",
     "software": {
       "name": "Avelis Wall Flow",
-      "version": "2.1.0"
+      "version": "2.2.0"
     },
     "identity": {
       "projectId": "AVELIS-IAM-2026",
@@ -84,13 +84,46 @@
     }
   },
   "candidate": {
-    "id": "CAND-02",
+    "id": "CAND-03",
     "option": {
       "profileSetId": "MF-12-50",
-      "gridStrategy": "OPENING_ALIGNED",
+      "gridStrategy": "OPENING_ZONED",
+      "gridStrategyLabel": "Zones d’ouvertures",
       "studSpacingMm": 600,
       "studProfileId": "100MF12-50",
       "trackProfileId": "104MF12"
+    },
+    "layout": {
+      "strategy": "OPENING_ZONED",
+      "label": "Zones d’ouvertures",
+      "description": "Fixe les rives et jambages puis répartit chaque zone entre appuis fixes.",
+      "targetModuleMm": 600,
+      "zoneCount": 3,
+      "gridCentersMm": [
+        500,
+        1500,
+        2500
+      ],
+      "actualStudCentersMm": [
+        25,
+        500,
+        975,
+        1500,
+        2025,
+        2500,
+        2975
+      ],
+      "actualBaySpacingsMm": [
+        475,
+        475,
+        525,
+        525,
+        475,
+        475
+      ],
+      "minimumBayMm": 475,
+      "maximumBayMm": 525,
+      "spacingSpreadMm": 50
     },
     "wall": {
       "lengthMm": 3000,
@@ -631,7 +664,7 @@
         "massKg": 2.11
       },
       {
-        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
+        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0BKEMPY",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -669,7 +702,7 @@
         "axis": "z",
         "lengthMm": 1876,
         "position": {
-          "xMm": 375,
+          "xMm": 475,
           "yMm": 0,
           "zMm": 62
         },
@@ -679,15 +712,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|09AGKL7",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0BKEMPY",
         "bounds": {
           "min": {
-            "x": 375,
+            "x": 475,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 425,
+            "x": 525,
             "y": 100,
             "z": 1938
           }
@@ -695,7 +728,7 @@
         "massKg": 3.9584
       },
       {
-        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
+        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0E73EUN",
         "role": "cripple_stud",
         "label": "Window lower cripple stud",
         "source": "OPENING_GRID",
@@ -733,7 +766,7 @@
         "axis": "z",
         "lengthMm": 376,
         "position": {
-          "xMm": 1575,
+          "xMm": 1475,
           "yMm": 0,
           "zMm": 62
         },
@@ -743,15 +776,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0FO4WEU",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0E73EUN",
         "bounds": {
           "min": {
-            "x": 1575,
+            "x": 1475,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 1625,
+            "x": 1525,
             "y": 100,
             "z": 438
           }
@@ -759,7 +792,7 @@
         "massKg": 0.7934
       },
       {
-        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK",
+        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1E1836X",
         "role": "cripple_stud",
         "label": "Upper cripple stud — WINDOW",
         "source": "OPENING_GRID",
@@ -797,7 +830,7 @@
         "axis": "z",
         "lengthMm": 376,
         "position": {
-          "xMm": 1575,
+          "xMm": 1475,
           "yMm": 0,
           "zMm": 1562
         },
@@ -807,15 +840,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EYDBUK",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|1E1836X",
         "bounds": {
           "min": {
-            "x": 1575,
+            "x": 1475,
             "y": 0,
             "z": 1562
           },
           "max": {
-            "x": 1625,
+            "x": 1525,
             "y": 100,
             "z": 1938
           }
@@ -823,7 +856,7 @@
         "massKg": 0.7934
       },
       {
-        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
+        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0LC6DYS",
         "role": "common_stud",
         "label": "Common stud",
         "source": "REFERENCE_GRID",
@@ -861,7 +894,7 @@
         "axis": "z",
         "lengthMm": 1876,
         "position": {
-          "xMm": 2175,
+          "xMm": 2475,
           "yMm": 0,
           "zMm": 62
         },
@@ -871,79 +904,15 @@
         ],
         "toleranceMm": null,
         "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0KOABLF",
+        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0LC6DYS",
         "bounds": {
           "min": {
-            "x": 2175,
+            "x": 2475,
             "y": 0,
             "z": 62
           },
           "max": {
-            "x": 2225,
-            "y": 100,
-            "z": 1938
-          }
-        },
-        "massKg": 3.9584
-      },
-      {
-        "id": "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9",
-        "role": "common_stud",
-        "label": "Common stud",
-        "source": "REFERENCE_GRID",
-        "openingId": null,
-        "material": {
-          "id": "REF-METSEC-Z275-FY450",
-          "label": "Reference cold-formed galvanized steel — Metsec Metframe",
-          "status": "REFERENCE_PRODUCT_NOT_CONFIRMED_BY_AVELIS",
-          "coating": "Z275",
-          "minimumYieldStrengthNmm2": 450
-        },
-        "profile": {
-          "id": "100MF12-50",
-          "manufacturerReference": "100MF12/50",
-          "family": "STUD_C",
-          "massKgPerM": 2.11,
-          "webDepthMm": 100,
-          "flange1Mm": 50,
-          "flange2Mm": 50,
-          "lipMm": 14,
-          "nominalThicknessMm": 1.2,
-          "minimumYieldStrengthNmm2": 450,
-          "coating": "Z275",
-          "sourceId": "METSEC_COMPONENTS_2026",
-          "sourceLocation": "Studs / Joists table, row 100MF12/50"
-        },
-        "representation": {
-          "kind": "PROFILE_ENVELOPE",
-          "note": "The viewer/DXF/STL uses the external profile envelope. Mass uses the manufacturer kg/m value; envelope volume is not used for quantities."
-        },
-        "sectionEnvelope": {
-          "inPlaneWidthMm": 50,
-          "depthMm": 100
-        },
-        "axis": "z",
-        "lengthMm": 1876,
-        "position": {
-          "xMm": 2775,
-          "yMm": 0,
-          "zMm": 62
-        },
-        "operations": [
-          "CUT_SQUARE",
-          "MARK_ID"
-        ],
-        "toleranceMm": null,
-        "manufacturingRelease": "BLOCKED_PENDING_AVELIS_CAPABILITIES",
-        "qrPayload": "AVELIS|AVELIS-IAM-2026|OFFICIAL-IFC-WINDOW|2.0|0EG3OG9",
-        "bounds": {
-          "min": {
-            "x": 2775,
-            "y": 0,
-            "z": 62
-          },
-          "max": {
-            "x": 2825,
+            "x": 2525,
             "y": 100,
             "z": 1938
           }
@@ -988,16 +957,19 @@
       ]
     },
     "metrics": {
-      "steelMassKg": 46.176,
-      "totalProfileLengthM": 21.884,
-      "componentCount": 13,
-      "cutCount": 26,
+      "steelMassKg": 42.217,
+      "totalProfileLengthM": 20.008,
+      "componentCount": 12,
+      "cutCount": 24,
       "uniqueLengthCount": 4,
       "uniqueProfileCount": 2,
-      "materialCostEstimateEurExVat": 142.68,
+      "minimumStudBayMm": 475,
+      "maximumStudBayMm": 525,
+      "studBaySpreadMm": 50,
+      "materialCostEstimateEurExVat": 130.45,
       "materialCostRangeEurExVat": {
-        "low": 84.04,
-        "high": 190.24
+        "low": 76.84,
+        "high": 173.93
       },
       "priceBasis": {
         "valueEurPerKgExVat": 3.09,
@@ -1049,13 +1021,12 @@
         "materialId": "REF-METSEC-Z275-FY450",
         "cutLengthMm": 1876,
         "massKgPerM": 2.11,
-        "quantity": 3,
-        "totalLengthM": 5.628,
-        "totalMassKg": 11.875,
+        "quantity": 2,
+        "totalLengthM": 3.752,
+        "totalMassKg": 7.917,
         "componentIds": [
-          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-09AGKL7",
-          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0KOABLF",
-          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EG3OG9"
+          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0BKEMPY",
+          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0LC6DYS"
         ]
       },
       {
@@ -1069,8 +1040,8 @@
         "totalLengthM": 0.752,
         "totalMassKg": 1.587,
         "componentIds": [
-          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0FO4WEU",
-          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0EYDBUK"
+          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-0E73EUN",
+          "AVELIS-IAM-2026-OFFICIAL-IFC-WINDOW-V2-0-C-1E1836X"
         ]
       },
       {
@@ -1133,18 +1104,18 @@
     ],
     "crossValidation": {
       "massReconciliation": {
-        "memberSumKg": 46.176,
-        "bomSumKg": 46.176,
-        "absoluteDifferenceKg": 0.0004,
+        "memberSumKg": 42.217,
+        "bomSumKg": 42.218,
+        "absoluteDifferenceKg": 0.0008,
         "status": "MATCH"
       }
     },
-    "score": 5.17,
+    "score": 0,
     "scoreBreakdown": {
       "method": "Equal-weight arithmetic mean of min-max normalized available metrics; lower is better.",
       "priority": "balanced",
       "normalized": {
-        "steelMassKg": 0.15511,
+        "steelMassKg": 0,
         "componentCount": 0,
         "uniqueLengthCount": 0
       }

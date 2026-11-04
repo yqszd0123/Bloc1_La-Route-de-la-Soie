@@ -2,13 +2,29 @@
 
 ## Espace de recherche déclaré
 
-Le moteur évalue exhaustivement six options, et non un résultat choisi d’avance :
+Le moteur évalue exhaustivement neuf combinaisons avant dédoublonnage :
 
 - trois couples compatibles de profils Metsec publics ;
-- deux stratégies de grille : trame régulière et trame alignée sur les ouvertures ;
-- entraxe de référence 600 mm dans les deux stratégies.
+- trois stratégies d’implantation : module symétrique, travées uniformes et zones d’ouvertures ;
+- module cible de référence 600 mm dans les trois stratégies.
 
-Le nombre de candidats générés doit être égal à la taille de l’espace déclaré ; un test l’impose.
+Une combinaison est une option explorée. Deux options qui produisent exactement les mêmes composants, profils, positions et longueurs sont fusionnées avant le classement. Le résultat contient donc jusqu’à neuf solutions distinctes sans afficher de faux doublons.
+
+## Trois implantations
+
+### Module symétrique
+
+Les montants de rive sont fixes. Le moteur conserve autant que possible des travées centrales de 600 mm et répartit le reliquat également aux deux extrémités. Pour une distance de 2950 mm entre axes de rive, il produit `575 + 600 + 600 + 600 + 575 mm`.
+
+### Travées uniformes
+
+Le nombre de travées vaut `ceil(portée utile / 600)`. La portée utile est ensuite divisée par ce nombre. Pour 2950 mm, les cinq travées mesurent 590 mm.
+
+### Zones d’ouvertures
+
+Les axes des montants de rive et de jambage deviennent des appuis fixes. Chaque zone entre deux appuis est divisée indépendamment en travées égales sans dépasser le module cible. Cette stratégie évite qu’un seul premier percement impose la phase de toute la paroi.
+
+Ces stratégies sont des règles géométriques de génération, pas des résultats de calcul structurel. Les entraxes réels minimum et maximum sont conservés dans chaque candidat et affichés dans l’interface.
 
 ## Génération
 
@@ -20,13 +36,14 @@ Une entrée normalisée contient l’enveloppe, le placement, les ouvertures et 
 - nombre de composants ;
 - nombre de longueurs distinctes ;
 - nombre de coupes ;
-- coût matière calculé après classement, à partir du même métrage.
+- coût matière calculé après classement, à partir du même métrage ;
+- entraxes réels minimum, maximum et dispersion, fournis comme données de comparaison.
 
-Les métriques sont normalisées entre minimum et maximum des six candidats. Si toutes les valeurs d’une métrique sont identiques, sa contribution est zéro. Le score est la moyenne des métriques disponibles pour la priorité choisie ; une petite règle de départage déterministe garde l’ordre stable. « Plus petit » signifie « meilleur » uniquement dans cet espace de référence.
+Les métriques de décision disponibles sont normalisées entre minimum et maximum des candidats distincts. Si toutes les valeurs d’une métrique sont identiques, sa contribution est zéro. Le score est la moyenne des métriques disponibles pour la priorité choisie ; une règle de départage déterministe garde l’ordre stable. « Plus petit » signifie « meilleur » uniquement dans cet espace de référence.
 
 ## Pareto et vérification
 
-Le statut Pareto est calculé indépendamment du score. Au moins une solution doit être non dominée. Le test vérifie que le recommandé possède le score minimal, que tous les candidats sont classés une seule fois et que les rangs sont monotones.
+Le statut Pareto est calculé indépendamment du score. Au moins une solution doit être non dominée. Les tests vérifient les neuf combinaisons déclarées, le retrait des géométries identiques, les trois calculs d’implantation, la monotonie des rangs et le score minimal du recommandé.
 
 ## Limites
 

@@ -30,7 +30,7 @@
     });
     parts.push('</g>');
     parts.push(`<text x="${margin}" y="85" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#182b36">${escapeXml(candidate.id)} — mur ${candidate.wall.lengthMm} × ${candidate.wall.heightMm} mm</text>`);
-    parts.push(`<text x="${margin}" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">${escapeXml(candidate.option.studProfileId)} · entraxe de référence ${candidate.option.studSpacingMm} mm · stratégie ${escapeXml(candidate.option.gridStrategy)}</text>`);
+    parts.push(`<text x="${margin}" y="140" font-family="Arial,sans-serif" font-size="34" fill="#465b66">${escapeXml(candidate.option.studProfileId)} · ${escapeXml(candidate.option.gridStrategyLabel)} · ${candidate.layout.minimumBayMm}–${candidate.layout.maximumBayMm} mm réels</text>`);
     parts.push(`<line x1="${margin}" y1="${height - 70}" x2="${margin + candidate.wall.lengthMm}" y2="${height - 70}" stroke="#182b36" stroke-width="5"/>`);
     parts.push(`<text x="${margin + candidate.wall.lengthMm / 2}" y="${height - 85}" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" fill="#182b36">${candidate.wall.lengthMm} mm</text>`);
     parts.push('</svg>');

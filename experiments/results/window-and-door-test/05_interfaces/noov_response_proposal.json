@@ -8,7 +8,7 @@
     "wallGuid": null,
     "version": "2.0"
   },
-  "selectedCandidate": "CAND-01",
+  "selectedCandidate": "CAND-03",
   "decisionScore": 0,
   "openings": [
     {
@@ -35,16 +35,19 @@
     }
   ],
   "metrics": {
-    "steelMassKg": 76.357,
-    "totalProfileLengthM": 36.188,
-    "componentCount": 19,
-    "cutCount": 38,
+    "steelMassKg": 75.353,
+    "totalProfileLengthM": 35.712,
+    "componentCount": 18,
+    "cutCount": 36,
     "uniqueLengthCount": 7,
     "uniqueProfileCount": 2,
-    "materialCostEstimateEurExVat": 235.94,
+    "minimumStudBayMm": 416.666,
+    "maximumStudBayMm": 550,
+    "studBaySpreadMm": 133.334,
+    "materialCostEstimateEurExVat": 232.84,
     "materialCostRangeEurExVat": {
-      "low": 138.97,
-      "high": 314.59
+      "low": 137.14,
+      "high": 310.45
     },
     "priceBasis": {
       "valueEurPerKgExVat": 3.09,
@@ -241,109 +244,94 @@
       "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|09F067C"
     },
     {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GGPSB5",
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1D293EC",
       "role": "cripple_stud",
       "profile": "100MF12/50",
       "lengthMm": 676,
       "massKg": 1.4264,
       "position": {
-        "xMm": 1175,
+        "xMm": 1075,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": "WINDOW-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GGPSB5"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1D293EC"
     },
     {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-18WA7MK",
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1N8ZOIP",
       "role": "cripple_stud",
       "profile": "100MF12/50",
       "lengthMm": 676,
       "massKg": 1.4264,
       "position": {
-        "xMm": 1175,
+        "xMm": 1075,
         "yMm": 0,
         "zMm": 1862
       },
       "axis": "z",
       "openingId": "WINDOW-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|18WA7MK"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1N8ZOIP"
     },
     {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0FJ0L5P",
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0KUE9SV",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 2476,
       "massKg": 5.2244,
       "position": {
-        "xMm": 1775,
+        "xMm": 2016.667,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0FJ0L5P"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0KUE9SV"
     },
     {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1KR6CD2",
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-04SXTDS",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 2476,
       "massKg": 5.2244,
       "position": {
-        "xMm": 2375,
+        "xMm": 2433.333,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1KR6CD2"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|04SXTDS"
     },
     {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1QICXN0",
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0GSMZMU",
       "role": "cripple_stud",
       "profile": "100MF12/50",
       "lengthMm": 476,
       "massKg": 1.0044,
       "position": {
-        "xMm": 2975,
+        "xMm": 3325,
         "yMm": 0,
         "zMm": 2062
       },
       "axis": "z",
       "openingId": "DOOR-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1QICXN0"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0GSMZMU"
     },
     {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1FVPIUB",
-      "role": "cripple_stud",
-      "profile": "100MF12/50",
-      "lengthMm": 476,
-      "massKg": 1.0044,
-      "position": {
-        "xMm": 3575,
-        "yMm": 0,
-        "zMm": 2062
-      },
-      "axis": "z",
-      "openingId": "DOOR-01",
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1FVPIUB"
-    },
-    {
-      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-1EX04SE",
+      "id": "AVELIS-IAM-2026-WINDOW-AND-DOOR-TEST-V2-0-C-0YAPAKR",
       "role": "common_stud",
       "profile": "100MF12/50",
       "lengthMm": 2476,
       "massKg": 5.2244,
       "position": {
-        "xMm": 4175,
+        "xMm": 4275,
         "yMm": 0,
         "zMm": 62
       },
       "axis": "z",
       "openingId": null,
-      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|1EX04SE"
+      "qrPayload": "AVELIS|AVELIS-IAM-2026|WINDOW-AND-DOOR-TEST|2.0|0YAPAKR"
     }
   ],
   "validation": {

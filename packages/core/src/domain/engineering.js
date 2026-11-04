@@ -25,7 +25,7 @@
       profileSets: core.math.deepClone(data.catalog.compatibleProfileSets),
       studSpacingMm: data.referenceRules.studSpacingMm.value,
       studSpacingStatus: data.referenceRules.studSpacingMm.status,
-      gridStrategies: ['WALL_ORIGIN', 'OPENING_ALIGNED'],
+      gridStrategies: Object.keys(core.GRID_STRATEGIES),
       budgetPrice: core.math.deepClone(price),
       machineCapabilities: null,
       manufacturingToleranceMm: null,
