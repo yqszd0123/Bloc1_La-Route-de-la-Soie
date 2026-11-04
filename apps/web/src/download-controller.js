@@ -22,7 +22,7 @@
   }
 
   function enable(enabled) {
-    ['download-design', 'download-step', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-package-2']
+    ['download-design', 'download-step', 'download-stl', 'download-package', 'download-bom', 'download-cutting', 'download-labels', 'download-prototype-parts', 'download-package-2']
       .forEach((id) => { document.getElementById(id).disabled = !enabled; });
   }
 
@@ -57,6 +57,11 @@
     document.getElementById('download-labels').addEventListener('click', () => {
       const { result, candidate } = current();
       download(`${result.input.wallId}_${candidate.id}_LABELS.csv`, core.serialize.labelsCsv(candidate), 'text/csv;charset=utf-8');
+    });
+    document.getElementById('download-prototype-parts').addEventListener('click', () => {
+      const { result, candidate } = current();
+      const model = core.prototypeLayers.build(candidate, 'COMPLETE');
+      download(`${result.input.wallId}_${candidate.id}_LAYER_PARTS.csv`, core.prototypeLayers.partsCsv(model), 'text/csv;charset=utf-8');
     });
     document.getElementById('download-package').addEventListener('click', downloadPackage);
     document.getElementById('download-package-2').addEventListener('click', downloadPackage);

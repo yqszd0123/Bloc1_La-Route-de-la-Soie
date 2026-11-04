@@ -30,7 +30,15 @@
       { key: 'id', label: 'component_id' }, { key: 'role' }, { key: 'label' }, { key: 'openingId', label: 'opening_id' },
       { label: 'profile_id', get: (row) => row.profile.id },
       { label: 'manufacturer_reference', get: (row) => row.profile.manufacturerReference },
-      { key: 'lengthMm', label: 'cut_length_mm' }, { key: 'massKg', label: 'calculated_mass_kg' },
+      { key: 'lengthMm', label: 'cut_length_mm' },
+      { label: 'web_depth_mm', get: (row) => row.fabricationGeometry.webDepthMm },
+      { label: 'flange_1_mm', get: (row) => row.fabricationGeometry.flange1Mm },
+      { label: 'flange_2_mm', get: (row) => row.fabricationGeometry.flange2Mm },
+      { label: 'lip_mm', get: (row) => row.fabricationGeometry.lipMm },
+      { label: 'nominal_thickness_mm', get: (row) => row.fabricationGeometry.nominalThicknessMm },
+      { label: 'developed_width_approx_mm', get: (row) => row.fabricationGeometry.developedWidthApproxMm },
+      { label: 'developed_area_approx_m2', get: (row) => row.fabricationGeometry.developedAreaApproxM2 },
+      { key: 'massKg', label: 'calculated_mass_kg' },
       { label: 'mass_kg_per_m', get: (row) => row.profile.massKgPerM },
       { label: 'operations', get: (row) => row.operations.join('|') },
       { key: 'toleranceMm', label: 'tolerance_mm_pending_avelis' },
@@ -42,6 +50,8 @@
     return toCsv(candidate.members, [
       { key: 'id', label: 'component_id' }, { key: 'role' },
       { label: 'profile', get: (row) => row.profile.manufacturerReference }, { key: 'lengthMm', label: 'cut_length_mm' },
+      { label: 'nominal_thickness_mm', get: (row) => row.fabricationGeometry.nominalThicknessMm },
+      { label: 'developed_area_approx_m2', get: (row) => row.fabricationGeometry.developedAreaApproxM2 },
       { key: 'axis' }, { label: 'x_mm', get: (row) => row.position.xMm },
       { label: 'y_mm', get: (row) => row.position.yMm }, { label: 'z_mm', get: (row) => row.position.zMm },
       { key: 'qrPayload', label: 'qr_payload' }, { key: 'manufacturingRelease', label: 'release_status' }
@@ -103,7 +113,16 @@
       metrics: candidate.metrics,
       components: candidate.members.map((member) => ({
         id: member.id, role: member.role, profile: member.profile.manufacturerReference,
-        lengthMm: member.lengthMm, massKg: member.massKg, position: member.position,
+        lengthMm: member.lengthMm,
+        sectionMm: {
+          webDepth: member.fabricationGeometry.webDepthMm,
+          flange1: member.fabricationGeometry.flange1Mm,
+          flange2: member.fabricationGeometry.flange2Mm,
+          lip: member.fabricationGeometry.lipMm,
+          nominalThickness: member.fabricationGeometry.nominalThicknessMm
+        },
+        developedAreaApproxM2: member.fabricationGeometry.developedAreaApproxM2,
+        massKg: member.massKg, position: member.position,
         axis: member.axis, openingId: member.openingId, qrPayload: member.qrPayload
       })),
       validation: candidate.validation,
@@ -129,8 +148,13 @@
       dimensionsMm: {
         length: member.lengthMm,
         sectionDepth: member.profile.webDepthMm,
-        nominalThickness: member.profile.nominalThicknessMm
+        flange1: member.profile.flange1Mm,
+        flange2: member.profile.flange2Mm,
+        lip: member.profile.lipMm || 0,
+        nominalThickness: member.profile.nominalThicknessMm,
+        developedWidthApprox: member.fabricationGeometry.developedWidthApproxMm
       },
+      developedAreaApproxM2: member.fabricationGeometry.developedAreaApproxM2,
       calculatedMassKg: member.massKg,
       positionMm: { x: member.position.xMm, y: member.position.yMm, z: member.position.zMm },
       axis: member.axis,
@@ -153,7 +177,7 @@
       project: result.project.identity,
       configurationId: `${result.input.projectId}-${result.input.wallId}`,
       revision: result.input.version,
-      units: { length: 'mm', mass: 'kg' },
+      units: { length: 'mm', area: 'm2', mass: 'kg' },
       candidateId: candidate.id,
       material: result.rules.material,
       profiles: Array.from(new Set(candidate.members.map((member) => member.profile.id))).map((id) => core.engineering.getProfile(id)),

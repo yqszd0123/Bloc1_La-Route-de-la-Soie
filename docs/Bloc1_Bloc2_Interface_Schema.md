@@ -11,7 +11,7 @@ Transmettre au Bloc 2 une configuration versionnée, des composants unitaires tr
 ## 2. Fichiers remis
 
 - `bom.csv` : références groupées, quantité, longueur totale et masse ;
-- `cutting_list.csv` : une ligne par composant, coupe, masse, opérations et statut ;
+- `cutting_list.csv` : une ligne par composant, coupe, section, épaisseur nominale, surface développée approximative, masse, opérations et statut ;
 - `machine_neutral_members.csv` : positions X/Y/Z, axe et QR ;
 - `component_labels.csv` : identifiants et QR ;
 - `manufacturing_handover.json` : contrat complet ci-dessous ;
@@ -19,7 +19,9 @@ Transmettre au Bloc 2 une configuration versionnée, des composants unitaires tr
 - `model_3d_profile_envelopes.dxf` : géométrie neutre de coordination ;
 - `validation_report.json` : contrôles et exclusions.
 
-CSV : UTF-8, séparateur point-virgule, ligne d’en-tête. Longueurs en mm, masses en kg.
+CSV : UTF-8, séparateur point-virgule, ligne d’en-tête. Longueurs et épaisseurs en mm, surfaces en m², masses en kg.
+
+Le module « Maquette en couches » fournit séparément `LAYER_PARTS.csv` avec les rectangles d’isolant et les contours logiques des autres couches. Ce fichier de prototype n’est pas inclus dans le paquet acier et ne constitue pas une libération industrielle.
 
 Le STEP est un vrai fichier ISO 10303-21 relu automatiquement par Open CASCADE pendant les tests. Il représente les enveloppes externes des profils et non leur section C/U détaillée, les perçages, fixations ou trajectoires machine.
 
@@ -43,7 +45,8 @@ Le schéma logique est `avelis.production.wall-handover.v2`. Exemple abrégé :
       "materialId": "REF-METSEC-Z275-FY450",
       "profileId": "100MF12-50",
       "manufacturerReference": "100MF12/50",
-      "dimensionsMm": { "length": 2000, "sectionDepth": 100, "nominalThickness": 1.2 },
+      "dimensionsMm": { "length": 2000, "sectionDepth": 100, "flange1": 50, "flange2": 50, "lip": 14, "nominalThickness": 1.2, "developedWidthApprox": 228 },
+      "developedAreaApproxM2": 0.456,
       "calculatedMassKg": 4.22,
       "positionMm": { "x": 600, "y": 0, "z": 0 },
       "axis": "Z",

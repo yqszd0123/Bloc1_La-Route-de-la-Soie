@@ -213,9 +213,9 @@
     <section id="prototype-page" class="app-page" hidden>
       <div class="page-heading">
         <div><span class="eyebrow">Maquette pédagogique · même mur sélectionné</span><h2>Du squelette acier au mur assemblé</h2></div>
-        <span class="pill pill--demo">Démonstration visuelle</span>
+        <span class="pill pill--demo">Pièces de maquette calculées</span>
       </div>
-      <div class="scope-warning"><strong>Portée strictement visuelle :</strong> les couches d’isolation, panneaux et finitions illustrent la maquette physique. Elles ne modifient ni l’IFC/STEP, ni la BOM, ni la liste de débit, ni le paquet ZIP.</div>
+      <div class="scope-warning"><strong>Portée de la maquette :</strong> les dimensions, épaisseurs de référence, surfaces et volumes sont calculés dans un CSV séparé. Ces pièces ne modifient ni l’IFC/STEP, ni la BOM acier, ni la liste de débit acier, ni le paquet ZIP de fabrication.</div>
 
       <div class="prototype-stage-grid" role="group" aria-label="Degré d’achèvement de la maquette">
         <button class="prototype-stage-button" data-stage="FRAME" type="button" aria-pressed="false"><b>1</b><span><strong>Ossature nue</strong><small>Profilés acier et cadres d’ouverture</small></span></button>
@@ -238,16 +238,22 @@
           <h3>Lecture de la maquette</h3>
           <p>Les portes et fenêtres restent vides dans chaque couche. Comme sur une vue éclatée constructive, les repères relient chaque face à son nom et le curseur montre l’ordre d’assemblage.</p>
           <div id="prototype-layer-list" class="prototype-layer-list"></div>
-          <div class="prototype-note"><strong>Choix matière à confirmer</strong><span>Les échantillons physiques seront choisis avec le FabLab et le Bloc 2. Aucun produit d’isolation ou de parement n’est attribué à Avelis sans confirmation.</span></div>
+          <div class="prototype-note"><strong>Produits publics de référence</strong><span>L’isolant suit automatiquement la profondeur du montant acier. Les références et épaisseurs servent au calcul de maquette mais restent à confirmer avec Avelis, le FabLab et le Bloc 2.</span></div>
         </aside>
       </div>
+      <section class="results-card">
+        <div class="panel-heading"><div><span class="eyebrow">Isolation découpée par cavité · autres couches avec portes/fenêtres déduites</span><h2>Pièces des couches</h2></div><div class="toolbar-actions"><span id="prototype-parts-count" class="pill">—</span><button id="download-prototype-parts" class="button button--secondary" disabled>Pièces couches CSV</button></div></div>
+        <div id="prototype-parts-metrics" class="prototype-parts-metrics"></div>
+        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Couche / référence</th><th>Géométrie</th><th>Dimensions L × H × E</th><th>Ouvertures</th><th>Surface nette</th><th>Volume</th></tr></thead><tbody id="prototype-parts-body"></tbody></table></div>
+        <p class="source-note">Les panneaux sont des contours logiques de maquette. Le calepinage selon formats commerciaux, les joints, fixations et chutes restent à définir.</p>
+      </section>
     </section>
 
     <section id="manufacturing-page" class="app-page" hidden>
       <div class="page-heading"><div><span class="eyebrow">Bloc 1 → Bloc 2 / logistique</span><h2>Paquet de fabrication neutre</h2></div><span class="pill pill--blocked">Machine non libérée</span></div>
       <div class="release-banner"><strong>BLOCKED_PENDING_AVELIS_CAPABILITY_CONFIRMATION</strong><span>La géométrie, la BOM et la liste de débit sont calculées. Les tolérances, longueurs de stock, perçages, fixations et format machine restent volontairement vides.</span></div>
       <div class="toolbar-actions toolbar-actions--left"><button id="download-cutting" class="button button--secondary" disabled>Liste de débit CSV</button><button id="download-labels" class="button button--secondary" disabled>Étiquettes / QR CSV</button><button id="download-package-2" class="button button--accent" disabled>Paquet ZIP complet</button></div>
-      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Longueur</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
+      <article class="results-card"><div class="panel-heading"><div><span class="eyebrow">Composants fabriqués</span><h2>Liste unitaire</h2></div><span id="manufacturing-count" class="pill">—</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Rôle</th><th>Profil fabricant</th><th>Section</th><th>Longueur</th><th>Épaisseur acier</th><th>Surface développée</th><th>Masse</th><th>QR payload</th></tr></thead><tbody id="manufacturing-table-body"></tbody></table></div></article>
     </section>
 
     <section id="engineering-page" class="app-page" hidden>

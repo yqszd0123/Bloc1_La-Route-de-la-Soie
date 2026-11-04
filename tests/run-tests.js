@@ -51,6 +51,16 @@ test('les profils Metsec conservent les valeurs publiées par le fabricant', () 
   assert.equal(profile.sourceId, 'METSEC_COMPONENTS_2026');
 });
 
+test('les couches de maquette utilisent uniquement des épaisseurs de référence sourcées', () => {
+  const catalog = core.ENGINEERING_DATA.catalog.prototypeLayers;
+  assert.equal(catalog.status, 'PUBLIC_REFERENCE_COMPOSITION_NOT_CONFIRMED_BY_AVELIS');
+  assert.deepEqual(catalog.layers.map((layer) => layer.id), [
+    'INSULATION', 'EXTERIOR_BOARD', 'INTERIOR_BOARD', 'EXTERIOR_FINISH', 'INTERIOR_FINISH'
+  ]);
+  catalog.layers.forEach((layer) => assert.ok(core.ENGINEERING_DATA.sources[layer.sourceId], layer.sourceId));
+  assert.equal(core.ENGINEERING_DATA.sources.STEICO_FLEX_036_2025.rawData.supportedThicknessMm.includes(100), true);
+});
+
 test('la masse linéique fabricant est recoupée par une méthode indépendante', () => {
   core.ENGINEERING_DATA.catalog.profiles.forEach((profile) => {
     const check = core.engineering.densityCrossCheck(profile);
@@ -303,6 +313,34 @@ test('les exports neutres et FabLab proviennent du même modèle', () => {
   assert.match(core.svg.svgForCandidate(candidate), /<svg/);
   assert.match(core.serialize.bomCsv(candidate), /total_mass_kg/);
   assert.match(core.serialize.cuttingListCsv(candidate), /manufacturing_release/);
+  assert.match(core.serialize.cuttingListCsv(candidate), /nominal_thickness_mm/);
+  assert.match(core.serialize.cuttingListCsv(candidate), /developed_area_approx_m2/);
+});
+
+test('chaque profilé acier expose épaisseur, section et surface développée calculée', () => {
+  const candidate = core.runWorkflow(core.DEFAULT_INPUT).recommended;
+  candidate.members.forEach((member) => {
+    const expectedWidth = core.engineering.developedWidthMm(member.profile);
+    const expectedArea = core.math.round(expectedWidth * member.lengthMm / 1e6, 6);
+    assert.equal(member.fabricationGeometry.developedWidthApproxMm, expectedWidth);
+    assert.equal(member.fabricationGeometry.developedAreaApproxM2, expectedArea);
+    assert.equal(member.fabricationGeometry.nominalThicknessMm, member.profile.nominalThicknessMm);
+  });
+});
+
+test('le contrat de fabrication expose dimensions, épaisseur, surface développée et unités', () => {
+  const result = core.runWorkflow(core.DEFAULT_INPUT);
+  const handover = core.serialize.manufacturingHandover(result, result.recommended);
+  assert.deepEqual(handover.units, { length: 'mm', area: 'm2', mass: 'kg' });
+  assert.ok(handover.components.length > 0);
+  handover.components.forEach((component) => {
+    assert.ok(component.dimensionsMm.sectionDepth > 0);
+    assert.ok(component.dimensionsMm.flange1 > 0);
+    assert.ok(component.dimensionsMm.flange2 > 0);
+    assert.ok(component.dimensionsMm.nominalThickness > 0);
+    assert.ok(component.dimensionsMm.developedWidthApprox > 0);
+    assert.ok(component.developedAreaApproxM2 > 0);
+  });
 });
 
 test('la maquette pédagogique expose quatre étapes sans modifier le candidat acier', () => {
@@ -318,29 +356,47 @@ test('la maquette pédagogique expose quatre étapes sans modifier le candidat a
   assert.equal(JSON.stringify(candidate), before);
 });
 
-test('les surfaces pédagogiques conservent les vides de porte et fenêtre', () => {
+test('l’isolant est découpé en rectangles libres entre l’acier et les ouvertures', () => {
   const result = core.runWorkflow({ ...core.DEFAULT_INPUT, doorEnabled: true, doorXMm: 100, doorWidthMm: 800, doorHeightMm: 1800 });
   const candidate = result.recommended;
-  const cells = core.prototypeLayers.surfaceCells(candidate.wall);
-  const surfaceArea = cells.reduce((sum, cell) => sum + cell.areaMm2, 0);
-  const openingArea = candidate.wall.openings.reduce((sum, opening) => sum + opening.widthMm * opening.heightMm, 0);
-  assert.equal(surfaceArea, candidate.wall.lengthMm * candidate.wall.heightMm - openingArea);
-  cells.forEach((cell) => candidate.wall.openings.forEach((opening) => {
-    const centerX = (cell.xMin + cell.xMax) / 2;
-    const centerZ = (cell.zMin + cell.zMax) / 2;
-    assert.equal(
-      centerX > opening.xMm && centerX < opening.xMm + opening.widthMm
-        && centerZ > opening.sillMm && centerZ < opening.sillMm + opening.heightMm,
-      false
-    );
+  const schedule = core.prototypeLayers.buildPartsSchedule(candidate);
+  const insulation = schedule.layers.find((layer) => layer.id === 'INSULATION');
+  const obstacles = core.prototypeLayers.projectedObstacles(candidate);
+  assert.ok(insulation.parts.length > 1);
+  assert.equal(insulation.thicknessMm, 100);
+  assert.equal(schedule.validation.insulationMatchesStudDepth, true);
+  insulation.parts.forEach((part) => obstacles.forEach((obstacle) => {
+    const overlapWidth = Math.min(part.xMm + part.widthMm, obstacle.xMax) - Math.max(part.xMm, obstacle.xMin);
+    const overlapHeight = Math.min(part.zMm + part.heightMm, obstacle.zMax) - Math.max(part.zMm, obstacle.zMin);
+    assert.equal(overlapWidth > 1e-6 && overlapHeight > 1e-6, false, `${part.id}/${obstacle.id}`);
   }));
+  assert.equal(
+    core.math.round(insulation.parts.reduce((sum, part) => sum + part.netAreaM2, 0), 6),
+    schedule.validation.cavityMergedAreaM2
+  );
 });
 
-test('les couches de démonstration restent absentes des fichiers de fabrication', () => {
+test('chaque panneau hors isolant est un contour unique avec les portes et fenêtres déduites', () => {
+  const result = core.runWorkflow({ ...core.DEFAULT_INPUT, doorEnabled: true, doorXMm: 100, doorWidthMm: 800, doorHeightMm: 1800 });
+  const schedule = core.prototypeLayers.buildPartsSchedule(result.recommended);
+  const openingAreaM2 = result.recommended.wall.openings.reduce((sum, opening) => sum + opening.widthMm * opening.heightMm, 0) / 1e6;
+  schedule.layers.filter((layer) => layer.id !== 'INSULATION').forEach((layer) => {
+    assert.equal(layer.parts.length, 1, layer.id);
+    assert.equal(layer.parts[0].cutouts.length, result.recommended.wall.openings.length, layer.id);
+    assert.equal(layer.parts[0].netAreaM2, core.math.round(6 - openingAreaM2, 6), layer.id);
+  });
+});
+
+test('le CSV des couches est séparé des fichiers de fabrication acier et ne contient aucun prix', () => {
   const result = core.runWorkflow(core.DEFAULT_INPUT);
   const model = core.prototypeLayers.build(result.recommended, 'COMPLETE');
-  assert.equal(model.exportPolicy.status, 'DEMONSTRATION_ONLY_NOT_EXPORTED');
-  assert.ok(model.layers.filter((layer) => layer.id !== 'FRAME').every((layer) => layer.displayOnly && !layer.exportedByManufacturingWorkflow));
+  assert.equal(model.exportPolicy.status, 'PROTOTYPE_PARTS_CSV_SEPARATE_FROM_STEEL_MANUFACTURING');
+  const csv = core.prototypeLayers.partsCsv(model);
+  assert.match(csv, /part_id;layer_id/);
+  assert.match(csv, /thickness_mm/);
+  assert.match(csv, /net_area_m2/);
+  assert.match(csv, /volume_m3/);
+  assert.doesNotMatch(csv.toLowerCase(), /price|prix|cost|coût/);
   const files = core.packageBuilder.buildExportFiles(result, result.recommended, 20);
   const fileNames = Object.keys(files).join('\n').toLowerCase();
   assert.doesNotMatch(fileNames, /insulation|isolation|board|parement|finish|finition|prototype-layer/);
@@ -356,9 +412,11 @@ test('l’interface présente une étape dédiée et sa limite d’export', () =
   assert.match(html, /id="rotation-slider" type="range" min="0" max="360"/);
   assert.match(html, /id="prototype-rotation-slider" type="range" min="0" max="360"/);
   assert.match(html, /id="prototype-explode-slider" type="range" min="0" max="200" value="100"/);
+  assert.match(html, /id="download-prototype-parts"/);
+  assert.match(html, /id="prototype-parts-body"/);
   assert.ok(html.indexOf('data-page="design-page"') < html.indexOf('data-page="prototype-page"'));
   assert.ok(html.indexOf('data-page="prototype-page"') < html.indexOf('data-page="manufacturing-page"'));
-  assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM, ni la liste de débit, ni le paquet ZIP/);
+  assert.match(html, /ne modifient ni l’IFC\/STEP, ni la BOM acier, ni la liste de débit acier, ni le paquet ZIP/);
 });
 
 test('le paquet complet contient les interfaces et bloque explicitement la machine', () => {
